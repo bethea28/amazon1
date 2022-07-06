@@ -9,25 +9,24 @@ function InterestSelection() {
     const ChoiceToggleButton = styled(ToggleButton)({
         backgroundColor: "rgba(144, 216, 111, 0.57)",
         width: "125px",
-        fontFamily: "Poppins",
         fontWeight: 600,
         borderRadius: "50px!important",
         margin: "10px"
     })
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#90d86f',
-    },
-    secondary: {
-      main: '#f50057',
-    },
-  },
-  typography: {
-    fontFamily: 'Poppins',
-  },
-});
+    const theme = createTheme({
+        palette: {
+        primary: {
+            main: '#90d86f',
+            },
+        secondary: {
+            main: '#f50057',
+            },
+        },
+        typography: {
+            fontFamily: 'Poppins',
+            },
+    });
 
     function handleChoice(event: React.MouseEvent<HTMLElement>, newChoices: string[]) {
         console.log(event);
