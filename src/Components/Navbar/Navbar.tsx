@@ -12,7 +12,7 @@ import Tooltip from '@mui/material/Tooltip';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
-//import Profile from './Profile'
+import Profile from './Profile'
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -23,6 +23,7 @@ export default function AccountMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', width: 900, justifyContent: 'flex-end', alignItems: 'center', textAlign: 'center' }}>
@@ -77,7 +78,7 @@ export default function AccountMenu() {
       >
         <MenuItem>
         <IconButton
-            
+            onClick={handleClick} //Add path
           >
           <Avatar /> Profile
           </IconButton>
