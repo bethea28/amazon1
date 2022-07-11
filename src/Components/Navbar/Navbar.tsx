@@ -12,9 +12,9 @@ import Tooltip from '@mui/material/Tooltip';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
-import Profile from './Profile'
+import { Link } from "react-router-dom";
 
-export default function AccountMenu() {
+export default function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -80,7 +80,9 @@ export default function AccountMenu() {
         <IconButton
             onClick={handleClick} //Add path
           >
-          <Avatar /> Profile
+          
+          <Avatar /> 
+          <Link to="/profile">Profile</Link>
           </IconButton>
         </MenuItem>
         <Divider />
