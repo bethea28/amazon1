@@ -7,6 +7,8 @@ import { updateUser } from "../../Services/UserService";
 function InterestSelection() {
 
     const [choices, setChoices] = useState(() => [""]);
+    const tempUserID = "de3caccd-fa2c-4cd0-a1bc-c9a313a09a75";
+    const interests = ["music", "art", "food", "cars", "wildlife", "pets", "technology", "literature", "healthcare", "finance", "sports", "politics", "entertainment" ]
 
     const ChoiceToggleButton = styled(ToggleButton)({
         backgroundColor: "rgba(144, 216, 111, 0.57)",
@@ -14,8 +16,6 @@ function InterestSelection() {
         fontWeight: 600,
         borderRadius: "50px!important",
     })
-
-    const tempUserID = "de3caccd-fa2c-4cd0-a1bc-c9a313a09a75";
 
     function handleChoice(_event: React.MouseEvent<HTMLElement>, newChoices: string[]) {
         setChoices(newChoices);
@@ -46,19 +46,7 @@ function InterestSelection() {
                     <Grid item>
                         <Box>
                             <ToggleButtonGroup size="large" value={choices} onChange={handleChoice} sx={{ flexWrap: "wrap", justifyContent: "center" }}>
-                                <ChoiceToggleButton value="music">Music</ChoiceToggleButton>
-                                <ChoiceToggleButton value="art">Art</ChoiceToggleButton>
-                                <ChoiceToggleButton value="food"> Food</ChoiceToggleButton>
-                                <ChoiceToggleButton value="cars">Cars</ChoiceToggleButton>
-                                <ChoiceToggleButton value="wildlife">Wildlife</ChoiceToggleButton>
-                                <ChoiceToggleButton value="pets">Pets</ChoiceToggleButton>
-                                <ChoiceToggleButton value="technology">Technology</ChoiceToggleButton>
-                                <ChoiceToggleButton value="literature">Literature</ChoiceToggleButton>
-                                <ChoiceToggleButton value="healthcare">Healthcare</ChoiceToggleButton>
-                                <ChoiceToggleButton value="finance">Finance</ChoiceToggleButton>
-                                <ChoiceToggleButton value="sports">Sports</ChoiceToggleButton>
-                                <ChoiceToggleButton value="politics">Politics</ChoiceToggleButton>
-                                <ChoiceToggleButton value="entertainment">Entertainment</ChoiceToggleButton>
+                                {interests.map((interest, idx) => <ChoiceToggleButton key={idx} value={interest}>{interest}</ChoiceToggleButton>)}
                             </ToggleButtonGroup>
                         </Box>
                     </Grid>
