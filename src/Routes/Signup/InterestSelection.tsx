@@ -3,6 +3,7 @@ import { styled } from "@mui/system";
 import React, { useState } from "react";
 import Header from "../../Components/Header";
 import axios from "axios";
+import { APIURL } from "../../Resources/Constants"
 
 function InterestSelection() {
 
@@ -15,15 +16,46 @@ function InterestSelection() {
         borderRadius: "50px!important",
     })
 
+    const tempUserID = "de3caccd-fa2c-4cd0-a1bc-c9a313a09a75";
+
+    type UpdateUserResponse = {
+        interests: object
+    };
+
+    async function updateUser() {
+        try {
+            const { data } = await axios.put<UpdateUserResponse>(
+                `${APIURL}/users/${tempUserID}`,
+                {
+                    interests: choices.slice(1)
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Origin": "*",
+                        Accept: "application/json"
+                    },
+                },
+            );
+            console.log(JSON.stringify(data, null, 4));
+        } catch (error) {
+
+            if (axios.isAxiosError(error)) {
+                console.log(error.message);
+            } else {
+                console.log(error);
+            }
+        }
+    }
+
     function handleChoice(event: React.MouseEvent<HTMLElement>, newChoices: string[]) {
-        const target = event.target as HTMLInputElement;
+        // const target = event.target as HTMLInputElement;
         setChoices(newChoices);
     }
 
     function handleSubmit(event: React.MouseEvent<HTMLElement>) {
         event.preventDefault();
-        console.log("Enter button pressed.");
-        console.log("Choices: ", choices);
+        updateUser();
     }
 
 
