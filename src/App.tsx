@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import InterestSelection from './Routes/Signup/InterestSelection';
 import { Box, ThemeProvider } from '@mui/material';
 import * as global from "./Resources/GlobalTheme";
+import Dashboard from './Routes/Dashboard/Dashboard';
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <Routes>
           <Route path="/interests" element={<InterestSelection />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </ThemeProvider>
     </Box>
