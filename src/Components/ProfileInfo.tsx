@@ -146,11 +146,11 @@ export default class Profileinfo extends React.Component<DataProps, DataState> {
                 <Box style={this.boxStyleParent} sx={{height: 1 / 4}}>
                   <Grid item container direction="row" justifyContent="space-between">
                     <Grid item>
-                    <Box sx={{ml: 1, color: '#FFFFFF', typography: 'subtitle2' }}>Personal Information</Box>
+                    <Box sx={{ml: 1, mt: 1, color: '#FFFFFF', typography: 'subtitle2' }}>Personal Information</Box>
                     </Grid>
                     <Grid item>
-                      <Box sx={{ml: 2}}>
-                        <Button sx={{mt:1}} variant="contained" onClick={this.handleClick} endIcon={<KeyboardArrowUpIcon />}></Button>
+                      <Box sx={{ml: 2, mr: 1}}>
+                        <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", mt:1, height: 25}} variant="contained" onClick={this.handleClick} endIcon={<KeyboardArrowUpIcon />}></Button>
                       </Box>
                     </Grid>
                   </Grid>
@@ -191,11 +191,11 @@ export default class Profileinfo extends React.Component<DataProps, DataState> {
                   
                 <Grid item container direction="row" justifyContent="space-between">
                 <Grid item>
-                <Box sx={{ml: 1, color: '#FFFFFF', typography: 'subtitle2' }}>Bio</Box>
+                <Box sx={{ml: 1, mt:1, color: '#FFFFFF', typography: 'subtitle2' }}>Bio</Box>
                 </Grid>
                 <Grid item>
-                  <Box sx={{ml: 2}}>
-                    <Button sx={{mt:1}} variant="contained" onClick={this.handleClick} endIcon={<KeyboardArrowUpIcon />}></Button>
+                  <Box sx={{ml: 2, mr: 1}}>
+                    <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", mt:1, height: 25}} variant="contained" onClick={this.handleClick} endIcon={<KeyboardArrowUpIcon />}></Button>
                   </Box>
                 </Grid>
               </Grid> 
@@ -230,11 +230,11 @@ export default class Profileinfo extends React.Component<DataProps, DataState> {
                   
                 <Grid item container direction="row" justifyContent="space-between">
                 <Grid item>
-                <Box sx={{ml: 1, color: '#FFFFFF', typography: 'subtitle2' }}>Interest</Box>
+                <Box sx={{ml: 1, mt: 1, color: '#FFFFFF', typography: 'subtitle2' }}>Interest</Box>
                 </Grid>
                 <Grid item>
-                  <Box sx={{ml: 2}}>
-                    <Button sx={{mt:1}} variant="contained" onClick={this.handleClick} endIcon={<KeyboardArrowUpIcon />}></Button>
+                  <Box sx={{ml: 2, mr: 1}}>
+                    <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", mt:1, height: 25}} variant="contained" onClick={this.handleClick} endIcon={<KeyboardArrowUpIcon />}></Button>
                   </Box>
                 </Grid>
               </Grid> 
@@ -252,8 +252,9 @@ export default class Profileinfo extends React.Component<DataProps, DataState> {
                   </Box>
               </Paper>
                   <Grid item container direction="row" justifyContent="flex-end" alignItems="flex-end">
-                  <Box sx={{my: 2}}> <Button variant="contained" onClick={this.handleSubmit}>Save Profile</Button></Box></Grid>
-              
+                  <Grid item>
+                    <Box sx={{my: 2, mr:3}}> <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", borderRadius:50}} variant="contained" onClick={this.handleSubmit}>Save Profile</Button></Box></Grid>
+                  </Grid>
               
             </Box>
             
