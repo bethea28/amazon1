@@ -1,7 +1,8 @@
 import { ToggleButton, Grid, Typography, ToggleButtonGroup, Button, Box } from "@mui/material";
 import { styled } from "@mui/system";
 import React, { useState } from "react";
-import Header from "../Header";
+import Header from "../../Components/Header";
+import axios from "axios";
 
 function InterestSelection() {
 
@@ -9,14 +10,20 @@ function InterestSelection() {
 
     const ChoiceToggleButton = styled(ToggleButton)({
         backgroundColor: "rgba(144, 216, 111, 0.57)",
-        width: "8rem",
+        width: "10em",
         fontWeight: 600,
         borderRadius: "50px!important",
     })
 
     function handleChoice(event: React.MouseEvent<HTMLElement>, newChoices: string[]) {
-        console.log(event);
+        const target = event.target as HTMLInputElement;
         setChoices(newChoices);
+    }
+
+    function handleSubmit(event: React.MouseEvent<HTMLElement>) {
+        event.preventDefault();
+        console.log("Enter button pressed.");
+        console.log("Choices: ", choices);
     }
 
 
@@ -24,12 +31,12 @@ function InterestSelection() {
         <Box flex={1} overflow={"auto"}>
             <Header />
             <Grid container spacing={0} alignItems="center" height={"100%"}>
-                <Grid container xs={4} bgcolor="rgba(209, 225, 210, 0.32)" height={"inherit"} justifyContent={"center"} alignItems={"center"}>
+                <Grid container item xs={4} bgcolor="rgba(209, 225, 210, 0.32)" height={"inherit"} justifyContent={"center"} alignItems={"center"}>
                     <Grid item>
-                        <Typography variant="h4">Let's Get Started</Typography>
+                        <Typography fontWeight={"600"} variant="h4">Let's Get Started</Typography>
                     </Grid>
                 </Grid>
-                <Grid container height={"100%"} xs={8} alignContent={"space-around"} justifyContent={"center"}>
+                <Grid container item height={"100%"} xs={8} alignContent={"space-around"} justifyContent={"center"}>
                     <Grid item>
                         <Box>
                             <Typography variant="h5">Select what best describes your interests</Typography>
@@ -55,7 +62,7 @@ function InterestSelection() {
                             </ToggleButtonGroup>
                         </Box>
                     </Grid>
-                    <Button size="large" variant="contained" disabled={choices.length < 2} fullWidth>Next</Button>
+                    <Button onClick={handleSubmit} size="large" variant="contained" disabled={choices.length < 2} fullWidth>Next</Button>
                 </Grid>
             </Grid>
         </Box>

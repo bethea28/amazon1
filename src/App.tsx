@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
-import InterestSelection from './Components/Signup/InterestSelection';
+import InterestSelection from './Routes/Signup/InterestSelection';
 import { Box, ThemeProvider } from '@mui/material';
 import * as global from "./Resources/GlobalTheme";
 
