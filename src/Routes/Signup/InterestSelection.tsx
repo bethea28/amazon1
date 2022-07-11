@@ -2,8 +2,7 @@ import { ToggleButton, Grid, Typography, ToggleButtonGroup, Button, Box } from "
 import { styled } from "@mui/system";
 import React, { useState } from "react";
 import Header from "../../Components/Header";
-import axios from "axios";
-import { APIURL } from "../../Resources/Constants"
+import { updateUser } from "../../Services/UserService";
 
 function InterestSelection() {
 
@@ -18,44 +17,13 @@ function InterestSelection() {
 
     const tempUserID = "de3caccd-fa2c-4cd0-a1bc-c9a313a09a75";
 
-    type UpdateUserResponse = {
-        interests: object
-    };
-
-    async function updateUser() {
-        try {
-            const { data } = await axios.put<UpdateUserResponse>(
-                `${APIURL}/users/${tempUserID}`,
-                {
-                    interests: choices.slice(1)
-                },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Access-Control-Allow-Origin": "*",
-                        Accept: "application/json"
-                    },
-                },
-            );
-            console.log(JSON.stringify(data, null, 4));
-        } catch (error) {
-
-            if (axios.isAxiosError(error)) {
-                console.log(error.message);
-            } else {
-                console.log(error);
-            }
-        }
-    }
-
-    function handleChoice(event: React.MouseEvent<HTMLElement>, newChoices: string[]) {
-        // const target = event.target as HTMLInputElement;
+    function handleChoice(_event: React.MouseEvent<HTMLElement>, newChoices: string[]) {
         setChoices(newChoices);
     }
 
     function handleSubmit(event: React.MouseEvent<HTMLElement>) {
         event.preventDefault();
-        updateUser();
+        updateUser({ interests: choices.slice(1) }, tempUserID);
     }
 
 
