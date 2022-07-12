@@ -2,7 +2,7 @@ import { Container, Box, ButtonGroup, Button, Stack, Typography } from "@mui/mat
 import React from "react";
 import Header from "../../Components/Header";
 import NavigationBar from "./Components/NavigationBar";
-import RecommendedProjectList from "./Components/ProjectList";
+import ProjectList from "./Components/ProjectList";
 import SearchBar from "./Components/SearchBar";
 
 function Home() {
@@ -15,8 +15,8 @@ function Home() {
                 {/* Recommended Projects Carousel */}
                 <Stack>
                     <Stack>
-                        <Typography textAlign={"left"} variant="h4">BASED ON YOUR INTERESTS</Typography>
-                        <RecommendedProjectList />
+                        <Typography margin={"0.5em"} textAlign={"left"} variant="h4">BASED ON YOUR INTERESTS</Typography>
+                        <ProjectList />
                     </Stack>
                 </Stack>
 
