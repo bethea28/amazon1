@@ -10,22 +10,22 @@ function NavigationBar() {
             <Grid container flexDirection={matches ? "row" : "column"} justifyContent={"space-around"}>
                 <Grid item>
                     <Link href="#" color={"inherit"} underline="none">
-                        <Typography>How It Works</Typography>
+                        <Typography variant="h6">How It Works</Typography>
                     </Link>
                 </Grid>
                 <Grid item>
                     <Link href="#" color={"inherit"} underline="none">
-                        <Typography>Explore</Typography>
+                        <Typography variant="h6">Explore</Typography>
                     </Link>
                 </Grid>
                 <Grid item>
                     <Link href="#" color={"inherit"} underline="none">
-                        <Typography>Start A Project</Typography>
+                        <Typography variant="h6">Start A Project</Typography>
                     </Link>
                 </Grid>
                 <Grid item>
                     <Link href="#" color={"inherit"} underline="none">
-                        <Typography>Fund A Project</Typography>
+                        <Typography variant="h6">Fund A Project</Typography>
                     </Link>
                 </Grid>
             </Grid>
