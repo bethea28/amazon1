@@ -3,13 +3,11 @@ import { styled } from "@mui/system";
 import React, { useState } from "react";
 import Header from "../../Components/Header";
 import { updateUser } from "../../Services/UserService";
+import { tempUserID, interests } from "../../Resources/Constants";
 
 function InterestSelection() {
 
     const [choices, setChoices] = useState(() => [""]);
-    const tempUserID = "de3caccd-fa2c-4cd0-a1bc-c9a313a09a75";
-    const interests = ["music", "art", "food", "cars", "wildlife", "pets", "technology", "literature", "healthcare", "finance", "sports", "politics", "entertainment" ]
-
     const ChoiceToggleButton = styled(ToggleButton)({
         backgroundColor: "rgba(144, 216, 111, 0.57)",
         width: "10em",
