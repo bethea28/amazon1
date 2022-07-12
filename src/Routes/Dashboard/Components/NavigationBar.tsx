@@ -1,10 +1,13 @@
-import { Box, Grid, Link, Typography } from "@mui/material";
+import { Box, Grid, Link, Typography, useMediaQuery } from "@mui/material";
 import React from "react";
 
 function NavigationBar() {
+    //Checks page width to check for mobile devices
+    const matches = useMediaQuery("(min-width: 600px)");
+    
     return (
         <Box margin={"1em"}>
-            <Grid container justifyContent={"space-around"}>
+            <Grid container flexDirection={matches ? "row" : "column"} justifyContent={"space-around"}>
                 <Grid item>
                     <Link href="#" color={"inherit"} underline="none">
                         <Typography>How It Works</Typography>
