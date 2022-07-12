@@ -1,5 +1,4 @@
-import axios from "axios";
-import { APIURL } from "../Resources/Constants";
+import { axiosInstance } from "../Resources/Constants";
 
 export async function updateUser(update: object, userID: string) {
 
@@ -8,23 +7,8 @@ export async function updateUser(update: object, userID: string) {
     };
 
     try {
-        await axios.put<UpdateUserResponse>(
-            `${APIURL}/users/${userID}`,
-            update,
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*",
-                    Accept: "application/json"
-                },
-            },
-        );
+        await axiosInstance.put<UpdateUserResponse>(`/users/${userID}`, update);
     } catch (error) {
-
-        if (axios.isAxiosError(error)) {
-            console.log(error.message);
-        } else {
-            console.log(error);
-        }
+        console.log(error);
     }
 }
