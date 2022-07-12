@@ -4,58 +4,48 @@ import TextField from '@mui/material/TextField';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import React, { useState } from 'react';
-import axios from 'axios';
+import UserService from '../services/UserService';
 
 
 export default function AvatarUploadField() {
 
     //When no profile pic is uploaded, show this default iamge. When uploaded, show the new image
     const [file, setFile] = useState("../no-profile-pic-icon-11.png");
-    const [errorMessage, setErrorMessage] = useState('');
 
-    //Handler to change image file when new image is chosen
+    //Handler to change image file locally when new image is chosen
     function handleChange(e: any) {
-        let url = URL.createObjectURL(e.target.files[0]);
-        setFile(url)
-        console.log(url)
 
-        // if (!url) {
-        //     console.log('Missing Image URL');
-        //     setErrorMessage('Missing a URL to upload to');
-        //     return;
-        // }
+        let url = URL.createObjectURL(e.target.files[0]);
+        setFile(url);
+        console.log(url);
         
     }
 
-    const handleSubmit = async(e: any) => {
-        let url = URL.createObjectURL(e.target.files[0]);
+    //Handler to upload photo chosen to the backend
+    const handleUpload = (e: any) => {
 
-        // try {
-        //     const res = await Axios.post('/uploadAvatar', url);
-        //     setFile(res.url);
-        // } catch (error) {
-        //     console.log(error);
-        // }
-      
-        try {
-          const response = await axios({
-            method: "post",
-            url: "/uploadAvatar",
-            data: url,
-          });
-        } catch(error) {
-          console.log(error)
-        }
+        let url = URL.createObjectURL(e.target.files[0]);
+        setFile(url);
+        let userId = this.user.id;
+
+        UserService.uploadAvatar(userId, url);
+
+    }
+
+      //Handler to delete current photo saved in the backend
+      const handleDeleteAvatar = (e: any) => {
+
+        let userId = this.user.id;
+        let fileName = this.filename;
+        
+        UserService.deleteAvatar(userId, fileName);
 
       }
-
-    
-
-    //function to delete old avatar after first upload from s3
 
     return(
 
         <Box sx={{ display: 'flex' }}>
+
                 <Avatar
                     alt="Profile Image"
                     src={file}
@@ -77,10 +67,19 @@ export default function AvatarUploadField() {
                 <Button
                     variant="contained" 
                     component="span"
-                    onClick={handleSubmit}
+                    onClick={handleUpload}
                     >
-                    Click me
-                    </Button>
+                    Upload Avatar
+                </Button>
+
+                <Button
+                variant="contained" 
+                component="span"
+                onClick={handleDeleteAvatar}
+                >
+                Delete Avatar
+                </Button>
+
         </Box>
             
     )
