@@ -1,8 +1,5 @@
 
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
+import { Box, TextField, Avatar, Button } from '@mui/material';
 import React, { useState } from 'react';
 import UserService from '../services/UserService';
 
