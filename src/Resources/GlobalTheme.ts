@@ -15,7 +15,8 @@ export const theme = responsiveFontSizes(createTheme({
     components: {
         MuiTypography: {
             defaultProps: {
-                fontFamily: "Poppins"
+                fontFamily: "Poppins",
+                fontWeight: 600
             }
         }
     }

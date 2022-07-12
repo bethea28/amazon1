@@ -1,4 +1,4 @@
-import { Box, TextField, styled, Input, FormControl } from "@mui/material";
+import { Box, styled, Input } from "@mui/material";
 import React, { useState } from "react";
 
 function SearchBar() {
