@@ -199,7 +199,6 @@ export default function Appbar() {
             noWrap
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
-            // onClick={(navigate('/Home))} 
           >
             JUMPSTARTER
           </Typography>
