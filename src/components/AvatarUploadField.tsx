@@ -1,10 +1,13 @@
 
 import { Box, TextField, Avatar, Button } from '@mui/material';
 import React, { useState } from 'react';
-import UserService from '../services/UserService';
+import AvatarService from '../services/AvatarService';
 
 
 export default function AvatarUploadField() {
+
+    //Need UseContext to pass in global userId variable
+
 
     //When no profile pic is uploaded, show this default iamge. When uploaded, show the new image
     const [file, setFile] = useState("../no-profile-pic-icon-11.png");
@@ -25,7 +28,7 @@ export default function AvatarUploadField() {
         setFile(url);
         let userId = this.user.id;
 
-        UserService.uploadAvatar(userId, url);
+        AvatarService.uploadAvatar(userId, url);
 
     }
 
@@ -35,20 +38,21 @@ export default function AvatarUploadField() {
         let userId = this.user.id;
         let fileName = this.filename;
         
-        UserService.deleteAvatar(userId, fileName);
+        AvatarService.deleteAvatar(userId, fileName);
 
       }
 
     return(
 
-        <Box sx={{ display: 'flex' }}>
-
+      <Box sx={{ display: 'flex', flexDirection: 'column', border: 4 }}>
+            <Box sx={{ display: 'flex', margin: 2, justifyContent: 'center' }}>
                 <Avatar
                     alt="Profile Image"
                     src={file}
                     sx={{ width: 75, height: 75 }}
                 />
                 <TextField
+                    fullWidth
                     id="outlined-full-width"
                     label="Avatar Upload"
                     style={{ margin: 8 }}
@@ -61,23 +65,27 @@ export default function AvatarUploadField() {
                     variant="outlined"
                     onChange={handleChange}
                 />
-                <Button
-                    variant="contained" 
-                    component="span"
-                    onClick={handleUpload}
-                    >
-                    Upload Avatar
-                </Button>
+            </Box>
+            <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
+              <Button
+                  sx={{ margin: 1, backgroundColor:"#A6BBA7", color:"#000000", mt:1, height: 25 }}
+                  variant="contained" 
+                  component="span"
+                  onClick={handleUpload}
+                  >
+                  Save Avatar
+                  </Button>
 
-                <Button
-                variant="contained" 
-                component="span"
-                onClick={handleDeleteAvatar}
-                >
-                Delete Avatar
-                </Button>
-
-        </Box>
+              <Button
+                  sx={{ margin: 1, backgroundColor:"#A6BBA7", color:"#000000", mt:1, height: 25 }}
+                  variant="contained" 
+                  component="span"
+                  onClick={handleDeleteAvatar}
+                  >
+                  Delete Avatar
+                  </Button>
+            </Box>
+      </Box>
             
     )
 }
