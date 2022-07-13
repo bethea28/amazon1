@@ -23,7 +23,7 @@ import { ListItemText } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import {Search, SearchIconWrapper, StyledInputBase} from '../Constants'
 
-export default function AppbarPublic() {
+export default function AppbarPrivate() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
