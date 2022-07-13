@@ -1,10 +1,10 @@
-import Appbar from "../Navbar/Appbar";
+import AppbarPrivate from "../Navbar/AppbarPrivate";
 import AppbarPublic from "../Navbar/AppbarPublic";
 
 export default function Home() {
   const userLoggedIn = true
 
   return (
-    userLoggedIn ? <Appbar /> : <AppbarPublic />
+    userLoggedIn ? <AppbarPrivate /> : <AppbarPublic />
   );
 }

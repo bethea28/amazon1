@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
+import { Button } from '@mui/material';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
@@ -22,11 +22,14 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { ListItemText } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import {Search, SearchIconWrapper, StyledInputBase} from '../Constants'
+import Tooltip from '@mui/material/Tooltip';
 
 export default function AppbarPublic() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
+  const settings = ['My Projects', 'Liked Projects'];
 
   const navigate = useNavigate();
 
@@ -49,6 +52,14 @@ export default function AppbarPublic() {
   const handleClickProfile= () => {
     navigate("/profile");
     handleMenuClose();
+  };
+
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
   };
 
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -148,13 +159,35 @@ export default function AppbarPublic() {
             size="large"
             edge="start"
             color="inherit"
+            aria-haspopup="true"
             aria-label="open drawer"
+            onClick={handleOpenUserMenu}
             sx={{ mr: 2 }}
           >
-            <MenuIcon>
-            <ListItemText primary="Projects" />
-            </MenuIcon>
+            <MenuIcon />
           </IconButton>
+          <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
           <Typography
             variant="h6"
             noWrap

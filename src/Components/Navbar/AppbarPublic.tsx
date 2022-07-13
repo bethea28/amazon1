@@ -13,8 +13,8 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ['Sign In'];
+// const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const AppbarPublic = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -36,7 +36,7 @@ const AppbarPublic = () => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{bgcolor:"#335436"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -55,7 +55,7 @@ const AppbarPublic = () => {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            JUMPSTARTER
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -128,10 +128,11 @@ const AppbarPublic = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", borderRadius:50}} 
+              variant="contained" size="small">Submit a Project</Button>
               </IconButton>
             </Tooltip>
-            <Menu
+            {/* <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
               anchorEl={anchorElUser}
@@ -152,7 +153,7 @@ const AppbarPublic = () => {
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
-            </Menu>
+            </Menu> */}
           </Box>
         </Toolbar>
       </Container>
