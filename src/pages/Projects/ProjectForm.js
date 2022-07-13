@@ -9,7 +9,7 @@ import { Typography } from '@mui/material';
 import axiosInstance from '../../../src/apiConfig';
 import axios from "axios";
 
-
+ 
 // const useStyles = makeStyles (theme =>({
 //     root: {
 //         '& .MuiFormControl-root': {
@@ -31,15 +31,6 @@ const initialValues = {
 
 }
 
-   
-    
-  
-
-
-
-
-
-
 export function ProjectForm() {
 
     //const[values, setValues] = useState(initialValues);
@@ -53,58 +44,74 @@ export function ProjectForm() {
 
     } = useForm(initialValues);
 
-   function handleSumbit(e){
-
+    const handleSubmit = e => {
         
-
+        console.log(values)
+        window.alert("testing")
+        
+        //e.preventDefalut()
+        try {
+                return axiosInstance.post('/project', {
+                    values
+                })
+            } catch(e) {
+                console.log(values)
+            }
        
-            
-            //     data:{
-            //         projectName: values.projectName,
-            //         targetFundingNum: values.targetFundingNum,
-            //         targetFundingDate:values.targetFundingDate,
-            //         description:values.description,
-            //         categories: values.categories
-            //     }
-                
-            let formData = new FormData();
-    
-            // Adding files to the formdata
-            formData.append("projectName", values.projectName);
-            formData.append("targetFundingNum", values.targetFundingNum);
-            formData.append("targetFundingDate", values.targetFundingDate);
-            formData.append("description", values.description);
-            formData.append("categories", values.categories);
-            
-            axios({
-          
-              // Endpoint to send files
-              url: "http://localhost:8080/project",
-              method: "POST",
-              headers: {
-          
-                // Add any auth token here
-                //authorization: "your token comes here",
-              },
-          
-              // Attaching the form data
-              data: formData,
-            })
-            console.log(e)
-              // Handle the response from backend here
-              .then((res) => { })
-              
-              // Catch errors if any
-              .catch((err) => { });
-              
-            
-            //   .then((res) => { })
-  
-            //   // Catch errors if any
-            //   .catch((err) => { });
-            
-  
+        
+        //let formData = new FormData();
+
+        //// Adding files to the formdata
+        // formData.append("projectName", values.projectName);
+        // formData.append("targetFundingNum", values.targetFundingNum);
+        // formData.append("targetFundingDate", values.targetFundingDate);
+        // formData.append("description", values.description);
+        // formData.append("categories", values.categories);
+        // console.log(formData)
+        // try {
+        //     return axiosInstance.post('/profile', {
+        //         formData
+        //     })
+        // } catch(e) {
+        //     console.log(values)
+        // }
     }
+
+//    function handleSumbit(e){
+
+//             let formData = new FormData();
+    
+//             // Adding files to the formdata
+//             formData.append("projectName", values.projectName);
+//             formData.append("targetFundingNum", values.targetFundingNum);
+//             formData.append("targetFundingDate", values.targetFundingDate);
+//             formData.append("description", values.description);
+//             formData.append("categories", values.categories);
+            
+//             axios({
+          
+//               // Endpoint to send files
+//               url: "http://localhost:8080/project",
+//               method: "POST",
+//               headers: {
+          
+//                 // Add any auth token here
+//                 //authorization: "your token comes here",
+//               },
+          
+//               // Attaching the form data
+//               data: formData,
+//             })
+//             console.log(e)
+//               // Handle the response from backend here
+//               .then((res) => { })
+              
+//               // Catch errors if any
+//               .catch((err) => { });
+            
+            
+  
+//     }
 
     // const handleInputChange = (e)=> {
     //     const {name, value} = e.target
@@ -119,7 +126,7 @@ export function ProjectForm() {
     return (
 
         
-            <Form>
+            <Form onSubmit={handleSubmit}>
             <Grid container>
             <Grid item xs = {6}>
                 <Controls.Input
@@ -167,15 +174,11 @@ export function ProjectForm() {
             
             <Typography align = 'center'>Categories</Typography>
             </Grid>   
-            
-            
-            
-        
            
-            <Grid item xs = {4} style={{ display: "flex", justifyContent: "center", alignItems: "center"  }}>
+            <Grid item xs = {6} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center"  }}>
             <Typography>Descriptions</Typography>
             </Grid>
-            <Grid item xs = {12}>
+            <Grid item xs = {12} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center"  }}>
             <Controls.Input
                 name = "description"
                 label = "Input descriptions of your project"
@@ -196,24 +199,18 @@ export function ProjectForm() {
                     text = "Back"
                     startIcon={<ArrowBackIcon />}
                     />
-                    
-                        
-            
+
             </Grid>
             <Grid item xs = {6}>
             <Controls.Button
                 text = "Sumbit"
                 type = "submit"
                 endIcon = {<SendIcon />}
-                onClick = {(e) => handleSumbit(e)}/>
+                />
             </Grid>
             </Grid>
-            
 
-            
             </Form>
-
-       
 
 
     )

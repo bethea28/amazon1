@@ -1,3 +1,4 @@
+
 export const getDepartmentCollection = () =>([
     {id: '1', title: 'Music'},
     {id: '2', title: 'Food'},
