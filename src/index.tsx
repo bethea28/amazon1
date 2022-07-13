@@ -3,7 +3,6 @@ import React from 'react';
  import { BrowserRouter, Routes, Route, } from "react-router-dom";
  import App from './App';
  import Profile from './Components/Profile/Profile'
- import Navbar from './Components/Navbar/Navbar';
  import Appbar from './Components/Navbar/Appbar';
 
  const root = ReactDOM.createRoot(
@@ -20,3 +19,4 @@ import React from 'react';
    </BrowserRouter>
    </React.StrictMode>
  );
+
