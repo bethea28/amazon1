@@ -1,0 +1,11 @@
+{
+  "auth": {
+    "amazon1frontend48dcffca": {
+      "service": "Cognito",
+      "serviceType": "imported",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}
