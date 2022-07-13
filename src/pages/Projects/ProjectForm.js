@@ -21,12 +21,13 @@ import axios from "axios";
 
 
 const initialValues = {
-    userId:0,
+    userId:'',
     projectName:'',
     targetFundingNum:'',
     targetFundingDate:new Date(),
-    categories:'',
     description:'',
+    categories:'',
+    
     
 
 }
@@ -45,18 +46,31 @@ export function ProjectForm() {
     } = useForm(initialValues);
 
     const handleSubmit = e => {
+        let state = {
+            userId: '002',
+            projectName: values.projectName,
+            targetFundingNum:values.targetFundingNum.toString(),
+            targetFundingDate:values.targetFundingDate.toString(),
+            description:values.description,
+            categories: values.categories.toString()
+        }
         
         console.log(values)
+        fetch('project', {
+            method:  'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(state),
+         });
+        
+        
+        
         window.alert("testing")
         
         //e.preventDefalut()
-        try {
-                return axiosInstance.post('/project', {
-                    values
-                })
-            } catch(e) {
-                console.log(values)
-            }
+        
        
         
         //let formData = new FormData();
