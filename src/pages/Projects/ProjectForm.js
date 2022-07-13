@@ -124,69 +124,88 @@ export function ProjectForm() {
             <Grid item xs = {6}>
                 <Controls.Input
                 name = "projectName"
-                label = "Project Name"
+                label = "Input name of your project"
                 value = {values.projectName} 
                 onChange = {handleInputChange}
                 />
+            </Grid>
+            <Grid item xs = {2} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center"  }}>
+            <Typography>Project Name</Typography>
+            </Grid>
+            <Grid item xs = {6}>
                 <Controls.Input
                 name = "targetFundingNum"
-                label = "Target Funding Number"
+                label = "Input target funding amount "
                 value = {values.targetFundingNum} 
                 onChange = {handleInputChange}
                 />
-               
+            </Grid>
+            <Grid item xs = {6} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center"  }}>
+            <Typography>Target Funding Number</Typography>
+            </Grid>
+            <Grid item xs = {6}>
                 <Controls.DatePicker
                 name = "targetFundingDate"
-                label = "Target Funding Date"
+                label = "Select target funding date"
                 value = {values.targetFundingDate} 
                 onChange = {handleInputChange}
                 />
-
+            </Grid>
+            <Grid item xs = {6} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center"  }}>
+            <Typography>Target Funding Date</Typography>
+            </Grid>
+            <Grid item xs = {6}>
                 <Controls.Select
                 name = "categories"
-                label = "Categories"
+                label = "Select categories"
                 value = {values.categories}
                 onChange = {handleInputChange}
                 options = {ProjectService.getDepartmentCollection()}
                 />
-                 
-            </Grid>
-            <Grid item xs = {6}>
-            <Typography>Input name of your project</Typography>
-            <Typography>Input target funding amount</Typography>
-            <Typography>Select target funding date </Typography>
-            <Typography>Select categorie </Typography>
-            </Grid>
+            </Grid> 
+            <Grid item xs = {6} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center"  }}>
+            
+            <Typography align = 'center'>Categories</Typography>
+            </Grid>   
+            
+            
+            
+        
            
+            <Grid item xs = {4} style={{ display: "flex", justifyContent: "center", alignItems: "center"  }}>
+            <Typography>Descriptions</Typography>
+            </Grid>
             <Grid item xs = {12}>
-            <Typography>Input descriptions of your project</Typography>
             <Controls.Input
                 name = "description"
-                label = "Description"
+                label = "Input descriptions of your project"
                 multiline
                 minRows={12}
                 value = {values.description} 
                 
                 onChange = {handleInputChange}/>
                 
-                
-            </Grid>
+            </Grid>    
+            
             </Grid>
            
             <Grid container>
-            <Grid item xs = {12}>
-            <div>
-                    <Controls.Button
-                        text = "Back"
-                        startIcon={<ArrowBackIcon />}
-                        />
-                    <Controls.Button
-                        text = "Sumbit"
-                        type = "submit"
-                        endIcon = {<SendIcon />}
-                        onClick = {(e) => handleSumbit(e)}/>
+            <Grid item xs = {6}>
+            
+                <Controls.Button
+                    text = "Back"
+                    startIcon={<ArrowBackIcon />}
+                    />
+                    
                         
-            </div>
+            
+            </Grid>
+            <Grid item xs = {6}>
+            <Controls.Button
+                text = "Sumbit"
+                type = "submit"
+                endIcon = {<SendIcon />}
+                onClick = {(e) => handleSumbit(e)}/>
             </Grid>
             </Grid>
             
