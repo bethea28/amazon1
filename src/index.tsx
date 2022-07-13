@@ -1,9 +1,10 @@
 import React from 'react';
- import ReactDOM from 'react-dom/client';
- import { BrowserRouter, Routes, Route, } from "react-router-dom";
- import App from './App';
- import Profile from './Components/Profile/Profile'
- import Appbar from './Components/Navbar/Appbar';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter, Routes, Route, } from "react-router-dom";
+import Profile from './Components/Profile/Profile'
+import Home from './Components/Home/Home';
+import AppbarPrivate from './Components/Navbar/AppbarPrivate';
+import AppbarPublic from './Components/Navbar/AppbarPublic';
 
  const root = ReactDOM.createRoot(
    document.getElementById('root') as HTMLElement
@@ -11,10 +12,9 @@ import React from 'react';
  root.render(
    <React.StrictMode>
      <BrowserRouter>
-     <Appbar/>
      <Routes>
-       <Route path="/" element={<App />} />
-       <Route path="profile" element={<Profile />} />
+       <Route path="/" element={<Home />} />
+      <Route path="profile" element={<Profile />} />
      </Routes>
    </BrowserRouter>
    </React.StrictMode>

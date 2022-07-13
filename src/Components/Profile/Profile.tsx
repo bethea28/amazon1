@@ -1,9 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
  import { Box } from '@mui/material';
  import { Grid, Paper, Button, TextField} from '@mui/material';
  import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
  import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
  import Avatar from '@mui/material/Avatar';
+ import AppbarPrivate from '../Navbar/AppbarPrivate';
+ import AppbarPublic from '../Navbar/AppbarPublic';
 
  interface DataProps {
    ProfileData?: []
@@ -17,10 +19,11 @@ import React, { Component } from 'react'
    personalInfoSection: boolean;
    bioScetion: boolean;
    interestSection: boolean;
-
  }
 
  export default class Profileinfo extends React.Component<DataProps, DataState> {  
+
+  userLoggedIn = true;
 
    constructor(props:any) {
      super(props)
@@ -92,7 +95,9 @@ import React, { Component } from 'react'
 
    render() {
      return (
+      
        <Box sx={{ display: 'flex', flexDirection: 'column', height: 1000}}>
+         {this.userLoggedIn ? <AppbarPrivate /> : <AppbarPublic />}
          <Box
            sx={{
              width: 1,
@@ -239,7 +244,6 @@ import React, { Component } from 'react'
                    </Grid>
 
              </Box>
-
        </Box>
      );
    }
