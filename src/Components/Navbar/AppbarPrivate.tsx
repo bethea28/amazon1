@@ -22,7 +22,6 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { ListItemText } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import {Search, SearchIconWrapper, StyledInputBase} from '../Constants'
-import Tooltip from '@mui/material/Tooltip';
 
 export default function AppbarPublic() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
