@@ -12,7 +12,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-      <SignIn authState={'signIn'} loading={false} error={''} />
+      <SignIn authState={'signIn'} loading={false} error={''}/>
 
       </header>
     </div>

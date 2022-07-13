@@ -1,5 +1,5 @@
 import React , {MouseEvent, FormEvent, ChangeEvent} from 'react';
-import { Box, Container, Link, TextField, Button}  from '@material-ui/core';
+import { Box, Container, Link, TextField, Button, Typography}  from '@material-ui/core';
 import { Auth } from 'aws-amplify';
 
 
@@ -23,7 +23,6 @@ const SignIn: React.FC<Props> = ({ authState, loading, error }) => {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    //signIn(form['userName'], form['password'], form['email']);
     const username = form.userName;
     const password = form.password;
     const email = form.email;
@@ -40,7 +39,20 @@ const SignIn: React.FC<Props> = ({ authState, loading, error }) => {
       .then((user) => {
         console.log(user);
         //insert toatr or some status message
-        //axios.post('http://localhost:8080/api/signup', clientData, headers);
+        const request = {
+          username: user.user.getUsername(),
+          userSub: user.userSub
+        }
+        fetch('http://localhost:8080/api/sigup', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          mode: 'cors',
+          body: JSON.stringify(request)
+        })
+
         return user;
       })
     } catch(error) {
@@ -52,16 +64,16 @@ const SignIn: React.FC<Props> = ({ authState, loading, error }) => {
   };
 
   const content = (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs"  className="signUpBox">
       <form onSubmit={handleSubmit}>
-        <Box display="flex" flexDirection="column" mt={1} p={2} height="200%">
-Sign Up
-          <Box display="flex" justifyContent="center" fontWeight={100} color="error.main">
+      <Typography color="textPrimary">Sign Up</Typography>
+        <Box display="flex" flexDirection="column" flex mt={5} p={5} height="200%" bgcolor="#D1e1D2">
+
+          <Box display="flex" justifyContent="center" fontWeight={100}>
             {error}
           </Box>
           <Box width="100%" my={2}>
             <TextField
-            autoComplete="userName"
             type="userName"
             onChange={handleChangeValue('userName')}
             value={form.userName}
@@ -69,25 +81,21 @@ Sign Up
             variant="outlined"
             required
             fullWidth
-            inputProps={{"data-testid":"userName"}}
             />
           </Box>
           <Box width="100%" my={2}>
             <TextField
               label={loading? " " : "Password"}
               type="password"
-              autoComplete="current-password"
               onChange={handleChangeValue('password')}
               value={form.password}
               variant="outlined"
               required
               fullWidth
-              inputProps={{"data-testid":"password"}}
             />
             </Box>
             <Box width="100%" my={2}>
             <TextField
-              autoComplete="email"
               type="email"
               onChange={handleChangeValue('email')}
               value={form.email}
@@ -95,12 +103,11 @@ Sign Up
               variant="outlined"
               required
               fullWidth
-              inputProps={{"data-testid":"email"}}
             />
           </Box>
           <Box width="100%" mt={4} mb={2}>
             <Button data-testid="submitButton" disabled={loading} type="submit">
-              Sign Up
+              <Typography>Sign Up</Typography>
             </Button>
           </Box>
         </Box>
