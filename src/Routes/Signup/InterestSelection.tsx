@@ -2,13 +2,12 @@ import { ToggleButton, Grid, Typography, ToggleButtonGroup, Button, Box } from "
 import { styled } from "@mui/system";
 import React, { useState } from "react";
 import Header from "../../Components/Header";
-import axios from "axios";
-import { APIURL } from "../../Resources/Constants"
+import { updateUser } from "../../Services/UserService";
+import { tempUserID, interests } from "../../Resources/Constants";
 
 function InterestSelection() {
 
     const [choices, setChoices] = useState(() => [""]);
-
     const ChoiceToggleButton = styled(ToggleButton)({
         backgroundColor: "rgba(144, 216, 111, 0.57)",
         width: "10em",
@@ -16,46 +15,13 @@ function InterestSelection() {
         borderRadius: "50px!important",
     })
 
-    const tempUserID = "de3caccd-fa2c-4cd0-a1bc-c9a313a09a75";
-
-    type UpdateUserResponse = {
-        interests: object
-    };
-
-    async function updateUser() {
-        try {
-            const { data } = await axios.put<UpdateUserResponse>(
-                `${APIURL}/users/${tempUserID}`,
-                {
-                    interests: choices.slice(1)
-                },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Access-Control-Allow-Origin": "*",
-                        Accept: "application/json"
-                    },
-                },
-            );
-            console.log(JSON.stringify(data, null, 4));
-        } catch (error) {
-
-            if (axios.isAxiosError(error)) {
-                console.log(error.message);
-            } else {
-                console.log(error);
-            }
-        }
-    }
-
-    function handleChoice(event: React.MouseEvent<HTMLElement>, newChoices: string[]) {
-        // const target = event.target as HTMLInputElement;
+    function handleChoice(_event: React.MouseEvent<HTMLElement>, newChoices: string[]) {
         setChoices(newChoices);
     }
 
     function handleSubmit(event: React.MouseEvent<HTMLElement>) {
         event.preventDefault();
-        updateUser();
+        updateUser({ interests: choices.slice(1) }, tempUserID);
     }
 
 
@@ -78,19 +44,7 @@ function InterestSelection() {
                     <Grid item>
                         <Box>
                             <ToggleButtonGroup size="large" value={choices} onChange={handleChoice} sx={{ flexWrap: "wrap", justifyContent: "center" }}>
-                                <ChoiceToggleButton value="music">Music</ChoiceToggleButton>
-                                <ChoiceToggleButton value="art">Art</ChoiceToggleButton>
-                                <ChoiceToggleButton value="food"> Food</ChoiceToggleButton>
-                                <ChoiceToggleButton value="cars">Cars</ChoiceToggleButton>
-                                <ChoiceToggleButton value="wildlife">Wildlife</ChoiceToggleButton>
-                                <ChoiceToggleButton value="pets">Pets</ChoiceToggleButton>
-                                <ChoiceToggleButton value="technology">Technology</ChoiceToggleButton>
-                                <ChoiceToggleButton value="literature">Literature</ChoiceToggleButton>
-                                <ChoiceToggleButton value="healthcare">Healthcare</ChoiceToggleButton>
-                                <ChoiceToggleButton value="finance">Finance</ChoiceToggleButton>
-                                <ChoiceToggleButton value="sports">Sports</ChoiceToggleButton>
-                                <ChoiceToggleButton value="politics">Politics</ChoiceToggleButton>
-                                <ChoiceToggleButton value="entertainment">Entertainment</ChoiceToggleButton>
+                                {interests.map((interest, idx) => <ChoiceToggleButton key={idx} value={interest}>{interest}</ChoiceToggleButton>)}
                             </ToggleButtonGroup>
                         </Box>
                     </Grid>
