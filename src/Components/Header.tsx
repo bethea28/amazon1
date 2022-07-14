@@ -4,7 +4,6 @@ import React from "react";
 function Header() {
     return (
         <Box>
-            {/* <Typography>Jumpstarter</Typography> */}
             <Box sx={{flexGrow: 1}}>
                 <AppBar position="static">
                     <Toolbar>
