@@ -21,7 +21,7 @@ import React from 'react'
    interestSection: boolean;
  }
 
- export default class Profileinfo extends React.Component<DataProps, DataState> {  
+ export default class Profile extends React.Component<DataProps, DataState> {  
 
   userLoggedIn = true;
 
@@ -57,7 +57,6 @@ import React from 'react'
        if(!(this.state.personalInfoSection))
          this.setState({personalInfoSection:true})
      }
-     //value: React.Dispatch<React.SetStateAction<string>>
    };
 
    paperStyleParent: React.CSSProperties = {
@@ -90,7 +89,6 @@ import React from 'react'
        body:JSON.stringify(userInfo)
    }).then(()=>{
    })
-   // window.location.reload();
  }
 
    render() {
