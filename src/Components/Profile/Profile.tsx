@@ -38,8 +38,10 @@ import React from 'react'
      };
    }
 
-   componentDidMount(){
-     fetch('http://localhost:8081/profile/001')
+   componentDidMount()
+   {
+    const user_id = this.state.user_id;
+     fetch(`http://localhost:8081/profile/${user_id}`)
      .then(res => res.json())
      .then((output)=>{
        let myMap = new Map<string, string>(Object.entries(output));
@@ -48,10 +50,8 @@ import React from 'react'
    }
 
    handleClick = (id:string, event: React.MouseEvent<HTMLElement>) => {
-     console.log(this.state.personalInfoSection)
      if(id == "1")
      {
-       console.log("1")
        if(this.state.personalInfoSection) 
          this.setState({personalInfoSection:false})
        if(!(this.state.personalInfoSection))
@@ -79,12 +79,12 @@ import React from 'react'
 
    handleSubmit=(event: React.MouseEvent<HTMLElement>)=>{
      event.preventDefault()
-     const user_id = "001"
+     const user_id = this.state.user_id
      const name = this.state.name
      const email = this.state.email
      const bio = this.state.bio
      const userInfo={user_id, name, email, bio}
-     fetch('http://localhost:8081/profile/001',{
+     fetch(`http://localhost:8081/profile/${user_id}`,{
        method:"PUT",
        headers:{"Content-Type":"application/json"},
        body:JSON.stringify(userInfo)
@@ -152,7 +152,6 @@ import React from 'react'
                        onChange={event => {
                          const { value } = event.target;
                          this.setState({ name: value });
-                         //console.log(this.state.name);
                        }}
 
                          size="small"/>
