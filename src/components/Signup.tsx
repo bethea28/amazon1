@@ -1,18 +1,26 @@
 import React , {MouseEvent, FormEvent, ChangeEvent} from 'react';
 import { Box, Container, Link, TextField, Button, Typography}  from '@material-ui/core';
 import { Auth } from 'aws-amplify';
+import { isPropertySignature } from 'typescript';
 
 
 type Props = {
   authState: string
   loading: boolean
-  error: string
-};
+  };
 
+async function getJwtToken() {
+  var token = '';
+  const session = await Auth.currentSession().then((result) => {
+    token = result.getAccessToken().getJwtToken();
+  })
+  return token;
+}
 
-const SignIn: React.FC<Props> = ({ authState, loading, error }) => {
+const SignIn: React.FC<Props> = ({ authState, loading }: Props) => {
   type Form = { [key:string]: string };
   const [form, setForm] = React.useState<Form>({username:"", password:"", email:""});
+  const [errorMessage, setError] = React.useState("");
 
   type FormKey = "userName" | "password" | "email";
   const handleChangeValue = (fieldName: FormKey) => (event: ChangeEvent<HTMLInputElement>) => {
@@ -43,21 +51,31 @@ const SignIn: React.FC<Props> = ({ authState, loading, error }) => {
           username: user.user.getUsername(),
           userSub: user.userSub
         }
-        fetch('http://localhost:8080/api/sigup', {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          },
-          mode: 'cors',
-          body: JSON.stringify(request)
-        })
-
+        const token = async (): Promise<string> => {
+          const response = await getJwtToken();
+          fetch('http://localhost:8080/api/signup', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': response
+            },
+            mode: 'cors',
+            body: JSON.stringify(request)
+          }).then(data => response);
+          return response;
+        }
+        setError("");
         return user;
       })
     } catch(error) {
-      if (error) {
+      console.log(JSON.stringify(error));
+      if (typeof error === 'object' && error != null)
+      {
         console.log('There was an error on signup: ' + error);
+        const errorObj = error;
+        console.log(errorObj);
+        setError(JSON.stringify(errorObj));
+        //Props.errorMessage = JSON.stringify(error);
         return error;
       }
     }
@@ -67,10 +85,10 @@ const SignIn: React.FC<Props> = ({ authState, loading, error }) => {
     <Container component="main" maxWidth="xs"  className="signUpBox">
       <form onSubmit={handleSubmit}>
       <Typography color="textPrimary">Sign Up</Typography>
-        <Box display="flex" flexDirection="column" flex mt={5} p={5} height="200%" bgcolor="#D1e1D2">
+        <Box display="flex" flexDirection="column" mt={5} p={5} height="200%" bgcolor="#D1e1D2">
 
-          <Box display="flex" justifyContent="center" fontWeight={100}>
-            {error}
+          <Box display="flex" justifyContent="center" fontWeight={1} style={{minHeight: '3vh', fontSize: '1rem'}}>
+            {errorMessage}
           </Box>
           <Box width="100%" my={2}>
             <TextField
