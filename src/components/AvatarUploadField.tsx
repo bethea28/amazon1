@@ -24,19 +24,18 @@ export default function AvatarUploadField() {
     //Handler to upload photo chosen to the backend
     const handleUpload = (e: any) => {
 
-        let url = URL.createObjectURL(e.target.files[0]);
-        setFile(url);
-        let userId = this.user.id;
+        setFile(file);
+        let userId = "001";
 
-        AvatarService.uploadAvatar(userId, url);
+        AvatarService.uploadAvatar(userId, file);
 
     }
 
       //Handler to delete current photo saved in the backend
       const handleDeleteAvatar = (e: any) => {
 
-        let userId = this.user.id;
-        let fileName = this.filename;
+        let userId = "001";
+        let fileName = file;
         
         AvatarService.deleteAvatar(userId, fileName);
 
