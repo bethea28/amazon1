@@ -1,9 +1,15 @@
 import { Box, Grid, Typography } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
-import React from "react";
+import React, { useEffect } from "react";
+import { GetProjectsResponse } from "../../../Resources/Constants";
 
 
-function ProjectList() {
+function ProjectList(props: GetProjectsResponse) {
+
+    useEffect(() => {
+        console.log(props);
+    }, [props])
+
     return (
         <Box>
             <Carousel navButtonsAlwaysVisible height={"450px"}>

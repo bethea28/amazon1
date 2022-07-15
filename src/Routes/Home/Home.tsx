@@ -1,11 +1,27 @@
 import { Container, Box, ButtonGroup, Button, Stack, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../Components/Header";
+import { getRecommendedProjects } from "../../Services/ProjectService";
+import { GetProjectsResponse } from "../../Resources/Constants";
 import NavigationBar from "./Components/NavigationBar";
 import ProjectList from "./Components/ProjectList";
 import SearchBar from "./Components/SearchBar";
 
 function Home() {
+
+    const [recommended, setRecommended] = useState<GetProjectsResponse>();
+
+    useEffect(() => {
+        if (!recommended) {
+            getRecommendedProjects("[\"Art\", \"Pet\"]").then((response) => {
+                setRecommended(response!)
+            })
+        }
+
+        console.log(recommended);
+    }, [recommended])
+
+
     return (
         <Box>
             <Header />
@@ -16,7 +32,7 @@ function Home() {
                 <Stack>
                     <Stack>
                         <Typography margin={"0.5em"} textAlign={"left"} variant="h4">BASED ON YOUR INTERESTS</Typography>
-                        <ProjectList />
+                        <ProjectList projects={recommended!}/>
                     </Stack>
                 </Stack>
 
