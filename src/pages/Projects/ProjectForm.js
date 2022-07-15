@@ -10,16 +10,6 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import axiosInstance from '../../../src/apiConfig';
 import axios from "axios";
 
- 
-// const useStyles = makeStyles (theme =>({
-//     root: {
-//         '& .MuiFormControl-root': {
-//             width:'80%',
-//             margin: theme.spacing(1)
-//         }
-//     }
-// }))
-
 
 const initialValues = {
     userId:'',
@@ -28,15 +18,11 @@ const initialValues = {
     targetFundingDate:new Date(),
     description:'',
     categories:'',
-    
-    
-
 }
+
 
 export function ProjectForm() {
 
-    //const[values, setValues] = useState(initialValues);
-    //const classes = useStyles();
     const validate = (fieldValues = values) =>{
         let temp = {...errors}
         if('projectName' in fieldValues)
@@ -65,33 +51,35 @@ export function ProjectForm() {
         
 
     } = useForm(initialValues, true, validate);
+   
+  
+        const handleSubmit = e => {
+            let state = {
+                userId: '002',
+                projectName: values.projectName,
+                targetFundingNum:values.targetFundingNum.toString(),
+                targetFundingDate:values.targetFundingDate.toString(),
+                description:values.description,
+                categories: values.categories.toString()
+            }
+            
+            if(validate()){
+                fetch('project', {
+                    method:  'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(state),
+                });
+                window.confirm("You create a new project successfully!");  
+                resetForm()  
 
-    const handleSubmit = e => {
-        let state = {
-            userId: '002',
-            projectName: values.projectName,
-            targetFundingNum:values.targetFundingNum.toString(),
-            targetFundingDate:values.targetFundingDate.toString(),
-            description:values.description,
-            categories: values.categories.toString()
+            }
+ 
+             
         }
-        
-        if(validate())
-            window.alert("testing")
 
-        fetch('project', {
-            method:  'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(state),
-         });
-         
-         //e.preventDefalut()
-        }
-        
-        
         // let formData = new FormData();
     
         // // Adding files to the formdata
@@ -140,8 +128,7 @@ export function ProjectForm() {
 
     return (
 
-        
-            <Form onSubmit={handleSubmit}>
+            <Form >
             <Grid container>
             <Grid item xs = {6}>
                 <Controls.Input
@@ -153,7 +140,7 @@ export function ProjectForm() {
                 />
             </Grid>
             <Grid item xs = {2} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center"  }}>
-            <Typography>Project Name</Typography>
+                <Typography>Project Name</Typography>
             </Grid>
             <Grid item xs = {6}>
                 <Controls.Input
@@ -165,7 +152,7 @@ export function ProjectForm() {
                 />
             </Grid>
             <Grid item xs = {6} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center"  }}>
-            <Typography>Target Funding Number</Typography>
+                <Typography>Target Funding Number</Typography>
             </Grid>
             <Grid item xs = {6}>
                 <Controls.DatePicker
@@ -176,7 +163,7 @@ export function ProjectForm() {
                 />
             </Grid>
             <Grid item xs = {6} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center"  }}>
-            <Typography>Target Funding Date</Typography>
+                <Typography>Target Funding Date</Typography>
             </Grid>
             <Grid item xs = {6}>
                 <Controls.Select
@@ -189,15 +176,13 @@ export function ProjectForm() {
                 />
             </Grid> 
             <Grid item xs = {6} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center"  }}>
-            
-            <Typography align = 'center'>Categories</Typography>
+                <Typography align = 'center'>Categories</Typography>
             </Grid>   
-           
             <Grid item xs = {4} style={{ display: "center", justifyContent: "flex-start", alignItems: "center"  }}>
-            <Typography>Descriptions</Typography>
+                <Typography>Descriptions</Typography>
             </Grid>
             <Grid item xs = {12} style={{ display: "center", justifyContent: "flex-start", alignItems: "center"  }}>
-            <Controls.Input
+                <Controls.Input
                 name = "description"
                 label = "Input descriptions of your project"
                 multiline
@@ -205,34 +190,28 @@ export function ProjectForm() {
                 value = {values.description} 
                 onChange = {handleInputChange}
                 error = {errors.description}
-                />
-                
-            </Grid>    
-            
+                />    
+                </Grid>    
             </Grid>
            
             <Grid container>
             <Grid item xs = {4}>
-            
                 <Controls.Button
                 text = "Back"
                 startIcon={<ArrowBackIcon />}
                 />
-
             </Grid>
             <Grid item xs = {4}>
-            
                 <Controls.Button
-                    text = "Reset"
-                    startIcon={<RestartAltIcon />}
-                    onClick = {resetForm}
-                    />
-
+                text = "Reset"
+                startIcon={<RestartAltIcon />}
+                onClick = {resetForm}
+                />
             </Grid>
             <Grid item xs = {4}>
                 <Controls.Button
                 text = "Sumbit"
-                type = "submit"
+                onClick = {handleSubmit}
                 endIcon = {<SendIcon />}
                 />
                 </Grid>

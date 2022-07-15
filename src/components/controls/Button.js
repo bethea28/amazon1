@@ -1,6 +1,5 @@
 import React from 'react'
 import { Button as MuiButton, makeStyles, ThemeProvider } from '@material-ui/core'
-//import { isClassExpression } from 'typescript';
 import { createTheme } from '@mui/material/styles';
 import { green } from '@material-ui/core/colors';
 
@@ -12,14 +11,9 @@ const useStyles = makeStyles(theme =>({
     label:{
         textTransform:'none'
     }
-    
-
-    
-    
 }))
 
 export default function Button(props) {
-
     const theme = createTheme({
         palette: {
           primary: {
