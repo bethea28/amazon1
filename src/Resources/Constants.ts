@@ -11,3 +11,7 @@ export const axiosInstance = axios.create({
         "Accept": "application/json"
     }
 })
+
+export type GetProjectsResponse = {
+    projects: object
+}
