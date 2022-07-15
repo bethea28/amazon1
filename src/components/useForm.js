@@ -1,5 +1,6 @@
 import React,{useState} from 'react'
 import { makeStyles } from '@material-ui/core';
+import axiosInstance from '../apiConfig';
 
 
 export function useForm(initialValues, validateOnChange = false, validate) {
@@ -23,13 +24,30 @@ export function useForm(initialValues, validateOnChange = false, validate) {
       setValues(initialValues);
       setErrors({})
     }
+    // use axios call sever endpoint
+    const postData = async (state) => {
+           
+      try{
+
+          let req = await axiosInstance.post('project', state, {
+              headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json'
+                       }
+          })
+          
+      }
+      catch(e) {console.log(e)}
+      };
+
     return {
       values,
       setValues,
       errors,
       setErrors,
       handleInputChange,
-      resetForm
+      resetForm,
+      postData
     }
     
   
