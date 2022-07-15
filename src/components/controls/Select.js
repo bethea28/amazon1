@@ -2,11 +2,12 @@ import { FormControl, InputLabel, MenuItem, Select as MuiSelect,ThemeProvider } 
 import React from 'react'
 import { green } from '@material-ui/core/colors';
 import { createTheme } from '@mui/material/styles';
+import { FormHelperText } from '@mui/material';
 
 
 export default function Select(props) {
 
-    const {name, label, value, onChange, options, ...other} = props;
+    const {name, label, value, error = null, onChange, options, ...other} = props;
     const theme = createTheme({
         palette: {
           primary: {
@@ -28,8 +29,8 @@ export default function Select(props) {
       });
     return (
         <ThemeProvider theme = {theme}>
-        <FormControl
-        variant = "filled">
+        <FormControl variant = "filled"
+        {...(error && {error:true})}>
             <InputLabel>{label}
             </InputLabel>
             <MuiSelect
@@ -45,6 +46,7 @@ export default function Select(props) {
                 }
 
             </MuiSelect>
+            {error && <FormHelperText>{error}</FormHelperText>}
 
         </FormControl>
         </ThemeProvider>

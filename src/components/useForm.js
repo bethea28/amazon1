@@ -2,10 +2,11 @@ import React,{useState} from 'react'
 import { makeStyles } from '@material-ui/core';
 
 
-export function useForm(initialValues) {
+export function useForm(initialValues, validateOnChange = false, validate) {
 
-
+    
     const[values, setValues] = useState(initialValues);
+    const[errors, setErrors] = useState({});
 
     const handleInputChange = (e)=> {
         const {name, value} = e.target
@@ -13,12 +14,21 @@ export function useForm(initialValues) {
             ...values,
             [name]:value
         })
+        if(validateOnChange)
+        validate({[name]:value})
     }
-  return {
-    values,
-    setValues,
-    handleInputChange
-  }
+    const resetForm = ()=>{
+      setValues(initialValues);
+      setErrors({})
+    }
+    return {
+      values,
+      setValues,
+      errors,
+      setErrors,
+      handleInputChange,
+      resetForm
+    }
     
   
 }

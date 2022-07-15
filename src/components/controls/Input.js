@@ -6,7 +6,7 @@ import { createTheme } from '@mui/material/styles';
 
 export default function Input(props) {
 
-    const {name, label, value, onChange, ...other} = props
+    const {name, label, value, error = null, onChange, ...other} = props
     const theme = createTheme({
         palette: {
           primary: {
@@ -25,6 +25,9 @@ export default function Input(props) {
         name =  {name}
         value = {value}
         onChange = {onChange} 
+        // error
+        // helperText = "some validation error."
+        {...(error && {error:true,helperTest:error})}
         { ...other}
         />
         </ThemeProvider>
