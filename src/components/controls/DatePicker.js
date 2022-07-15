@@ -37,9 +37,6 @@ export default function DatePicker(props) {
             { ...other}
             onChange={date =>onChange(converToDefEventPara(name,date))}
             />
-
-           
-
         </MuiPickersUtilsProvider>
         </ThemeProvider>
     )

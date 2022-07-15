@@ -22,7 +22,7 @@ const initialValues = {
 
 
 export function ProjectForm() {
-
+    //check submit and onChange data validation
     const validate = (fieldValues = values) =>{
         let temp = {...errors}
         if('projectName' in fieldValues)
@@ -40,7 +40,7 @@ export function ProjectForm() {
             return Object.values(temp).every(x => x == "")
         
     }
-
+    //get const from useForm function
     const{
         values,
         setValues,
@@ -48,11 +48,10 @@ export function ProjectForm() {
         setErrors,
         handleInputChange,
         resetForm
-        
 
     } = useForm(initialValues, true, validate);
    
-  
+        //submit project and post to the sever endpoint
         const handleSubmit = e => {
             let state = {
                 userId: '002',
@@ -76,55 +75,8 @@ export function ProjectForm() {
                 resetForm()  
 
             }
- 
              
         }
-
-        // let formData = new FormData();
-    
-        // // Adding files to the formdata
-        // formData.append("userId:", "002");
-        // formData.append("projectName", values.projectName);
-        // formData.append("targetFundingNum",values.targetFundingNum.toString());
-        // formData.append("targetFundingDate",values.targetFundingDate.toString());
-        // formData.append("description",values.description);
-        // formData.append("categories", values.categories.toString());
-
-        //   axios({
-  
-        //     // Endpoint to send files
-        //     url: 'http://localhost:8080/project',
-        //     method: 'POST',
-            
-        //     headers: {
-        //                 'Accept': 'application/json',
-        //                 'Content-Type': 'application/json'
-        //             },
-        //     // Attaching the form data
-        //     data: formData,
-        //   })
-        // const url = 'http://localhost:8080/project'
-        // axios.post(url, formData, {
-        //     headers: { 'Content-Type': 'multipart/form-data' },
-        //     transformRequest: formData => formData,
-        //   })
-        
-        
-       
-        
-        //  const postData = async () => {
-
-        //     let req = await axios.post("http://localhost:8080/project", {
-        //         userId: '002',
-        //         projectName: values.projectName,
-        //         targetFundingNum:values.targetFundingNum.toString(),
-        //         targetFundingDate:values.targetFundingDate.toString(),
-        //         description:values.description,
-        //         categories: values.categories.toString()
-        //     });
-        //     console.log("post data", req);
-        //   };
-        
 
     return (
 

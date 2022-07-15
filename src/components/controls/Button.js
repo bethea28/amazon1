@@ -36,10 +36,8 @@ export default function Button(props) {
         {...other}
             classes = { {root: classes.root, label: classes.label}}>
         {text}
-
         </MuiButton>
         </ThemeProvider>
         
-
     )
 }

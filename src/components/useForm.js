@@ -7,7 +7,8 @@ export function useForm(initialValues, validateOnChange = false, validate) {
     
     const[values, setValues] = useState(initialValues);
     const[errors, setErrors] = useState({});
-
+    
+    //save and validate the onChange info
     const handleInputChange = (e)=> {
         const {name, value} = e.target
         setValues({
@@ -17,6 +18,7 @@ export function useForm(initialValues, validateOnChange = false, validate) {
         if(validateOnChange)
         validate({[name]:value})
     }
+    //reset form info
     const resetForm = ()=>{
       setValues(initialValues);
       setErrors({})
@@ -32,6 +34,7 @@ export function useForm(initialValues, validateOnChange = false, validate) {
     
   
 }
+//set theme style
 const useStyles = makeStyles (theme =>({
     root: {
         '& .MuiFormControl-root': {
@@ -43,6 +46,8 @@ const useStyles = makeStyles (theme =>({
     }
    
 }))
+
+// set Form style
 export function Form(props) {
     const classes = useStyles();
     const {children,...other} = props
