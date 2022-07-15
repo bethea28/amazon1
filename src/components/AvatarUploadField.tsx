@@ -6,40 +6,28 @@ import AvatarService from '../services/AvatarService';
 
 export default function AvatarUploadField() {
 
-    //Need UseContext to pass in global userId variable
-
-
+    //Need to be updated later with global userId prop to match current user logged in
+    const userId = "001";
+    
     //When no profile pic is uploaded, show this default iamge. When uploaded, show the new image
     const [file, setFile] = useState("../no-profile-pic-icon-11.png");
-
+    
     //Handler to change image file locally when new image is chosen
     function handleChange(e: any) {
-
-        let url = URL.createObjectURL(e.target.files[0]);
-        setFile(url);
-        console.log(url);
-        
+        let fileChosen = URL.createObjectURL(e.target.files[0]);
+        setFile(fileChosen);
+        console.log(fileChosen);
     }
 
     //Handler to upload photo chosen to the backend
     const handleUpload = (e: any) => {
-
-        setFile(file);
-        let userId = "001";
-
         AvatarService.uploadAvatar(userId, file);
-
     }
 
-      //Handler to delete current photo saved in the backend
-      const handleDeleteAvatar = (e: any) => {
-
-        let userId = "001";
-        let fileName = file;
-        
-        AvatarService.deleteAvatar(userId, fileName);
-
-      }
+    //Handler to delete current photo saved in the backend
+    const handleDeleteAvatar = (e: any) => {
+        AvatarService.deleteAvatar(userId, file);
+    }
 
     return(
 
