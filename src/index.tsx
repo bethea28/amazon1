@@ -5,6 +5,7 @@ import Profile from './Components/Profile/Profile'
 import Home from './Components/Home/Home';
 import AppbarPrivate from './Components/Navbar/AppbarPrivate';
 import AppbarPublic from './Components/Navbar/AppbarPublic';
+import App from './App';
 
  const root = ReactDOM.createRoot(
    document.getElementById('root') as HTMLElement
@@ -13,7 +14,7 @@ import AppbarPublic from './Components/Navbar/AppbarPublic';
    <React.StrictMode>
      <BrowserRouter>
      <Routes>
-       <Route path="/" element={<Home />} />
+       <Route path="/" element={<App />} />
       <Route path="profile" element={<Profile />} />
      </Routes>
    </BrowserRouter>

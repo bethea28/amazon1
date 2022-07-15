@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { SetStateAction } from 'react'
 import { Box } from '@mui/material';
 import { Grid, Paper, Button, TextField} from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -6,14 +6,172 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Avatar from '@mui/material/Avatar';
 import AppbarPrivate from '../Navbar/AppbarPrivate';
 import AppbarPublic from '../Navbar/AppbarPublic';
+import { useState, useEffect } from 'react';
+import "./Styles.css";
+import ProfileService from '../../services/ProfileService';
+import { StyledEngineProvider } from '@mui/material/styles';
 
 const Profile = () => {
+  const [user_id, setUserId] = useState( '001' );
+  const [bio, setBio] = useState( '' );
+  const [name, setName] = useState( '' );
+  const [email, setEmail] = useState( '' );
+  const [userLoggedIn, setUserLoggedIn] = useState(true);
+
+  useEffect(() => {
+    const data = ProfileService.get('001')
+    new Promise<{ email: string, name: string, bio: string }>((resolve) => {
+        resolve(data)
+    }).then(data => {
+      setName(data.name);
+      setEmail(data.email);
+      setBio(data.bio);
+    })
+  }, [])
+
+  const handleSubmit=(event: React.MouseEvent<HTMLElement>)=>{
+    event.preventDefault()
+    const data = { user_id, name, email, bio }
+    ProfileService.update(data)
+} 
+
   return (
-    <></>
+    <StyledEngineProvider injectFirst>
+      <Box sx={{ display: 'flex', flexDirection: 'column', height: 1000}}>
+        {userLoggedIn ? <AppbarPrivate /> : <AppbarPublic />}
+        <Box sx={{
+          width: 1,
+          height: 1 / 4,
+          my: 3,
+          mr: 2,
+          backgroundColor: '#EAEAEA',
+          borderRadius: '5px',
+          fontSize: '0.875rem',
+          fontWeight: '700',
+          textAlign: 'center',
+          label: "profile-header-picture"
+          }}>
+          Picture
+        </Box>
+        <Box sx={{
+          width: 2 / 3,
+          height: 3 / 4,
+          mx: "auto",
+          pl: 3,
+          py: 1,
+          backgroundColor: '#EAEAEA',
+          borderRadius: 2,
+          fontSize: '0.875rem',
+          fontWeight: '700',
+          textAlign: 'left',
+          label: "My profile section"
+        }}>
+          <Box sx={{ fontWeight: 'bold'}}>My Profile</Box>
+          <Paper elevation={3} className="customPaper" >    
+            <Box className="customBox">
+              <Grid item container direction="row" justifyContent="space-between">
+                <Grid item>
+                  <Box sx={{ml: 1, mt: 1, color: '#FFFFFF', typography: 'subtitle2' }}>Personal Information</Box>
+                </Grid>
+                <Grid item>
+                  <Box sx={{ml: 2, mr: 1}}>
+                    <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", mt:1, height: 25,  }} variant="contained" endIcon={<KeyboardArrowUpIcon />}></Button>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Box>
+            <Box sx={{ml:2, m: 1, height: 3 / 4}}>
+              <Grid container direction={"column"} component="form" spacing={1}>
+                <Grid item>
+                  <TextField fullWidth
+                  id="outlined-basic" 
+                  label="Name"
+                  InputLabelProps={{shrink: true}}
+                  value={name}
+                  onChange={event => {
+                    setName(event.target.value);
+                  }}
+
+                    size="small"/>
+                </Grid>
+                <Grid item>
+                    <TextField fullWidth id="outlined-basic" label="email" 
+                    InputLabelProps={{shrink: true}} value={email} 
+                    variant="outlined" size="small" onChange={event => {
+                      setEmail(event.target.value);
+                    }}/>
+                </Grid>
+                <Grid item>
+                  <Avatar />
+                </Grid>
+              </Grid>
+            </Box>
+          </Paper>
+          <Paper elevation={3} className="customPaper">    
+            <Box className="customBox">   
+              <Grid item container direction="row" justifyContent="space-between">
+                <Grid item>
+                  <Box sx={{ml: 1, mt:1, color: '#FFFFFF', typography: 'subtitle2' }}>Bio</Box>
+                </Grid>
+                <Grid item>
+                  <Box sx={{ml: 2, mr: 1}}>
+                    <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", mt:1, height: 25,  }}  variant="contained" endIcon={<KeyboardArrowUpIcon />}></Button>
+                  </Box>
+                </Grid>
+              </Grid> 
+            </Box>
+            <Box sx={{m:1, height: 3 / 4}}>
+              <Grid container direction={"column"} component="form" spacing={1}>
+                <Grid item>
+                  <TextField fullWidth
+                    id="outlined-multiline"
+                    size="medium"
+                    label="Bio"
+                    value={bio}
+                    onChange={event => {
+                    setBio(event.target.value);
+                  }}
+                    multiline
+                    rows={4}
+                    InputLabelProps={{shrink: true}}
+                  />
+                </Grid>     
+              </Grid>
+            </Box>
+          </Paper>
+          <Paper elevation={3} className="customPaper">    
+            <Box className="customBox">   
+              <Grid item container direction="row" justifyContent="space-between">
+                <Grid item>
+                  <Box sx={{ml: 1, mt: 1, color: '#FFFFFF', typography: 'subtitle2' }}>Interest</Box>
+                </Grid>
+                <Grid item>
+                  <Box sx={{ml: 2, mr: 1}}>
+                    <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", mt:1, height: 25}} variant="contained" endIcon={<KeyboardArrowUpIcon />}></Button>
+                  </Box>
+                </Grid>
+              </Grid> 
+            </Box>
+            <Box sx={{m:1, height: 3 / 4}}>
+              <Grid container direction={"column"} component="form" spacing={1}>
+                <Grid item>
+                </Grid>     
+              </Grid>
+            </Box>
+          </Paper>        
+          <Grid item container direction="row" justifyContent="flex-end" alignItems="flex-end">
+            <Grid item>
+              <Box sx={{my: 2, mr:3}}> 
+                <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", borderRadius:50}} variant="contained" onClick={handleSubmit}>Save Profile</Button>
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
+      </Box>
+    </StyledEngineProvider>
   );
 };
 export default Profile;
-
 
 
 
