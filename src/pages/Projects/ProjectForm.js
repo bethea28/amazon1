@@ -8,7 +8,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Typography } from '@mui/material';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import axiosInstance from '../../../src/apiConfig';
-import axios from "axios";
+//import axios from "axios";
 
 
 const initialValues = {
@@ -50,7 +50,25 @@ export function ProjectForm() {
         resetForm
 
     } = useForm(initialValues, true, validate);
-   
+
+          const postData = async (state) => {
+           
+            try{
+
+                let req = await axiosInstance.post('project', state, {
+                    headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        }}
+                        
+                )
+                
+            }
+            catch(e) {console.log(e)}
+
+            //console.log("post data", req);
+            };
+
         //submit project and post to the sever endpoint
         const handleSubmit = e => {
             let state = {
@@ -63,20 +81,34 @@ export function ProjectForm() {
             }
             
             if(validate()){
-                fetch('project', {
-                    method:  'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(state),
-                });
-                window.confirm("You create a new project successfully!");  
-                resetForm()  
-
+                postData(state)
+                // fetch('project', {
+                //     method:  'POST',
+                //     headers: {
+                //         'Accept': 'application/json',
+                //         'Content-Type': 'application/json'
+                //     },
+                //     body: JSON.stringify(state),
+                // });
+                // window.confirm("You create a new project successfully!");  
+                // resetForm()  
+                // axios({
+                //     method: 'post',
+                //     url: 'http://localhost:8080/project',
+                //     data: {
+                //         userId: '002',
+                //         projectName: values.projectName,
+                //         targetFundingNum:values.targetFundingNum.toString(),
+                //         targetFundingDate:values.targetFundingDate.toString(),
+                //         description:values.description,
+                //         categories: values.categories.toString()
+                //     }
+                //   });
+                
             }
              
         }
+    
 
     return (
 
