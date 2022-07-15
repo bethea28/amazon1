@@ -25,6 +25,8 @@ export default function ProjectDetails(props: String) {
         categories: ""
     }
 
+    const projectId = "001"
+
     const [currentProject, setCurrentProject] = useState(initialProjectState);
 
     //As soon as the page is rendered, getData function will get called
@@ -42,7 +44,7 @@ export default function ProjectDetails(props: String) {
 
         getData();
 
-    }, [props]);
+    }, []);
 
     console.log("Project Details: ", currentProject);
 

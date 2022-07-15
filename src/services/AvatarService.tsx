@@ -8,11 +8,11 @@ const http = axios.create({
 
 export default {
   //Upload new avatar for a user
-  async uploadAvatar(id: String, fileName: String) {
+  async uploadAvatar(userId: String, file: String) {
 
         try {
 
-          const response = await http.post(`/uploadAvatar/${id}`, fileName);
+          const response = await http.post(`/uploadAvatar/${userId}`, file);
 
           if (response.status === 201) {
             alert('Upload successful!');
@@ -25,11 +25,11 @@ export default {
   },
 
   //Delete user's avatar
-  async deleteAvatar(id: String, filename: String) { 
+  async deleteAvatar(userId: String, filename: String) { 
 
           try {
 
-            const response = await http.delete(`/deleteAvatar/${id}/${filename}`);
+            const response = await http.delete(`/deleteAvatar/${userId}/${filename}`);
 
             if (response.status === 200) {
               alert('Delete successful!');
