@@ -13,5 +13,15 @@ export const axiosInstance = axios.create({
 })
 
 export type GetProjectsResponse = {
-    projects: object
+    projects: Array<Project>
+}
+
+export type Project = {
+    projectID: string,
+    userID: string,
+    projectName: string,
+    description: string,
+    categories: string,
+    targetFundingDate: string,
+    targetFundingNum: string
 }
