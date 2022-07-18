@@ -4,7 +4,8 @@ import { Routes, Route } from 'react-router-dom';
 import InterestSelection from './Routes/Signup/InterestSelection';
 import { Box, ThemeProvider } from '@mui/material';
 import * as global from "./Resources/GlobalTheme";
-import Home from './Routes/Home/Home';
+import Profile from './Components/Profile/Profile'
+import Home from './Components/Home/Home';
 
 function App() {
 
@@ -12,12 +13,11 @@ function App() {
 
   return (
     <Box className="App" height={"100vh"} display={"flex"} flexDirection={"column"}>
-      <ThemeProvider theme={theme}>
-        <Routes>
-          <Route path="/interests" element={<InterestSelection />} />
-          <Route path="/dashboard" element={<Home />} />
-        </Routes>
-      </ThemeProvider>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Profile />} />
+        <Route path="/interests" element={<InterestSelection />} />
+      </Routes>
     </Box>
   );
 }
