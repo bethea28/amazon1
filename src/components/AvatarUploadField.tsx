@@ -21,7 +21,9 @@ export default function AvatarUploadField() {
 
     //Handler to upload photo chosen to the backend
     const handleUpload = (e: any) => {
-        AvatarService.uploadAvatar(userId, file);
+        var bodyFormData = new FormData();
+        bodyFormData.append('file', file);
+        AvatarService.uploadAvatar(userId, bodyFormData);
     }
 
     //Handler to delete current photo saved in the backend

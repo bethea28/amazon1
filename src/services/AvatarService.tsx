@@ -8,21 +8,35 @@ const http = axios.create({
 
 export default {
   //Upload new avatar for a user
-  async uploadAvatar(userId: String, file: String) {
+  async uploadAvatar(userId: String, file: FormData) {
 
         try {
 
-          const response = await http.post(`users/${userId}/uploadAvatar`, file, {
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }
+        //   const response = await http.post(`users/${userId}/uploadAvatar`, file, {
+        //     params: {
+        //       userId: 'userId'
+        //     },
+        //     data: 'bodyFormData',
+        //     headers: {
+        //       'Content-Type': 'multipart/form-data'
+        //     }
+        // });
+
+
+        const response = await http.post(`users/${userId}/uploadAvatar`, file, {
+          params: {
+            userId: 'userId'
+          },
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
         });
 
-          if (response.status === 201) {
-            alert('Upload successful!');
-          }
+        if (response.status === 200) {
+          alert('Upload successful!');
+        }
 
-        } catch(error) {
+      } catch(error) {
           console.log(error);
         }
 
