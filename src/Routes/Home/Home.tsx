@@ -2,23 +2,22 @@ import { Container, Box, ButtonGroup, Button, Stack, Typography } from "@mui/mat
 import React, { useEffect, useState } from "react";
 import Header from "../../Components/Header";
 import { getRecommendedProjects } from "../../Services/ProjectService";
-import { GetProjectsResponse } from "../../Resources/Constants";
+import { GetProjectsResponse, Project } from "../../Resources/Constants";
 import NavigationBar from "./Components/NavigationBar";
 import ProjectList from "./Components/ProjectList";
 import SearchBar from "./Components/SearchBar";
 
 function Home() {
 
-    const [recommended, setRecommended] = useState<GetProjectsResponse>();
+    const [recommended, setRecommended] = useState<Project[]>();
 
     useEffect(() => {
         if (!recommended) {
-            getRecommendedProjects("[\"Art\", \"Pet\"]").then((response) => {
+            getRecommendedProjects("[\"Art\", \"Pet\", \"Food\"]").then((response) => {
                 setRecommended(response!)
             })
         }
-
-        console.log(recommended);
+        // console.log(recommended);
     }, [recommended])
 
 
