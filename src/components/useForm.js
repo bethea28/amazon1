@@ -1,6 +1,8 @@
 import React,{useState} from 'react'
 import { makeStyles } from '@material-ui/core';
 import axiosInstance from '../apiConfig';
+import { Auth } from 'aws-amplify';
+import { ConsoleLogger } from '@aws-amplify/core';
 
 
 export function useForm(initialValues, validateOnChange = false, validate) {
@@ -26,18 +28,28 @@ export function useForm(initialValues, validateOnChange = false, validate) {
     }
     // use axios call sever endpoint
     const postData = async (state) => {
-           
-      try{
-
-          let req = await axiosInstance.post('project', state, {
+          return Auth.currentSession().then(res=>{
+            let accessToken = res.getAccessToken();
+            let jwt = accessToken.getJwtToken();
+            return axiosInstance.post('project', state, {
               headers: {
-                      'Accept': 'application/json',
+                      'Authorization': `Bearer ${jwt}`,
                       'Content-Type': 'application/json'
                        }
+            })
           })
+           
+      // try{
+
+      //     let req = await axiosInstance.post('project', state, {
+      //         headers: {
+      //                 'Accept': 'application/json',
+      //                 'Content-Type': 'application/json'
+      //                  }
+      //     })
           
-      }
-      catch(e) {console.log(e)}
+      // }
+      // catch(e) {console.log(e)}
       };
 
     return {

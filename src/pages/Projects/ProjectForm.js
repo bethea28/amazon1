@@ -64,7 +64,9 @@ export function ProjectForm() {
             categories: values.categories.toString()
         }
         if(validate()){
-            postData(state)
+            postData(state).catch(error=>{
+                console.log(error)
+            })
             resetForm()
             
         }
