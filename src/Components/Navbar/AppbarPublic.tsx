@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { useNavigate } from "react-router-dom";
 
 const pages = ['Sign In'];
 const settings = ['Projects'];
@@ -32,6 +33,12 @@ const AppbarPublic = () => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const navigate = useNavigate();
+  
+  const handleClickProfile= () => {
+    navigate("/profile");
   };
 
   return (
@@ -128,7 +135,7 @@ const AppbarPublic = () => {
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
               <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", borderRadius:50}} 
-              variant="contained" size="small">Submit a Project</Button>
+              variant="contained" size="small" onClick={handleClickProfile}>Profile</Button>
               </IconButton>
             </Tooltip>
           </Box>
