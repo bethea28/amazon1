@@ -1,10 +1,25 @@
-import React from "react";
-import AppbarPrivate from "./Components/Navbar/AppbarPrivate";
-import AppbarPublic from "./Components/Navbar/AppbarPublic";
+import React from 'react';
+import './App.css';
+import { Routes, Route } from 'react-router-dom';
+import InterestSelection from './Routes/Signup/InterestSelection';
+import { Box, ThemeProvider } from '@mui/material';
+import * as global from "./Resources/GlobalTheme";
+import Profile from './Components/Profile/Profile'
+import Home from './Components/Home/Home';
 
-export default function App() {
-  const userLoggedIn = false
+function App() {
+
+  const theme = global.theme;
+
   return (
-    userLoggedIn ? <AppbarPrivate /> : <AppbarPublic />
+    <Box className="App" height={"100vh"} display={"flex"} flexDirection={"column"}>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Profile />} />
+        <Route path="/interests" element={<InterestSelection />} />
+      </Routes>
+    </Box>
   );
 }
+
+export default App;
