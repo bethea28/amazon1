@@ -126,10 +126,8 @@ const AppbarPublic = () => {
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
               <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", borderRadius:50}} 
               variant="contained" size="small" onClick={handleClickProfile}>Profile</Button>
-              </IconButton>
             </Tooltip>
           </Box>
         </Toolbar>
