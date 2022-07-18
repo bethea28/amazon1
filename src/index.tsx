@@ -1,23 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route, } from "react-router-dom";
-import Profile from './Components/Profile/Profile'
-import Home from './Components/Home/Home';
-import AppbarPrivate from './Components/Navbar/AppbarPrivate';
-import AppbarPublic from './Components/Navbar/AppbarPublic';
+import './index.css';
 import App from './App';
+import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
 
- const root = ReactDOM.createRoot(
-   document.getElementById('root') as HTMLElement
- );
- root.render(
-   <React.StrictMode>
-     <BrowserRouter>
-     <Routes>
-       <Route path="/" element={<App />} />
-      <Route path="profile" element={<Profile />} />
-     </Routes>
-   </BrowserRouter>
-   </React.StrictMode>
- );
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
+root.render(
+  <BrowserRouter>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </BrowserRouter>
+);
 

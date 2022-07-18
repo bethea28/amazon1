@@ -1,16 +1,10 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
+import React from 'react';
+import { AppBar, Container, Button } from '@mui/material';
+import { Box, Toolbar, Menu, Tooltip } from '@mui/material';
+import { IconButton, Typography, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { useNavigate } from "react-router-dom";
 
 const pages = ['Sign In'];
 const settings = ['Projects'];
@@ -32,6 +26,12 @@ const AppbarPublic = () => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const navigate = useNavigate();
+  
+  const handleClickProfile= () => {
+    navigate("/profile");
   };
 
   return (
@@ -126,10 +126,8 @@ const AppbarPublic = () => {
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
               <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", borderRadius:50}} 
-              variant="contained" size="small">Submit a Project</Button>
-              </IconButton>
+              variant="contained" size="small" onClick={handleClickProfile}>Profile</Button>
             </Tooltip>
           </Box>
         </Toolbar>
