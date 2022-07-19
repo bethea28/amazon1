@@ -7,42 +7,21 @@ import AppbarPrivate from '../Navbar/AppbarPrivate';
 import AppbarPublic from '../Navbar/AppbarPublic';
 import "./Styles.css";
 import ProfileService from '../../Services/ProfileService';
+import { headerBox, bottomOutterBox } from '../Constants';
 
 const Profile = () => {
-  const [user_id, setUserId] = useState( '001' );
-  const [bio, setBio] = useState( '' );
-  const [name, setName] = useState( '' );
-  const [email, setEmail] = useState( '' );
-  const [userLoggedIn, setUserLoggedIn] = useState(true);
+  const [user_id, setUserId] = useState<String>( '001' );
+  const [bio, setBio] = useState<String>( '' );
+  const [name, setName] = useState<String>( '' );
+  const [email, setEmail] = useState<String>( '' );
+  const [userLoggedIn, setUserLoggedIn] = useState<boolean>(true);
 
-const headerBox = {
-  width: 1,
-  height: 1 / 4,
-  my: 3,
-  mr: 2,
-  backgroundColor: '#EAEAEA',
-  borderRadius: '5px',
-  fontSize: '0.875rem',
-  fontWeight: '700',
-  textAlign: 'center',
-  label: "profile-header-picture"
-}
-
-const bottomOutterBox = {
-  width: 2 / 3,
-  height: 3 / 4,
-  mx: "auto",
-  pl: 3,
-  py: 1,
-  backgroundColor: '#EAEAEA',
-  borderRadius: 2,
-  fontSize: '0.875rem',
-  fontWeight: '700',
-  textAlign: 'left',
-  label: "My profile section"
-}
   useEffect(() => {
-    const data = ProfileService.get('001')
+    const fetch = async () => {
+    const data = await ProfileService.get('001')
+      setName(data.name)
+      setEmail(data.email)
+      setBio(data.bio)
     new Promise<{ email: string, name: string, bio: string }>((resolve) => {
         resolve(data)
     }).then(data => {
@@ -50,12 +29,14 @@ const bottomOutterBox = {
       setEmail(data.email);
       setBio(data.bio);
     })
+    }
+    fetch()
   }, [])
 
   const handleSubmit=(event: React.MouseEvent<HTMLElement>)=>{
     event.preventDefault()
     const data = { user_id, name, email, bio }
-    ProfileService.update(data)
+    // ProfileService.update(data)
 } 
 
   return (
