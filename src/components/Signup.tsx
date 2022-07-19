@@ -1,131 +1,140 @@
-import React , { MouseEvent, FormEvent, ChangeEvent, useState } from 'react';
-import { Box, Container, Link, TextField, Button, Typography, Grid }  from '@material-ui/core';
+import React, { useState } from 'react';
+import { Box, Container, Button, Typography, Grid, TextField } from '@material-ui/core';
 import { Auth } from 'aws-amplify';
-import { withStyles } from "@material-ui/core/styles";
+import { createUser } from '../Services/CreateUserService';
+import setAuthorizationToken from '../Services/SetAuthorizationToken';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
+interface IFormInput {
+  username: string,
+  password: string,
+  email: string
+};
 
-type Props = {
-  authState: string
-  loading: boolean
-  };
-
-async function getJwtToken() {
-  var token = '';
-  const session = await Auth.currentSession().then((result) => {
-    token = result.getAccessToken().getJwtToken();
-  })
-  return token;
-}
-
-const SignIn: React.FC<Props> = ({ authState, loading }: Props) => {
-  type Form = { [key:string]: string };
-  const [form, setForm] = useState<Form>({username:"", password:"", email:""});
+function SignUp() {
+  const { control, handleSubmit } = useForm<IFormInput>();
   const [errorMessage, setError] = useState("");
 
-  type FormKey = "userName" | "password" | "email";
-  const handleChangeValue = (fieldName: FormKey) => (event: ChangeEvent<HTMLInputElement>) => {
-    const newForm = {...form};
-    newForm[fieldName] = event.currentTarget.value;
-    setForm(newForm);
-  };
-
-  const handleSubmit = async (event: FormEvent) => {
-    event.preventDefault();
-    const username = form.userName;
-    const password = form.password;
-    const email = form.email;
-    console.log(username + ' ' + password + ' ' + email);
-
+  const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
+    const username = data.username;
+    const password = data.password;
+    const email = data.email;
     try {
-      const { user } = await Auth.signUp({
+      const user = await Auth.signUp({
         username,
         password,
         attributes: {
           email
         }
-      })
-      .then((user) => {
-        console.log(user);
-        const request = {
-          username: user.user.getUsername(),
-          userSub: user.userSub
-        }
-        const token = async (): Promise<string> => {
-          const response = await getJwtToken();
-          fetch('http://localhost:8080/api/signup', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': response
-            },
-            mode: 'cors',
-            body: JSON.stringify(request)
-          }).then(data => response);
-          return response;
-        }
-        setError("");
-        return user;
-      })
-    } catch(error) {
-      console.log(JSON.stringify(error));
-      if (typeof error === 'object' && error != null)
-      {
-        console.log('There was an error on signup: ' + error);
+      });
+      const data = {
+        username: user.user.getUsername(),
+        email: email
+      };
+      setAuthorizationToken();
+      createUser({ data });
+      setError("Sign up was successful!");
+      return user;
+    } catch (error) {
+      if (typeof error === 'object' && error != null) {
         const errorObj = error;
-        console.log(errorObj);
         setError(JSON.stringify(errorObj));
         return error;
       }
     }
   };
 
-  const content = (
-    <Container component="main" maxWidth="xs"  className="signUpBox">
-      <form onSubmit={handleSubmit}>
-      <Typography variant="h2">Sign Up</Typography>
+  return (
+    <Container component="main" maxWidth="xs" className="signUpBox">
+      <form>
+        <Typography variant="h2">Sign Up</Typography>
         <Box height="250%" bgcolor="#D1e1D2">
           <Grid container direction={"column"} spacing={2}>
             <Grid item>
               <Typography variant="caption">{errorMessage}</Typography>
             </Grid>
             <Grid item>
-              <TextField
-              type="userName"
-              onChange={handleChangeValue('userName')}
-              value={form.userName}
-              label={loading? " " : "Username"}
-              variant="outlined"
-              required
-              fullWidth
+              <Controller
+                name="username"
+                control={control}
+                defaultValue=""
+                render={({
+                  field: { onChange, value = "" },
+                  fieldState: { error },
+                }) => (
+                  <TextField
+                    fullWidth
+                    label={"Username"}
+                    variant="outlined"
+                    value={value}
+                    onChange={onChange}
+                    error={!!error}
+                    helperText={error ? error.message : null}
+                    type="string"
+                  />
+                )}
+                rules={{
+                  required: true
+                }}
               />
             </Grid>
             <Grid item>
-              <TextField
-                label={loading? " " : "Password"}
-                type="password"
-                onChange={handleChangeValue('password')}
-                value={form.password}
-                variant="outlined"
-                required
-                fullWidth
+              <Controller
+                name="password"
+                control={control}
+                defaultValue=""
+                render={({
+                  field: { onChange, value = "" },
+                  fieldState: { error },
+                }) => (
+                  <TextField
+                    fullWidth
+                    label={"Password"}
+                    variant="outlined"
+                    value={value}
+                    onChange={onChange}
+                    error={!!error}
+                    helperText={error ? error.message : null}
+                    type="password"
+                  />
+                )}
+                rules={{
+                  required: true,
+                  minLength: 8,
+                  pattern: /^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$/
+                }}
               />
-              </Grid>
-              <Grid item>
-              <TextField
-                type="email"
-                onChange={handleChangeValue('email')}
-                value={form.email}
-                label={loading? " " : "Email Address"}
-                variant="outlined"
-                required
-                fullWidth
+            </Grid>
+            <Grid item>
+              <Controller
+                name="email"
+                control={control}
+                defaultValue=""
+                render={({
+                  field: { onChange, value = "" },
+                  fieldState: { error },
+                }) => (
+                  <TextField
+                    fullWidth
+                    label={"Email"}
+                    variant="outlined"
+                    value={value}
+                    onChange={onChange}
+                    error={!!error}
+                    helperText={error ? error.message : null}
+                    type="string"
+                  />
+                )}
+                rules={{
+                  required: true,
+                }}
               />
             </Grid>
             <Grid item>
               <Typography variant="caption">*Password must be at least 8 characters with 1 symbol and 1 capitol letter</Typography>
             </Grid>
             <Grid item>
-              <Button variant="outlined" disabled={loading} type="submit">
+              <Button variant="outlined" type="submit" onClick={handleSubmit(onSubmit)}>
                 <Typography variant="button">Sign Up</Typography>
               </Button>
             </Grid>
@@ -134,7 +143,6 @@ const SignIn: React.FC<Props> = ({ authState, loading }: Props) => {
       </form>
     </Container>
   );
-    return (authState === 'signIn' ) ? content : null;
 }
 
-export default SignIn;
+export default SignUp;
