@@ -14,17 +14,30 @@ export default function AvatarUploadField() {
     
     //Handler to change image file locally when new image is chosen
     function handleChange(e: any) {
-        let fileChosen = URL.createObjectURL(e.target.files[0]);
+        // let fileChosen = URL.createObjectURL(e.target.files[0]);
+        let fileChosen = e.target.files[0];
         setFile(fileChosen);
         console.log(fileChosen);
     }
 
-    //Handler to upload photo chosen to the backend
-    const handleUpload = (e: any) => {
-        var bodyFormData = new FormData();
-        bodyFormData.append('file', file);
-        AvatarService.uploadAvatar(userId, bodyFormData);
-    }
+    // //Handler to upload photo chosen to the backend
+    // const handleUpload = (e: any) => {
+    //     // let newFile = Buffer.from(file).toString('base64');
+    //     let bodyFormData = new FormData();
+    //     bodyFormData.append('file', file);
+    //     let finalFormData = new FormData();
+    //     finalFormData.append('file', bodyFormData, file);
+    //     AvatarService.uploadAvatar(userId, finalFormData);
+    // }
+
+        //Handler to upload photo chosen to the backend
+        const handleUpload = (e: any) => {
+            // let newFile = Buffer.from(file).toString('base64');
+            let bodyFormData = new FormData();
+            bodyFormData.append('file', file);
+            AvatarService.uploadAvatar(userId, bodyFormData);
+            
+        }
 
     //Handler to delete current photo saved in the backend
     const handleDeleteAvatar = (e: any) => {

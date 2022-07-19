@@ -10,6 +10,16 @@ export default {
   //Upload new avatar for a user
   async uploadAvatar(userId: String, file: FormData) {
 
+
+        // var reader = new FileReader();
+        // reader.readAsDataURL(file); 
+        // reader.onloadend = function() {
+        //   var base64data = reader.result;                
+        //   console.log(base64data);
+        // }
+        // const text = await (new Response(file));
+        console.log("BEYONCE", file);
+
         try {
 
         //   const response = await http.post(`users/${userId}/uploadAvatar`, file, {
@@ -24,12 +34,15 @@ export default {
 
 
         const response = await http.post(`users/${userId}/uploadAvatar`, file, {
-          params: {
-            userId: 'userId'
-          },
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
+          // params: {
+          //   userId: 'userId'
+          // },
+          // headers: {
+          //   'Content-Type': 'multipart/form-data'
+          // },
+          // data: {
+          //   file: file
+          // }
         });
 
         if (response.status === 200) {
