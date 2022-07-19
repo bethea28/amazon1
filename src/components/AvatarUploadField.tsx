@@ -10,15 +10,33 @@ export default function AvatarUploadField() {
     const userId = "001";
     
     //When no profile pic is uploaded, show this default iamge. When uploaded, show the new image
-    const [file, setFile] = useState("../no-profile-pic-icon-11.png");
-    
-    //Handler to change image file locally when new image is chosen
+    const [file, setFile] = useState("");
+
+    const[preview, setPreview] = useState("");
+
     function handleChange(e: any) {
-        // let fileChosen = URL.createObjectURL(e.target.files[0]);
-        let fileChosen = e.target.files[0];
-        setFile(fileChosen);
+        let fileChosen = URL.createObjectURL(e.target.files[0]);
+        setPreview(fileChosen);
+        setFile(e.target.files[0]);
         console.log(fileChosen);
+        console.log(e.target.files[0]);
     }
+    
+    //Handler to change image file to be saved in the BE when new image is chosen
+    // function handleFileChange(e: any) {
+    //     // let fileChosen = URL.createObjectURL(e.target.files[0]);
+    //     let fileChosen = e.target.files[0];
+    //     setFile(fileChosen);
+    //     console.log(fileChosen);
+    // }
+
+    // //Handler to change image preview
+    // function handlePreviewChange(e: any) {
+    //     // let fileChosen = URL.createObjectURL(e.target.files[0]);
+    //     let fileChosen = e.target.files[0];
+    //     setFile(fileChosen);
+    //     console.log(fileChosen);
+    // }
 
     // //Handler to upload photo chosen to the backend
     // const handleUpload = (e: any) => {
@@ -50,7 +68,7 @@ export default function AvatarUploadField() {
             <Box sx={{ display: 'flex', margin: 2, justifyContent: 'center' }}>
                 <Avatar
                     alt="Profile Image"
-                    src={file}
+                    src={preview}
                     sx={{ width: 75, height: 75 }}
                 />
                 <TextField
