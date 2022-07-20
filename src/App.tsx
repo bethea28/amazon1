@@ -13,7 +13,7 @@ function App() {
     <Box className="App" height={"100vh"} display={"flex"} flexDirection={"column"}>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/" element={<Profile />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/interests" element={<InterestSelection />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
