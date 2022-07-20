@@ -25,3 +25,19 @@ export type Project = {
     targetFundingDate: string,
     targetFundingNum: string
 }
+
+export type GetUserResponse = {
+    id: number,
+    avatar: string,
+    bio: string,
+    email: string,
+    username: string,
+    firstName: string,
+    lastName: string,
+    interests: string[],
+    projectIDs: string[]
+}
+
+export type UpdateUserResponse = {
+    data: object
+};
