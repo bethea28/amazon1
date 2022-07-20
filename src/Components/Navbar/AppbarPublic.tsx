@@ -6,10 +6,11 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from "react-router-dom";
 
-const pages = ['Sign In'];
-const settings = ['Projects'];
-
 const AppbarPublic = () => {
+
+  const pages = ['Sign In'];
+  const settings = ['Projects'];
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -38,7 +39,7 @@ const AppbarPublic = () => {
     <AppBar position="static" sx={{bgcolor:"#335436"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
           <Typography
             variant="h6"
             noWrap
@@ -57,18 +58,18 @@ const AppbarPublic = () => {
             JUMPSTARTER
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
+               size="large"
+               aria-label="account of current user"
+               aria-controls="menu-appbar"
+               aria-haspopup="true"
+               onClick={handleOpenNavMenu}
+               color="inherit"
+             >
+               <MenuIcon />
+             </IconButton>
+             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
@@ -91,10 +92,10 @@ const AppbarPublic = () => {
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
-            </Menu>
-          </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
+             </Menu>
+           </Box>
+  <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+           <Typography
             variant="h5"
             noWrap
             component="a"
@@ -111,9 +112,9 @@ const AppbarPublic = () => {
             }}
           >
             LOGO
-          </Typography>
+           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
@@ -125,13 +126,11 @@ const AppbarPublic = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
               <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", borderRadius:50}} 
               variant="contained" size="small" onClick={handleClickProfile}>Profile</Button>
-            </Tooltip>
           </Box>
-        </Toolbar>
-      </Container>
+        </Toolbar> 
+      </Container> 
     </AppBar>
   );
 };

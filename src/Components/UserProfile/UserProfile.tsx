@@ -6,10 +6,10 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import AppbarPrivate from '../Navbar/AppbarPrivate';
 import AppbarPublic from '../Navbar/AppbarPublic';
 import "./Styles.css";
-import ProfileService from '../../Services/ProfileService';
+import UserProfileService from '../../Services/UserProfileService';
 import { headerBox, bottomOutterBox } from '../Constants';
 
-const Profile = () => {
+const UserProfile = () => {
   const [user_id, setUserId] = useState<String>( '001' );
   const [bio, setBio] = useState<String>( '' );
   const [name, setName] = useState<String>( '' );
@@ -17,26 +17,20 @@ const Profile = () => {
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetch = async () => {
-    const data = await ProfileService.get('001')
-      setName(data.name)
-      setEmail(data.email)
-      setBio(data.bio)
-    new Promise<{ email: string, name: string, bio: string }>((resolve) => {
-        resolve(data)
-    }).then(data => {
-      setName(data.name);
-      setEmail(data.email);
-      setBio(data.bio);
-    })
-    }
     fetch()
   }, [])
 
+    const fetch = async () => {
+    const response = await UserProfileService.get("001")
+    setName(response.name)
+    setEmail(response.email)
+    setBio(response.bio)
+    }
+
   const handleSubmit=(event: React.MouseEvent<HTMLElement>)=>{
     event.preventDefault()
-    const data = { user_id, name, email, bio }
-    // ProfileService.update(data)
+    const data = { name, email, bio }
+    UserProfileService.update("001", data)
 } 
 
   return (
@@ -151,4 +145,4 @@ const Profile = () => {
     </StyledEngineProvider>
   );
 };
-export default Profile;
+export default UserProfile;
