@@ -1,11 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route, } from "react-router-dom";
-import Profile from './Components/Profile/Profile'
-import Home from './Components/Home/Home';
-import AppbarPrivate from './Components/Navbar/AppbarPrivate';
-import AppbarPublic from './Components/Navbar/AppbarPublic';
+import './index.css';
 import App from './App';
+<<<<<<< HEAD
 import SignIn from './Components/Signup';
 import awsconfig from './aws-exports';
 import { Amplify, Auth } from 'aws-amplify';
@@ -25,4 +22,19 @@ Amplify.configure(awsconfig);
    </BrowserRouter>
    </React.StrictMode>
  );
+=======
+import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
+
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
+root.render(
+  <BrowserRouter>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </BrowserRouter>
+);
+>>>>>>> amzn1-44
 
