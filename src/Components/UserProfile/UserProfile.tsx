@@ -8,38 +8,56 @@ import AppbarPublic from '../Navbar/AppbarPublic';
 import "./Styles.css";
 import UserProfileService from '../../Services/UserProfileService';
 import { headerBox, bottomOutterBox } from '../Constants';
+import { Amplify, Auth } from 'aws-amplify';
+import { axiosInstance } from '../../Resources/Constants';
 
 const UserProfile = () => {
-  const [user_id, setUserId] = useState<String>( '001' );
+  const [user_id, setUserId] = useState<String>('');
   const [bio, setBio] = useState<String>( '' );
   const [name, setName] = useState<String>( '' );
   const [email, setEmail] = useState<String>( '' );
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>(true);
 
-  useEffect(() => {
-//SignUp
-    const register = async () => {  
-      UserProfileService.signUp("Bri", "Nada1998!", "bb@gmail.com")  
-    //   const user = await Auth.signUp({
-    //   username:"Cohort9",
-    //   password:"Nada1998!",
-    //   attributes: {
-    //     email:"c@email.com"
-    //   }
-    // })
-    // .then((user) => {
-    //   console.log(user);
-    }
+  const username="zebra"
 
-      //const user = await Auth.signIn("Cohort6", "Nada1998!");
-      // .then(response => {
-      //   console.log(response);
-      // })
-    fetch()
+  useEffect(() => {
+    //fetch()
   }, [])
 
+  const register = async () => {  
+    //Signup
+  //   const user = await Auth.signUp({
+  //     username:username,
+  //     password:"Nada1998!",
+  //     attributes: {
+  //       email:"cohort@email.com"
+  //     }
+  //   })
+  // console.log(user)
+
+  //SignIn
+  // const newUser = await Auth.signIn(username, "Nada1998!")
+  // console.log(newUser);
+
+  //Get currentSession
+  // Auth.currentSession().then(res=>{
+  //   let accessToken = res.getAccessToken();
+  //   let jwt = accessToken.getJwtToken();
+  //   console.log(jwt)
+  //   const data = { name, email, bio }
+  //   console.log("Bio: ")
+  //   console.log(bio)
+  //   const info = axiosInstance.post('/profile', data, {
+  //     headers: {
+  //       'Authorization': `Bearer ${jwt}`,
+  //       'Content-Type': 'application/json'
+  //     }
+  //   })
+  // })
+  }
+
     const fetch = async () => {
-    const response = await UserProfileService.get("001")
+    const response = await UserProfileService.getUserProfile("f1009b7c-28a6-4248-a9ea-5d7804772775")
     setName(response.name)
     setEmail(response.email)
     setBio(response.bio)
@@ -48,7 +66,8 @@ const UserProfile = () => {
   const handleSubmit=(event: React.MouseEvent<HTMLElement>)=>{
     event.preventDefault()
     const data = { name, email, bio }
-    UserProfileService.update("001", data)
+    //register()
+    //UserProfileService.updateUserProfile("f1009b7c-28a6-4248-a9ea-5d7804772775", data)
 } 
 
   return (
@@ -154,7 +173,9 @@ const UserProfile = () => {
           <Grid item container direction="row" justifyContent="flex-end" alignItems="flex-end">
             <Grid item>
               <Box sx={{my: 2, mr:3}}> 
-                <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", borderRadius:50}} variant="contained" onClick={handleSubmit}>Save Profile</Button>
+                <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", borderRadius:50}} variant="contained" 
+                onClick={handleSubmit}
+                >Save Profile</Button>
               </Box>
             </Grid>
           </Grid>
