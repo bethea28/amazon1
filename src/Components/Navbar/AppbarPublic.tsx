@@ -1,21 +1,16 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
+import React from 'react';
+import { AppBar, Container, Button } from '@mui/material';
+import { Box, Toolbar, Menu, Tooltip } from '@mui/material';
+import { IconButton, Typography, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-
-const pages = ['Sign In'];
-const settings = ['Projects'];
+import { useNavigate } from "react-router-dom";
 
 const AppbarPublic = () => {
+
+  const pages = ['Sign In'];
+  const settings = ['Projects'];
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -34,11 +29,17 @@ const AppbarPublic = () => {
     setAnchorElUser(null);
   };
 
+  const navigate = useNavigate();
+  
+  const handleClickProfile= () => {
+    navigate("/profile");
+  };
+
   return (
     <AppBar position="static" sx={{bgcolor:"#335436"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
           <Typography
             variant="h6"
             noWrap
@@ -57,18 +58,18 @@ const AppbarPublic = () => {
             JUMPSTARTER
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
+               size="large"
+               aria-label="account of current user"
+               aria-controls="menu-appbar"
+               aria-haspopup="true"
+               onClick={handleOpenNavMenu}
+               color="inherit"
+             >
+               <MenuIcon />
+             </IconButton>
+             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
@@ -91,10 +92,10 @@ const AppbarPublic = () => {
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
-            </Menu>
-          </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
+             </Menu>
+           </Box>
+  <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+           <Typography
             variant="h5"
             noWrap
             component="a"
@@ -111,9 +112,9 @@ const AppbarPublic = () => {
             }}
           >
             LOGO
-          </Typography>
+           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
@@ -125,15 +126,11 @@ const AppbarPublic = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
               <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", borderRadius:50}} 
-              variant="contained" size="small">Submit a Project</Button>
-              </IconButton>
-            </Tooltip>
+              variant="contained" size="small" onClick={handleClickProfile}>Profile</Button>
           </Box>
-        </Toolbar>
-      </Container>
+        </Toolbar> 
+      </Container> 
     </AppBar>
   );
 };
