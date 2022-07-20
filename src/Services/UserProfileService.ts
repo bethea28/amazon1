@@ -1,15 +1,18 @@
 import axios from "axios"
 import { axiosInstance } from "../Resources/Constants"
-// import { Auth } from 'aws-amplify';
 
 class UserProfileService{
 
-  get = async (userId: string) => {
-    const response = await axiosInstance.get(`/profile/${userId}`)
+  getUserProfile = async (userId: string) => {
+    const response = await axiosInstance.get(`/profile/${userId}`, {
+      headers: {
+      'Content-Type': 'application/json'
+      }
+    })
         return(response.data)
   }
 
-  update = async (userId: string, data: object) => {
+  updateUserProfile = async (userId: string, data: object) => {
     const response = await axiosInstance.put(`/profile/${userId}`, data, {
       headers: {
         "Content-Type":"application/json"
@@ -17,20 +20,13 @@ class UserProfileService{
     })
   }
 
-  signUp = async (username: string, password: string, email:string) => {
-    //    const user = await Auth.signUp({
-    //   username:"Cohort9",
-    //   password:"Nada1998!",
-    //   attributes: {
-    //     email:"c@email.com"
-    //   }
-    // })
-    // const response = await axiosInstance.put(`/profile/${userId}`, data, {
-    //   headers: {
-    //     "Content-Type":"application/json",
-    //     "Authorization": `Bearer ${token}`
-    //   }
-    // })
+  addUserProfile = async (jwt:string, data:object) => {
+    return axiosInstance.post('/project', data, {
+      headers: {
+        'Authorization': `Bearer ${jwt}`,
+        'Content-Type': 'application/json'
+      }
+    })
   }
 }
 export default new UserProfileService;

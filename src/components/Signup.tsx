@@ -1,47 +1,47 @@
 import React , {MouseEvent, FormEvent, ChangeEvent} from 'react';
 import { Box, Container, Link, TextField, Button, Typography}  from '@mui/material';
-import { Auth } from 'aws-amplify';
+// import { Auth } from 'aws-amplify';
 import { isPropertySignature } from 'typescript';
 
-type Props = {
-  authState: string
-  loading: boolean
-  };
+// type Props = {
+//   authState: string
+//   loading: boolean
+//   };
 
-const SignIn: React.FC<Props> = ({ authState, loading }: Props) => {
-  console.log("wtf")
+// const SignIn: React.FC<Props> = ({ authState, loading }: Props) => {
+//   console.log("wtf")
 
-async function signIn2() {
-  const { user } = await Auth.signUp({
-            username:"Cohort9",
-            password:"Nada1998!",
-            attributes: {
-              email:"c@email.com"
-            }
-          })
-          .then((user) => {
-            console.log(user);
-  // console.log("trying")
-  //     const user = await Auth.signIn("Cohort6", "Nada1998!");
-      // .then(response => {
-      //   console.log(response);
-      // })
-}
+// async function signIn2() {
+//   const { user } = await Auth.signUp({
+//             username:"Cohort9",
+//             password:"Nada1998!",
+//             attributes: {
+//               email:"c@email.com"
+//             }
+//           })
+//           .then((user) => {
+//             console.log(user);
+//   // console.log("trying")
+//   //     const user = await Auth.signIn("Cohort6", "Nada1998!");
+//       // .then(response => {
+//       //   console.log(response);
+//       // })
+// }
 
-  return (
-    <React.Fragment>
-      <div>
-    <Box sx={{border:2, color:"blue"}}>
-    <Button sx={{border:3}} onClick={signIn2}></Button>
-    </Box>
-  </div>
-    </React.Fragment>
+//   return (
+//     <React.Fragment>
+//       <div>
+//     <Box sx={{border:2, color:"blue"}}>
+//     <Button sx={{border:3}} onClick={signIn2}></Button>
+//     </Box>
+//   </div>
+//     </React.Fragment>
   
-  );
-}
+//   );
+// }
     
 
-export default SignIn;
+// export default SignIn;
 
 // type Props = {
 //   authState: string
