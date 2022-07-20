@@ -17,6 +17,24 @@ const UserProfile = () => {
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>(true);
 
   useEffect(() => {
+//SignUp
+    const register = async () => {  
+      UserProfileService.signUp("Bri", "Nada1998!", "bb@gmail.com")  
+    //   const user = await Auth.signUp({
+    //   username:"Cohort9",
+    //   password:"Nada1998!",
+    //   attributes: {
+    //     email:"c@email.com"
+    //   }
+    // })
+    // .then((user) => {
+    //   console.log(user);
+    }
+
+      //const user = await Auth.signIn("Cohort6", "Nada1998!");
+      // .then(response => {
+      //   console.log(response);
+      // })
     fetch()
   }, [])
 
