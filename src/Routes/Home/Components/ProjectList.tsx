@@ -22,7 +22,6 @@ function ProjectList(props: GetProjectsResponse) {
                         </Grid>
                     )
                  })}
-
             </Carousel>
         </Box>
     )
