@@ -8,8 +8,9 @@ import AppbarPublic from '../Navbar/AppbarPublic';
 import "./Styles.css";
 import UserProfileService from '../../Services/UserProfileService';
 import { headerBox, bottomOutterBox } from '../Constants';
-import { Amplify, Auth } from 'aws-amplify';
+import { Auth } from 'aws-amplify';
 import { axiosInstance } from '../../Resources/Constants';
+import axios from 'axios';
 
 const UserProfile = () => {
   const [user_id, setUserId] = useState<String>('');
@@ -21,78 +22,40 @@ const UserProfile = () => {
   const username="zebra20"
 
   useEffect(() => {
+    
     const fetching = async () => {
-      console.log("fetching")
+      console.log("Signing in")
       const newUser = await Auth.signIn("zebra20", "Nada1998!")
       console.log(newUser)
+
+      console.log("Get current User")
       Auth.currentSession().then(res=>{
         let accessToken = res.getAccessToken();
         let jwt = accessToken.getJwtToken();
+      console.log(`jwt token: ${jwt}`)
       
-        const fetching2 = async () => {
-      const response = await axiosInstance.get('/profile/f1009b7c-28a6-4248-a9ea-5d7804772775', {
+      const fetching2 = async () => {
+      console.log("calling fetching 2 function")
+      const response = await axios.get('http://localhost:8080/profile/f1009b7c-28a6-4248-a9ea-5d7804772775', {
       headers: {
-      // 'Authorization': `Bearer ${jwt}`,
+      'Authorization': `Bearer ${jwt}`,
       'Content-Type': 'application/json'
       }
     })
-    console.log(`response: ${response}`)
+    setName(response.data.name)
+    setEmail(response.data.email)
+    setBio(response.data.bio)
   }
   fetching2()
-    //return(response.data)
+  //   //return(response.data)
   })
 }
-fetching()
+//fetching()
   }, [])
-
-  const register = async () => {  
-    //Signup
-  //   const user = await Auth.signUp({
-  //     username:username,
-  //     password:"Nada1998!",
-  //     attributes: {
-  //       email:"cohort@email.com"
-  //     }
-  //   })
-  // console.log(user)
-
-  //SignIn
-  // const newUser = await Auth.signIn(username, "Nada1998!")
-  // console.log(newUser);
-
-  //Get currentSession
-  // Auth.currentSession().then(res=>{
-  //   let accessToken = res.getAccessToken();
-  //   let jwt = accessToken.getJwtToken();
-  //   console.log(jwt)
-  //   const data = { name, email, bio }
-  //   console.log("Bio: ")
-  //   console.log(bio)
-  //   const info = axiosInstance.post('/profile', data, {
-  //     headers: {
-  //       'Authorization': `Bearer ${jwt}`,
-  //       'Content-Type': 'application/json'
-  //     }
-  //   })
-  // })
-  }
-
-    
-      // Auth.currentSession().then(res=>{
-      //   let accessToken = res.getAccessToken();
-      //   let jwt = accessToken.getJwtToken();
-      // })
-    // const fetch = async () => {
-    // const response = await UserProfileService.getUserProfile("f1009b7c-28a6-4248-a9ea-5d7804772775", jwt)
-    // setName(response.name)
-    // setEmail(response.email)
-    // setBio(response.bio)
-    //   }
 
   const handleSubmit=(event: React.MouseEvent<HTMLElement>)=>{
     event.preventDefault()
     const data = { name, email, bio }
-    //register()
     //UserProfileService.updateUserProfile("f1009b7c-28a6-4248-a9ea-5d7804772775", data)
 } 
 
