@@ -1,9 +1,14 @@
+import { Box } from "@mui/material";
+import CommentList from "../../Routes/Project/Components/CommentList";
 import AppbarPrivate from "../Navbar/AppbarPrivate";
 import AppbarPublic from "../Navbar/AppbarPublic";
 
 export default function Home() {
 
   return (
-    <AppbarPublic />
+    <Box>
+      <AppbarPublic />
+      <CommentList/>
+    </Box>
   );
 }
