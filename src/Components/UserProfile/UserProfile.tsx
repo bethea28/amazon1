@@ -11,8 +11,17 @@ import { headerBox, bottomOutterBox } from '../Constants';
 import { Auth } from 'aws-amplify';
 import { axiosInstance } from '../../Resources/Constants';
 import axios from 'axios';
+import { useForm, Controller } from "react-hook-form";
+import UserData from '../../Resources/types';
 
-const UserProfile = () => {
+// const UserProfile = (props) => {
+  function UserProfile() {
+    const { register, setValue } = useForm<UserData>();
+/*    const [userProfile, setUserProfile] = useState<UserData>()
+  // const { register, setValue, handleSubmit, formState: { errors } } = useForm<UserData>();
+  //const { register, setValue } = useForm<UserData>();
+  // onSubmit = handleSubmit(data => console.log(data));
+
   const [user_id, setUserId] = useState<String>('');
   const [bio, setBio] = useState<String>( '' );
   const [name, setName] = useState<String>( '' );
@@ -42,7 +51,8 @@ const UserProfile = () => {
       'Content-Type': 'application/json'
       }
     })
-    setName(response.data.name)
+    // setValue("name", response.data.name)
+    // setName(response.data.name)
     setEmail(response.data.email)
     setBio(response.data.bio)
   }
@@ -50,19 +60,19 @@ const UserProfile = () => {
   //   //return(response.data)
   })
 }
-//fetching()
+fetching()
   }, [])
 
-  const handleSubmit=(event: React.MouseEvent<HTMLElement>)=>{
-    event.preventDefault()
-    const data = { name, email, bio }
-    //UserProfileService.updateUserProfile("f1009b7c-28a6-4248-a9ea-5d7804772775", data)
-} 
-
+//   const handleSubmit=(event: React.MouseEvent<HTMLElement>)=>{
+//     event.preventDefault()
+//     const data = { name, email, bio }
+//     //UserProfileService.updateUserProfile("f1009b7c-28a6-4248-a9ea-5d7804772775", data)
+// } 
+*/
   return (
     <StyledEngineProvider injectFirst>
       <Box sx={{ display: 'flex', flexDirection: 'column', height: 1000}}>
-        {userLoggedIn ? <AppbarPrivate /> : <AppbarPublic />}
+        {/* {userLoggedIn ? <AppbarPrivate /> : <AppbarPublic />} */}
         <Box sx={{...headerBox}}>
           Picture
         </Box>
@@ -82,29 +92,42 @@ const UserProfile = () => {
               </Grid>
             </Box>
             <Box sx={{ml:2, m: 1, height: 3 / 4}}>
-              <Grid container direction={"column"} component="form" spacing={1}>
+              <form>
+              <Grid container direction={"column"} 
+              // component="form" 
+              spacing={1}>
                 <Grid item>
-                  <TextField fullWidth
+
+
+
+                  <TextField 
+                  // {...register("name")}
+                  fullWidth
                   id="outlined-basic" 
                   size="small"
                   label="Name"
                   InputLabelProps={{shrink: true}}
-                  value={name}
+                  // value={name}
                   onChange={event => {
-                    setName(event.target.value);
+                    // setName(event.target.value);
                   }}/>
+    
+
+
                 </Grid>
                 <Grid item>
                     <TextField fullWidth id="outlined-basic" label="email" 
-                    InputLabelProps={{shrink: true}} value={email} 
+                    InputLabelProps={{shrink: true}} 
+                    // value={email} 
                     variant="outlined" size="small" onChange={event => {
-                      setEmail(event.target.value);
+                      // setEmail(event.target.value);
                     }}/>
                 </Grid>
                 <Grid item>
                   <Avatar />
                 </Grid>
               </Grid>
+              </form>
             </Box>
           </Paper>
           <Paper elevation={3} className="customPaper">    
@@ -127,9 +150,9 @@ const UserProfile = () => {
                     id="outlined-multiline"
                     size="medium"
                     label="Bio"
-                    value={bio}
+                    // value={bio}
                     onChange={event => {
-                    setBio(event.target.value);
+                    // setBio(event.target.value);
                   }}
                     multiline
                     rows={4}
@@ -163,7 +186,7 @@ const UserProfile = () => {
             <Grid item>
               <Box sx={{my: 2, mr:3}}> 
                 <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", borderRadius:50}} variant="contained" 
-                onClick={handleSubmit}
+                // onClick={handleSubmit(onSubmit)}
                 >Save Profile</Button>
               </Box>
             </Grid>
