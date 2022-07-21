@@ -5,7 +5,7 @@ import InterestSelection from './Routes/Signup/InterestSelection';
 import { Box } from '@mui/material';
 import Profile from './Components/Profile/Profile'
 import Home from './Components/Home/Home';
-import Dashboard from './Routes/Home/Dashboard';
+import Dashboard from './Routes/Dashboard/Dashboard';
 
 function App() {
 
