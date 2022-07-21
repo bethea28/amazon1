@@ -9,7 +9,7 @@ function ProjectList(props: GetProjectsResponse) {
     return (
         <Box>
             <Carousel
-            navButtonsAlwaysVisible
+            indicators={false}
             animation="slide"
             height={"450px"}>
                  {props.projects && props.projects.map((project, idx) => {
