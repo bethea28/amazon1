@@ -18,10 +18,31 @@ const UserProfile = () => {
   const [email, setEmail] = useState<String>( '' );
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>(true);
 
-  const username="zebra"
+  const username="zebra20"
 
   useEffect(() => {
-    //fetch()
+    const fetching = async () => {
+      console.log("fetching")
+      const newUser = await Auth.signIn("zebra20", "Nada1998!")
+      console.log(newUser)
+      Auth.currentSession().then(res=>{
+        let accessToken = res.getAccessToken();
+        let jwt = accessToken.getJwtToken();
+      
+        const fetching2 = async () => {
+      const response = await axiosInstance.get('/profile/f1009b7c-28a6-4248-a9ea-5d7804772775', {
+      headers: {
+      // 'Authorization': `Bearer ${jwt}`,
+      'Content-Type': 'application/json'
+      }
+    })
+    console.log(`response: ${response}`)
+  }
+  fetching2()
+    //return(response.data)
+  })
+}
+fetching()
   }, [])
 
   const register = async () => {  
@@ -56,12 +77,17 @@ const UserProfile = () => {
   // })
   }
 
-    const fetch = async () => {
-    const response = await UserProfileService.getUserProfile("f1009b7c-28a6-4248-a9ea-5d7804772775")
-    setName(response.name)
-    setEmail(response.email)
-    setBio(response.bio)
-    }
+    
+      // Auth.currentSession().then(res=>{
+      //   let accessToken = res.getAccessToken();
+      //   let jwt = accessToken.getJwtToken();
+      // })
+    // const fetch = async () => {
+    // const response = await UserProfileService.getUserProfile("f1009b7c-28a6-4248-a9ea-5d7804772775", jwt)
+    // setName(response.name)
+    // setEmail(response.email)
+    // setBio(response.bio)
+    //   }
 
   const handleSubmit=(event: React.MouseEvent<HTMLElement>)=>{
     event.preventDefault()
