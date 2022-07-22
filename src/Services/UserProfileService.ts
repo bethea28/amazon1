@@ -3,13 +3,19 @@ import { axiosInstance } from "../Resources/Constants"
 
 class UserProfileService{
 
-  getUserProfile = async (userId: string) => {
-    const response = await axiosInstance.get(`/profile/${userId}`, {
+  getUserProfile = async (userId: string, jwt:string) => {
+    console.log("jwt")
+    console.log(jwt)
+    
+      const response = await axios.get(`http://localhost:8080/profile/${userId}`, {
       headers: {
+      'Authorization': `Bearer ${jwt}`,
       'Content-Type': 'application/json'
-      }
+      }      
     })
-        return(response.data)
+    console.log("response data from getUserProfile")
+    console.log(response.data)
+    return(response)
   }
 
   updateUserProfile = async (userId: string, data: object) => {
@@ -21,12 +27,13 @@ class UserProfileService{
   }
 
   addUserProfile = async (jwt:string, data:object) => {
-    return axiosInstance.post('/project', data, {
+    const response = await axiosInstance.post('/profile/', data, {
       headers: {
         'Authorization': `Bearer ${jwt}`,
         'Content-Type': 'application/json'
       }
     })
+    return response.data
   }
 }
 export default new UserProfileService;
