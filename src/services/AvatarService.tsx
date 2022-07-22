@@ -4,72 +4,59 @@ const http = axios.create({
     baseURL: 'http://localhost:8080/api'
 });
 
-// export default class UserService {
-
 export default {
+
   //Upload new avatar for a user
   async uploadAvatar(userId: String, file: FormData) {
 
+    try {
 
-        // var reader = new FileReader();
-        // reader.readAsDataURL(file); 
-        // reader.onloadend = function() {
-        //   var base64data = reader.result;                
-        //   console.log(base64data);
-        // }
-        // const text = await (new Response(file));
-        console.log("BEYONCE", file);
+      const response = await http.post(`/profile/${userId}/uploadAvatar`, file);
 
-        try {
+      if (response.status === 201) {
+        alert('Upload successful!');
+      }
 
-        //   const response = await http.post(`users/${userId}/uploadAvatar`, file, {
-        //     params: {
-        //       userId: 'userId'
-        //     },
-        //     data: 'bodyFormData',
-        //     headers: {
-        //       'Content-Type': 'multipart/form-data'
-        //     }
-        // });
+    } catch(error) {
+        console.log(error);
+        alert('Upload failed! Please try again.')
+      }
 
+      window.location.reload();
 
-        const response = await http.post(`users/${userId}/uploadAvatar`, file, {
-          // params: {
-          //   userId: 'userId'
-          // },
-          // headers: {
-          //   'Content-Type': 'multipart/form-data'
-          // },
-          // data: {
-          //   file: file
-          // }
-        });
+  },
 
-        if (response.status === 200) {
-          alert('Upload successful!');
-        }
+  //Get user's avatar (Component is currently calling axios get directly, not yet this service)
+  async getAvatar(userId: String, filename: String) { 
 
-      } catch(error) {
-          console.log(error);
-        }
+    try {
 
+      const response = await http.get(`/getAvatar/${userId}/${filename}`);
+      return response;
+
+    } catch(error) {
+      console.log(error);
+    }
   },
 
   //Delete user's avatar
   async deleteAvatar(userId: String, filename: String) { 
 
-          try {
+    try {
 
-            const response = await http.delete(`/deleteAvatar/${userId}/${filename}`);
+      const response = await http.delete(`/deleteAvatar/${userId}/${filename}`);
 
-            if (response.status === 200) {
-              alert('Delete successful!');
-            }
-            
-          } catch(error) {
-            console.log(error);
-          }
-    
+      if (response.status === 204) {
+        alert('Delete successful!');
+      }
+      
+    } catch(error) {
+        console.log(error);
+        alert('Failed to delete! Please try again.')
+      }
+
+      window.location.reload();
+
   }
 
 }
