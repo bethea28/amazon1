@@ -4,7 +4,7 @@ import { FormControl, InputLabel, MenuItem, Button, Box,
          Select,Grid,TextField, Input, Paper,makeStyles } from '@material-ui/core';
 import {MuiPickersUtilsProvider,KeyboardDatePicker}from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns';
-import { useForm, Controller, SubmitHandler,  } from "react-hook-form";
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import axiosInstance from '../../apiConfig';
 import { Auth } from 'aws-amplify';
 import { padding } from '@mui/system';
@@ -18,8 +18,22 @@ interface ProjectFormInput {
     targetFundingNum: String;
     targetFundingDate: Date;
     description: String;
-    categories: String;
+    categories:  String;
 }
+// export type ProjectFormInput = {
+//     Native: string;
+//     TextField: string;
+//     Select: number;
+//     ReactSelect: NestedValue<{ value: string; label: string }>;
+//     Checkbox: boolean;
+//     switch: boolean;
+//     RadioGroup: RadioGroupOption;
+//     MUI_Slider: NumberRange;
+//     ReactDatepicker: Date;
+//     numberFormat: number;
+//     downShift: DownshiftItem;
+//     country: NestedValue<{ code: string; label: string; phone: string }>;
+//   };
 
 const useStyles = makeStyles (theme =>({
     root: {
@@ -39,7 +53,7 @@ const useStyles = makeStyles (theme =>({
 export default function AddProject() {
     const classes = useStyles();
 
-    const { control, handleSubmit} = useForm<ProjectFormInput>();
+    const { control,register, handleSubmit} = useForm<ProjectFormInput>();
     
     const currencies = [
         {
@@ -64,7 +78,9 @@ export default function AddProject() {
           },
       ];
     const onSubmit = async (data: ProjectFormInput ) => {
-
+        
+        console.log("Name",data)
+        return
         const res = await Auth.currentSession()
         let jwt = res.getAccessToken().getJwtToken();    
         return await axiosInstance.post('project', data, {
@@ -74,7 +90,7 @@ export default function AddProject() {
             }
         }) 
     }
-
+    
     return (
         <Paper>
         <form className={classes.root} onSubmit={handleSubmit(onSubmit)} autoComplete = "off">
@@ -119,6 +135,15 @@ export default function AddProject() {
                 defaultValue=""
                 label="Select categories"
                 name="categories"
+                inputProps={{
+                    inputRef: (ref: { value: any; }) => {
+                      if (!ref) return;
+                      register({
+                        label: "categories",
+                        value: ref.value,
+                      }); 
+                    },
+                  }}
                 >
           {currencies.map((option) => (
             <MenuItem key={option.value} value={option.value}>
@@ -129,7 +154,7 @@ export default function AddProject() {
              </FormControl>
             </Grid>
             <Grid item xs = {2} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center"  }}>
-                <Typography>Project Description</Typography>
+                <Typography>Select Categories</Typography>
             </Grid>
             </Grid>
             <Grid container>
