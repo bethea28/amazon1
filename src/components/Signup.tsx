@@ -4,6 +4,7 @@ import { Auth } from 'aws-amplify';
 import { createUser } from '../Services/CreateUserService';
 import setAuthorizationToken from '../Services/SetAuthorizationToken';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import { useNavigate } from "react-router-dom";
 
 interface IFormInput {
   username: string,
@@ -14,6 +15,7 @@ interface IFormInput {
 function SignUp() {
   const { control, handleSubmit } = useForm<IFormInput>();
   const [errorMessage, setError] = useState("");
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     const username = data.username;
@@ -34,6 +36,7 @@ function SignUp() {
       setAuthorizationToken();
       createUser({ data });
       setError("Sign up was successful!");
+      navigate("/profile");
       return user;
     } catch (error) {
       if (typeof error === 'object' && error != null) {

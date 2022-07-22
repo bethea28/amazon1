@@ -11,3 +11,33 @@ export const axiosInstance = axios.create({
         "Accept": "application/json"
     }
 })
+
+export type GetProjectsResponse = {
+    projects: Array<Project>
+}
+
+export type Project = {
+    projectID: string,
+    userID: string,
+    projectName: string,
+    description: string,
+    categories: string,
+    targetFundingDate: string,
+    targetFundingNum: string
+}
+
+export type GetUserResponse = {
+    id: number,
+    avatar: string,
+    bio: string,
+    email: string,
+    username: string,
+    firstName: string,
+    lastName: string,
+    interests: string[],
+    projectIDs: string[]
+}
+
+export type UpdateUserResponse = {
+    data: object
+};
