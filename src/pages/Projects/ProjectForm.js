@@ -118,7 +118,7 @@ export function ProjectForm() {
                 label = "Select categories"
                 value = {values.categories}
                 onChange = {handleInputChange}
-                options = {ProjectService.getDepartmentCollection()}
+                options = {ProjectService.getCategoryCollection()}
                 error = {errors.categories}
                 />
             </Grid> 

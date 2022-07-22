@@ -14,20 +14,11 @@ const useStyles = makeStyles(theme =>({
 }))
 
 export default function Button(props) {
-    const theme = createTheme({
-        palette: {
-          primary: {
-            light: '#757ce8',
-            main: '#90D86F',
-            dark: green[600],
-            
-          }
-        }
-      });
+    
     const {text, size, color, variant, onClick, ...other} = props
     const classes = useStyles();
     return (
-        <ThemeProvider theme = {theme}>
+       
         <MuiButton
         variant = {variant || "contained"}
         size = {size || "large" }
@@ -37,7 +28,7 @@ export default function Button(props) {
             classes = { {root: classes.root, label: classes.label}}>
         {text}
         </MuiButton>
-        </ThemeProvider>
+       
         
     )
 }

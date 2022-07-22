@@ -8,27 +8,9 @@ import { FormHelperText } from '@mui/material';
 export default function Select(props) {
 
     const {name, label, value, error = null, onChange, options, ...other} = props;
-    const theme = createTheme({
-        palette: {
-          primary: {
-            light: green[200],
-            main: '#90D86F',
-            dark: green[600],
-            contrastText: '#000',
-            
-          },
-          secondary: {
-            light: '#ff7961',
-            main: '#f44336',
-            dark: '#ba000d',
-            contrastText: '#000',
-          },
-        },
-
-        
-      });
+    
     return (
-        <ThemeProvider theme = {theme}>
+        
         <FormControl variant = "filled"
         {...(error && {error:true})}>
             <InputLabel>{label}
@@ -40,15 +22,13 @@ export default function Select(props) {
             { ...other}
             onChange = {onChange}>
                 <MenuItem value ="">None</MenuItem>{
-                    options.map(
-                        item =>(<MenuItem key ={item.id} value = {item.title}>{item.title}</MenuItem>)
-                    )
+                    options.map(item =>(<MenuItem key ={item.id} value = {item.title}>{item.title}</MenuItem>))
                 }
 
             </MuiSelect>
             {error && <FormHelperText>{error}</FormHelperText>}
 
         </FormControl>
-        </ThemeProvider>
+       
     )
 }
