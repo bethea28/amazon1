@@ -11,68 +11,69 @@ import { headerBox, bottomOutterBox } from '../Constants';
 import { Auth } from 'aws-amplify';
 import { axiosInstance } from '../../Resources/Constants';
 import axios from 'axios';
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import UserData from '../../Resources/types';
+import AuthService from '../../Services/AuthService';
 
-// const UserProfile = (props) => {
-  function UserProfile() {
-    const { register, setValue } = useForm<UserData>();
-/*    const [userProfile, setUserProfile] = useState<UserData>()
-  // const { register, setValue, handleSubmit, formState: { errors } } = useForm<UserData>();
-  //const { register, setValue } = useForm<UserData>();
-  // onSubmit = handleSubmit(data => console.log(data));
+export default function UserProfile() {
+    
+  const initialValues = {name: '', email: '', bio: ''}
+  const [userProfile, setUserProfile] = useState<UserData>(initialValues)
+  const { register, handleSubmit, formState: { errors } } = useForm<UserData>();
 
   const [user_id, setUserId] = useState<String>('');
-  const [bio, setBio] = useState<String>( '' );
-  const [name, setName] = useState<String>( '' );
-  const [email, setEmail] = useState<String>( '' );
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>(true);
-
-  const username="zebra20"
-
+  
   useEffect(() => {
+    //fetchUserProfile()
+    //signUpandFetch()
     
-    const fetching = async () => {
-      console.log("Signing in")
-      const newUser = await Auth.signIn("zebra20", "Nada1998!")
-      console.log(newUser)
-
-      console.log("Get current User")
-      Auth.currentSession().then(res=>{
-        let accessToken = res.getAccessToken();
-        let jwt = accessToken.getJwtToken();
-      console.log(`jwt token: ${jwt}`)
-      
-      const fetching2 = async () => {
-      console.log("calling fetching 2 function")
-      const response = await axios.get('http://localhost:8080/profile/f1009b7c-28a6-4248-a9ea-5d7804772775', {
-      headers: {
-      'Authorization': `Bearer ${jwt}`,
-      'Content-Type': 'application/json'
-      }
-    })
-    // setValue("name", response.data.name)
-    // setName(response.data.name)
-    setEmail(response.data.email)
-    setBio(response.data.bio)
-  }
-  fetching2()
-  //   //return(response.data)
-  })
-}
-fetching()
   }, [])
 
-//   const handleSubmit=(event: React.MouseEvent<HTMLElement>)=>{
-//     event.preventDefault()
-//     const data = { name, email, bio }
-//     //UserProfileService.updateUserProfile("f1009b7c-28a6-4248-a9ea-5d7804772775", data)
-// } 
-*/
+  const fetchUserProfile = async () => {
+    const jwt = await AuthService.SignIn("zebra20", "Nada1998!")
+    console.log(jwt)
+    
+    const response = await UserProfileService.getUserProfile(jwt.response.userSub, jwt.jwt)
+    setUserProfile(response.data)
+  }
+
+  const signUpandFetch = async () => {
+    console.log("fetching")
+    const name = "burberry24"
+    const email = "burberry24@gmail.com"
+    const bio = "listening"
+
+    const data = {name:"burberry24", password:"Nada1998!", email: "burberry24@gmail.com"}
+    const returnVal = await AuthService.SignUp(data.name, data.password, data.email)
+    //const returnVal = await AuthService.SignIn(data.email, data.password)
+    console.log(returnVal)
+    console.log("returnVal")
+    //const data2 = {name:"burberry16", email: "burberry16@gmail.com", bio: "Listening"}
+    
+
+    console.log("add new user to dynamoDB")
+    const dater = { name, email, bio }
+    
+    // UserProfileService.addUserProfile(jwt.newUser, dater)
+
+    console.log("fetch data")
+    //console.log(returnVal.response.attributes.sub)
+    console.log(returnVal.response.userSub)
+    const response = await UserProfileService.getUserProfile(returnVal.response.userSub, returnVal.newUser)
+    console.log(response)
+    setUserProfile(response.data)
+  }
+
+  const onSubmit = handleSubmit(async (data: UserData)=>{
+    // UserProfileService.updateUserProfile("f1009b7c-28a6-4248-a9ea-5d7804772775", data)
+})
+
   return (
     <StyledEngineProvider injectFirst>
+  <form onSubmit={onSubmit}>   
       <Box sx={{ display: 'flex', flexDirection: 'column', height: 1000}}>
-        {/* {userLoggedIn ? <AppbarPrivate /> : <AppbarPublic />} */}
+        {userLoggedIn ? <AppbarPrivate /> : <AppbarPublic />}
         <Box sx={{...headerBox}}>
           Picture
         </Box>
@@ -92,42 +93,44 @@ fetching()
               </Grid>
             </Box>
             <Box sx={{ml:2, m: 1, height: 3 / 4}}>
-              <form>
               <Grid container direction={"column"} 
               // component="form" 
               spacing={1}>
                 <Grid item>
 
-
-
                   <TextField 
-                  // {...register("name")}
+                  {...register("name")}
                   fullWidth
                   id="outlined-basic" 
                   size="small"
                   label="Name"
                   InputLabelProps={{shrink: true}}
-                  // value={name}
+                  value={userProfile!.name}
                   onChange={event => {
-                    // setName(event.target.value);
+                    setUserProfile(prevState => {
+                      // Object.assign would also work
+                      return {...prevState, ['name']: event.target.value};
+                    });
+                    
                   }}/>
     
-
 
                 </Grid>
                 <Grid item>
                     <TextField fullWidth id="outlined-basic" label="email" 
                     InputLabelProps={{shrink: true}} 
-                    // value={email} 
+                    value={userProfile!.email} 
                     variant="outlined" size="small" onChange={event => {
-                      // setEmail(event.target.value);
+                      setUserProfile(prevState => {
+                        // Object.assign would also work
+                        return {...prevState, ['email']: event.target.value};
+                      });
                     }}/>
                 </Grid>
                 <Grid item>
                   <Avatar />
                 </Grid>
               </Grid>
-              </form>
             </Box>
           </Paper>
           <Paper elevation={3} className="customPaper">    
@@ -144,15 +147,20 @@ fetching()
               </Grid> 
             </Box>
             <Box sx={{m:1, height: 3 / 4}}>
-              <Grid container direction={"column"} component="form" spacing={1}>
+              <Grid container direction={"column"} 
+              // component="form" 
+              spacing={1}>
                 <Grid item>
                   <TextField fullWidth
                     id="outlined-multiline"
                     size="medium"
                     label="Bio"
-                    // value={bio}
+                    value={userProfile!.bio}
                     onChange={event => {
-                    // setBio(event.target.value);
+                      setUserProfile(prevState => {
+                        // Object.assign would also work
+                        return {...prevState, ['bio']: event.target.value};
+                      });
                   }}
                     multiline
                     rows={4}
@@ -176,7 +184,9 @@ fetching()
               </Grid> 
             </Box>
             <Box sx={{m:1, height: 3 / 4}}>
-              <Grid container direction={"column"} component="form" spacing={1}>
+              <Grid container direction={"column"} 
+              // component="form" 
+              spacing={1}>
                 <Grid item>
                 </Grid>     
               </Grid>
@@ -186,14 +196,15 @@ fetching()
             <Grid item>
               <Box sx={{my: 2, mr:3}}> 
                 <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", borderRadius:50}} variant="contained" 
-                // onClick={handleSubmit(onSubmit)}
+                //onClick={handleSubmit(onSubmit)}
+                onClick={signUpandFetch}
                 >Save Profile</Button>
               </Box>
             </Grid>
           </Grid>
         </Box>
       </Box>
+      </form>   
     </StyledEngineProvider>
   );
 };
-export default UserProfile;
