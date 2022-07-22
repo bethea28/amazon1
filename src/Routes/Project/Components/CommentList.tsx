@@ -1,12 +1,14 @@
 import { Avatar, Box, Grid, Paper, Typography } from "@mui/material";
 import { green } from "@mui/material/colors";
 import React from "react";
+import CommentField from "./CommentField";
 
 function CommentList() {
 
     return (
         <Box>
             <Typography margin={"0.5em"} textAlign={"left"} variant="h5">Comments ([amount])</Typography>
+            <CommentField />
             <Paper sx={{padding: "1em", mt: 3}}>
                 <Grid container wrap="nowrap" spacing={2}>
                     <Grid item>
