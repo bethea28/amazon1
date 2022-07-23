@@ -1,7 +1,7 @@
 
 import { Box, TextField, Avatar, Button } from '@mui/material';
 import { useState, useEffect } from 'react';
-import AvatarService from '../services/AvatarService';
+import AvatarService from '../Services/AvatarService';
 import axios from 'axios';
 
 export default function AvatarUploadField() {
@@ -9,6 +9,7 @@ export default function AvatarUploadField() {
     //Need to be updated later with current user after login component is set
     const userId = "001";
 
+    //Will remove once I get a separate Get service to work
     const filename = userId;
 
     /**
@@ -62,14 +63,13 @@ export default function AvatarUploadField() {
      */
     useEffect( () => {
     
-    showAvatar();
+        showAvatar();
  
     }, []);
 
     /**
-     * Shows either the default image for no image saved or the current image saved
+     * This handler changes the image displayed and file to be saved based on the image chosen to be saved.
      */
-    //Handler to change the image displayed and file to be saved based on the image chosen to be saved.
     function handleChange(e: any) {
         let fileChosen = URL.createObjectURL(e.target.files[0]);
         setPreview(fileChosen);
@@ -77,9 +77,8 @@ export default function AvatarUploadField() {
     }
 
     /**
-     * Shows either the default image for no image saved or the current image saved
+     * This handler uploads photo chosen to the backend
      */
-    //Handler to upload photo chosen to the backend
     const handleUpload = (e: any) => {
         setDisabledSave(true);
         let bodyFormData = new FormData();
@@ -88,9 +87,8 @@ export default function AvatarUploadField() {
     }
 
     /**
-     * Shows either the default image for no image saved or the current image saved
+     * This handler deletes current photo saved in the backend
      */
-    //Handler to delete current photo saved in the backend
     const handleDeleteAvatar = (e: any) => {
         setDisabledDelete(true);
         AvatarService.deleteAvatar(userId, userId);
@@ -100,7 +98,7 @@ export default function AvatarUploadField() {
     }
 
     /**
-     * Shows either the default image for no image saved or the current image saved
+     * Returns the UI and functions to call
      */
     return(
 
