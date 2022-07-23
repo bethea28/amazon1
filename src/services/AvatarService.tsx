@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const http = axios.create({
-    baseURL: 'http://localhost:8080/api'
+    baseURL: 'http://localhost:8080/api/users'
 });
 
 export default {
@@ -11,7 +11,7 @@ export default {
 
     try {
 
-      const response = await http.post(`/profile/${userId}/uploadAvatar`, file);
+      const response = await http.post(`/${userId}/uploadAvatar`, file);
 
       if (response.status === 201) {
         alert('Upload successful!');

@@ -6,29 +6,41 @@ import axios from 'axios';
 
 export default function AvatarUploadField() {
 
-    //Need to be updated later with current user
+    //Need to be updated later with current user after login component is set
     const userId = "001";
 
     const filename = userId;
 
-    //Shows either the default image for no image saved or the current image saved
+    /**
+     * Shows either the default image for no image saved or the current image saved
+     */
     const[preview, setPreview] = useState("");
 
-    //Sets the image file to be saved
+    /**
+     * Sets the image file to be saved
+     */
     const [file, setFile] = useState("");
 
-    //This useState disables the Save Avatar button after it is clicked 
+    /**
+     * This useState disables the Save Avatar button after it is clicked
+     */ 
     const [disabledSave, setDisabledSave] = useState(false);
 
-    //This useState disables the Save Avatar button after it is clicked 
+    /**
+     * This useState disables the Delete Avatar button after it is clicked 
+     */
+    
     const [disabledDelete, setDisabledDelete] = useState(false);
 
+    /**
+     * Shows the current image saved by the user in the past to be used in useEffect hook
+     */
     const showAvatar = async () => {
 
     try {
 
         //Axios get service is set up and will move this logic there
-        const { data } = await axios(`http://localhost:8080/api/getAvatar/${userId}/${filename}`, {
+        const { data } = await axios(`http://localhost:8080/api/users/getAvatar/${userId}/${filename}`, {
             method: 'GET',
         });    
         console.log(data);
@@ -45,13 +57,18 @@ export default function AvatarUploadField() {
 
     };
 
-    //onLoad display the image of the avatar associated with current user
+    /**
+     * onLoad display the image of the avatar associated with current user
+     */
     useEffect( () => {
     
     showAvatar();
  
     }, []);
 
+    /**
+     * Shows either the default image for no image saved or the current image saved
+     */
     //Handler to change the image displayed and file to be saved based on the image chosen to be saved.
     function handleChange(e: any) {
         let fileChosen = URL.createObjectURL(e.target.files[0]);
@@ -59,6 +76,9 @@ export default function AvatarUploadField() {
         setFile(e.target.files[0]);
     }
 
+    /**
+     * Shows either the default image for no image saved or the current image saved
+     */
     //Handler to upload photo chosen to the backend
     const handleUpload = (e: any) => {
         setDisabledSave(true);
@@ -67,6 +87,9 @@ export default function AvatarUploadField() {
         AvatarService.uploadAvatar(userId, bodyFormData);
     }
 
+    /**
+     * Shows either the default image for no image saved or the current image saved
+     */
     //Handler to delete current photo saved in the backend
     const handleDeleteAvatar = (e: any) => {
         setDisabledDelete(true);
@@ -76,6 +99,9 @@ export default function AvatarUploadField() {
         setFile(noAvatar);
     }
 
+    /**
+     * Shows either the default image for no image saved or the current image saved
+     */
     return(
 
       <Box sx={{ display: 'flex', flexDirection: 'column', border: 1 }}>
