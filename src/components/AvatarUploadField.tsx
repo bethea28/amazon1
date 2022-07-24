@@ -5,7 +5,7 @@ import { getAvatar, uploadAvatar, deleteAvatar } from '../Services/AvatarService
 
 export default function AvatarUploadField() {
 
-    //Need to be updated later with current user after login component is set
+    //Need to be updated with current user via getUser service or GetUserResponse constants?
     const userId = "001";
 
     const filename = userId;

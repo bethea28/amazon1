@@ -14,6 +14,7 @@ export async function getAvatar(userId: String, filename: String) {
   try {
 
     const { data } = await http.get(`/getAvatar/${userId}/${filename}`);
+    //Add auth token
     return data;
 
   } catch(error) {
@@ -32,6 +33,7 @@ export async function uploadAvatar(userId: String, file: FormData) {
   try {
 
     const response = await http.post(`/${userId}/uploadAvatar`, file);
+    //Add auth token
 
     if (response.status === 201) {
       alert('Upload successful!');
@@ -56,7 +58,8 @@ export async function deleteAvatar(userId: String, filename: String) {
   try {
 
     const response = await http.delete(`/deleteAvatar/${userId}/${filename}`);
-
+    //Add auth token
+    
     if (response.status === 204) {
       alert('Delete successful!');
     }
