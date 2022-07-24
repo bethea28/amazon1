@@ -11,7 +11,6 @@ import Dashboard from './Routes/Home/Dashboard';
 function App() {
 
   return (
-      
     <Box className="App" height={"100vh"} display={"flex"} flexDirection={"column"}>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -19,9 +18,6 @@ function App() {
         <Route path="/interests" element={<InterestSelection />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
-      <Box className="Avatar Field">
-        <AvatarUploadField />
-      </Box>
     </Box>
   );
 }
