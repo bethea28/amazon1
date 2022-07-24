@@ -1,15 +1,13 @@
 
 import { Box, TextField, Avatar, Button } from '@mui/material';
 import { useState, useEffect } from 'react';
-import AvatarService from '../Services/AvatarService';
-import axios from 'axios';
+import { getAvatar, uploadAvatar, deleteAvatar } from '../Services/AvatarService';
 
 export default function AvatarUploadField() {
 
     //Need to be updated later with current user after login component is set
     const userId = "001";
 
-    //Will remove once I get a separate Get service to work
     const filename = userId;
 
     /**
@@ -38,23 +36,22 @@ export default function AvatarUploadField() {
      */
     const showAvatar = async () => {
 
-    try {
+        try {
 
-        //Axios get service is set up and will move this logic there
-        const { data } = await axios(`http://localhost:8080/api/users/getAvatar/${userId}/${filename}`, {
-            method: 'GET',
-        });    
-        console.log(data);
-        let convert: any = Object.entries(data);
-        console.log(convert[0][1]);
-        let uri = convert[0][1].uri;
-        console.log(uri);
-        
-        setPreview(uri);
+            /**
+             * Calls getAvatar service
+             * @params userId The current user's id
+             * @params filename Set to the current user's id and is the name of the file to get
+             */
+            const response = await getAvatar(userId, filename);    
+            const convert: any = Object.entries(response);
+            const imageURL = convert[0][1].uri;
+            
+            setPreview(imageURL);
 
-     } catch (error) {
-            console.log(error);
-        }
+        } catch (error) {
+                console.log(error);
+            }
 
     };
 
@@ -69,32 +66,56 @@ export default function AvatarUploadField() {
 
     /**
      * This handler changes the image displayed and file to be saved based on the image chosen to be saved.
+     * Event type is any for now for file useState to be data types File, String, or Blob.
      */
     function handleChange(e: any) {
+
         let fileChosen = URL.createObjectURL(e.target.files[0]);
         setPreview(fileChosen);
         setFile(e.target.files[0]);
+
     }
 
     /**
      * This handler uploads photo chosen to the backend
      */
-    const handleUpload = (e: any) => {
+    const handleUpload = (e: React.MouseEvent<HTMLElement>) => {
+
         setDisabledSave(true);
+
+        /**
+         * Allows the iamge file to be transferred to the backend via form data
+         */
         let bodyFormData = new FormData();
         bodyFormData.append('file', file);
-        AvatarService.uploadAvatar(userId, bodyFormData);
+
+        /**
+         * Calls uploadAvatar service
+         * @params userId The current user's id
+         * @params bodyFormData The image file to be saved via form data
+         */
+        uploadAvatar(userId, bodyFormData);
+
     }
 
     /**
-     * This handler deletes current photo saved in the backend
+     * This handler deletes the current photo saved in the backend
      */
-    const handleDeleteAvatar = (e: any) => {
+    const handleDeleteAvatar = (e: React.MouseEvent<HTMLElement>) => {
+
         setDisabledDelete(true);
-        AvatarService.deleteAvatar(userId, userId);
-        let noAvatar = "";
+
+        /**
+         * Calls deleteAvatar service
+         * @params userId The current user's id
+         * @params filename The image file to delete
+         */
+        deleteAvatar(userId, filename);
+
+        const noAvatar = "";
         setPreview(noAvatar);
         setFile(noAvatar);
+
     }
 
     /**
