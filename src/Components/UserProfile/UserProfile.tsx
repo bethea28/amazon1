@@ -14,64 +14,51 @@ import axios from 'axios';
 import { useForm } from "react-hook-form";
 import UserData from '../../Resources/types';
 import AuthService from '../../Services/AuthService';
+import { setConstantValue } from 'typescript';
 
 export default function UserProfile() {
     
+  let token = ''
+  let idSub = ''
   const initialValues = {name: '', email: '', bio: ''}
   const [userProfile, setUserProfile] = useState<UserData>(initialValues)
-  const { register, handleSubmit, formState: { errors } } = useForm<UserData>();
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<UserData>();
 
   const [user_id, setUserId] = useState<String>('');
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>(true);
   
   useEffect(() => {
-    //fetchUserProfile()
-    //signUpandFetch()
+    fetchUserProfile()
     
   }, [])
 
   const fetchUserProfile = async () => {
-    const jwt = await AuthService.SignIn("zebra20", "Nada1998!")
-    console.log(jwt)
-    
-    const response = await UserProfileService.getUserProfile(jwt.response.userSub, jwt.jwt)
+    console.log("Called fetchUserProfile()")
+    const jwt = await AuthService.SignIn("zebra21", "Nada1998!")
+    const id = jwt.response.attributes.sub
+    token = jwt.jwt
+    idSub = id
+    const response = await UserProfileService.getUserProfile(id, jwt.jwt)
     setUserProfile(response.data)
-  }
-
-  const signUpandFetch = async () => {
-    console.log("fetching")
-    const name = "burberry24"
-    const email = "burberry24@gmail.com"
-    const bio = "listening"
-
-    const data = {name:"burberry24", password:"Nada1998!", email: "burberry24@gmail.com"}
-    const returnVal = await AuthService.SignUp(data.name, data.password, data.email)
-    //const returnVal = await AuthService.SignIn(data.email, data.password)
-    console.log(returnVal)
-    console.log("returnVal")
-    //const data2 = {name:"burberry16", email: "burberry16@gmail.com", bio: "Listening"}
-    
-
-    console.log("add new user to dynamoDB")
-    const dater = { name, email, bio }
-    
-    // UserProfileService.addUserProfile(jwt.newUser, dater)
-
-    console.log("fetch data")
-    //console.log(returnVal.response.attributes.sub)
-    console.log(returnVal.response.userSub)
-    const response = await UserProfileService.getUserProfile(returnVal.response.userSub, returnVal.newUser)
-    console.log(response)
-    setUserProfile(response.data)
+    reset(response.data)
   }
 
   const onSubmit = handleSubmit(async (data: UserData)=>{
-    // UserProfileService.updateUserProfile("f1009b7c-28a6-4248-a9ea-5d7804772775", data)
+    console.log("submit")
+    const jwt = await AuthService.SignIn("zebra21", "Nada1998!")
+    const id = jwt.response.attributes.sub
+    console.log(data)
+    console.log(`jwt: ${jwt.jwt}`)
+    
+    const response = await UserProfileService.updateUserProfile(id, jwt.jwt, data)
+
 })
+
+// const onSubmit = handleSubmit(data => console.log(data));
 
   return (
     <StyledEngineProvider injectFirst>
-  <form onSubmit={onSubmit}>   
+  <form onSubmit={onSubmit}>  
       <Box sx={{ display: 'flex', flexDirection: 'column', height: 1000}}>
         {userLoggedIn ? <AppbarPrivate /> : <AppbarPublic />}
         <Box sx={{...headerBox}}>
@@ -98,34 +85,45 @@ export default function UserProfile() {
               spacing={1}>
                 <Grid item>
 
-                  <TextField 
-                  {...register("name")}
+                  <TextField type="text"
+                  {...register('name', {
+                    onChange: (event: React.ChangeEvent<HTMLInputElement>): 
+                    void => {setUserProfile((prevState) => ({ 
+                      name: event.target.value,
+                      email: prevState.email,
+                      bio: prevState.bio
+                   }))
+                  }
+                })}
                   fullWidth
                   id="outlined-basic" 
                   size="small"
                   label="Name"
                   InputLabelProps={{shrink: true}}
                   value={userProfile!.name}
-                  onChange={event => {
-                    setUserProfile(prevState => {
-                      // Object.assign would also work
-                      return {...prevState, ['name']: event.target.value};
-                    });
+                  // onChange={event => {
+                  //   setUserProfile(prevState => {
+                  //     return {['name']: event.target.value};
+                  //   });
                     
-                  }}/>
+                  // }}
+                  />
     
 
                 </Grid>
                 <Grid item>
-                    <TextField fullWidth id="outlined-basic" label="email" 
-                    InputLabelProps={{shrink: true}} 
-                    value={userProfile!.email} 
-                    variant="outlined" size="small" onChange={event => {
+                    <TextField {...register('email')}
+                    onChange={event => {
                       setUserProfile(prevState => {
                         // Object.assign would also work
                         return {...prevState, ['email']: event.target.value};
                       });
-                    }}/>
+                    }}
+                    fullWidth id="outlined-basic" label="email" 
+                    InputLabelProps={{shrink: true}} 
+                    value={userProfile!.email} 
+                    variant="outlined" size="small" 
+                    />
                 </Grid>
                 <Grid item>
                   <Avatar />
@@ -151,7 +149,8 @@ export default function UserProfile() {
               // component="form" 
               spacing={1}>
                 <Grid item>
-                  <TextField fullWidth
+                  <TextField {...register('bio')}
+                  fullWidth
                     id="outlined-multiline"
                     size="medium"
                     label="Bio"
@@ -196,8 +195,7 @@ export default function UserProfile() {
             <Grid item>
               <Box sx={{my: 2, mr:3}}> 
                 <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", borderRadius:50}} variant="contained" 
-                //onClick={handleSubmit(onSubmit)}
-                onClick={signUpandFetch}
+                onClick={onSubmit}
                 >Save Profile</Button>
               </Box>
             </Grid>
