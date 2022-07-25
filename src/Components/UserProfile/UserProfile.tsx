@@ -18,26 +18,21 @@ import { setConstantValue } from 'typescript';
 
 export default function UserProfile() {
     
-  let token = ''
-  let idSub = ''
   const initialValues = {name: '', email: '', bio: ''}
   const [userProfile, setUserProfile] = useState<UserData>(initialValues)
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<UserData>();
+  const { register, handleSubmit, reset } = useForm<UserData>();
 
   const [user_id, setUserId] = useState<String>('');
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>(true);
   
   useEffect(() => {
     fetchUserProfile()
-    
   }, [])
 
   const fetchUserProfile = async () => {
     console.log("Called fetchUserProfile()")
     const jwt = await AuthService.SignIn("zebra21", "Nada1998!")
     const id = jwt.response.attributes.sub
-    token = jwt.jwt
-    idSub = id
     const response = await UserProfileService.getUserProfile(id, jwt.jwt)
     setUserProfile(response.data)
     reset(response.data)
@@ -53,8 +48,6 @@ export default function UserProfile() {
     const response = await UserProfileService.updateUserProfile(id, jwt.jwt, data)
 
 })
-
-// const onSubmit = handleSubmit(data => console.log(data));
 
   return (
     <StyledEngineProvider injectFirst>
@@ -101,21 +94,12 @@ export default function UserProfile() {
                   label="Name"
                   InputLabelProps={{shrink: true}}
                   value={userProfile!.name}
-                  // onChange={event => {
-                  //   setUserProfile(prevState => {
-                  //     return {['name']: event.target.value};
-                  //   });
-                    
-                  // }}
                   />
-    
-
                 </Grid>
                 <Grid item>
                     <TextField {...register('email')}
                     onChange={event => {
                       setUserProfile(prevState => {
-                        // Object.assign would also work
                         return {...prevState, ['email']: event.target.value};
                       });
                     }}
@@ -146,7 +130,6 @@ export default function UserProfile() {
             </Box>
             <Box sx={{m:1, height: 3 / 4}}>
               <Grid container direction={"column"} 
-              // component="form" 
               spacing={1}>
                 <Grid item>
                   <TextField {...register('bio')}
@@ -157,7 +140,6 @@ export default function UserProfile() {
                     value={userProfile!.bio}
                     onChange={event => {
                       setUserProfile(prevState => {
-                        // Object.assign would also work
                         return {...prevState, ['bio']: event.target.value};
                       });
                   }}
@@ -184,7 +166,6 @@ export default function UserProfile() {
             </Box>
             <Box sx={{m:1, height: 3 / 4}}>
               <Grid container direction={"column"} 
-              // component="form" 
               spacing={1}>
                 <Grid item>
                 </Grid>     
