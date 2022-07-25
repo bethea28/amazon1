@@ -1,5 +1,5 @@
-import React,{useState, useEffect} from 'react'
-import { Typography } from '@mui/material';
+import React,{useState, useEffect} from 'react';
+import { Typography,FormHelperText } from '@mui/material';
 import { FormControl, InputLabel, MenuItem, Button, Box,
          Select,Grid,TextField, Input, Paper,makeStyles } from '@material-ui/core';
 import {MuiPickersUtilsProvider,KeyboardDatePicker,DatePicker}from '@material-ui/pickers'
@@ -9,19 +9,11 @@ import axiosInstance from '../../apiConfig';
 import { Auth } from 'aws-amplify';
 import { padding } from '@mui/system';
 import { FireplaceRounded, Padding } from '@mui/icons-material'
-import ReactDatePicker from 'react-datepicker';
-import ReactSelect from 'react-select';
-
-// interface ICategories{ 
-//     label: string;
-//     value: string;
-// }
-
 
 interface ProjectFormInput {
     projectName: string;
-    targetFundingNum: string;
-    targetFundingDate: Date | null;
+    targetFundingNum: number;
+    targetFundingDate: Date;
     description: string;
     categories: string;
 }
@@ -53,48 +45,27 @@ const useStyles = makeStyles (theme =>({
         "& .MuiFormLabel-root": {
             padding: '0 30px',
           }
-    },
-    // label:{
-    //     textTransform:'none',
-        
-    // }
-   
+    }
+
 }))
 export default function AddProject() {
     const classes = useStyles();
-    const [targetDate, setDate] = useState<Date | null>(null);
+    const { reset, control, register, handleSubmit,formState: { errors }} = useForm<ProjectFormInput>();
 
-    const { reset, control, register, handleSubmit} = useForm<ProjectFormInput>();
-    
-    // const categoriesSelect:ICategories[]=[
-    //     {
-    //       value: 'Food',
-    //       label: 'Food',
-    //     },
-    //     {
-    //       value: 'Art',
-    //       label: 'Art',
-    //     },
-    //     {
-    //       value: 'Car',
-    //       label: 'Car',
-    //     },
-    //     {
-    //       value: 'Tech',
-    //       label: 'Tech',
-    //     },
-    //     {
-    //         value: 'Other',
-    //         label: 'Other',
-    //       },
-    //   ];
     const onSubmit = async (data: ProjectFormInput ) => {
-        
-        console.log("Name",data)
-        return
+        let state = {
+            userId: '002',
+            projectName: data.projectName,
+            targetFundingNum:data.targetFundingNum.toString(),
+            targetFundingDate:data.targetFundingDate.toDateString(),
+            description:data.description,
+            categories: data.categories
+        }
+        console.log("state",state)
+       
         const res = await Auth.currentSession()
         let jwt = res.getAccessToken().getJwtToken();    
-        return await axiosInstance.post('project', data, {
+        return await axiosInstance.post('project', state, {
             headers: {
                 'Authorization': `Bearer ${jwt}`,
                 'Content-Type': 'application/json'
@@ -109,13 +80,13 @@ export default function AddProject() {
         
             <Grid container>
             <Grid item xs = {4}>
-            <Controller
-                render={({ field }) => <TextField
-                label = "Input name of your project" {...field}/>}
-                name="projectName"
-                control={control}
-                defaultValue=""
+            <TextField
+            {...register("projectName", {required: true})} 
+            label = "Input name of your project"
+            error={errors.projectName !== undefined}
             />
+            {errors.projectName && ( 
+            <Typography variant ="body2" color ="red">This field is required</Typography>)}
             </Grid>
             <Grid item xs = {2} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center"  }}>
                 <Typography>Project Name</Typography>
@@ -123,13 +94,22 @@ export default function AddProject() {
             </Grid>
             <Grid container>
             <Grid item xs = {4}>
-            <Controller
+            <TextField
+            {...register("targetFundingNum",{ min: 0.01 })} 
+            type = "number"
+            label = "Input target funding amount"
+            defaultValue = {0}
+            error={errors.targetFundingNum !== undefined }
+            />
+            {errors.targetFundingNum && (
+            <Typography variant ="body2" color ="red">Target funding amount must be valid</Typography>)}
+            {/* <Controller
                 render={({ field }) => <TextField 
                 label = "Input target funding amount "{...field}/>}
                 name="targetFundingNum"
                 control={control}
                 defaultValue=""    
-            />
+            /> */}
             </Grid>
             <Grid item xs = {2} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center"  }}>
                 <Typography>Target Funding Number</Typography>
@@ -141,16 +121,15 @@ export default function AddProject() {
                 <InputLabel htmlFor="category-select">
                     Select Category 
                 </InputLabel>
-               
                 <Controller
                     name="categories"
                     control={control}
                     defaultValue=""
+                    rules={{required:true}}
                     render={({ field }) => {
                     return <Select 
                         value={field.value}
-                        onChange={(e) => field.onChange(e)}
-                     >
+                        onChange={(e) => field.onChange(e)} >
                         <MenuItem value="Tech">Tech</MenuItem>
                         <MenuItem value="Art">Art</MenuItem>
                         <MenuItem value="Car">Car</MenuItem>
@@ -160,7 +139,9 @@ export default function AddProject() {
                     </Select>
                     }}
                 />
-                
+                <FormHelperText error={errors.categories !== undefined}>  
+                {errors.categories && (<Typography variant ="body2" color ="red">Please select category</Typography>)}
+                </FormHelperText>
             </FormControl>
             </Grid>
             <Grid item xs = {2} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center"  }}>
@@ -172,45 +153,54 @@ export default function AddProject() {
             <Grid item xs = {4}>
             <Controller
               name="targetFundingDate"
-              defaultValue = {null}
+              defaultValue = {new Date()}
               control={control}
               render={({ field }) => (
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardDatePicker
-                    inputVariant="outlined"
-                    variant="inline"
-                    label="Select Date"
-                    value={field.value}
-                    onChange={(e)=>field.onChange(e)}
-                    format="MM/dd/yyyy"
-                    defaultValue = {null}
-                    autoOk
-                  />
-                </MuiPickersUtilsProvider>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <KeyboardDatePicker
+                inputVariant="outlined"
+                variant="inline"
+                label="Select Date"
+                value={field.value}
+                onChange={(e)=>field.onChange(e)}
+                format="MM/dd/yyyy"
+                defaultValue = {null}
+                autoOk
+                />
+            </MuiPickersUtilsProvider>
             )}
             />
-
             </Grid>
             <Grid item xs = {2} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center"  }}>
                 <Typography>Target Funding Date</Typography>
             </Grid>
+
             <Grid container>
             <Grid item xs = {4}>
-            <Controller
+            <TextField
+            {...register("description", {required: true})} 
+            label = "Input descriptions of your project"
+            multiline minRows={12} 
+            error={errors.description !== undefined}
+            />   
+            {errors.description && (
+            <Typography variant ="body2" color ="red">This field is required</Typography>)}
+            {/* <Controller
                 render={({ field }) => <TextField 
                 label = "Input descriptions of your project"
                 multiline minRows={12} {...field}/>}
                 name="description"
                 control={control}
                 defaultValue=""
-            />
+            /> */}
             </Grid>
             <Grid item xs = {2} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center"  }}>
                 <Typography>Project Description</Typography>
             </Grid>
             </Grid>
             <Grid container>
-            <Grid item xs = {4}>
+            
+            <Grid item xs = {2}>
             <Button variant="contained" 
             color="primary"
             type="reset"
@@ -218,7 +208,8 @@ export default function AddProject() {
                 <Typography variant="button">Reset</Typography>
             </Button>
             </Grid>
-            <Grid item xs = {2} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center"  }}>
+            <Grid item xs = {2} >
+                {/* style={{ display: "flex", justifyContent: "flex-start", alignItems: "center"  }} */}
             <Button variant="contained" 
             color="primary"
             type="submit">
@@ -226,10 +217,7 @@ export default function AddProject() {
             </Button>
             </Grid>
             </Grid>
-            
             </Grid>
-
-
         </form>
         </Paper>
         

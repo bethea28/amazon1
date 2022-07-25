@@ -2,7 +2,7 @@ import { Grid, makeStyles, TextField, createTheme } from '@material-ui/core';
 import React,{useState, useEffect} from 'react'
 import {Controls} from '../../components/controls/Controls';
 import {useForm,Form} from '../../components/useForm';
-import * as ProjectService from '../../services/ProjectService';
+//import * as ProjectService from '../../services/ProjectService';
 import SendIcon from '@mui/icons-material/Send';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Typography } from '@mui/material';
@@ -18,7 +18,13 @@ const initialValues = {
     description:'',
     categories:'',
 }
-
+const getCategoryCollection = () =>([
+    {id: '1', title: 'Music'},
+    {id: '2', title: 'Food'},
+    {id: '3', title: 'Art'},
+    {id: '4', title: 'Pet'},
+    {id: '5', title: 'Other'}
+])
 
 export function ProjectForm() {
     //check submit and onChange data validation
@@ -118,7 +124,7 @@ export function ProjectForm() {
                 label = "Select categories"
                 value = {values.categories}
                 onChange = {handleInputChange}
-                options = {ProjectService.getCategoryCollection()}
+                options = {getCategoryCollection()}
                 error = {errors.categories}
                 />
             </Grid> 
