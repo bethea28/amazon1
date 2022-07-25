@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './App.css';
-import { DialogTitle } from '@material-ui/core';
 import {Amplify} from 'aws-amplify';
 import {withAuthenticator} from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
@@ -11,7 +10,6 @@ import { createTheme } from '@mui/material/styles';
 import AddProject from './pages/Projects/AddProject'
 
 Amplify.configure(awsmobile);
-
 function App(props:any) {
     const theme = createTheme({
         palette: {
@@ -30,5 +28,4 @@ function App(props:any) {
       </div>
     );
 }
-
 export default withAuthenticator(App);
