@@ -10,11 +10,9 @@ import InterestSelection from './Routes/Signup/InterestSelection';
 import { Box } from '@mui/material';
 import Profile from './Components/Profile/Profile'
 import Home from './Components/Home/Home';
+import Dashboard from './Routes/Dashboard/Dashboard';
 import Signup from './Components/Signup';
 import Login from './Components/Login';
-import Dashboard from './Routes/Home/Dashboard';
-
-
 
 Amplify.configure(awsconfig);
 
