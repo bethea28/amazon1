@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
 import { DialogTitle } from '@material-ui/core';
-import Projects from './pages/Projects/Projects';
 import {Amplify} from 'aws-amplify';
 import {withAuthenticator} from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
