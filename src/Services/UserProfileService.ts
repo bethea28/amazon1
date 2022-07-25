@@ -4,10 +4,7 @@ import { axiosInstance } from "../Resources/Constants"
 class UserProfileService{
 
   getUserProfile = async (userId: string, jwt:string) => {
-    console.log("jwt")
-    console.log(jwt)
-    
-      const response = await axios.get(`http://localhost:8080/profile/${userId}`, {
+      const response = await axiosInstance.get(`/profile/${userId}`, {
       headers: {
       'Authorization': `Bearer ${jwt}`,
       'Content-Type': 'application/json'
@@ -18,12 +15,14 @@ class UserProfileService{
     return(response)
   }
 
-  updateUserProfile = async (userId: string, data: object) => {
+  updateUserProfile = async (userId: string, jwt: string, data: object) => {
     const response = await axiosInstance.put(`/profile/${userId}`, data, {
       headers: {
-        "Content-Type":"application/json"
+        'Authorization': `Bearer ${jwt}`,
+        'Content-Type': 'application/json'
       }
     })
+    return(response)
   }
 
   addUserProfile = async (jwt:string, data:object) => {
