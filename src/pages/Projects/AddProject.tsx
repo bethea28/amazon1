@@ -1,14 +1,12 @@
 import React,{useState, useEffect} from 'react';
-import { Typography,FormHelperText } from '@mui/material';
-import { FormControl, InputLabel, MenuItem, Button, Box,
-         Select,Grid,TextField, Input, Paper,makeStyles } from '@material-ui/core';
-import {MuiPickersUtilsProvider,KeyboardDatePicker,DatePicker}from '@material-ui/pickers'
+import { Typography, FormHelperText } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Button,
+         Select, Grid, TextField, Paper, makeStyles } from '@material-ui/core';
+import {MuiPickersUtilsProvider, KeyboardDatePicker}from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns';
 import { useForm, Controller, SubmitHandler, DefaultValues } from "react-hook-form";
-import axiosInstance from '../../apiConfig';
-import { Auth } from 'aws-amplify';
-import { padding } from '@mui/system';
-import { FireplaceRounded, Padding } from '@mui/icons-material'
+import * as ProjectService from '../../services/ProjectService';
+
 
 interface ProjectFormInput {
     projectName: string;
@@ -17,20 +15,6 @@ interface ProjectFormInput {
     description: string;
     categories: string;
 }
-// export type ProjectFormInput = {
-//     Native: string;
-//     TextField: string;
-//     Select: number;
-//     ReactSelect: NestedValue<{ value: string; label: string }>;
-//     Checkbox: boolean;
-//     switch: boolean;
-//     RadioGroup: RadioGroupOption;
-//     MUI_Slider: NumberRange;
-//     ReactDatepicker: Date;
-//     numberFormat: number;
-//     downShift: DownshiftItem;
-//     country: NestedValue<{ code: string; label: string; phone: string }>;
-//   };
 
 const useStyles = makeStyles (theme =>({
     root: {
@@ -51,7 +35,6 @@ const useStyles = makeStyles (theme =>({
 export default function AddProject() {
     const classes = useStyles();
     const { reset, control, register, handleSubmit,formState: { errors }} = useForm<ProjectFormInput>();
-
     const onSubmit = async (data: ProjectFormInput ) => {
         let state = {
             userId: '002',
@@ -62,17 +45,11 @@ export default function AddProject() {
             categories: data.categories
         }
         console.log("state",state)
-       
-        const res = await Auth.currentSession()
-        let jwt = res.getAccessToken().getJwtToken();    
-        return await axiosInstance.post('project', state, {
-            headers: {
-                'Authorization': `Bearer ${jwt}`,
-                'Content-Type': 'application/json'
-            }
-        }) 
+        ProjectService.postData(state).catch(error=>{
+            console.log(error)
+        })
+        reset() 
     }
-    
     return (
         <Paper>
         <form className={classes.root} onSubmit={handleSubmit(onSubmit)}
@@ -103,13 +80,6 @@ export default function AddProject() {
             />
             {errors.targetFundingNum && (
             <Typography variant ="body2" color ="red">Target funding amount must be valid</Typography>)}
-            {/* <Controller
-                render={({ field }) => <TextField 
-                label = "Input target funding amount "{...field}/>}
-                name="targetFundingNum"
-                control={control}
-                defaultValue=""    
-            /> */}
             </Grid>
             <Grid item xs = {2} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center"  }}>
                 <Typography>Target Funding Number</Typography>
@@ -185,26 +155,16 @@ export default function AddProject() {
             />   
             {errors.description && (
             <Typography variant ="body2" color ="red">This field is required</Typography>)}
-            {/* <Controller
-                render={({ field }) => <TextField 
-                label = "Input descriptions of your project"
-                multiline minRows={12} {...field}/>}
-                name="description"
-                control={control}
-                defaultValue=""
-            /> */}
             </Grid>
             <Grid item xs = {2} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center"  }}>
                 <Typography>Project Description</Typography>
             </Grid>
             </Grid>
             <Grid container>
-            
             <Grid item xs = {2}>
             <Button variant="contained" 
             color="primary"
-            type="reset"
-            >
+            type="reset">
                 <Typography variant="button">Reset</Typography>
             </Button>
             </Grid>
@@ -220,7 +180,6 @@ export default function AddProject() {
             </Grid>
         </form>
         </Paper>
-        
     )
 }
 

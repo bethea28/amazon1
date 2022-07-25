@@ -20,19 +20,14 @@ function App(props:any) {
             light: '#757ce8',
             main: '#90D86F',
             dark: green[600],
-            
           }
         },
-        
       })
-  
     return (
       <div className="App">
       <ThemeProvider theme = {theme}>
         <AddProject/>
       </ThemeProvider>
-      
-
       </div>
     );
 }
