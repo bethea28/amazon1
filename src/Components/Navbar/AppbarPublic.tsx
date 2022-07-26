@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, MouseEvent } from 'react';
 import { AppBar, Container, Button } from '@mui/material';
 import { Box, Toolbar, Menu, Tooltip } from '@mui/material';
 import { IconButton, Typography, MenuItem } from '@mui/material';
@@ -8,16 +8,16 @@ import { useNavigate } from "react-router-dom";
 
 const AppbarPublic = () => {
 
-  const pages = ['Sign In'];
+  const pages = ['Login','signup'];
   const settings = ['Projects'];
 
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
 
@@ -33,6 +33,9 @@ const AppbarPublic = () => {
   
   const handleClickProfile= () => {
     navigate("/profile");
+  };
+  const handlePageClick = (key:string) => {
+    navigate(`/${key}`);
   };
 
   return (
@@ -88,7 +91,8 @@ const AppbarPublic = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} 
+                onClick={() => handlePageClick(page)}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
@@ -117,7 +121,7 @@ const AppbarPublic = () => {
              {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={() => handlePageClick(page)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}

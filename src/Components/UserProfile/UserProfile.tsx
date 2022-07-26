@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Box, StyledEngineProvider, Avatar } from '@mui/material';
 import { Grid, Paper, Button, TextField} from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -15,6 +15,8 @@ import { useForm } from "react-hook-form";
 import UserData from '../../Resources/types';
 import AuthService from '../../Services/AuthService';
 import { setConstantValue } from 'typescript';
+import setAuthorizationToken from '../../Services/SetAuthorizationToken';
+import { AuthContext, AuthProvider, AuthData } from '../../Context/AuthProvider';
 
 export default function UserProfile() {
     
@@ -25,15 +27,17 @@ export default function UserProfile() {
   const [user_id, setUserId] = useState<String>('');
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>(true);
   
+  console.log("Get user context")
+    const { id, token, setAuthData } = useContext(AuthContext)
+
   useEffect(() => {
     fetchUserProfile()
   }, [])
 
   const fetchUserProfile = async () => {
     console.log("Called fetchUserProfile()")
-    const jwt = await AuthService.SignIn("zebra21", "Nada1998!")
-    const id = jwt.response.attributes.sub
-    const response = await UserProfileService.getUserProfile(id, jwt.jwt)
+
+    const response = await UserProfileService.getUserProfile(id, token)
     setUserProfile(response.data)
     reset(response.data)
   }
@@ -143,8 +147,8 @@ export default function UserProfile() {
                         return {...prevState, ['bio']: event.target.value};
                       });
                   }}
-                    multiline
-                    rows={4}
+                  multiline={false}
+                  // rows={4}
                     InputLabelProps={{shrink: true}}
                   />
                 </Grid>     
