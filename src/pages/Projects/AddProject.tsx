@@ -35,19 +35,26 @@ export default function AddProject() {
     const classes = useStyles();
     const { reset, control, register, handleSubmit,formState: { errors }} = useForm<ProjectFormInput>();
     const onSubmit = async (data: ProjectFormInput ) => {
+
+        const{projectName, description,categories} = data
+
         let state = {
             userId: '002',
-            projectName: data.projectName,
+            projectName,
             targetFundingNum:data.targetFundingNum.toString(),
             targetFundingDate:data.targetFundingDate.toDateString(),
-            description:data.description,
-            categories: data.categories
+            description,
+            categories
         }
         console.log("state",state)
-        ProjectService.postData(state).catch(error=>{
+        try{
+            await ProjectService.postData(state)
+            reset() 
+        }
+        catch(error){
             console.log(error)
-        })
-        reset() 
+        }
+    
     }
     return (
         <Paper>
@@ -144,8 +151,7 @@ export default function AddProject() {
                 {...register("description", {required: true})} 
                 label = "Input descriptions of your project"
                 multiline minRows={12} 
-                error={errors.description !== undefined}
-                />   
+                error={errors.description !== undefined}/>   
                 {errors.description && (
                 <Typography variant ="body2" color ="red">This field is required</Typography>)}
             </Grid>
