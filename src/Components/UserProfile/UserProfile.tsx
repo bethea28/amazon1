@@ -7,7 +7,7 @@ import AppbarPrivate from '../Navbar/AppbarPrivate';
 import AppbarPublic from '../Navbar/AppbarPublic';
 import "./Styles.css";
 import UserProfileService from '../../Services/UserProfileService';
-import { ProfileBackgroundImageBox, ProfileDataBox } from '../Constants';
+import { profileBackgroundImageBox, profileDataBox } from '../Constants';
 import { useForm } from "react-hook-form";
 import UserData from '../../Resources/types';
 import setAuthorizationToken from '../../Services/SetAuthorizationToken';
@@ -45,10 +45,10 @@ export default function UserProfile() {
   <form onSubmit={onSubmit}>  
       <Box sx={{ display: 'flex', flexDirection: 'column', height: 1000}}>
         {userLoggedIn ? <AppbarPrivate /> : <AppbarPublic />}
-        <Box sx={{...ProfileBackgroundImageBox}}>
+        <Box sx={{...profileBackgroundImageBox}}>
           Picture
         </Box>
-        <Box sx={{...ProfileDataBox}}>
+        <Box sx={{...profileDataBox}}>
           <Box sx={{ fontWeight: 'bold'}}>My Profile</Box>
           <Paper elevation={3} className="customPaper" >    
             <Box className="customBox">
