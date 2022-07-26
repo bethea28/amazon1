@@ -1,7 +1,7 @@
 import React , { useState} from 'react';
 import { Box, Container, Button, Typography, Grid, TextField } from '@material-ui/core';
 import { Auth } from 'aws-amplify';
-import setAuthorizationToken from '../Services/SetAuthorizationToken';
+import setAuthorizationToken from '../services/SetAuthorizationToken';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useNavigate } from "react-router-dom";
 
