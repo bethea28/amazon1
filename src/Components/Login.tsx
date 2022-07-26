@@ -99,11 +99,6 @@ interface IFormInput {
                       type="password"
                     />
                   )}
-                  // rules={{
-                  //   required: true,
-                  //   minLength: 8,
-                  //   pattern: /^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$/
-                  // }}
                 />
               </Grid>
               <Grid item>

@@ -40,7 +40,7 @@ export const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export const headerBox = {
+export const ProfileBackgroundImageBox = {
   width: 1,
   height: 1 / 4,
   my: 3,
@@ -53,7 +53,7 @@ export const headerBox = {
   label: "profile-header-picture"
 }
 
-export const bottomOutterBox = {
+export const ProfileDataBox = {
   width: 2 / 3,
   height: 3 / 4,
   mx: "auto",

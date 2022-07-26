@@ -32,7 +32,7 @@ const AppbarPublic = () => {
   const navigate = useNavigate();
   
   const handleClickProfile= () => {
-    navigate("/profile");
+    //navigate("/profile");
   };
   const handlePageClick = (key:string) => {
     navigate(`/${key}`);
@@ -129,10 +129,13 @@ const AppbarPublic = () => {
             ))}
           </Box>
 
+          
+
           <Box sx={{ flexGrow: 0 }}>
               <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", borderRadius:50}} 
-              variant="contained" size="small" onClick={handleClickProfile}>Profile</Button>
+              variant="contained" size="small" onClick={handleClickProfile}>Start a project</Button>
           </Box>
+          
         </Toolbar> 
       </Container> 
     </AppBar>
