@@ -16,20 +16,23 @@ import Signup from './Components/Signup';
 import Login from './Components/Login';
 import Dashboard from './Routes/Home/Dashboard';
 import UserProfile from './Components/UserProfile/UserProfile'
+import { AuthProvider } from './Context/AuthProvider'
 Amplify.configure(awsconfig);
 
 function App() {
 
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/" element={<UserProfile />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/profile" element={<UserProfile />} />
-      <Route path="/interests" element={<InterestSelection />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/login" element={<Login />} />
-    </Routes>
+    <AuthProvider>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/" element={<UserProfile />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/profile" element={<UserProfile />} />
+        <Route path="/interests" element={<InterestSelection />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </AuthProvider>
   );
 }
 export default App;
