@@ -10,6 +10,7 @@
       "StackName": "amplify-amazon1frontend-dev-190318",
       "StackId": "arn:aws:cloudformation:us-east-1:313135610139:stack/amplify-amazon1frontend-dev-190318/d1bb0e60-0236-11ed-b5e1-0e3fd6399897",
       "AmplifyAppId": "d2572yy20pwtiz"
+
     },
     "categories": {
       "auth": {
