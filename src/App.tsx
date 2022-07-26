@@ -1,5 +1,4 @@
-import './App.css';
-import AvatarUploadField from './Components/AvatarUploadField';
+import React from 'react';
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import InterestSelection from './Routes/Signup/InterestSelection';
@@ -9,7 +8,6 @@ import Home from './Components/Home/Home';
 import Dashboard from './Routes/Home/Dashboard';
 
 function App() {
-
   return (
     <Box className="App" height={"100vh"} display={"flex"} flexDirection={"column"}>
       <Routes>

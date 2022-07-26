@@ -5,63 +5,34 @@ import { getAvatar, uploadAvatar, deleteAvatar } from '../Services/AvatarService
 
 export default function AvatarUploadField() {
 
-    //Need to be updated with current user via getUser service or GetUserResponse constants?
-    const userId = "001";
-
+    
+    const userId = "001"; //Need to be updated with current user
     const filename = userId;
 
-    /**
-     * Shows either the default image for no image saved or the current image saved
-     */
     const[preview, setPreview] = useState("");
-
-    /**
-     * Sets the image file to be saved
-     */
     const [file, setFile] = useState("");
-
-    /**
-     * This useState disables the Save Avatar button after it is clicked
-     */ 
     const [disabledSave, setDisabledSave] = useState(false);
-
-    /**
-     * This useState disables the Delete Avatar button after it is clicked 
-     */
-    
     const [disabledDelete, setDisabledDelete] = useState(false);
 
     /**
      * Shows the current image saved by the user in the past to be used in useEffect hook
      */
     const showAvatar = async () => {
-
         try {
-
-            /**
-             * Calls getAvatar service
-             * @params userId The current user's id
-             * @params filename Set to the current user's id and is the name of the file to get
-             */
             const response = await getAvatar(userId, filename);    
             const convert: any = Object.entries(response);
             const imageURL = convert[0][1].uri;
-            
             setPreview(imageURL);
-
         } catch (error) {
                 console.log(error);
             }
-
     };
 
     /**
      * onLoad display the image of the avatar associated with current user
      */
     useEffect( () => {
-    
         showAvatar();
- 
     }, []);
 
     /**
@@ -69,18 +40,15 @@ export default function AvatarUploadField() {
      * Event type is any for now for file useState to be data types File, String, or Blob.
      */
     function handleChange(e: any) {
-
         let fileChosen = URL.createObjectURL(e.target.files[0]);
         setPreview(fileChosen);
         setFile(e.target.files[0]);
-
     }
 
     /**
      * This handler uploads photo chosen to the backend
      */
     const handleUpload = (e: React.MouseEvent<HTMLElement>) => {
-
         setDisabledSave(true);
 
         /**
@@ -88,41 +56,21 @@ export default function AvatarUploadField() {
          */
         let bodyFormData = new FormData();
         bodyFormData.append('file', file);
-
-        /**
-         * Calls uploadAvatar service
-         * @params userId The current user's id
-         * @params bodyFormData The image file to be saved via form data
-         */
         uploadAvatar(userId, bodyFormData);
-
     }
 
     /**
-     * This handler deletes the current photo saved in the backend
+     * This handler deletes the current photo saved in the backend and resets the preview image to the default no avatar image
      */
     const handleDeleteAvatar = (e: React.MouseEvent<HTMLElement>) => {
-
         setDisabledDelete(true);
-
-        /**
-         * Calls deleteAvatar service
-         * @params userId The current user's id
-         * @params filename The image file to delete
-         */
         deleteAvatar(userId, filename);
-
         const noAvatar = "";
         setPreview(noAvatar);
         setFile(noAvatar);
-
     }
 
-    /**
-     * Returns the UI and functions to call
-     */
     return(
-
       <Box sx={{ display: 'flex', flexDirection: 'column', border: 1 }}>
             <Box sx={{ display: 'flex', margin: 2, justifyContent: 'center' }}>
                 <Avatar
@@ -155,7 +103,6 @@ export default function AvatarUploadField() {
                   >
                   Save Avatar
                   </Button>
-
               <Button className="deleteAvatar"
                   sx={{ margin: 1, backgroundColor:"#A6BBA7", color:"#000000", mt:1, height: 25 }}
                   variant="contained" 
@@ -167,6 +114,5 @@ export default function AvatarUploadField() {
                   </Button>
             </Box>
       </Box>
-            
     )
 }
