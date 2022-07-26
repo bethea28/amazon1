@@ -1,7 +1,7 @@
 import { Container, Box, ButtonGroup, Button, Stack, Typography, ThemeProvider } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Header from "../../Components/Header";
-import { getNewestProjects, getRecommendedProjects } from "../../Services/ProjectService";
+import { getNewestProjects, getRecommendedProjects } from "../../services/ProjectService";
 import { Project } from "../../Resources/Constants";
 import NavigationBar from "./Components/NavigationBar";
 import ProjectList from "./Components/ProjectList";

@@ -5,7 +5,7 @@ import { FormControl, InputLabel, MenuItem, Button,
 import {MuiPickersUtilsProvider, KeyboardDatePicker}from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns';
 import { useForm, Controller} from "react-hook-form";
-import * as ProjectService from '../../services/ProjectService';
+import {postData} from '../../services/AddProjectService';
 
 interface ProjectFormInput {
     projectName: string;
@@ -48,7 +48,7 @@ export default function AddProject() {
         }
         console.log("state",state)
         try{
-            await ProjectService.postData(state)
+            await postData(state)
             reset() 
         }
         catch(error){
