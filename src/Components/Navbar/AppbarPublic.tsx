@@ -32,8 +32,8 @@ const AppbarPublic = () => {
   const navigate = useNavigate();
   
   const handleClickProfile= () => {
-    //navigate("/profile");
   };
+
   const handlePageClick = (key:string) => {
     navigate(`/${key}`);
   };
@@ -42,7 +42,6 @@ const AppbarPublic = () => {
     <AppBar position="static" sx={{bgcolor:"#335436"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
           <Typography
             variant="h6"
             noWrap
