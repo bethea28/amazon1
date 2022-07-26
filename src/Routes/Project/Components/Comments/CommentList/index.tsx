@@ -1,7 +1,7 @@
 import { Avatar, Box, Grid, Paper, Typography } from "@mui/material";
 import { green } from "@mui/material/colors";
 import React from "react";
-import CommentField from "./CommentField";
+import CommentField from "../CommentField";
 
 function CommentList() {
 
