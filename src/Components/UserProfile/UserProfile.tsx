@@ -8,13 +8,8 @@ import AppbarPublic from '../Navbar/AppbarPublic';
 import "./Styles.css";
 import UserProfileService from '../../Services/UserProfileService';
 import { headerBox, bottomOutterBox } from '../Constants';
-import { Auth } from 'aws-amplify';
-import { axiosInstance } from '../../Resources/Constants';
-import axios from 'axios';
 import { useForm } from "react-hook-form";
 import UserData from '../../Resources/types';
-import AuthService from '../../Services/AuthService';
-import { setConstantValue } from 'typescript';
 import setAuthorizationToken from '../../Services/SetAuthorizationToken';
 import { AuthContext, AuthProvider, AuthData } from '../../Context/AuthProvider';
 
@@ -27,29 +22,21 @@ export default function UserProfile() {
   const [user_id, setUserId] = useState<String>('');
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>(true);
   
-  console.log("Get user context")
-    const { id, token, setAuthData } = useContext(AuthContext)
+  //get user context
+  const { id, token, setAuthData } = useContext(AuthContext)
 
   useEffect(() => {
     fetchUserProfile()
   }, [])
 
   const fetchUserProfile = async () => {
-    console.log("Called fetchUserProfile()")
-
     const response = await UserProfileService.getUserProfile(id, token)
     setUserProfile(response.data)
     reset(response.data)
   }
 
   const onSubmit = handleSubmit(async (data: UserData)=>{
-    console.log("submit")
-    const jwt = await AuthService.SignIn("zebra21", "Nada1998!")
-    const id = jwt.response.attributes.sub
-    console.log(data)
-    console.log(`jwt: ${jwt.jwt}`)
-    
-    const response = await UserProfileService.updateUserProfile(id, jwt.jwt, data)
+    const response = await UserProfileService.updateUserProfile(id, token, data)
 
 })
 

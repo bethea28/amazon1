@@ -10,8 +10,6 @@ class UserProfileService{
       'Content-Type': 'application/json'
       }      
     })
-    console.log("response data from getUserProfile")
-    console.log(response.data)
     return(response)
   }
 

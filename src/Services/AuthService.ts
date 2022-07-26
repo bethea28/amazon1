@@ -5,8 +5,6 @@ class AuthService{
   SignIn = async (username:string, password:string) => {
     const response = await Auth.signIn(username, password)
     const jwt = await this.getCurrentUser()
-    console.log("newUser")
-    console.log(jwt)
     const returns = {jwt, response}
     return returns
   }
