@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, MouseEvent } from 'react';
 import { AppBar, Container, Button } from '@mui/material';
 import { Box, Toolbar, Menu, Tooltip } from '@mui/material';
 import { IconButton, Typography, MenuItem } from '@mui/material';
@@ -6,17 +6,18 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from "react-router-dom";
 
-const pages = ['Sign In'];
-const settings = ['Projects'];
-
 const AppbarPublic = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const pages = ['Login','signup'];
+  const settings = ['Projects'];
+
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+
+  const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
 
@@ -31,14 +32,16 @@ const AppbarPublic = () => {
   const navigate = useNavigate();
   
   const handleClickProfile= () => {
-    navigate("/profile");
+  };
+
+  const handlePageClick = (key:string) => {
+    navigate(`/${key}`);
   };
 
   return (
     <AppBar position="static" sx={{bgcolor:"#335436"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -57,18 +60,18 @@ const AppbarPublic = () => {
             JUMPSTARTER
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
+               size="large"
+               aria-label="account of current user"
+               aria-controls="menu-appbar"
+               aria-haspopup="true"
+               onClick={handleOpenNavMenu}
+               color="inherit"
+             >
+               <MenuIcon />
+             </IconButton>
+             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
@@ -87,14 +90,14 @@ const AppbarPublic = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} 
+                onClick={() => handlePageClick(page)}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
-            </Menu>
-          </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
+             </Menu>
+           </Box>
+           <Typography
             variant="h5"
             noWrap
             component="a"
@@ -110,13 +113,13 @@ const AppbarPublic = () => {
               textDecoration: 'none',
             }}
           >
-            LOGO
-          </Typography>
+            JUMPSTARTER
+           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={() => handlePageClick(page)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
@@ -124,14 +127,15 @@ const AppbarPublic = () => {
             ))}
           </Box>
 
+          
+
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
               <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", borderRadius:50}} 
-              variant="contained" size="small" onClick={handleClickProfile}>Profile</Button>
-            </Tooltip>
+              variant="contained" size="small" onClick={handleClickProfile}>Start a project</Button>
           </Box>
-        </Toolbar>
-      </Container>
+          
+        </Toolbar> 
+      </Container> 
     </AppBar>
   );
 };
