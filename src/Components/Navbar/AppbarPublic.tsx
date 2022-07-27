@@ -97,7 +97,6 @@ const AppbarPublic = () => {
               ))}
              </Menu>
            </Box>
-  <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
            <Typography
             variant="h5"
             noWrap
@@ -114,7 +113,7 @@ const AppbarPublic = () => {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            JUMPSTARTER
            </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
              {pages.map((page) => (
