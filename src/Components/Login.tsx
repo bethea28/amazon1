@@ -1,7 +1,7 @@
 import React , { useState} from 'react';
 import { Box, Container, Button, Typography, Grid, TextField } from '@material-ui/core';
 import { Auth } from 'aws-amplify';
-import setAuthorizationToken from '../services/SetAuthorizationToken';
+import setAuthorizationToken from '../Services/SetAuthorizationToken';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useNavigate } from "react-router-dom";
 
@@ -92,7 +92,7 @@ interface IFormInput {
                   rules={{
                     required: true,
                     minLength: 8,
-                    pattern: /^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$/
+                    pattern: /^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=]).*$/
                   }}
                 />
               </Grid>

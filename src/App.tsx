@@ -1,7 +1,6 @@
 
 import '@aws-amplify/ui-react/styles.css';
 import awsmobile from './aws-exports';
-import {ThemeProvider} from '@material-ui/core';
 import { green } from '@material-ui/core/colors';
 import { createTheme } from '@mui/material/styles';
 import AddProject from './pages/Projects/AddProject'
@@ -26,15 +25,15 @@ Amplify.configure(awsconfig);
 
 function App() {
 
-  const theme = createTheme({
-    palette: {
-      primary: {
-        light: '#757ce8',
-        main: '#90D86F',
-        dark: green[600],
-      }
-    },
-  })
+  // const theme = createTheme({
+  //   palette: {
+  //     primary: {
+  //       light: '#757ce8',
+  //       main: '#90D86F',
+  //       dark: green[600],
+  //     }
+  //   },
+  // })
   return (
     <Box className="App" height={"100vh"} display={"flex"} flexDirection={"column"}>
       <ThemeProvider theme = {theme}>

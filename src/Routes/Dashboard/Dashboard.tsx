@@ -1,12 +1,12 @@
 import { Container, Box, ButtonGroup, Button, Stack, Typography, ThemeProvider } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import Header from "../../Components/Header";
-import { getNewestProjects, getRecommendedProjects } from "../../services/ProjectService";
+import { getNewestProjects, getRecommendedProjects } from "../../Services/ProjectService";
 import { Project } from "../../Resources/Constants";
 import NavigationBar from "./Components/NavigationBar";
 import ProjectList from "./Components/ProjectList";
 import SearchBar from "./Components/SearchBar";
 import { theme } from "../../Resources/GlobalTheme";
+import AppbarPublic from "../../Components/Navbar/AppbarPublic";
 
 function Dashboard() {
 
@@ -37,7 +37,7 @@ function Dashboard() {
     return (
         <ThemeProvider theme={theme}>
             <Box>
-                <Header />
+                <AppbarPublic />
                 <Container>
                     <SearchBar />
                     <NavigationBar />
