@@ -36,7 +36,6 @@ function App() {
         <AuthProvider>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/" element={<UserProfile />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/profile" element={<UserProfile />} />
             <Route path="/interests" element={<InterestSelection />} />
