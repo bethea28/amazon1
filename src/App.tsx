@@ -17,6 +17,8 @@ import SignUp from './Components/Signup';
 import Login from './Components/Login';
 import UserProfile from './Components/UserProfile/UserProfile'
 import { AuthProvider } from './Context/AuthProvider'
+import RequireAuth from './Components/RequireAuth'
+import AppbarPublic from './Components/Navbar/AppbarPublic';
 Amplify.configure(awsconfig);
 
 function App() {
@@ -35,13 +37,20 @@ function App() {
       <ThemeProvider theme = {theme}>
         <AuthProvider>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/profile" element={<UserProfile />} />
-            <Route path="/interests" element={<InterestSelection />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/addproject" element={<AddProject />} />
+            {/* public routes */}
+              <Route path="/" element={<Home />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/login" element={<Login />} />
+
+            {/* protected routes */}
+            <Route element={<RequireAuth/>}>
+              <Route path="/profile" element={<UserProfile />} />
+              <Route path="/interests" element={<InterestSelection />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/addproject" element={<AddProject />} />
+            </Route>
+            
+            {/* catch all */}
           </Routes>
         </AuthProvider>
       </ThemeProvider>
