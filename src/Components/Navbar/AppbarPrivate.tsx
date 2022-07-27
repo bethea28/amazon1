@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent } from 'react';
+import React, { useState, MouseEvent, useContext } from 'react';
 import { AppBar } from '@mui/material';
 import { Box, Toolbar, Menu, Badge } from '@mui/material';
 import { IconButton, Typography, MenuItem } from '@mui/material';
@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import Logout from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {Search, SearchIconWrapper, StyledInputBase} from '../Constants'
+import { AuthContext } from '../../Context/AuthProvider';
 
 export default function AppbarPrivate() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -22,6 +23,7 @@ export default function AppbarPrivate() {
   const settings = ['My Projects', 'Liked Projects'];
 
   const navigate = useNavigate();
+  const { id, token, setAuthData } = useContext(AuthContext)
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -56,6 +58,14 @@ export default function AppbarPrivate() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const handleLogout = () =>
+  {
+    setAuthData(prevState => {
+      return {...prevState, ['id']: '' , ['token']: ''}
+    })
+    navigate("/")
+  }
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -80,7 +90,7 @@ export default function AppbarPrivate() {
         <ListItemText primary="Profile" />
       </MenuItem>
       <Divider />
-      <MenuItem>
+      <MenuItem onClick={handleLogout}>
         <ListItemIcon>
           <Logout fontSize="small" />
         </ListItemIcon>

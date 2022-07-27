@@ -3,13 +3,19 @@ import { Box, Container, Button, Typography, Grid, TextField } from '@material-u
 import { Auth } from 'aws-amplify';
 import SetAuthorizationToken from '../Services/SetAuthorizationToken';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate,  } from "react-router-dom";
 import { AuthContext, AuthProvider, AuthData } from '../Context/AuthProvider'
 
 interface IFormInput {
   username: string,
   password: string,
 };
+
+interface LocationState {
+  from: {
+    pathname: string;
+  };
+}
 
   function Login() {
 
@@ -18,6 +24,8 @@ interface IFormInput {
     const { control, handleSubmit } = useForm<IFormInput>();
     const [errorMessage, setError] = useState("");
     const navigate = useNavigate();
+    const location = useLocation();
+    const {from} = location.state as LocationState || "/profile"
 
     const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
       const username = data.username;
@@ -33,6 +41,10 @@ interface IFormInput {
         setAuthData(prevState => {
           return {...prevState, ['id']: userId , ['token']: token}
         })
+
+        if(location.state)
+          navigate(from.pathname, {replace: true});
+        else
         navigate("/profile");
         
       } catch (error) {
