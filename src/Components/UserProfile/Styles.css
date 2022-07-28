@@ -1,0 +1,24 @@
+.customPaper {
+  flex-direction: column;
+  height: 28%;
+  margin-top: 10px;
+  margin-right: 25px;
+  border-radius: 5px;
+  display: flex; 
+  background-color: #EAEAEA;
+}
+
+.customBox {
+  width: 100%;
+  border-radius: 5px;
+  display: flex;
+  background-color: #335436;
+  height: 25%;
+}
+
+.arrowUp-root:hover {
+  background-color:#A6BBA7;
+  color: #000000; 
+  margin-top:1;
+  height: 25;
+}
