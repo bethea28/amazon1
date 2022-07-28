@@ -1,47 +1,80 @@
 
 import { Box, TextField, Avatar, Button } from '@mui/material';
-import React, { useState } from 'react';
-import AvatarService from '../services/AvatarService';
-
+import { useState, useEffect } from 'react';
+import { getAvatar, uploadAvatar, deleteAvatar } from '../Services/AvatarService';
 
 export default function AvatarUploadField() {
 
-    //Need UseContext to pass in global userId variable
-    const userId = "001";
+    const userId = "001"; //Need to be updated with current user
+    const filename = userId;
 
-    //When no profile pic is uploaded, show this default iamge. When uploaded, show the new image
-    const [file, setFile] = useState("../no-profile-pic-icon-11.png");
+    const[preview, setPreview] = useState("");
+    const [file, setFile] = useState("");
+    const [disabledSave, setDisabledSave] = useState(false);
+    const [disabledDelete, setDisabledDelete] = useState(false);
 
-    //Handler to change image file locally when new image is chosen
+    /**
+     * Shows the current image saved by the user in the past to be used in useEffect hook
+     */
+    const showAvatar = async () => {
+        try {
+            const response = await getAvatar(userId, filename);    
+            const convert: any = Object.entries(response);
+            const imageURL = convert[0][1].uri;
+            setPreview(imageURL);
+        } catch (error) {
+                console.log(error);
+            }
+    };
+
+    /**
+     * onLoad display the image of the avatar associated with current user
+     */
+    useEffect( () => {
+        showAvatar();
+    }, []);
+
+    /**
+     * This handler changes the image displayed and file to be saved based on the image chosen to be saved.
+     * Event type is any for now for file useState to be data types File, String, or Blob.
+     */
     function handleChange(e: any) {
-
-        let url = URL.createObjectURL(e.target.files[0]);
-        setFile(url);
-        console.log(url);
-        
+        let fileChosen = URL.createObjectURL(e.target.files[0]);
+        setPreview(fileChosen);
+        setFile(e.target.files[0]);
     }
 
-    //Handler to upload photo chosen to the backend
-    const handleUpload = (e: any) => {
+    /**
+     * This handler uploads photo chosen to the backend
+     */
+    const handleUpload = (e: React.MouseEvent<HTMLElement>) => {
+        setDisabledSave(true);
 
-        AvatarService.uploadAvatar(userId, file);
-
+        /**
+         * Allows the iamge file to be transferred to the backend via form data
+         */
+        let bodyFormData = new FormData();
+        bodyFormData.append('file', file);
+        uploadAvatar(userId, bodyFormData);
     }
 
-      //Handler to delete current photo saved in the backend
-      const handleDeleteAvatar = (e: any) => {
-        
-        AvatarService.deleteAvatar(userId, file);
-
-      }
+    /**
+     * This handler deletes the current photo saved in the backend and resets the preview image to the default no avatar image
+     */
+    const handleDeleteAvatar = (e: React.MouseEvent<HTMLElement>) => {
+        setDisabledDelete(true);
+        deleteAvatar(userId, filename);
+        const noAvatar = "";
+        setPreview(noAvatar);
+        setFile(noAvatar);
+    }
 
     return(
-
-      <Box sx={{ display: 'flex', flexDirection: 'column', border: 4 }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', border: 1 }}>
             <Box sx={{ display: 'flex', margin: 2, justifyContent: 'center' }}>
                 <Avatar
                     alt="Profile Image"
-                    src={file}
+                    src={preview}
                     sx={{ width: 75, height: 75 }}
                 />
                 <TextField
@@ -60,25 +93,25 @@ export default function AvatarUploadField() {
                 />
             </Box>
             <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
-              <Button
+              <Button className="uploadAvatar"
                   sx={{ margin: 1, backgroundColor:"#A6BBA7", color:"#000000", mt:1, height: 25 }}
                   variant="contained" 
                   component="span"
+                  disabled={disabledSave}
                   onClick={handleUpload}
                   >
                   Save Avatar
                   </Button>
-
-              <Button
+              <Button className="deleteAvatar"
                   sx={{ margin: 1, backgroundColor:"#A6BBA7", color:"#000000", mt:1, height: 25 }}
                   variant="contained" 
                   component="span"
+                  disabled={disabledDelete}
                   onClick={handleDeleteAvatar}
                   >
                   Delete Avatar
                   </Button>
             </Box>
       </Box>
-            
     )
 }
