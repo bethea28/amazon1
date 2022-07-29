@@ -10,22 +10,22 @@ export default function ProjectDetails() {
 
     //Update to refer to specific project clicked on identified by project id
     //useParams or Context to pass in global projectId variable
-    const projectID = "f476a834-cfea-4184-8596-d7bfbce50dfd"
+    const projectId = "f476a834-cfea-4184-8596-d7bfbce50dfd"
 
-    //Empty project details to be filled in once page renders
-    const initialProjectState: Project[] = [{
-        projectId: "",
-        userId: "",
-        projectName: "",
-        targetFundingNum: "",
-        targetFundingDate: "",
-        description: "",
-        categories: "",
-        createdAt: "",
-        lastUpdatedAt: ""
-    }]
+    // //Empty project details to be filled in once page renders
+    // const initialProjectState: Project[] = [{
+    //     projectId: "",
+    //     userId: "",
+    //     projectName: "",
+    //     targetFundingNum: "",
+    //     targetFundingDate: "",
+    //     description: "",
+    //     categories: "",
+    //     createdAt: "",
+    //     lastUpdatedAt: ""
+    // }]
 
-    const [currentProject, setCurrentProject] = useState<Project[]>(initialProjectState);
+    const [currentProject, setCurrentProject] = useState<Project[]>();
 
     //As soon as the page is rendered, getData function will get called
     useEffect(() => {
@@ -33,27 +33,18 @@ export default function ProjectDetails() {
         const getData = async () => {
 
             //Call axios service to fetch data
-            try {
-                const response = await getProjectDetails(projectID);
-                setCurrentProject(response!);
-
-            } catch (error) {
-                    console.log(error);
-                }
-            //Show fetched data on page by updating state
+            const response = await getProjectDetails(projectId);
+            setCurrentProject(response!);
         }
 
         if (!currentProject) {
             getData();
         }
-
     }, [currentProject]);
 
     return (
         <Box className="Project-details">
-            <Box className="Project-title">
-                <ProjectDetailsList projects={currentProject!} />
-            </Box>
+            <ProjectDetailsList projects={currentProject!} />
         </Box>
     )
 }
