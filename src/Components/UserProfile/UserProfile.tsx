@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Box, StyledEngineProvider, Avatar } from '@mui/material';
 import { Grid, Paper, Button, TextField} from '@mui/material';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import AppbarPrivate from '../Navbar/AppbarPrivate';
 import AppbarPublic from '../Navbar/AppbarPublic';
 import "./Styles.css";

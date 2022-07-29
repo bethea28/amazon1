@@ -19,8 +19,7 @@ interface LocationState {
 
   function Login() {
 
-    //get context
-    const { id, token, setAuthData } = useContext(AuthContext)
+    const { setAuthData } = useContext(AuthContext)
     const { control, handleSubmit } = useForm<IFormInput>();
     const [errorMessage, setError] = useState("");
     const navigate = useNavigate();
@@ -46,7 +45,6 @@ interface LocationState {
             navigate(from.pathname, {replace: true}); 
           }
         else{
-          console.log("In profile")
           navigate("/profile");
         }
         
@@ -58,7 +56,6 @@ interface LocationState {
         }
       }
     }
-
 
     return (
       <Container component="main" maxWidth="xs" className="signUpBox">

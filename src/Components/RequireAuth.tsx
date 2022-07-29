@@ -1,8 +1,6 @@
 import { useLocation, Navigate, Outlet } from "react-router-dom"
-import { useState, useEffect, useContext } from "react"
-import AuthService from '../Services/AuthService'
-import AppbarPublic from "./Navbar/AppbarPublic";
-import { AuthContext, AuthProvider, AuthData } from '../Context/AuthProvider'
+import { useContext } from "react"
+import { AuthContext } from '../Context/AuthProvider'
 
 const RequireAuth = () => {
 

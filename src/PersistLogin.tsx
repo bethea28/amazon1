@@ -4,8 +4,8 @@ import { AuthContext } from './Context/AuthProvider'
 import AuthService from "./Services/AuthService";
 
 const PersistLogin = () => {
+  
   const [isLoading, setIsLoading] = useState(true)
-
   const { isLoggedIn, setAuthData } = useContext(AuthContext)
 
   useEffect(() => {

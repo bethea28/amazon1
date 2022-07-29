@@ -3,12 +3,14 @@ import React, { useState, createContext, Dispatch, SetStateAction } from "react"
 type Props = {
   children: React.ReactNode;
 };
+
 export type AuthData = {
   id: string;
   token: string;
   isLoggedIn: boolean;
   setAuthData: Dispatch<SetStateAction<AuthData>>;
 };
+
 const initialData: AuthData = {
   id: '',
   token: '',
