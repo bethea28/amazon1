@@ -19,3 +19,13 @@ export async function getNewestProjects() {
         console.log(error);
     }
 }
+
+export async function getProjectDetails(projectID: string) {
+    
+    try {
+        const { data } = await axiosInstance.get<Project>(`/project/${projectID}`);
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+}

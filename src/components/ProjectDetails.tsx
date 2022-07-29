@@ -1,33 +1,28 @@
 import { Box, TextField, Avatar, Button } from '@mui/material';
-import ProjectService from '../services/ProjectService';
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from 'react-router-dom';
+import { Project } from '../Resources/Constants';
+import { getProjectDetails } from '../Services/ProjectService';
 
 
+export default function ProjectDetails(props: Project) {
 
-export default function ProjectDetails(props: String) {
-
-    //Refer to specific project clicked on identified by project id
-    
-    // let params = useParams;
-    // console.log(params);
-
-    //Or use Context to pass in global projectId variable
+    //Update to refer to specific project clicked on identified by project id
+    //useParams or Context to pass in global projectId variable
+    const projectID = "001"
 
     //Empty project details to be filled in once page renders
     const initialProjectState = {
-        projectId: null,
-        userId: "",
+        projectID: "",
+        userID: "",
         projectName: "",
-        targetFundingNum: "",
-        targetFundingDate: "",
         description: "",
-        categories: ""
+        categories: "",
+        targetFundingDate: "",
+        targetFundingNum: ""
     }
 
-    const projectId = "001"
-
-    const [currentProject, setCurrentProject] = useState(initialProjectState);
+    const [currentProject, setCurrentProject] = useState<Project>(initialProjectState);
 
     //As soon as the page is rendered, getData function will get called
     useEffect(() => {
@@ -35,26 +30,33 @@ export default function ProjectDetails(props: String) {
         const getData = async () => {
 
             //Call axios service to fetch data
-            const data = await ProjectService.getProject(projectId);
+            try {
+                const response = await getProjectDetails(projectID);
+                setCurrentProject(response!);
 
+            } catch (error) {
+                    console.log(error);
+                }
             //Show fetched data on page by updating state
-            setCurrentProject(data);
+        }
 
-        };
+        if (!currentProject) {
+            getData();
+        }
 
-        getData();
-
-    }, []);
-
-    console.log("Project Details: ", currentProject);
-
+    }, [currentProject]);
 
     return (
-        <Box className="Project">
-            {currentProject.data? <h2>Title: {currentProject.data.projectName}</h2> : null}
+        <Box className="Project-details">
+            <Box className="Project-title">
+                {props? <h2>Title: {currentProject.projectName}</h2> : null}
+            </Box>
+            <Box className="Project-categories">
+            {props? <h2>Categories: {currentProject.categories}</h2> : null}
+            </Box>
+            <Box className="Project-description">
+            {props? <h2>Description: {currentProject.description}</h2> : null}
+            </Box>
         </Box>
     )
-
-
-
 }
