@@ -12,6 +12,16 @@ class UserProfileService{
     return(response)
   }
 
+  showUserProfile = async (userId: string, jwt:string) => {
+    const response = await axiosInstance.get(`/profile/view/${userId}`, {
+      headers: {
+      'Authorization': `Bearer ${jwt}`,
+      'Content-Type': 'application/json'
+      }      
+    })
+    return(response)
+  }
+
   updateUserProfile = async (userId: string, jwt: string, data: object) => {
     const response = await axiosInstance.put(`/profile/${userId}`, data, {
       headers: {

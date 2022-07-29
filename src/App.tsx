@@ -18,6 +18,7 @@ import { AuthProvider } from './Context/AuthProvider'
 import RequireAuth from './Components/RequireAuth'
 import Layout from './Layout';
 import PersistLogin from './PersistLogin';
+import ViewUserProfile from './Components/UserProfile/ViewUserProfile';
 
 Amplify.configure(awsconfig);
 
@@ -42,6 +43,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/profile/view" element={<ViewUserProfile />} />
 
               {/* protected routes */}
               <Route element={<PersistLogin/>}>

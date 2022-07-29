@@ -1,5 +1,6 @@
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
+import { formHelperTextClasses } from '@mui/material';
 
 export const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -53,8 +54,37 @@ export const profileBackgroundImageBox = {
   label: "profile-header-picture"
 }
 
+export const viewProfileInfo = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: 1,
+  height: 1,
+  mr: 2,
+  backgroundColor: '#f5f0f0',
+  borderRadius: '5px',
+  fontSize: '0.875rem',
+  fontWeight: '700',
+  textAlign: 'center',
+  label: "profile-header-picture"
+}
+
 export const profileDataBox = {
   width: 2 / 3,
+  height: 3 / 4,
+  mx: "auto",
+  pl: 3,
+  py: 1,
+  backgroundColor: '#EAEAEA',
+  borderRadius: 2,
+  fontSize: '0.875rem',
+  fontWeight: '700',
+  textAlign: 'left',
+  label: "My profile section"
+}
+
+export const viewProfileAdditional = {
+  width: 1,
   height: 3 / 4,
   mx: "auto",
   pl: 3,
