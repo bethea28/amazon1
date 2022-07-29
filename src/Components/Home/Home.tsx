@@ -11,7 +11,6 @@ export default function Home() {
     isLogged()
   }, [loggedIn])
 
-
   const isLogged = async () => {
     setLoggedIn(await AuthService.isLogged())
   }

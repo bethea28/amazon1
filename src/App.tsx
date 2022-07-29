@@ -1,16 +1,14 @@
-import { useState, useEffect } from 'react';
 import '@aws-amplify/ui-react/styles.css';
 import { green } from '@material-ui/core/colors';
 import { createTheme } from '@mui/material/styles';
 import AddProject from './pages/Projects/AddProject'
 import React from 'react';
 import './App.css';
-import { Amplify, Auth } from 'aws-amplify';
+import { Amplify } from 'aws-amplify';
 import awsconfig from './aws-exports';
 import { Routes, Route } from 'react-router-dom';
 import InterestSelection from './Routes/Signup/InterestSelection';
 import { Box, ThemeProvider } from '@mui/material';
-import * as global from "./Resources/GlobalTheme";
 import Home from './Components/Home/Home';
 import Dashboard from './Routes/Dashboard/Dashboard';
 import SignUp from './Components/Signup';
@@ -18,7 +16,6 @@ import Login from './Components/Login';
 import UserProfile from './Components/UserProfile/UserProfile'
 import { AuthProvider } from './Context/AuthProvider'
 import RequireAuth from './Components/RequireAuth'
-import AppbarPublic from './Components/Navbar/AppbarPublic';
 import Layout from './Layout';
 import PersistLogin from './PersistLogin';
 
@@ -55,8 +52,6 @@ function App() {
                   <Route path="/addproject" element={<AddProject />} />
                 </Route>
               </Route>
-              
-              {/* catch all */}
             </Route>
           </Routes>
         </AuthProvider>
