@@ -4,7 +4,7 @@ import { axiosInstance } from "../Resources/Constants"
 class UserProfileService{
 
   getUserProfile = async (userId: string, jwt:string) => {
-      const response = await axiosInstance.get(`/profile/${userId}`, {
+    const response = await axiosInstance.get(`/profile/${userId}`, {
       headers: {
       'Authorization': `Bearer ${jwt}`,
       'Content-Type': 'application/json'

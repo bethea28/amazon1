@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import UserData from '../../Resources/types';
 import { AuthContext} from '../../Context/AuthProvider';
 import { ProfileSectionStyle } from './UserProfileStyle';
+import AuthService from '../../Services/AuthService';
 
 export default function UserProfile() {
 
@@ -26,7 +27,8 @@ export default function UserProfile() {
   }, [])
 
   const fetchUserProfile = async () => {
-    const response = await UserProfileService.getUserProfile(id, token)
+    const token = await AuthService.getCurrentUser()
+    const response = await UserProfileService.getUserProfile(token.id, token.jwt)
     setUserProfile(response.data)
     reset(response.data)
   }

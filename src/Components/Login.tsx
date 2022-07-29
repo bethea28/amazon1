@@ -4,7 +4,7 @@ import { Auth } from 'aws-amplify';
 import SetAuthorizationToken from '../Services/SetAuthorizationToken';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useLocation, useNavigate,  } from "react-router-dom";
-import { AuthContext, AuthProvider, AuthData } from '../Context/AuthProvider'
+import { AuthContext } from '../Context/AuthProvider'
 
 interface IFormInput {
   username: string,
@@ -39,13 +39,16 @@ interface LocationState {
         const token:string = await SetAuthorizationToken()
         
         setAuthData(prevState => {
-          return {...prevState, ['id']: userId , ['token']: token}
+          return {...prevState, ['id']: userId , ['token']: token, ['isLoggedIn']: true}
         })
 
-        if(location.state)
-          navigate(from.pathname, {replace: true});
-        else
-        navigate("/profile");
+        if(location.state){
+            navigate(from.pathname, {replace: true}); 
+          }
+        else{
+          console.log("In profile")
+          navigate("/profile");
+        }
         
       } catch (error) {
         if (typeof error === 'object' && error != null) {
