@@ -39,6 +39,7 @@ function App() {
         <AuthProvider>
           <Routes>
             <Route path="/" element={<Layout/>}>
+            
               {/* public routes */}
                 <Route path="/" element={<Home />} />
                 <Route path="/signup" element={<SignUp />} />
@@ -46,14 +47,14 @@ function App() {
                 <Route path="/profile/view" element={<ViewUserProfile />} />
 
               {/* protected routes */}
-              <Route element={<PersistLogin/>}>
-                <Route element={<RequireAuth/>}>
-                  <Route path="/profile" element={<UserProfile />} />
-                  <Route path="/interests" element={<InterestSelection />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/addproject" element={<AddProject />} />
+                <Route element={<PersistLogin/>}>
+                  <Route element={<RequireAuth/>}>
+                    <Route path="/profile" element={<UserProfile /> } />
+                    <Route path="/interests" element={<InterestSelection />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/addproject" element={<AddProject />} />
+                  </Route>
                 </Route>
-              </Route>
             </Route>
           </Routes>
         </AuthProvider>
