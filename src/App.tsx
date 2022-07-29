@@ -18,6 +18,8 @@ import { AuthProvider } from './Context/AuthProvider'
 import RequireAuth from './Components/RequireAuth'
 import Layout from './Layout';
 import PersistLogin from './PersistLogin';
+import AppbarPrivate from './Components/Navbar/AppbarPrivate'
+import AppbarPublic from './Components/Navbar/AppbarPublic'
 
 Amplify.configure(awsconfig);
 
@@ -38,20 +40,21 @@ function App() {
         <AuthProvider>
           <Routes>
             <Route path="/" element={<Layout/>}>
+            
               {/* public routes */}
                 <Route path="/" element={<Home />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/login" element={<Login />} />
 
               {/* protected routes */}
-              <Route element={<PersistLogin/>}>
-                <Route element={<RequireAuth/>}>
-                  <Route path="/profile" element={<UserProfile />} />
-                  <Route path="/interests" element={<InterestSelection />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/addproject" element={<AddProject />} />
+                <Route element={<PersistLogin/>}>
+                  <Route element={<RequireAuth/>}>
+                    <Route path="/profile" element={<UserProfile /> } />
+                    <Route path="/interests" element={<InterestSelection />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/addproject" element={<AddProject />} />
+                  </Route>
                 </Route>
-              </Route>
             </Route>
           </Routes>
         </AuthProvider>
