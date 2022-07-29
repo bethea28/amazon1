@@ -1,28 +1,31 @@
 import { Box, TextField, Avatar, Button } from '@mui/material';
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from 'react-router-dom';
-import { Project } from '../Resources/Constants';
-import { getProjectDetails } from '../Services/ProjectService';
+import { Project, GetProjectsResponse } from '../../Resources/Constants';
+import { getProjectDetails } from '../../Services/ProjectService';
+import ProjectDetailsList from './Components/ProjectDetailsList';
 
 
-export default function ProjectDetails(props: Project) {
+export default function ProjectDetails() {
 
     //Update to refer to specific project clicked on identified by project id
     //useParams or Context to pass in global projectId variable
-    const projectID = "001"
+    const projectID = "f476a834-cfea-4184-8596-d7bfbce50dfd"
 
     //Empty project details to be filled in once page renders
-    const initialProjectState = {
-        projectID: "",
-        userID: "",
+    const initialProjectState: Project[] = [{
+        projectId: "",
+        userId: "",
         projectName: "",
+        targetFundingNum: "",
+        targetFundingDate: "",
         description: "",
         categories: "",
-        targetFundingDate: "",
-        targetFundingNum: ""
-    }
+        createdAt: "",
+        lastUpdatedAt: ""
+    }]
 
-    const [currentProject, setCurrentProject] = useState<Project>(initialProjectState);
+    const [currentProject, setCurrentProject] = useState<Project[]>(initialProjectState);
 
     //As soon as the page is rendered, getData function will get called
     useEffect(() => {
@@ -49,13 +52,7 @@ export default function ProjectDetails(props: Project) {
     return (
         <Box className="Project-details">
             <Box className="Project-title">
-                {props? <h2>Title: {currentProject.projectName}</h2> : null}
-            </Box>
-            <Box className="Project-categories">
-            {props? <h2>Categories: {currentProject.categories}</h2> : null}
-            </Box>
-            <Box className="Project-description">
-            {props? <h2>Description: {currentProject.description}</h2> : null}
+                <ProjectDetailsList projects={currentProject!} />
             </Box>
         </Box>
     )
