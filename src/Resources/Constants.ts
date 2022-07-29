@@ -8,7 +8,8 @@ export const axiosInstance = axios.create({
     headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
-        "Accept": "application/json"
+        "Accept": "application/json",
+        //"Authorization": `Bearer ${jwt}`, //(commented out until api token is determined)
     }
 })
 

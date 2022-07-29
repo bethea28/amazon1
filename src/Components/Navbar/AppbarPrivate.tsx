@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, MouseEvent } from 'react';
 import { AppBar } from '@mui/material';
 import { Box, Toolbar, Menu, Badge } from '@mui/material';
 import { IconButton, Typography, MenuItem } from '@mui/material';
@@ -15,8 +15,8 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {Search, SearchIconWrapper, StyledInputBase} from '../Constants'
 
 export default function AppbarPrivate() {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
   const settings = ['My Projects', 'Liked Projects'];
@@ -26,7 +26,7 @@ export default function AppbarPrivate() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+  const handleProfileMenuOpen = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -44,7 +44,7 @@ export default function AppbarPrivate() {
     handleMenuClose();
   };
 
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
 
@@ -52,7 +52,7 @@ export default function AppbarPrivate() {
     setAnchorElUser(null);
   };
 
-  const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+  const handleMobileMenuOpen = (event: MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
@@ -112,7 +112,7 @@ export default function AppbarPrivate() {
             <MailIcon />
           </Badge>
         </IconButton>
-        <p>Messages</p>
+        <Typography>Messages</Typography>
       </MenuItem>
       <MenuItem>
         <IconButton
@@ -124,7 +124,7 @@ export default function AppbarPrivate() {
             <NotificationsIcon />
           </Badge>
         </IconButton>
-        <p>Notifications</p>
+        <Typography>Notifications</Typography>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -136,7 +136,7 @@ export default function AppbarPrivate() {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <Typography>Profile</Typography>
       </MenuItem>
     </Menu>
   );

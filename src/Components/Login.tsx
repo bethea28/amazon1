@@ -1,9 +1,10 @@
-import React , { useState} from 'react';
+import React , { useState, useContext } from 'react';
 import { Box, Container, Button, Typography, Grid, TextField } from '@material-ui/core';
 import { Auth } from 'aws-amplify';
-import setAuthorizationToken from '../services/SetAuthorizationToken';
+import SetAuthorizationToken from '../Services/SetAuthorizationToken';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useNavigate } from "react-router-dom";
+import { AuthContext, AuthProvider, AuthData } from '../Context/AuthProvider'
 
 interface IFormInput {
   username: string,
@@ -11,6 +12,9 @@ interface IFormInput {
 };
 
   function Login() {
+
+    //get context
+    const { id, token, setAuthData } = useContext(AuthContext)
     const { control, handleSubmit } = useForm<IFormInput>();
     const [errorMessage, setError] = useState("");
     const navigate = useNavigate();
@@ -23,8 +27,14 @@ interface IFormInput {
           username,
           password
         });
-        setAuthorizationToken();
+        const userId = user.attributes.sub
+        const token:string = await SetAuthorizationToken()
+
+        setAuthData(prevState => {
+          return {...prevState, ['id']: userId , ['token']: token}
+        })
         navigate("/profile");
+
       } catch (error) {
         if (typeof error === 'object' && error != null) {
           const errorObj = error;

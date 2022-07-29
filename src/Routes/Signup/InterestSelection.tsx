@@ -2,7 +2,7 @@ import { ToggleButton, Grid, Typography, ToggleButtonGroup, Button, Box, ThemePr
 import { styled } from "@mui/system";
 import React, { useState } from "react";
 import Header from "../../Components/Header";
-import { updateUser } from "../../services/UserService";
+import { updateUser } from "../../Services/UserService";
 import { tempUserID, interests } from "../../Resources/Constants";
 import { theme } from "../../Resources/GlobalTheme";
 

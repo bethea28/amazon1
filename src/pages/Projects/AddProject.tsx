@@ -5,7 +5,7 @@ import { FormControl, InputLabel, MenuItem, Button,
 import {MuiPickersUtilsProvider, KeyboardDatePicker}from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns';
 import { useForm, Controller} from "react-hook-form";
-import {postData} from '../../services/AddProjectService';
+import {postData} from '../../Services/AddProjectService';
 
 interface ProjectFormInput {
     projectName: string;
