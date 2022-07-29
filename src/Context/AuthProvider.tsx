@@ -5,12 +5,14 @@ type Props = {
 };
 export type AuthData = {
   id: string;
-  token: string
+  token: string;
+  isLoggedIn: boolean;
   setAuthData: Dispatch<SetStateAction<AuthData>>;
 };
 const initialData: AuthData = {
   id: '',
   token: '',
+  isLoggedIn: false,
   setAuthData: (): void => {},
 };
 

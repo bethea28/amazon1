@@ -14,6 +14,7 @@ import Logout from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {Search, SearchIconWrapper, StyledInputBase} from '../Constants'
 import { AuthContext } from '../../Context/AuthProvider';
+import AuthService from '../../Services/AuthService';
 
 export default function AppbarPrivate() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -58,12 +59,13 @@ export default function AppbarPrivate() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const handleLogout = () =>
+  const handleLogout = async () =>
   {
     setAuthData(prevState => {
-      return {...prevState, ['id']: '' , ['token']: ''}
+      return {...prevState, ['id']: '' , ['token']: '', ['isLoggedIn']: false}
     })
-    navigate("/")
+    await AuthService.SignOut()
+    navigate("/");
   }
 
   const menuId = 'primary-search-account-menu';
