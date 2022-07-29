@@ -1,23 +1,45 @@
-import {useState, useEffect, useContext } from "react";
-import AppbarPrivate from "../Navbar/AppbarPrivate";
-import AppbarPublic from "../Navbar/AppbarPublic";
-import AuthService from '../../Services/AuthService'
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from '../../Context/AuthProvider'
+import AuthService from "../../Services/AuthService";
+import AppbarPrivate from "../../Components/Navbar/AppbarPrivate";
+import AppbarPublic from "../../Components/Navbar/AppbarPublic";
 
-export default function Home() {
-
-  const [loggedIn, setLoggedIn] = useState<boolean>(false)
+const Home = () => {
+  
+  const [isLoading, setIsLoading] = useState(true)
+  const { isLoggedIn, setAuthData } = useContext(AuthContext)
 
   useEffect(() => {
-    isLogged()
-  }, [loggedIn])
+    const verifyUser = async () => {
+      try {
+        const verified = await AuthService.isLogged();
+        setAuthData(prevState => {
+          return {...prevState, ['isLoggedIn']: verified}
+        })
+      }
+      catch (err) {
+        setAuthData(prevState => {
+          return {...prevState, ['isLoggedIn']: false}
+        })
+        console.error(err);
+      }
+      finally {
+        setIsLoading(false);
+      }
+    }
 
-  const isLogged = async () => {
-    setLoggedIn(await AuthService.isLogged())
-  }
+    !isLoggedIn ? verifyUser() : setIsLoading(false)
+
+  }, [])
 
   return (
-    {loggedIn}
-    ? <AppbarPrivate />
-    : <AppbarPublic />
-  );
+    <>
+    {isLoading
+    ? <AppbarPrivate/>
+    : <AppbarPublic/>
+    }
+    </>
+  )
 }
+
+export default Home
