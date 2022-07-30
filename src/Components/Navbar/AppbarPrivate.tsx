@@ -21,7 +21,7 @@ export default function AppbarPrivate() {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
-  const settings = ['My Projects', 'Liked Projects'];
+  const settings = ['Home'];
 
   const navigate = useNavigate();
   const { id, token, setAuthData } = useContext(AuthContext)
@@ -43,9 +43,14 @@ export default function AppbarPrivate() {
   };
 
   const handleClickProfile= () => {
-    navigate("/profile");
     handleMenuClose();
+    navigate("/profile");
   };
+
+  const handleHomePageClick=()=>{
+    handleCloseUserMenu()
+    navigate('/');
+  }
 
   const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -118,26 +123,6 @@ export default function AppbarPrivate() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <Typography>Messages</Typography>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <Typography>Notifications</Typography>
-      </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
@@ -185,7 +170,7 @@ export default function AppbarPrivate() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={handleHomePageClick}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
@@ -209,20 +194,6 @@ export default function AppbarPrivate() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
             <IconButton
               size="large"
               edge="end"

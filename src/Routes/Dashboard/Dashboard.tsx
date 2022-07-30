@@ -37,7 +37,6 @@ function Dashboard() {
     return (
         <ThemeProvider theme={theme}>
             <Box>
-                <Header />
                 <Container>
                     <SearchBar />
                     <NavigationBar />
