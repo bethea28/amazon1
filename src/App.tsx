@@ -18,8 +18,6 @@ import { AuthProvider } from './Context/AuthProvider'
 import RequireAuth from './Components/RequireAuth'
 import Layout from './Layout';
 import PersistLogin from './PersistLogin';
-import AppbarPrivate from './Components/Navbar/AppbarPrivate'
-import AppbarPublic from './Components/Navbar/AppbarPublic'
 
 Amplify.configure(awsconfig);
 
