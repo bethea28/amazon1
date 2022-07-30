@@ -31,7 +31,8 @@ const AppbarPublic = () => {
 
   const navigate = useNavigate();
   
-  const handleClickProfile= () => {
+  const handleClickProject= () => {
+    navigate("/addproject")
   };
 
   const handlePageClick = (key:string) => {
@@ -131,7 +132,7 @@ const AppbarPublic = () => {
 
           <Box sx={{ flexGrow: 0 }}>
               <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", borderRadius:50}} 
-              variant="contained" size="small" onClick={handleClickProfile}>Start a project</Button>
+              variant="contained" size="small" onClick={handleClickProject}>Start a project</Button>
           </Box>
           
         </Toolbar> 

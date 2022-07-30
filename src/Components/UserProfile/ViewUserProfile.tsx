@@ -1,9 +1,10 @@
 import logo from '../../logo.svg';
 import { Box, Grid, Typography, List, ListItem, 
-  ListItemText, Divider} from '@mui/material';
-import AppbarPrivate from "../Navbar/AppbarPrivate"
+  ListItemText, Divider, Stack, Chip, Button} from '@mui/material';
+import AppbarPrivate from "../Navbar/AppbarPrivate";
 import { viewProfileInfo,viewProfileAdditional } from '../Constants';
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import { useState } from 'react';
+
 
 const style = {
   width: '100%',
@@ -12,6 +13,19 @@ const style = {
 };
 
 export default function ViewUserProfile(){
+
+  const [style, setStyle] = useState("cont");
+  
+  const changeStyle = () => {
+    console.log("you just clicked");
+  
+    setStyle("cont2");
+  };
+
+  const showAbout = () => {
+    
+  };
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: 1000}}>
       { <AppbarPrivate /> }
@@ -37,8 +51,12 @@ export default function ViewUserProfile(){
         bgcolor: 'background.paper',
       }}
     >
-      <ListItem>
-        <ListItemText primary="About" />
+      <ListItem alignItems="center" >
+        <Stack direction="row" spacing={1} alignContent='center' justifyContent="center" alignItems="center">
+          <Chip label="About " onClick={showAbout}/>
+          <Chip color="primary" label="Comments" />
+          <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", borderRadius:50}} variant="contained"></Button>
+        </Stack>
       </ListItem>
       <Divider />
       <ListItem>
@@ -46,6 +64,12 @@ export default function ViewUserProfile(){
       </ListItem>
     </List>
       </Box>
+      {/* <div className="App">CHANGE CSS STYLING WITH ONCLICK EVENT</div>
+      <div className={style}>
+        <button className="button" onClick={changeStyle}>
+          Click me!
+        </button>
+      </div> */}
     </Box>
   )
 }

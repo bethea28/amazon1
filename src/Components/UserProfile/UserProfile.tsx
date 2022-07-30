@@ -18,7 +18,7 @@ export default function UserProfile() {
   const [userProfile, setUserProfile] = useState<UserData>(initialValues)
   const { register, handleSubmit, reset } = useForm<UserData>();
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>(true);
-  const { id, token, setAuthData } = useContext(AuthContext)
+  const { id, token, isLoggedIn, setAuthData } = useContext(AuthContext)
 
   useEffect(() => {
     fetchUserProfile()
