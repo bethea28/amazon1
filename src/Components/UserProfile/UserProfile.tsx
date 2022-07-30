@@ -17,7 +17,6 @@ export default function UserProfile() {
   const initialValues = {name: '', email: '', bio: ''}
   const [userProfile, setUserProfile] = useState<UserData>(initialValues)
   const { register, handleSubmit, reset } = useForm<UserData>();
-  const [userLoggedIn, setUserLoggedIn] = useState<boolean>(true);
   const { id, token, isLoggedIn, setAuthData } = useContext(AuthContext)
 
   useEffect(() => {
@@ -25,21 +24,31 @@ export default function UserProfile() {
   }, [])
 
   const fetchUserProfile = async () => {
-    const token = await AuthService.getCurrentUser()
-    const response = await UserProfileService.getUserProfile(token.id, token.jwt)
-    setUserProfile(response.data)
-    reset(response.data)
+    try {
+      const token = await AuthService.getCurrentUser()
+      const response = await UserProfileService.getUserProfile(token.id, token.jwt)
+      setAuthData(prevState => {
+        return {...prevState, ['isLoggedIn']: true}
+      })
+      setUserProfile(response.data)
+     reset(response.data)
+    }catch (err){
+      setAuthData(prevState => {
+        return {...prevState, ['isLoggedIn']: false}
+      })
+    }
+
   }
 
   const onSubmit = handleSubmit(async (data: UserData)=>{
-    const response = await UserProfileService.updateUserProfile(id, token, data)
+    const response = await UserProfileService.updateUserProfile(id!, token!, data)
 })
 
   return (
     <StyledEngineProvider injectFirst>
       <form onSubmit={onSubmit}>  
         <Box sx={{ display: 'flex', flexDirection: 'column', height: 1000}}>
-          {userLoggedIn ? <AppbarPrivate /> : <AppbarPublic />}
+          {isLoggedIn ? <AppbarPrivate /> : <AppbarPublic />}
           <Box sx={{...profileBackgroundImageBox}}>
             Picture
           </Box>

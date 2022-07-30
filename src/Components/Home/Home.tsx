@@ -3,41 +3,39 @@ import { AuthContext } from '../../Context/AuthProvider'
 import AuthService from "../../Services/AuthService";
 import AppbarPrivate from "../../Components/Navbar/AppbarPrivate";
 import AppbarPublic from "../../Components/Navbar/AppbarPublic";
+import UserProfileService from '../../Services/UserProfileService';
+import Dashboard from "../../Routes/Dashboard/Dashboard";
 
 const Home = () => {
   
-  const [isLoading, setIsLoading] = useState(true)
   const { isLoggedIn, setAuthData } = useContext(AuthContext)
 
   useEffect(() => {
-    const verifyUser = async () => {
-      try {
-        const verified = await AuthService.isLogged();
-        setAuthData(prevState => {
-          return {...prevState, ['isLoggedIn']: verified}
-        })
-      }
-      catch (err) {
-        setAuthData(prevState => {
-          return {...prevState, ['isLoggedIn']: false}
-        })
-        console.error(err);
-      }
-      finally {
-        setIsLoading(false);
-      }
+    checkLogin()
+  }, [])
+
+  const checkLogin = async () => {
+    try {
+      const token = await AuthService.getCurrentUser()
+      const response = await UserProfileService.getUserProfile(token.id, token.jwt)
+      setAuthData(prevState => {
+        return {...prevState, ['isLoggedIn']: true}
+      })
+    }catch (err){
+      setAuthData(prevState => {
+        return {...prevState, ['isLoggedIn']: false}
+      })
     }
 
-    !isLoggedIn ? verifyUser() : setIsLoading(false)
-
-  }, [])
+  }
 
   return (
     <>
-    {isLoading
+    {isLoggedIn
     ? <AppbarPrivate/>
     : <AppbarPublic/>
     }
+    <Dashboard/>
     </>
   )
 }
