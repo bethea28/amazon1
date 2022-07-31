@@ -1,12 +1,10 @@
 import { Box, Card, CardContent, CardMedia, Chip, Stack, Typography } from "@mui/material";
-import { flexbox } from "@mui/system";
 import { GetProjectsResponse } from "../../../Resources/Constants";
 
 export default function ProjectDetailsList(props: GetProjectsResponse) {
 
     return (
-        <Box className="Project-details">
-            
+        <Box className="Project-details-list">
             {props.projects && props.projects.map((project) => {
                 return (
                     <Stack 
@@ -22,7 +20,7 @@ export default function ProjectDetailsList(props: GetProjectsResponse) {
                                 component="img"
                                 height="500"
                                 image="https://images.pexels.com/photos/776656/pexels-photo-776656.jpeg"
-                                alt="Paella dish"
+                                alt="Pot of plants"
                             />
                             {/* Update Image to project photos prop */}
                             <CardContent>
@@ -49,12 +47,9 @@ export default function ProjectDetailsList(props: GetProjectsResponse) {
                             {/* Insert like component
                             Insert comments component */}
                         </Card>
-
                     </Stack>
                 )
             })}
-            
         </Box>
     )
-
 }
