@@ -42,17 +42,17 @@ function App() {
             
               {/* public routes */}
                 <Route path="/" element={<Home />} />
-                <Route path="/signup" element={<SignUp />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/profile/view" element={<ViewUserProfile />} />
+                <Route path="/signup" element={<SignUp />} />                
 
               {/* protected routes */}
                 <Route element={<PersistLogin/>}>
                   <Route element={<RequireAuth/>}>
+                  <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/profile" element={<UserProfile /> } />
-                    <Route path="/interests" element={<InterestSelection />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/addproject" element={<AddProject />} />
+                    <Route path="/interests" element={<InterestSelection />} />
+                    <Route path="/profile/view" element={<ViewUserProfile />} />
                   </Route>
                 </Route>
             </Route>
