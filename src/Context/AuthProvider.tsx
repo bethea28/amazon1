@@ -21,12 +21,10 @@ const initialData: AuthData = {
   setAuthData: (): void => {},
 };
 
-// Create the context 
 const AuthContext = createContext<AuthData>(initialData);
 
 const AuthProvider = ({ children }: Props): JSX.Element => {
   useEffect(() => {
-    console.log("useEffect used")
     Hub.listen("auth", ({ payload: { event, data } }) => {
       const id = data.attributes.sub
       const jwtToken = data.getSignInUserSession().getAccessToken().getJwtToken()
