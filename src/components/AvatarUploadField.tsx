@@ -5,7 +5,6 @@ import { getAvatar, uploadAvatar, deleteAvatar } from '../Services/AvatarService
 
 export default function AvatarUploadField() {
 
-    
     const userId = "001"; //Need to be updated with current user
     const filename = userId;
 
