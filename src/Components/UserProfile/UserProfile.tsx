@@ -29,10 +29,10 @@ export default function UserProfile() {
         return {...prevState, ['isLoggedIn']: true}
       })
       setUserProfile(response.data)
-     reset(response.data)
+      reset(response.data)
     }catch (err){
       setAuthData(prevState => {
-        return {...prevState, ['isLoggedIn']: false}
+        return {...prevState, ['isLoggedIn']: false, ['token']: ''}
       })
     }
 
