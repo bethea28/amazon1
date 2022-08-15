@@ -60,7 +60,7 @@ interface LocationState {
     return (
       <Container component="main" maxWidth="xs" className="signUpBox">
         <form>
-          <Typography variant="h2">Log Imn</Typography>
+          <Typography variant="h2">Log In</Typography>
           <Box height="100%" bgcolor="#D1e1D2">
             <Grid container direction={"column"} spacing={2}>
               <Grid item>
