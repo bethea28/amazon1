@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
-import { AuthContext } from './Context/AuthProvider'
-import AuthService from "./Services/AuthService";
+import { AuthContext } from '../../Context/AuthProvider'
+import AuthService from "./AuthService";
 
 const PersistLogin = () => {
   

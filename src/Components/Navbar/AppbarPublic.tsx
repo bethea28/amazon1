@@ -5,6 +5,7 @@ import { IconButton, Typography, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from "react-router-dom";
+import AddProject from '../../pages/Projects/AddProject';
 
 const AppbarPublic = () => {
 
@@ -31,7 +32,8 @@ const AppbarPublic = () => {
 
   const navigate = useNavigate();
   
-  const handleClickProfile= () => {
+  const handleStartProject= () => {
+    navigate("/addproject");
   };
 
   const handlePageClick = (key:string) => {
@@ -131,7 +133,7 @@ const AppbarPublic = () => {
 
           <Box sx={{ flexGrow: 0 }}>
               <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", borderRadius:50}} 
-              variant="contained" size="small" onClick={handleClickProfile}>Start a project</Button>
+              variant="contained" size="small" onClick={handleStartProject}>Start a project</Button>
           </Box>
           
         </Toolbar> 

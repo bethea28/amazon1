@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Container, Button, Typography, Grid, TextField } from '@material-ui/core';
 import { Auth } from 'aws-amplify';
 import { createUser } from '../Services/CreateUserService';
-import SetAuthorizationToken from '../Services/SetAuthorizationToken';
+import SetAuthorizationToken from '../Services/Authentication/SetAuthorizationToken';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useNavigate } from "react-router-dom";
 
@@ -36,7 +36,7 @@ function SignUp() {
       SetAuthorizationToken();
       createUser({ data });
       setError("Sign up was successful!");
-      navigate("/profile");
+      navigate("/");
       return user;
     } catch (error) {
       if (typeof error === 'object' && error != null) {
@@ -104,7 +104,7 @@ function SignUp() {
                 rules={{
                   required: true,
                   minLength: 8,
-                  pattern: /^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$/
+                  pattern: /^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).*$/
                 }}
               />
             </Grid>
