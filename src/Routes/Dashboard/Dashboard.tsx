@@ -13,25 +13,25 @@ function Dashboard() {
     const [recommended, setRecommended] = useState<Project[]>();
     const [recent, setRecent] = useState<Project[]>();
 
-    // useEffect(() => {
-    //     const fetchRecommended = async () => {
-    //         const response = await getRecommendedProjects('["art", "pet", "food"]')
-    //         setRecommended(response);
-    //     }
+    useEffect(() => {
+        const fetchRecommended = async () => {
+            const response = await getRecommendedProjects('["art", "pet", "food"]')
+            setRecommended(response);
+        }
 
-    //     const fetchNewest = async () => {
-    //         const response = await getNewestProjects();
-    //         setRecent(response);
-    //     }
+        const fetchNewest = async () => {
+            const response = await getNewestProjects();
+            setRecent(response);
+        }
 
-    //     if (!recommended) {
-    //         fetchRecommended();
-    //     }
+        if (!recommended) {
+            fetchRecommended();
+        }
 
-    //     if (!recent) {
-    //         fetchNewest();
-    //     }
-    // }, [recommended])
+        if (!recent) {
+            fetchNewest();
+        }
+    }, [recommended])
 
 
     return (
