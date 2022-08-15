@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Box, StyledEngineProvider, Avatar } from '@mui/material';
 import { Grid, Paper, Button, TextField} from '@mui/material';
-import AppbarPrivate from '../Navbar/AppbarPrivate';
-import AppbarPublic from '../Navbar/AppbarPublic';
 import "./Styles.css";
 import UserProfileService from '../../Services/UserProfileService';
 import { profileBackgroundImageBox, profileDataBox } from '../Constants';
@@ -10,14 +8,14 @@ import { useForm } from "react-hook-form";
 import UserData from '../../Resources/types';
 import { AuthContext} from '../../Context/AuthProvider';
 import { ProfileSectionStyle } from './UserProfileStyle';
-import AuthService from '../../Services/AuthService';
+import AuthService from '../../Services/Authentication/AuthService';
 
 export default function UserProfile() {
 
   const initialValues = {name: '', email: '', bio: ''}
   const [userProfile, setUserProfile] = useState<UserData>(initialValues)
   const { register, handleSubmit, reset } = useForm<UserData>();
-  const { id, token, isLoggedIn, setAuthData } = useContext(AuthContext)
+  const { id, token, setAuthData } = useContext(AuthContext)
 
   useEffect(() => {
     fetchUserProfile()
@@ -48,7 +46,6 @@ export default function UserProfile() {
     <StyledEngineProvider injectFirst>
       <form onSubmit={onSubmit}>  
         <Box sx={{ display: 'flex', flexDirection: 'column', height: 1000}}>
-          {isLoggedIn ? <AppbarPrivate /> : <AppbarPublic />}
           <Box sx={{...profileBackgroundImageBox}}>
             Picture
           </Box>
