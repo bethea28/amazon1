@@ -18,13 +18,15 @@ export type GetProjectsResponse = {
 }
 
 export type Project = {
-    projectID: string,
-    userID: string,
+    projectId: string,
+    userId: string,
     projectName: string,
+    targetFundingNum: string
+    targetFundingDate: string,
     description: string,
     categories: string,
-    targetFundingDate: string,
-    targetFundingNum: string
+    createdAt: string
+    lastUpdatedAt: string,
 }
 
 export type GetUserResponse = {

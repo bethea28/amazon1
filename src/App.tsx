@@ -17,6 +17,7 @@ import SignUp from './Components/Signup';
 import Login from './Components/Login';
 import UserProfile from './Components/UserProfile/UserProfile'
 import { AuthProvider } from './Context/AuthProvider'
+import ProjectDetails from './Routes/ProjectDetails/ProjectDetails';
 Amplify.configure(awsconfig);
 
 function App() {
@@ -42,6 +43,8 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/login" element={<Login />} />
             <Route path="/addproject" element={<AddProject />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/project-details" element={<ProjectDetails />} />
           </Routes>
         </AuthProvider>
       </ThemeProvider>
