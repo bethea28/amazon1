@@ -1,7 +1,7 @@
 import React , { useState, useContext } from 'react';
 import { Box, Container, Button, Typography, Grid, TextField } from '@material-ui/core';
 import { Auth } from 'aws-amplify';
-import SetAuthorizationToken from '../Services/SetAuthorizationToken';
+import SetAuthorizationToken from '../Services/Authentication/SetAuthorizationToken';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useLocation, useNavigate,  } from "react-router-dom";
 import { AuthContext } from '../Context/AuthProvider'
@@ -24,7 +24,7 @@ interface LocationState {
     const [errorMessage, setError] = useState("");
     const navigate = useNavigate();
     const location = useLocation();
-    const {from} = location.state as LocationState || "/profile"
+    const {from} = location.state as LocationState || "/"
 
     const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
       const username = data.username;
@@ -45,7 +45,7 @@ interface LocationState {
             navigate(from.pathname, {replace: true}); 
           }
         else{
-          navigate("/profile");
+          navigate("/");
         }
         
       } catch (error) {
@@ -61,7 +61,7 @@ interface LocationState {
       <Container component="main" maxWidth="xs" className="signUpBox">
         <form>
           <Typography variant="h2">Log In</Typography>
-          <Box height="250%" bgcolor="#D1e1D2">
+          <Box height="100%" bgcolor="#D1e1D2">
             <Grid container direction={"column"} spacing={2}>
               <Grid item>
                 <Typography variant="caption">{errorMessage}</Typography>

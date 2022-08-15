@@ -1,20 +1,17 @@
 import React, { useState, MouseEvent, useContext } from 'react';
-import { AppBar } from '@mui/material';
-import { Box, Toolbar, Menu, Badge } from '@mui/material';
-import { IconButton, Typography, MenuItem } from '@mui/material';
+import { Box, Toolbar, Menu } from '@mui/material';
+import { IconButton, Typography, MenuItem, AppBar } from '@mui/material';
 import { ListItemText, Divider, ListItemIcon } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { useNavigate } from "react-router-dom";
 import Logout from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {Search, SearchIconWrapper, StyledInputBase} from '../Constants'
 import { AuthContext } from '../../Context/AuthProvider';
-import AuthService from '../../Services/AuthService';
+import AuthService from '../../Services/Authentication/AuthService';
 
 export default function AppbarPrivate() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -24,7 +21,7 @@ export default function AppbarPrivate() {
   const settings = ['Home'];
 
   const navigate = useNavigate();
-  const { id, token, setAuthData } = useContext(AuthContext)
+  const { setAuthData } = useContext(AuthContext)
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);

@@ -6,10 +6,10 @@ type Props = {
 };
 
 export type AuthData = {
-  id: string | null;
-  username: string | null;
-  token: string | null;
-  isLoggedIn: boolean | null;
+  id: string;
+  username: string
+  token: string;
+  isLoggedIn: boolean;
   setAuthData: Dispatch<SetStateAction<AuthData>>;
 };
 
@@ -21,7 +21,6 @@ const initialData: AuthData = {
   setAuthData: (): void => {},
 };
 
-// Create the context 
 const AuthContext = createContext<AuthData>(initialData);
 
 const AuthProvider = ({ children }: Props): JSX.Element => {
@@ -43,7 +42,7 @@ const AuthProvider = ({ children }: Props): JSX.Element => {
           break;
         case "signOut":
           setAuthData(prevState => {
-            return {...prevState, ['id']: null, ['token']: null, ['username']: null, ['isLoggedIn']: false}
+            return {...prevState, ['id']: id, ['token']: jwtToken, ['username']: userName, ['isLoggedIn']: false}
           })
           break;
         case "signIn_failure":

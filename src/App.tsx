@@ -15,9 +15,9 @@ import SignUp from './Components/Signup';
 import Login from './Components/Login';
 import UserProfile from './Components/UserProfile/UserProfile'
 import { AuthProvider } from './Context/AuthProvider'
-import RequireAuth from './Components/RequireAuth'
-import Layout from './Layout';
-import PersistLogin from './PersistLogin';
+import RequireAuth from './Services/Authentication/RequireAuth'
+import Layout from './Components/Layout';
+import PersistLogin from './Services/Authentication/PersistLogin';
 import ViewUserProfile from './Components/UserProfile/ViewUserProfile';
 
 Amplify.configure(awsconfig);
@@ -38,15 +38,15 @@ function App() {
       <ThemeProvider theme = {theme}>
         <AuthProvider>
           <Routes>
-            <Route path="/" element={<Layout/>}>
-            
-              {/* public routes */}
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<SignUp />} />                
+            <Route element={<PersistLogin/>}>
+              <Route path="/" element={<Layout/>}>
+              
+                {/* public routes */}
+                  <Route path="/" element={<Home />} />
+                  <Route path="/signup" element={<SignUp />} />
+                  <Route path="/login" element={<Login />} />
 
-              {/* protected routes */}
-                <Route element={<PersistLogin/>}>
+                {/* protected routes */}
                   <Route element={<RequireAuth/>}>
                   <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/profile" element={<UserProfile /> } />
@@ -54,7 +54,8 @@ function App() {
                     <Route path="/interests" element={<InterestSelection />} />
                     <Route path="/profile/view" element={<ViewUserProfile />} />
                   </Route>
-                </Route>
+
+              </Route>
             </Route>
           </Routes>
         </AuthProvider>

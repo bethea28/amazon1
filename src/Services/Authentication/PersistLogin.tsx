@@ -1,9 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
-import { AuthContext } from './Context/AuthProvider'
-import AuthService from "./Services/AuthService";
-import AppbarPrivate from "./Components/Navbar/AppbarPrivate";
-import AppbarPublic from "./Components/Navbar/AppbarPublic";
+import { AuthContext } from '../../Context/AuthProvider'
+import AuthService from "./AuthService";
 
 const PersistLogin = () => {
   
@@ -14,7 +12,6 @@ const PersistLogin = () => {
     const verifyUser = async () => {
       try {
         const verified = await AuthService.isLogged();
-        // const verified = isLoggedIn
         setAuthData(prevState => {
           return {...prevState, ['isLoggedIn']: verified}
         })
