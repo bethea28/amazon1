@@ -1,6 +1,5 @@
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
-import { formHelperTextClasses } from '@mui/material';
 
 export const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -95,4 +94,14 @@ export const viewProfileAdditional = {
   fontWeight: '700',
   textAlign: 'left',
   label: "My profile section"
+}
+
+export const typographyTitle = {
+  mr: 2,
+  display: { xs: 'none', md: 'flex' },
+  fontFamily: 'monospace',
+  fontWeight: 700,
+  letterSpacing: '.3rem',
+  color: 'inherit',
+  textDecoration: 'none',
 }

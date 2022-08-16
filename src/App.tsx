@@ -6,7 +6,7 @@ import React from 'react';
 import './App.css';
 import { Amplify } from 'aws-amplify';
 import awsconfig from './aws-exports';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useParams } from 'react-router-dom';
 import InterestSelection from './Routes/Signup/InterestSelection';
 import { Box, ThemeProvider } from '@mui/material';
 import Home from './Components/Home/Home';
@@ -19,11 +19,13 @@ import RequireAuth from './Services/Authentication/RequireAuth'
 import Layout from './Components/Layout';
 import PersistLogin from './Services/Authentication/PersistLogin';
 import ViewUserProfile from './Components/UserProfile/ViewUserProfile';
+import Tempfile from './Components/UserProfile/Tempfile';
 
 Amplify.configure(awsconfig);
 
 function App() {
 
+  const { username } = useParams();
   const theme = createTheme({
     palette: {
       primary: {
@@ -45,6 +47,8 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/signup" element={<SignUp />} />
                   <Route path="/login" element={<Login />} />
+                  <Route path="/temp" element={<Tempfile />} />
+                  <Route path="/profile/view/:username" element={<ViewUserProfile />} />
 
                 {/* protected routes */}
                   <Route element={<RequireAuth/>}>
@@ -52,7 +56,6 @@ function App() {
                     <Route path="/profile" element={<UserProfile /> } />
                     <Route path="/addproject" element={<AddProject />} />
                     <Route path="/interests" element={<InterestSelection />} />
-                    <Route path="/profile/view" element={<ViewUserProfile />} />
                   </Route>
 
               </Route>

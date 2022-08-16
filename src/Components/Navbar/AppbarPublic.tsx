@@ -1,16 +1,18 @@
-import React, { useState, MouseEvent } from 'react';
+import React, { useState, MouseEvent, useContext } from 'react';
 import { AppBar, Container, Button } from '@mui/material';
 import { Box, Toolbar, Menu, Tooltip } from '@mui/material';
 import { IconButton, Typography, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from "react-router-dom";
-import AddProject from '../../pages/Projects/AddProject';
+import { AuthContext } from '../../Context/AuthProvider';
+import { typographyTitle } from '../Constants';
 
 const AppbarPublic = () => {
 
   const pages = ['Login','signup'];
   const settings = ['Projects'];
+  const { username } = useContext(AuthContext);
 
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
@@ -36,6 +38,10 @@ const AppbarPublic = () => {
     navigate("/addproject");
   };
 
+  const handleViewProfile= () => {
+    navigate("/profile/view/${username}");
+  };
+
   const handlePageClick = (key:string) => {
     navigate(`/${key}`);
   };
@@ -49,15 +55,7 @@ const AppbarPublic = () => {
             noWrap
             component="a"
             href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
+            sx={{...typographyTitle}}
           >
             JUMPSTARTER
           </Typography>
@@ -104,16 +102,7 @@ const AppbarPublic = () => {
             noWrap
             component="a"
             href=""
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
+            sx={{...typographyTitle}}
           >
             JUMPSTARTER
            </Typography>
@@ -129,6 +118,8 @@ const AppbarPublic = () => {
             ))}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
+            <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", borderRadius:50}} 
+              variant="contained" size="small" onClick={handleViewProfile}>View User Profile</Button>
               <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", borderRadius:50}} 
               variant="contained" size="small" onClick={handleStartProject}>Start a project</Button>
           </Box>
