@@ -25,7 +25,12 @@
 
 .signUpBox {
   background-color: #D1E1D2;
-  min-height: 50vh;
+  align-items: center;
+  justify-content: center;
+  max-width: 450px;
+  max-height: 700px;
+  justify-content: space-around;
+  padding: 2rem;
 }
 
 .App-link {
