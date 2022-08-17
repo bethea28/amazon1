@@ -47,7 +47,7 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/signup" element={<SignUp />} />
                   <Route path="/login" element={<Login />} />
-                  <Route path="/temp" element={<Tempfile />} />
+                  <Route path="/profile/test" element={<Tempfile />} />
                   <Route path="/profile/view/:username" element={<ViewUserProfile />} />
 
                 {/* protected routes */}

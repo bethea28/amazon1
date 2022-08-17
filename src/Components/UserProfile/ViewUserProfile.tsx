@@ -5,7 +5,6 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import AuthService from '../../Services/Authentication/AuthService';
 import UserProfileService from '../../Services/UserProfileService';
 import UserData from '../../Resources/types';
 import { viewProfileAdditional, viewProfileInfo } from '../Constants';
@@ -25,7 +24,7 @@ export default function ViewUserProfile(){
 
   const fetchUserProfile = async () => {
     try {
-      const response = await UserProfileService.viewUserProfile("510f359f-3f5b-4675-828a-1590d9db0b6a")
+      const response = await UserProfileService.getUserProfile("510f359f-3f5b-4675-828a-1590d9db0b6a")
       setUserProfile(response.data)
     }catch (err){
       }

@@ -12,7 +12,6 @@ const AppbarPublic = () => {
 
   const pages = ['Login','signup'];
   const settings = ['Projects'];
-  const { username } = useContext(AuthContext);
 
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
@@ -38,10 +37,6 @@ const AppbarPublic = () => {
     navigate("/addproject");
   };
 
-  const handleViewProfile= () => {
-    navigate("/profile/view/${username}");
-  };
-
   const handlePageClick = (key:string) => {
     navigate(`/${key}`);
   };
@@ -50,16 +45,6 @@ const AppbarPublic = () => {
     <AppBar position="static" sx={{bgcolor:"#335436"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{...typographyTitle}}
-          >
-            JUMPSTARTER
-          </Typography>
-
            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
                size="large"
@@ -118,8 +103,6 @@ const AppbarPublic = () => {
             ))}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
-            <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", borderRadius:50}} 
-              variant="contained" size="small" onClick={handleViewProfile}>View User Profile</Button>
               <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", borderRadius:50}} 
               variant="contained" size="small" onClick={handleStartProject}>Start a project</Button>
           </Box>

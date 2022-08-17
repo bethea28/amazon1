@@ -24,7 +24,7 @@ export default function UserProfile() {
   const fetchUserProfile = async () => {
     try {
       const token = await AuthService.getCurrentUser()
-      const response = await UserProfileService.getUserProfile(token.id, token.jwt)
+      const response = await UserProfileService.getUserProfile(token.id)
       setAuthData(prevState => {
         return {...prevState, ['isLoggedIn']: true}
       })
