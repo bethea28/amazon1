@@ -1,15 +1,29 @@
 import { Auth } from 'aws-amplify';
 
+/**
+ * Cognito authentication services
+ */
 class AuthService{
 
-  SignIn = async (username:string, password:string) => {
+  /**
+   * Allow user to sign in
+   * @params username The username of the user
+   * @params password The user's password
+   */
+  signIn = async (username:string, password:string) => {
     const response = await Auth.signIn(username, password)
     const jwt = await this.getCurrentUser()
     const returns = {jwt, response}
     return returns
   }
 
-  SignUp = async (username:string, password: string, email:string) => {
+  /**
+   * Allow user to sign up
+   * @params username The username of the user
+   * @params password The user's password
+   * @params email    The user's email
+   */
+  signUp = async (username:string, password: string, email:string) => {
     const response = await Auth.signUp({username, password, attributes: {
       email
     }
@@ -19,6 +33,9 @@ class AuthService{
     return returns
   }
 
+  /**
+   * Get the current signed in user
+   */
   getCurrentUser = async () => {
     const token = await Auth.currentSession().then(res=>{
       let accessToken = res.getAccessToken();
@@ -29,6 +46,9 @@ class AuthService{
     return token
   };
 
+  /**
+   * Check if the current user is logged in
+   */
   isLogged = async () => {
     const token = await Auth.currentAuthenticatedUser().then(response => {
       return(true)
@@ -38,7 +58,10 @@ class AuthService{
     return token
   };
 
-  SignOut = async () => {
+  /**
+   * Allow the current user to sign out
+   */
+  signOut = async () => {
     const response = await Auth.signOut()
     return response
   }
