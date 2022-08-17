@@ -1,10 +1,10 @@
 import React , { useState, useContext } from 'react';
-import { Box, Container, Button, Typography, Grid, TextField } from '@material-ui/core';
+import { Box, Container, Button, Typography, Grid, TextField } from '@mui/material';
 import { Auth } from 'aws-amplify';
-import SetAuthorizationToken from '../Services/Authentication/SetAuthorizationToken';
+import SetAuthorizationToken from '../../Services/Authentication/SetAuthorizationToken';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useLocation, useNavigate,  } from "react-router-dom";
-import { AuthContext } from '../Context/AuthProvider'
+import { AuthContext } from '../../Context/AuthProvider'
 
 interface IFormInput {
   username: string,

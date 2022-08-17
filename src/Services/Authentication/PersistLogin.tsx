@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from '../../Context/AuthProvider'
 import AuthService from "./AuthService";
+import Typography from "@mui/material/Typography";
 
 const PersistLogin = () => {
   
@@ -32,11 +33,11 @@ const PersistLogin = () => {
   }, [])
 
   return (
-    <>
-    {isLoading
-    ? <p>Loading...</p>
-    : <Outlet/>
-    }
+    <> {
+      isLoading
+        ? <Typography>Loading...</Typography>
+        : <Outlet/>
+      }
     </>
   )
 }

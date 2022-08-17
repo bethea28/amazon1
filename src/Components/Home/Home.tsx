@@ -1,4 +1,4 @@
-import Dashboard from "../../Routes/Dashboard/Dashboard";
+import Dashboard from "../Dashboard/Dashboard";
 
 const Home = () => {
 

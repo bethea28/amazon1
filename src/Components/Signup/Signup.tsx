@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Box, Container, Button, Typography, Grid, TextField } from '@material-ui/core';
+import { Box, Container, Button, Typography, Grid, TextField } from '@mui/material';
 import { Auth } from 'aws-amplify';
-import { createUser } from '../Services/CreateUserService';
-import SetAuthorizationToken from '../Services/Authentication/SetAuthorizationToken';
+import { createUser } from '../../Services/CreateUserService';
+import setAuthorizationToken from '../../Services/Authentication/SetAuthorizationToken';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useNavigate } from "react-router-dom";
 
@@ -33,7 +33,7 @@ function SignUp() {
         username: user.user.getUsername(),
         email: email
       };
-      SetAuthorizationToken();
+      setAuthorizationToken();
       createUser({ data });
       setError("Sign up was successful!");
       navigate("/");

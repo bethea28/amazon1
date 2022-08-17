@@ -1,18 +1,18 @@
 import '@aws-amplify/ui-react/styles.css';
-import { green } from '@material-ui/core/colors';
+import { green } from '@mui/material/colors';
 import { createTheme } from '@mui/material/styles';
-import AddProject from './pages/Projects/AddProject'
+import AddProject from './Components/Project/AddProject';
 import React from 'react';
 import './App.css';
 import { Amplify } from 'aws-amplify';
-import awsconfig from './aws-exports';
+import awsconfig from './Resources/aws-exports';
 import { Routes, Route, useParams } from 'react-router-dom';
-import InterestSelection from './Routes/Signup/InterestSelection';
+import InterestSelection from './Components/Signup/InterestSelection';
 import { Box, ThemeProvider } from '@mui/material';
 import Home from './Components/Home/Home';
-import Dashboard from './Routes/Dashboard/Dashboard';
-import SignUp from './Components/Signup';
-import Login from './Components/Login';
+import Dashboard from './Components/Dashboard/Dashboard';
+import SignUp from './Components/Signup/Signup';
+import Login from './Components/Login/Login';
 import UserProfile from './Components/UserProfile/UserProfile'
 import { AuthProvider } from './Context/AuthProvider'
 import RequireAuth from './Services/Authentication/RequireAuth'
@@ -20,7 +20,7 @@ import Layout from './Components/Layout';
 import PersistLogin from './Services/Authentication/PersistLogin';
 import ViewUserProfile from './Components/UserProfile/ViewUserProfile';
 import Tempfile from './Components/UserProfile/Tempfile';
-
+import ProjectDetails from './Components/Project/ProjectDetails';
 Amplify.configure(awsconfig);
 
 function App() {
@@ -52,13 +52,13 @@ function App() {
 
                 {/* protected routes */}
                   <Route element={<RequireAuth/>}>
-                  <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/profile" element={<UserProfile /> } />
-                    <Route path="/addproject" element={<AddProject />} />
-                    <Route path="/interests" element={<InterestSelection />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                      <Route path="/profile" element={<UserProfile /> } />
+                      <Route path="/addproject" element={<AddProject />} />
+                      <Route path="/interests" element={<InterestSelection />} />
+                      <Route path="/project-details" element={<ProjectDetails />} />
+                    </Route>
                   </Route>
-
-              </Route>
             </Route>
           </Routes>
         </AuthProvider>

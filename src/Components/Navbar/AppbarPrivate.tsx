@@ -66,7 +66,7 @@ export default function AppbarPrivate() {
     setAuthData(prevState => {
       return {...prevState, ['id']: '' , ['token']: '', ['isLoggedIn']: false}
     })
-    await AuthService.SignOut()
+    await AuthService.signOut()
     navigate("/");
   }
 

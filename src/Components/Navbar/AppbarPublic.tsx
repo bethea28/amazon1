@@ -5,8 +5,12 @@ import { IconButton, Typography, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from "react-router-dom";
+<<<<<<< HEAD
 import { AuthContext } from '../../Context/AuthProvider';
 import { typographyTitle } from '../Constants';
+=======
+import AddProject from '../Project/AddProject';
+>>>>>>> feature/amzn1-5and55/continousloginandlogout
 
 const AppbarPublic = () => {
 
