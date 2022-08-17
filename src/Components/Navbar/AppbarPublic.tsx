@@ -5,7 +5,7 @@ import { IconButton, Typography, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from "react-router-dom";
-import AddProject from '../../pages/Projects/AddProject';
+import AddProject from '../Project/AddProject';
 
 const AppbarPublic = () => {
 
