@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { Container, Box, Button, Grid, Typography, ThemeProvider, Paper, TextField } from "@mui/material";
 import { Auth } from 'aws-amplify';
-import { createUser } from '../Services/CreateUserService';
-import setAuthorizationToken from '../Services/SetAuthorizationToken';
-import { theme } from "../Resources/GlobalTheme";
+import setAuthorizationToken from '../../Services/SetAuthorizationToken';
+import { theme } from "../../Resources/GlobalTheme";
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useNavigate } from "react-router-dom";
-import UserProfileService from '../Services/UserProfileService';
+import UserProfileService from '../../Services/UserProfileService';
 
 interface IFormInput {
   username: string,

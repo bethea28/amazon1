@@ -6,8 +6,8 @@ import ProjectDetailsList from './Components/ProjectDetailsList';
 import { theme } from "../../Resources/GlobalTheme";
 import NavigationBar from '../Dashboard/Components/NavigationBar';
 import SearchBar from '../Dashboard/Components/SearchBar';
-import AppbarPrivate from '../../Components/Navbar/AppbarPrivate';
-import AppbarPublic from '../../Components/Navbar/AppbarPublic';
+import AppbarPrivate from '../Navbar/AppbarPrivate';
+import AppbarPublic from '../Navbar/AppbarPublic';
 
 export default function ProjectDetails() {
 
