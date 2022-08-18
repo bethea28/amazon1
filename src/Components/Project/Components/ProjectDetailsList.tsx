@@ -1,6 +1,6 @@
 import { Box, Card, CardContent, CardMedia, Chip, Stack, Typography, Link } from "@mui/material";
 import { GetProjectsResponse } from "../../../Resources/Constants";
-import { typographyTitle } from "../../UserProfile/Constants";
+import { typographyTitle } from "../../../Resources/Constants"
 import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Dialog, { DialogProps } from '@mui/material/Dialog';

@@ -4,7 +4,7 @@ import { Box, Toolbar, Menu, Tooltip } from '@mui/material';
 import { IconButton, Typography, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from "react-router-dom";
-import { typographyTitle } from '../UserProfile/Constants';
+import { typographyTitle } from '../../Resources/Constants';
 
 const AppbarPublic = () => {
 

@@ -6,7 +6,7 @@ import React from 'react';
 import './App.css';
 import { Amplify } from 'aws-amplify';
 import awsconfig from './Resources/aws-exports';
-import { Routes, Route, useParams } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import InterestSelection from './Components/Signup/InterestSelection';
 import { Box, ThemeProvider } from '@mui/material';
 import Home from './Components/Home/Home';
@@ -16,14 +16,13 @@ import Login from './Components/Login/Login';
 import UserProfile from './Components/UserProfile/UserProfile'
 import { AuthProvider } from './Context/AuthProvider'
 import RequireAuth from './Services/Authentication/RequireAuth'
-import Layout from './Components/Layout';
+import Layout from './Services/Authentication/Layout';
 import PersistLogin from './Services/Authentication/PersistLogin';
 import ProjectDetails from './Components/Project/ProjectDetails';
 Amplify.configure(awsconfig);
 
 function App() {
 
-  const { username } = useParams();
   const theme = createTheme({
     palette: {
       primary: {
