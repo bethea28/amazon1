@@ -6,11 +6,12 @@ type Props = {
 };
 
 export type AuthData = {
-  id: string;
-  username: string
-  token: string;
-  isLoggedIn: boolean;
-  setAuthData: Dispatch<SetStateAction<AuthData>>;
+  id: string;                                       // The userId
+  username: string                                  // The username of the user
+  token: string;                                    // The jwt token
+  isLoggedIn: boolean;                              // Checks if the user is logged in
+  firstName: string                                 // The user's first name
+  setAuthData: Dispatch<SetStateAction<AuthData>>;  // Used to set the variables above
 };
 
 const initialData: AuthData = {
@@ -18,6 +19,7 @@ const initialData: AuthData = {
   username: '',
   token: '',
   isLoggedIn: false,
+  firstName: '',
   setAuthData: (): void => {},
 };
 

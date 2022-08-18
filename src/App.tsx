@@ -1,7 +1,7 @@
 import '@aws-amplify/ui-react/styles.css';
 import { green } from '@mui/material/colors';
 import { createTheme } from '@mui/material/styles';
-import AddProject from './Components/Project/AddProject'
+import AddProject from './Components/Project/AddProject';
 import React from 'react';
 import './App.css';
 import { Amplify } from 'aws-amplify';
@@ -16,7 +16,7 @@ import Login from './Components/Login/Login';
 import UserProfile from './Components/UserProfile/UserProfile'
 import { AuthProvider } from './Context/AuthProvider'
 import RequireAuth from './Services/Authentication/RequireAuth'
-import Layout from './Components/Layout';
+import Layout from './Services/Authentication/Layout';
 import PersistLogin from './Services/Authentication/PersistLogin';
 import ProjectDetails from './Components/Project/ProjectDetails';
 Amplify.configure(awsconfig);
@@ -35,7 +35,7 @@ function App() {
   return (
     <Box className="App" height={"100vh"} display={"flex"} flexDirection={"column"}>
       <ThemeProvider theme = {theme}>
-      <AuthProvider>
+        <AuthProvider>
           <Routes>
             <Route element={<PersistLogin/>}>
               <Route path="/" element={<Layout/>}>
@@ -47,14 +47,13 @@ function App() {
 
                 {/* protected routes */}
                   <Route element={<RequireAuth/>}>
-                    <Route path="/profile" element={<UserProfile /> } />
-                    <Route path="/interests" element={<InterestSelection />} />
                     <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/addproject" element={<AddProject />} />
-                    <Route path="/project-details" element={<ProjectDetails />} />
+                      <Route path="/profile" element={<UserProfile /> } />
+                      <Route path="/addproject" element={<AddProject />} />
+                      <Route path="/interests" element={<InterestSelection />} />
+                      <Route path="/project-details" element={<ProjectDetails />} />
+                    </Route>
                   </Route>
-
-              </Route>
             </Route>
           </Routes>
         </AuthProvider>
