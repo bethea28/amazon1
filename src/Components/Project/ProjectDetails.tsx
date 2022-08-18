@@ -6,8 +6,6 @@ import ProjectDetailsList from './Components/ProjectDetailsList';
 import { theme } from "../../Resources/GlobalTheme";
 import NavigationBar from '../Dashboard/Components/NavigationBar';
 import SearchBar from '../Dashboard/Components/SearchBar';
-import AppbarPrivate from '../Navbar/AppbarPrivate';
-import AppbarPublic from '../Navbar/AppbarPublic';
 
 export default function ProjectDetails() {
 
@@ -32,7 +30,6 @@ export default function ProjectDetails() {
     return (
         <ThemeProvider theme={theme}>
             <Box className="Project-details-page">
-            {userLoggedIn ? <AppbarPrivate /> : <AppbarPublic />}
                 <Container>
                     <SearchBar />
                     <NavigationBar />
