@@ -6,9 +6,7 @@ export const axiosInstance = axios.create({
     baseURL: "http://localhost:8080",
     timeout: 1000,
     headers: {
-        "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
-        "Accept": "application/json",
         //"Authorization": `Bearer ${jwt}`, //(commented out until api token is determined)
     }
 })

@@ -1,7 +1,7 @@
 import { ToggleButton, Grid, Typography, ToggleButtonGroup, Button, Box, ThemeProvider } from "@mui/material";
 import { styled } from "@mui/system";
 import React, { useState } from "react";
-import Header from "../../Components/Header";
+import Header from "../Header";
 import { updateUser } from "../../Services/UserService";
 import { tempUserID, interests } from "../../Resources/Constants";
 import { theme } from "../../Resources/GlobalTheme";

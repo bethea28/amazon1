@@ -1,27 +1,27 @@
-import React, { useState, MouseEvent } from 'react';
-import { AppBar } from '@mui/material';
-import { Box, Toolbar, Menu, Badge } from '@mui/material';
-import { IconButton, Typography, MenuItem } from '@mui/material';
+import React, { useState, MouseEvent, useContext } from 'react';
+import { Box, Toolbar, Menu } from '@mui/material';
+import { IconButton, Typography, MenuItem, AppBar } from '@mui/material';
 import { ListItemText, Divider, ListItemIcon } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { useNavigate } from "react-router-dom";
 import Logout from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {Search, SearchIconWrapper, StyledInputBase} from '../Constants'
+import { AuthContext } from '../../Context/AuthProvider';
+import AuthService from '../../Services/Authentication/AuthService';
 
 export default function AppbarPrivate() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
-  const settings = ['My Projects', 'Liked Projects'];
+  const settings = ['Home'];
 
   const navigate = useNavigate();
+  const { setAuthData } = useContext(AuthContext)
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -40,9 +40,14 @@ export default function AppbarPrivate() {
   };
 
   const handleClickProfile= () => {
-    navigate("/profile");
     handleMenuClose();
+    navigate("/profile");
   };
+
+  const handleHomePageClick=()=>{
+    handleCloseUserMenu()
+    navigate('/');
+  }
 
   const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -55,6 +60,15 @@ export default function AppbarPrivate() {
   const handleMobileMenuOpen = (event: MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  const handleLogout = async () =>
+  {
+    setAuthData(prevState => {
+      return {...prevState, ['id']: '' , ['token']: '', ['isLoggedIn']: false}
+    })
+    await AuthService.signOut()
+    navigate("/");
+  }
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -80,7 +94,7 @@ export default function AppbarPrivate() {
         <ListItemText primary="Profile" />
       </MenuItem>
       <Divider />
-      <MenuItem>
+      <MenuItem onClick={handleLogout}>
         <ListItemIcon>
           <Logout fontSize="small" />
         </ListItemIcon>
@@ -106,26 +120,6 @@ export default function AppbarPrivate() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <Typography>Messages</Typography>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <Typography>Notifications</Typography>
-      </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
@@ -173,7 +167,7 @@ export default function AppbarPrivate() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={handleHomePageClick}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
@@ -197,20 +191,6 @@ export default function AppbarPrivate() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
             <IconButton
               size="large"
               edge="end"

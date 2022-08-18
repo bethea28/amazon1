@@ -1,10 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Box, StyledEngineProvider, Avatar } from '@mui/material';
 import { Grid, Paper, Button, TextField} from '@mui/material';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import AppbarPrivate from '../Navbar/AppbarPrivate';
-import AppbarPublic from '../Navbar/AppbarPublic';
 import "./Styles.css";
 import UserProfileService from '../../Services/UserProfileService';
 import { profileBackgroundImageBox, profileDataBox } from '../Constants';
@@ -12,13 +8,13 @@ import { useForm } from "react-hook-form";
 import UserData from '../../Resources/types';
 import { AuthContext} from '../../Context/AuthProvider';
 import { ProfileSectionStyle } from './UserProfileStyle';
+import AuthService from '../../Services/Authentication/AuthService';
 
 export default function UserProfile() {
 
   const initialValues = {name: '', email: '', bio: ''}
   const [userProfile, setUserProfile] = useState<UserData>(initialValues)
   const { register, handleSubmit, reset } = useForm<UserData>();
-  const [userLoggedIn, setUserLoggedIn] = useState<boolean>(true);
   const { id, token, setAuthData } = useContext(AuthContext)
 
   useEffect(() => {
@@ -26,20 +22,30 @@ export default function UserProfile() {
   }, [])
 
   const fetchUserProfile = async () => {
-    const response = await UserProfileService.getUserProfile(id, token)
-    setUserProfile(response.data)
-    reset(response.data)
+    try {
+      const token = await AuthService.getCurrentUser()
+      const response = await UserProfileService.getUserProfile(token.id, token.jwt)
+      setAuthData(prevState => {
+        return {...prevState, ['isLoggedIn']: true}
+      })
+      setUserProfile(response.data)
+      reset(response.data)
+    }catch (err){
+      setAuthData(prevState => {
+        return {...prevState, ['isLoggedIn']: false, ['token']: ''}
+      })
+    }
+
   }
 
   const onSubmit = handleSubmit(async (data: UserData)=>{
-    const response = await UserProfileService.updateUserProfile(id, token, data)
+    const response = await UserProfileService.updateUserProfile(id!, token!, data)
 })
 
   return (
     <StyledEngineProvider injectFirst>
       <form onSubmit={onSubmit}>  
         <Box sx={{ display: 'flex', flexDirection: 'column', height: 1000}}>
-          {userLoggedIn ? <AppbarPrivate /> : <AppbarPublic />}
           <Box sx={{...profileBackgroundImageBox}}>
             Picture
           </Box>
