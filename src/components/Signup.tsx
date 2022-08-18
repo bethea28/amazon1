@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { Box, Button, Typography, Grid, TextField, Paper } from '@material-ui/core';
+import { Container, Box, Button, Grid, Typography, ThemeProvider, Paper, TextField } from "@mui/material";
 import { Auth } from 'aws-amplify';
 import { createUser } from '../Services/CreateUserService';
 import setAuthorizationToken from '../Services/SetAuthorizationToken';
-import AppbarPublic from "./Navbar/AppbarPublic";
+import { theme } from "../Resources/GlobalTheme";
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useNavigate } from "react-router-dom";
-import { match } from 'assert';
-import { watch } from 'fs';
+import UserProfileService from '../Services/UserProfileService';
 
 interface IFormInput {
   username: string,
@@ -20,8 +19,13 @@ interface IFormInput {
 
 function SignUp() {
   const { control, handleSubmit, register, getValues } = useForm<IFormInput>();
-  const [errorMessage, setError] = useState("");
+  const [errorMessage, setError ] = useState("");
+  const [ passwordShown, setPasswordShown ] = useState(false);
   const navigate = useNavigate();
+
+  const togglePassword = () => {
+    setPasswordShown(!passwordShown);
+  }
 
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     const username = data.username;
@@ -44,11 +48,15 @@ function SignUp() {
         userSub: user.userSub,
         email: email
       };
-      setAuthorizationToken();
-      console.log(data);
-      createUser({ data });
+      const token = await setAuthorizationToken();
+      try {
+        UserProfileService.addUserProfile(token, data );
+      } catch (error) {
+        console.log(error);
+      }
+
       setError("Sign up was successful!");
-      navigate("/profile");
+      navigate("/interests");
       return user;
     } catch (error) {
       if (typeof error === 'object' && error != null) {
@@ -60,8 +68,8 @@ function SignUp() {
   };
 
   return (
+    <ThemeProvider theme = {theme}>
     <Paper>
-    <AppbarPublic />
     <Grid container direction={"row"} spacing={2} justifyContent="center">
     <Grid container direction={"column"} justifyContent="center" alignContent={"center"} style={{ minHeight: '100vh' }}>
     <Grid item className="signUpBox">
@@ -164,7 +172,7 @@ function SignUp() {
                     onChange={onChange}
                     error={!!error}
                     helperText={error ? error.message : null}
-                    type="password"
+                    type={passwordShown ? "text" : "password" }
                   />
                 )}
                 rules={{
@@ -173,6 +181,7 @@ function SignUp() {
                   pattern: /^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!?]).*$/
                 }}
               />
+              <Button onClick={togglePassword}>Show Password</Button>
             </Grid>
             <Grid item>
               <Controller
@@ -191,7 +200,7 @@ function SignUp() {
                     onChange={onChange}
                     error={!!error}
                     helperText={error ? error.message : null}
-                    type="password"
+                    type={passwordShown ? "text" : "password" }
                   />
                 )}
                 rules={{
@@ -245,6 +254,7 @@ function SignUp() {
       </Grid>
     </Grid>
     </Paper>
+    </ThemeProvider>
   );
 }
 
