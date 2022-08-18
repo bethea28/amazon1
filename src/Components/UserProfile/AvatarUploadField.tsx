@@ -1,7 +1,7 @@
 
 import { Box, TextField, Avatar, Button } from '@mui/material';
 import { useState, useEffect } from 'react';
-import { getAvatar, uploadAvatar, deleteAvatar } from '../Services/AvatarService';
+import { getAvatar, uploadAvatar, deleteAvatar } from '../../Services/AvatarService';
 
 export default function AvatarUploadField() {
 

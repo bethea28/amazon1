@@ -1,23 +1,23 @@
 import { useState, useEffect } from 'react';
 import '@aws-amplify/ui-react/styles.css';
-import { green } from '@material-ui/core/colors';
+import { green } from '@mui/material/colors';
 import { createTheme } from '@mui/material/styles';
-import AddProject from './pages/Projects/AddProject'
+import AddProject from './Components/Project/AddProject'
 import React from 'react';
 import './App.css';
 import { Amplify, Auth } from 'aws-amplify';
-import awsconfig from './aws-exports';
+import awsconfig from './Resources/aws-exports';
 import { Routes, Route } from 'react-router-dom';
-import InterestSelection from './Routes/Signup/InterestSelection';
+import InterestSelection from './Components/Signup/InterestSelection';
 import { Box, ThemeProvider } from '@mui/material';
 import * as global from "./Resources/GlobalTheme";
 import Home from './Components/Home/Home';
-import Dashboard from './Routes/Dashboard/Dashboard';
-import SignUp from './Components/Signup';
-import Login from './Components/Login';
+import Dashboard from './Components/Dashboard/Dashboard';
+import SignUp from './Components/Signup/Signup';
+import Login from './Components/Login/Login';
 import UserProfile from './Components/UserProfile/UserProfile'
 import { AuthProvider } from './Context/AuthProvider'
-import ProjectDetails from './Routes/ProjectDetails/ProjectDetails';
+import ProjectDetails from './Components/Project/ProjectDetails';
 Amplify.configure(awsconfig);
 
 function App() {
