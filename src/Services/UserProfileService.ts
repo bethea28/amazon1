@@ -10,7 +10,7 @@ class UserProfileService{
    * @params userId The current user's id
    * @params jwt    The jwt token
    */
-  getUserProfile = async (userId: string, jwt:string) => {
+  getUserProfile = async (userId: string) => {
     const response = await axiosInstance.get(`/profile/${userId}`, {
       headers: {
       'Content-Type': 'application/json'

@@ -18,8 +18,6 @@ import { AuthProvider } from './Context/AuthProvider'
 import RequireAuth from './Services/Authentication/RequireAuth'
 import Layout from './Components/Layout';
 import PersistLogin from './Services/Authentication/PersistLogin';
-import ViewUserProfile from './Components/UserProfile/ViewUserProfile';
-import Tempfile from './Components/UserProfile/Tempfile';
 import ProjectDetails from './Components/Project/ProjectDetails';
 Amplify.configure(awsconfig);
 
@@ -47,8 +45,6 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/signup" element={<SignUp />} />
                   <Route path="/login" element={<Login />} />
-                  <Route path="/profile/test" element={<Tempfile />} />
-                  <Route path="/profile/view/:username" element={<ViewUserProfile />} />
 
                 {/* protected routes */}
                   <Route element={<RequireAuth/>}>
