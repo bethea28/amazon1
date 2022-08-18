@@ -3,9 +3,9 @@ import { Box, StyledEngineProvider, Avatar } from '@mui/material';
 import { Grid, Paper, Button, TextField} from '@mui/material';
 import "./Styles.css";
 import UserProfileService from '../../Services/UserProfileService';
-import { profileBackgroundImageBox, profileDataBox } from '../Constants';
+import { profileBackgroundImageBox, profileDataBox } from '../../Resources/Constants';
 import { useForm } from "react-hook-form";
-import UserData from '../../Resources/types';
+import { UserData } from '../../Resources/types';
 import { AuthContext} from '../../Context/AuthProvider';
 import { ProfileSectionStyle } from './UserProfileStyle';
 import AuthService from '../../Services/Authentication/AuthService';
@@ -24,7 +24,7 @@ export default function UserProfile() {
   const fetchUserProfile = async () => {
     try {
       const token = await AuthService.getCurrentUser()
-      const response = await UserProfileService.getUserProfile(token.id, token.jwt)
+      const response = await UserProfileService.getUserProfile(token.id)
       setAuthData(prevState => {
         return {...prevState, ['isLoggedIn']: true}
       })

@@ -1,11 +1,10 @@
-import React, { useState, MouseEvent } from 'react';
+import React, { useState, MouseEvent, useContext } from 'react';
 import { AppBar, Container, Button } from '@mui/material';
 import { Box, Toolbar, Menu, Tooltip } from '@mui/material';
 import { IconButton, Typography, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from "react-router-dom";
-import AddProject from '../Project/AddProject';
+import { typographyTitle } from '../../Resources/Constants';
 
 const AppbarPublic = () => {
 
@@ -44,24 +43,6 @@ const AppbarPublic = () => {
     <AppBar position="static" sx={{bgcolor:"#335436"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            JUMPSTARTER
-          </Typography>
-
            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
                size="large"
@@ -104,16 +85,7 @@ const AppbarPublic = () => {
             noWrap
             component="a"
             href=""
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
+            sx={{...typographyTitle}}
           >
             JUMPSTARTER
            </Typography>
@@ -128,9 +100,6 @@ const AppbarPublic = () => {
               </Button>
             ))}
           </Box>
-
-          
-
           <Box sx={{ flexGrow: 0 }}>
               <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", borderRadius:50}} 
               variant="contained" size="small" onClick={handleStartProject}>Start a project</Button>

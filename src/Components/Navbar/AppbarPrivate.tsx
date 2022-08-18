@@ -9,7 +9,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { useNavigate } from "react-router-dom";
 import Logout from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import {Search, SearchIconWrapper, StyledInputBase} from '../Constants'
+import {Search, SearchIconWrapper, StyledInputBase} from './Constants'
 import { AuthContext } from '../../Context/AuthProvider';
 import AuthService from '../../Services/Authentication/AuthService';
 

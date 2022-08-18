@@ -36,6 +36,7 @@ export default function ProjectDetails() {
                     <Box>
                         <ProjectDetailsList projects={currentProject!} />
                     </Box>
+
                 </Container>
             </Box>
         </ThemeProvider>
