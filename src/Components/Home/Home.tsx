@@ -1,9 +1,10 @@
-import AppbarPrivate from "../Navbar/AppbarPrivate";
-import AppbarPublic from "../Navbar/AppbarPublic";
+import Dashboard from "../Dashboard/Dashboard";
 
-export default function Home() {
+const Home = () => {
 
   return (
-    <AppbarPublic />
-  );
+    <Dashboard/>
+  )
 }
+
+export default Home
