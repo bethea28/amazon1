@@ -42,7 +42,7 @@ export default function AddProject() {
             userId: '002',
             projectName,
             targetFundingNum:data.targetFundingNum.toString(),
-            targetFundingDate:data.targetFundingDate.toDateString(),
+            targetFundingDate:data.targetFundingDate.toLocaleDateString(),
             description,
             categories
         }
@@ -65,10 +65,12 @@ export default function AddProject() {
                 <TextField
                 {...register("projectName", {required: true})} 
                 label = "Input name of your project"
+                defaultValue = ""
                 error={errors.projectName !== undefined}
                 />
                 {errors.projectName && ( 
                 <Typography variant ="body2" color ="red">This field is required</Typography>)}
+                
             </Grid>
             <Grid item xs = {2} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center"  }}>
                 <Typography>Project Name</Typography>
@@ -77,7 +79,7 @@ export default function AddProject() {
             <Grid container>
             <Grid item xs = {4}>
                 <TextField
-                {...register("targetFundingNum",{ min: 0.01 })} 
+                {...register("targetFundingNum",{ min: 0.01, })} 
                 type = "number"
                 label = "Input target funding amount"
                 defaultValue = {0}
