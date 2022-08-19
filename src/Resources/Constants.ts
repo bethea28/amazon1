@@ -15,6 +15,10 @@ export type GetProjectsResponse = {
     projects: Array<Project>
 }
 
+export type GetProjectResponse = {
+    project: Project
+}
+
 export type Project = {
     projectId: string,
     userId: string,
