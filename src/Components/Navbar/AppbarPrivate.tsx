@@ -66,8 +66,9 @@ export default function AppbarPrivate() {
     setAuthData(prevState => {
       return {...prevState, ['id']: '' , ['token']: '', ['isLoggedIn']: false}
     })
-    await AuthService.signOut()
+    
     navigate("/");
+    await AuthService.signOut();
   }
 
   const menuId = 'primary-search-account-menu';
