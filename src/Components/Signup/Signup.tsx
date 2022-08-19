@@ -1,15 +1,8 @@
 import React, { useState } from 'react';
-<<<<<<< HEAD
-import { Container, Box, Button, Grid, Typography, ThemeProvider, Paper, TextField } from "@mui/material";
+import { Box, Button, Grid, Typography, ThemeProvider, Paper, TextField } from "@mui/material";
 import { Auth } from 'aws-amplify';
-import setAuthorizationToken from '../../Services/SetAuthorizationToken';
-import { theme } from "../../Resources/GlobalTheme";
-=======
-import { Box, Container, Button, Typography, Grid, TextField } from '@mui/material';
-import { Auth } from 'aws-amplify';
-import { createUser } from '../../Services/CreateUserService';
 import setAuthorizationToken from '../../Services/Authentication/SetAuthorizationToken';
->>>>>>> main
+import { theme } from "../../Resources/GlobalTheme";
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useNavigate } from "react-router-dom";
 import UserProfileService from '../../Services/UserProfileService';
@@ -208,15 +201,10 @@ function SignUp() {
                 rules={{
                   required: true,
                   minLength: 8,
-<<<<<<< HEAD
-                  pattern: /^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!?]).*$/,
                   validate: (value) => {
                     const { password } = getValues();
                       return password === value || "Your passwords do not match";
                   }
-=======
-                  pattern: /^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).*$/
->>>>>>> main
                 }}
               />
             </Grid>

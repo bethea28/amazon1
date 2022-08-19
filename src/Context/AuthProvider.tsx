@@ -23,10 +23,7 @@ const initialData: AuthData = {
   setAuthData: (): void => {},
 };
 
-<<<<<<< HEAD
 // Create the context
-=======
->>>>>>> main
 const AuthContext = createContext<AuthData>(initialData);
 
 const AuthProvider = ({ children }: Props): JSX.Element => {
@@ -58,7 +55,6 @@ const AuthProvider = ({ children }: Props): JSX.Element => {
     });
   },[]);
   const [authData, setAuthData] = useState<AuthData>(initialData);
-<<<<<<< HEAD
   useEffect(() => {
     return Hub.listen('auth', (data) => {
       const { payload } = data;
@@ -66,9 +62,6 @@ const AuthProvider = ({ children }: Props): JSX.Element => {
       //setAuthData
     })
   });
-=======
-
->>>>>>> main
   return (
     <AuthContext.Provider value={{ ...authData, setAuthData }}>
       {children}
