@@ -41,10 +41,10 @@ function SignUp() {
         }
       });
       const data = {
-        //userName: user.user.getUsername(),
-        //firstName: firstname,
-        //lastName: lastname,
-        user_id: user.userSub,
+        userName: user.user.getUsername(),
+        firstName: firstname,
+        lastName: lastname,
+        userId: user.userSub,
         email: email
       };
       const token = await setAuthorizationToken();
