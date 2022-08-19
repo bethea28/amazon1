@@ -86,7 +86,7 @@ export default function ProjectDetailsList(props: GetProjectsResponse) {
                     onClick={handleClickOpen}
                     sx={{...typographyTitle}}>
                       By: 
-                      <Link href="#" underline="hover">
+                      <Link href="#" color="inherit" underline="hover">
                         {userData}
                       </Link>
                   </Typography>                                 
