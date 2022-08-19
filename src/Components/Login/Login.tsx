@@ -1,5 +1,5 @@
 import React , { useState, useContext } from 'react';
-import { Box, Container, Button, Typography, Grid, TextField } from '@mui/material';
+import { Box, Container, Button, Typography, Grid, TextField, Paper } from '@mui/material';
 import { Auth } from 'aws-amplify';
 import SetAuthorizationToken from '../../Services/Authentication/SetAuthorizationToken';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
@@ -36,18 +36,16 @@ interface LocationState {
         });
         const userId = user.attributes.sub
         const token:string = await SetAuthorizationToken()
-        
+
         setAuthData(prevState => {
           return {...prevState, ['id']: userId , ['token']: token, ['isLoggedIn']: true}
         })
-
         if(location.state){
-            navigate(from.pathname, {replace: true}); 
+            navigate(from.pathname, {replace: true});
           }
         else{
           navigate("/");
         }
-        
       } catch (error) {
         if (typeof error === 'object' && error != null) {
           const errorObj = error;
@@ -58,7 +56,10 @@ interface LocationState {
     }
 
     return (
-      <Container component="main" maxWidth="xs" className="signUpBox">
+      <Paper>
+      <Grid container direction={"row"} spacing={2} justifyContent="center">
+      <Grid container direction={"column"} justifyContent="center" alignContent={"center"} style={{ minHeight: '100vh' }}>
+      <Grid item className="signUpBox">
         <form>
           <Typography variant="h2">Log In</Typography>
           <Box height="100%" bgcolor="#D1e1D2">
@@ -111,6 +112,10 @@ interface LocationState {
                       type="password"
                     />
                   )}
+                  rules={{
+                    required: true,
+                    minLength: 8
+                  }}
                 />
               </Grid>
               <Grid item>
@@ -121,7 +126,10 @@ interface LocationState {
             </Grid>
           </Box>
         </form>
-      </Container>
+        </Grid>
+      </Grid>
+    </Grid>
+    </Paper>
     );
   }
 
