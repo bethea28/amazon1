@@ -1,4 +1,4 @@
-import axiosInstance from '../apiConfig';
+import { axiosInstance } from '../Resources/Constants';
 import { Auth } from 'aws-amplify';
 
 export const postData = async (state:any) => {

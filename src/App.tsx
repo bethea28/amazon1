@@ -1,23 +1,25 @@
-import { useState, useEffect } from 'react';
 import '@aws-amplify/ui-react/styles.css';
-import { green } from '@material-ui/core/colors';
+import { green } from '@mui/material/colors';
 import { createTheme } from '@mui/material/styles';
-import AddProject from './pages/Projects/AddProject'
+import AddProject from './Components/Project/AddProject';
 import React from 'react';
 import './App.css';
-import { Amplify, Auth } from 'aws-amplify';
-import awsconfig from './aws-exports';
+import { Amplify } from 'aws-amplify';
+import awsconfig from './Resources/aws-exports';
 import { Routes, Route } from 'react-router-dom';
-import InterestSelection from './Routes/Signup/InterestSelection';
+import InterestSelection from './Components/Signup/InterestSelection';
 import { Box, ThemeProvider } from '@mui/material';
-import * as global from "./Resources/GlobalTheme";
 import Home from './Components/Home/Home';
-import Dashboard from './Routes/Dashboard/Dashboard';
-import SignUp from './Components/Signup';
-import Login from './Components/Login';
+import Dashboard from './Components/Dashboard/Dashboard';
+import SignUp from './Components/Signup/Signup';
+import Login from './Components/Login/Login';
 import UserProfile from './Components/UserProfile/UserProfile'
 import { AuthProvider } from './Context/AuthProvider'
 import { TransactionTable } from './Components/TransactionTable';
+import RequireAuth from './Services/Authentication/RequireAuth'
+import Layout from './Services/Authentication/Layout';
+import PersistLogin from './Services/Authentication/PersistLogin';
+import ProjectDetails from './Components/Project/ProjectDetails';
 Amplify.configure(awsconfig);
 
 function App() {
@@ -36,14 +38,24 @@ function App() {
       <ThemeProvider theme = {theme}>
         <AuthProvider>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/profile" element={<UserProfile />} />
-            <Route path="/interests" element={<InterestSelection />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/addproject" element={<AddProject /> } />
-            <Route path="/transaction" element={<><AddProject /><TransactionTable /></>} />
+            <Route element={<PersistLogin/>}>
+              <Route path="/" element={<Layout/>}>
+              
+                {/* public routes */}
+                  <Route path="/" element={<Home />} />
+                  <Route path="/signup" element={<SignUp />} />
+                  <Route path="/login" element={<Login />} />
+
+                {/* protected routes */}
+                  <Route element={<RequireAuth/>}>
+                    <Route path="/dashboard" element={<Dashboard />} />
+                      <Route path="/profile" element={<UserProfile /> } />
+                      <Route path="/addproject" element={<AddProject />} />
+                      <Route path="/interests" element={<InterestSelection />} />
+                      <Route path="/project-details" element={<ProjectDetails />} />
+                    </Route>
+                  </Route>
+            </Route>
           </Routes>
         </AuthProvider>
       </ThemeProvider>

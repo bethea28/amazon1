@@ -5,7 +5,7 @@ export async function getRecommendedProjects(categories: string) {
     
     try {
         const res = await Auth.currentSession()
-        let jwt = res.getAccessToken().getJwtToken();
+        let jwt = res.getAccessToken().getJwtToken(); 
         const { data } = await axiosInstance.post<Project[]>("/project/recommended", categories, {
             headers: {
                 'Authorization': `Bearer ${jwt}`,
@@ -22,13 +22,31 @@ export async function getNewestProjects() {
 
     try {
         const res = await Auth.currentSession()
-        let jwt = res.getAccessToken().getJwtToken();
+        let jwt = res.getAccessToken().getJwtToken(); 
         const { data } = await axiosInstance.get<Project[]>("/project/recent", {
             headers: {
                 'Authorization': `Bearer ${jwt}`,
                 'Content-Type': 'application/json'
             }
         })
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export async function getProjectDetails(id: string) {
+    
+    try {
+        const res = await Auth.currentSession()
+        let jwt = res.getAccessToken().getJwtToken(); 
+        const { data } = await axiosInstance.get<Project[]>(`/project/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${jwt}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
         return data;
     } catch (error) {
         console.log(error);
