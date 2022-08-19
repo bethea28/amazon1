@@ -39,9 +39,9 @@ class AuthService{
   getCurrentUser = async () => {
     const token = await Auth.currentSession().then(res=>{
       let accessToken = res.getAccessToken();
-      let id = accessToken.payload.sub;
+      let userId = accessToken.payload.sub;
       let jwt = accessToken.getJwtToken();
-      return {id, jwt}
+      return {userId, jwt}
     })
     return token
   };

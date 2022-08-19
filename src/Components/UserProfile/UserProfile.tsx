@@ -2,19 +2,17 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Box, StyledEngineProvider, Avatar } from '@mui/material';
 import { Grid, Paper, Button, TextField} from '@mui/material';
 import "./Styles.css";
-import UserProfileService from '../../Services/UserProfileService';
-import { profileBackgroundImageBox, profileDataBox } from '../../Resources/Constants';
+import UserService from '../../Services/UserService';
+import { profileBackgroundImageBox, profileDataBox, User, initialUserData } from '../../Resources/Constants';
 import { useForm } from "react-hook-form";
-import { UserData } from '../../Resources/types';
 import { AuthContext} from '../../Context/AuthProvider';
 import { ProfileSectionStyle } from './UserProfileStyle';
 import AuthService from '../../Services/Authentication/AuthService';
 
 export default function UserProfile() {
 
-  const initialValues = {name: '', email: '', bio: ''}
-  const [userProfile, setUserProfile] = useState<UserData>(initialValues)
-  const { register, handleSubmit, reset } = useForm<UserData>();
+  const [userProfile, setUserProfile] = useState<User>(initialUserData)
+  const { register, handleSubmit, reset } = useForm<User>();
   const { id, token, setAuthData } = useContext(AuthContext)
 
   useEffect(() => {
@@ -23,13 +21,15 @@ export default function UserProfile() {
 
   const fetchUserProfile = async () => {
     try {
-      const token = await AuthService.getCurrentUser()
-      const response = await UserProfileService.getUserProfile(token.id)
+      const currentUser = await AuthService.getCurrentUser()
+      console.log(currentUser.userId)
+      const response = await UserService.getUser(currentUser.userId)
       setAuthData(prevState => {
-        return {...prevState, ['isLoggedIn']: true}
+        return {...prevState, ['isLoggedIn']: true, ['id']:currentUser.userId, ['token']:currentUser.jwt}
       })
-      setUserProfile(response.data)
-      reset(response.data)
+      console.log("response: ", response)
+      setUserProfile(response!.data)
+      reset(response!.data)
     }catch (err){
       setAuthData(prevState => {
         return {...prevState, ['isLoggedIn']: false, ['token']: ''}
@@ -38,8 +38,9 @@ export default function UserProfile() {
 
   }
 
-  const onSubmit = handleSubmit(async (data: UserData)=>{
-    const response = await UserProfileService.updateUserProfile(id!, token!, data)
+  const onSubmit = handleSubmit(async (data: User)=>{
+    console.log("data: ", data)
+    const response = await UserService.updateUser(id!, token!, data)
 })
 
   return (
@@ -59,11 +60,11 @@ export default function UserProfile() {
                 <Grid container direction={"column"} 
                 spacing={1}>
                   <Grid item>
-                    <TextField type="text"
-                    {...register('name', {
+                    <TextField disabled type="text"
+                    {...register('firstName', {
                       onChange: (event: React.ChangeEvent<HTMLInputElement>): 
-                      void => {setUserProfile((prevState) => ({ 
-                        name: event.target.value,
+                      void => {setUserProfile((prevState) => ({...prevState,
+                        firstName: event.target.value,
                         email: prevState.email,
                         bio: prevState.bio
                     }))
@@ -74,11 +75,11 @@ export default function UserProfile() {
                     size="small"
                     label="Name"
                     InputLabelProps={{shrink: true}}
-                    value={userProfile!.name}
+                    value={userProfile!.firstName}
                     />
                   </Grid>
                   <Grid item>
-                      <TextField {...register('email')}
+                      <TextField disabled {...register('email')}
                       onChange={event => {
                         setUserProfile(prevState => {
                           return {...prevState, ['email']: event.target.value};
@@ -124,13 +125,16 @@ export default function UserProfile() {
             </Paper>
             <Paper elevation={3} className="customPaper">    
               <Box className="customBox">  
-                <ProfileSectionStyle label="Interest"></ProfileSectionStyle>
+                <ProfileSectionStyle label="Interests"></ProfileSectionStyle>
               </Box>
               <Box sx={{m:1, height: 3 / 4}}>
-                <Grid container direction={"column"} 
-                spacing={1}>
-                  <Grid item>
-                  </Grid>     
+             
+                <Grid container spacing= {2} >
+                { userProfile.interests.map((interest) =>
+                  <Grid key={interest} item>
+                  <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", borderRadius:50}} variant="contained"
+                  >{interest}</Button>
+                  </Grid>)}
                 </Grid>
               </Box>
             </Paper>        

@@ -2,7 +2,7 @@ import { ToggleButton, Grid, Typography, ToggleButtonGroup, Button, Box, ThemePr
 import { styled } from "@mui/system";
 import React, { useState } from "react";
 import Header from "../Header";
-import { updateUser } from "../../Services/UserService";
+import UserService from "../../Services/UserService";
 import { tempUserID, interests } from "../../Resources/Constants";
 import { theme } from "../../Resources/GlobalTheme";
 
@@ -22,7 +22,7 @@ function InterestSelection() {
 
     function handleSubmit(event: React.MouseEvent<HTMLElement>) {
         event.preventDefault();
-        updateUser({ interests: choices.slice(1) }, tempUserID);
+        // UserService.updateUser({ interests: choices.slice(1) }, tempUserID);
     }
 
 
