@@ -41,19 +41,15 @@ function SignUp() {
         }
       });
       const data = {
-        userName: user.user.getUsername(),
-        firstName: firstname,
-        lastName: lastname,
-        userSub: user.userSub,
+        //userName: user.user.getUsername(),
+        //firstName: firstname,
+        //lastName: lastname,
+        user_id: user.userSub,
         email: email
       };
       const token = await setAuthorizationToken();
-      try {
-        UserProfileService.addUserProfile(token, data );
-      } catch (error) {
-        console.log(error);
-      }
-
+      const profile = await UserProfileService.addUserProfile(token, data );
+      console.log(profile);
       setError("Sign up was successful!");
       navigate("/interests");
       return user;
