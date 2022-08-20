@@ -4,7 +4,7 @@ import { createTheme } from '@mui/material/styles';
 import AddProject from './Components/Project/AddProject';
 import React from 'react';
 import './App.css';
-import { Amplify } from 'aws-amplify';
+import { Amplify, API } from 'aws-amplify';
 import awsconfig from './Resources/aws-exports';
 import { Routes, Route } from 'react-router-dom';
 import InterestSelection from './Components/Signup/InterestSelection';
@@ -20,6 +20,7 @@ import Layout from './Services/Authentication/Layout';
 import PersistLogin from './Services/Authentication/PersistLogin';
 import ProjectDetails from './Components/Project/ProjectDetails';
 Amplify.configure(awsconfig);
+API.configure(awsconfig);
 
 function App() {
 

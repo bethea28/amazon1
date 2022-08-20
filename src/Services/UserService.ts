@@ -50,7 +50,6 @@ class UserService{
      */
   updateUser = async (userId: string, jwt: string, data: object) => {
     try {
-      console.log("userId: ", userId)
       const response = await axiosInstance.patch<User>(`/users/${userId}`, data, {
         headers: {
           'Authorization': `Bearer ${jwt}`,
