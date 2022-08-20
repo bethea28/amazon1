@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Container, Button, Typography, Grid, TextField } from '@mui/material';
 import { Auth } from 'aws-amplify';
-import { createUser } from '../../Services/CreateUserService';
+// import UserService from '../../Services/UserService';
 import setAuthorizationToken from '../../Services/Authentication/SetAuthorizationToken';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useNavigate } from "react-router-dom";
@@ -34,7 +34,7 @@ function SignUp() {
         email: email
       };
       setAuthorizationToken();
-      createUser({ data });
+      // UserService.addUser(data);
       setError("Sign up was successful!");
       navigate("/");
       return user;
