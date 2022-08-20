@@ -32,7 +32,6 @@ export default function ProjectDetails() {
     return (
         <ThemeProvider theme={theme}>
             {currentProject && <Box className="Project-details-page">
-                {userLoggedIn ? <AppbarPrivate /> : <AppbarPublic />}
                 <Container>
                     <SearchBar />
                     <NavigationBar />
@@ -79,6 +78,7 @@ export default function ProjectDetails() {
                         </Card>
                         </Stack>
                     </Box>
+
                 </Container>
             </Box>}
         </ThemeProvider>

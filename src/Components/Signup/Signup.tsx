@@ -1,24 +1,35 @@
 import React, { useState } from 'react';
-import { Box, Container, Button, Typography, Grid, TextField } from '@material-ui/core';
+import { Box, Button, Grid, Typography, ThemeProvider, Paper, TextField } from "@mui/material";
 import { Auth } from 'aws-amplify';
-import { createUser } from '../../Services/CreateUserService';
-import setAuthorizationToken from '../../Services/SetAuthorizationToken';
+import setAuthorizationToken from '../../Services/Authentication/SetAuthorizationToken';
+import { theme } from "../../Resources/GlobalTheme";
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useNavigate } from "react-router-dom";
+import UserProfileService from '../../Services/UserProfileService';
 
 interface IFormInput {
   username: string,
+  firstname: string,
+  lastname: string,
   password: string,
+  passwordverify: string,
   email: string
 };
 
 function SignUp() {
-  const { control, handleSubmit } = useForm<IFormInput>();
-  const [errorMessage, setError] = useState("");
+  const { control, handleSubmit, register, getValues } = useForm<IFormInput>();
+  const [errorMessage, setError ] = useState("");
+  const [ passwordShown, setPasswordShown ] = useState(false);
   const navigate = useNavigate();
+
+  const togglePassword = () => {
+    setPasswordShown(!passwordShown);
+  }
 
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     const username = data.username;
+    const firstname = data.firstname;
+    const lastname = data.lastname;
     const password = data.password;
     const email = data.email;
     try {
@@ -30,13 +41,17 @@ function SignUp() {
         }
       });
       const data = {
-        username: user.user.getUsername(),
+        userName: user.user.getUsername(),
+        firstName: firstname,
+        lastName: lastname,
+        userId: user.userSub,
         email: email
       };
-      setAuthorizationToken();
-      createUser({ data });
+      const token = await setAuthorizationToken();
+      const profile = await UserProfileService.addUserProfile(token, data );
+      console.log(profile);
       setError("Sign up was successful!");
-      navigate("/profile");
+      navigate("/interests");
       return user;
     } catch (error) {
       if (typeof error === 'object' && error != null) {
@@ -48,11 +63,15 @@ function SignUp() {
   };
 
   return (
-    <Container component="main" maxWidth="xs" className="signUpBox">
+    <ThemeProvider theme = {theme}>
+    <Paper>
+    <Grid container direction={"row"} spacing={2} justifyContent="center">
+    <Grid container direction={"column"} justifyContent="center" alignContent={"center"} style={{ minHeight: '100vh' }}>
+    <Grid item className="signUpBox">
       <form>
         <Typography variant="h2">Sign Up</Typography>
-        <Box height="250%" bgcolor="#D1e1D2">
-          <Grid container direction={"column"} spacing={2}>
+        <Box height="25%" bgcolor="#D1e1D2">
+          <Grid container direction={"column"} spacing={2} justifyContent="center">
             <Grid item>
               <Typography variant="caption">{errorMessage}</Typography>
             </Grid>
@@ -83,6 +102,56 @@ function SignUp() {
             </Grid>
             <Grid item>
               <Controller
+                name="firstname"
+                control={control}
+                defaultValue=""
+                render={({
+                  field: { onChange, value = "" },
+                  fieldState: { error },
+                }) => (
+                  <TextField
+                    fullWidth
+                    label={"First Name"}
+                    variant="outlined"
+                    value={value}
+                    onChange={onChange}
+                    error={!!error}
+                    helperText={error ? error.message : null}
+                    type="string"
+                  />
+                )}
+                rules={{
+                  required: true
+                }}
+              />
+              </Grid>
+              <Grid item>
+              <Controller
+                name="lastname"
+                control={control}
+                defaultValue=""
+                render={({
+                  field: { onChange, value = "" },
+                  fieldState: { error },
+                }) => (
+                  <TextField
+                    fullWidth
+                    label={"Last Name"}
+                    variant="outlined"
+                    value={value}
+                    onChange={onChange}
+                    error={!!error}
+                    helperText={error ? error.message : null}
+                    type="string"
+                  />
+                )}
+                rules={{
+                  required: true
+                }}
+              />
+            </Grid>
+            <Grid item>
+              <Controller
                 name="password"
                 control={control}
                 defaultValue=""
@@ -98,13 +167,44 @@ function SignUp() {
                     onChange={onChange}
                     error={!!error}
                     helperText={error ? error.message : null}
-                    type="password"
+                    type={passwordShown ? "text" : "password" }
                   />
                 )}
                 rules={{
                   required: true,
                   minLength: 8,
-                  pattern: /^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$/
+                  pattern: /^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!?]).*$/
+                }}
+              />
+              <Button onClick={togglePassword}>Show Password</Button>
+            </Grid>
+            <Grid item>
+              <Controller
+                name="passwordverify"
+                control={control}
+                defaultValue=""
+                render={({
+                  field: { onChange, value = "" },
+                  fieldState: { error },
+                }) => (
+                  <TextField
+                    fullWidth
+                    label={"PasswordVerify"}
+                    variant="outlined"
+                    value={value}
+                    onChange={onChange}
+                    error={!!error}
+                    helperText={error ? error.message : null}
+                    type={passwordShown ? "text" : "password" }
+                  />
+                )}
+                rules={{
+                  required: true,
+                  minLength: 8,
+                  validate: (value) => {
+                    const { password } = getValues();
+                      return password === value || "Your passwords do not match";
+                  }
                 }}
               />
             </Grid>
@@ -137,14 +237,18 @@ function SignUp() {
               <Typography variant="caption">*Password must be at least 8 characters with 1 symbol and 1 capitol letter</Typography>
             </Grid>
             <Grid item>
-              <Button variant="outlined" type="submit" onClick={handleSubmit(onSubmit)}>
+             <Button variant="outlined" type="submit" onClick={handleSubmit(onSubmit)}>
                 <Typography variant="button">Sign Up</Typography>
               </Button>
             </Grid>
-          </Grid>
+            </Grid>
         </Box>
       </form>
-    </Container>
+      </Grid>
+      </Grid>
+    </Grid>
+    </Paper>
+    </ThemeProvider>
   );
 }
 
