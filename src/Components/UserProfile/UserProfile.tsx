@@ -22,13 +22,10 @@ export default function UserProfile() {
   const fetchUserProfile = async () => {
     try {
       const currentUser = await AuthService.getCurrentUser()
-      console.log(currentUser.userId)
       const response = await UserService.getUser(currentUser.userId)
       setAuthData(prevState => {
         return {...prevState, ['isLoggedIn']: true, ['id']:currentUser.userId, ['token']:currentUser.jwt}
       })
-      console.log("response: ", response)
-      console.log("response data: ", response!.data)
       setUserProfile(response!.data)
       reset(response!.data)
     }catch (err){

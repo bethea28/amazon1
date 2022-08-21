@@ -23,32 +23,33 @@ const initialData: AuthData = {
   setAuthData: (): void => {},
 };
 
-// Create the context
+/** Create the context */
 const AuthContext = createContext<AuthData>(initialData);
 
 const AuthProvider = ({ children }: Props): JSX.Element => {
   useEffect(() => {
     Hub.listen("auth", ({ payload: { event, data } }) => {
-      // const id = data.userSub;
-      // const jwtToken = data.
-      //data.getSignInUserSession().getAccessToken().getJwtToken();
-      // const userName = data.username;
+
+      const userId = data.attributes.sub;
+      let jwtToken = data.signInUserSession.accessToken.jwtToken;
+      const username = data.username;
+      
       switch (event) {
         case "signIn":
-          
-          // setAuthData(prevState => {
-          //   return {...prevState, ['id']: id, ['token']: jwtToken, ['username']: userName, ['isLoggedIn']: true}
-          // })
-          // break;
+          jwtToken = data.signInUserSession.accessToken.jwtToken;
+          setAuthData(prevState => {
+            return {...prevState, ['id']: userId, ['token']: jwtToken, ['username']: username, ['isLoggedIn']: true}
+          })
+          break;
           case "signUp":
-          // setAuthData(prevState => {
-          //   return {...prevState, ['id']: id, ['token']: jwtToken, ['username']: userName, ['isLoggedIn']: true}
-          // })
+          setAuthData(prevState => {
+            return {...prevState, ['id']: userId, ['username']: username, ['isLoggedIn']: true}
+          })
           break;
         case "signOut":
-          // setAuthData(prevState => {
-          //   return {...prevState, ['id']: id, ['token']: jwtToken, ['username']: userName, ['isLoggedIn']: false}
-          // })
+          setAuthData(prevState => {
+            return {...prevState, ['id']: '', ['token']: '', ['username']: '', ['isLoggedIn']: false}
+          })
           break;
         case "signIn_failure":
           console.log("Sign in failure", data);
@@ -57,13 +58,6 @@ const AuthProvider = ({ children }: Props): JSX.Element => {
     });
   },[]);
   const [authData, setAuthData] = useState<AuthData>(initialData);
-  useEffect(() => {
-    return Hub.listen('auth', (data) => {
-      const { payload } = data;
-      console.log(data);
-      //setAuthData
-    })
-  });
   return (
     <AuthContext.Provider value={{ ...authData, setAuthData }}>
       {children}
