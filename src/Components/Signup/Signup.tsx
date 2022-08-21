@@ -35,48 +35,21 @@ function SignUp() {
     const lastName = data.lastName;
     const password = data.password;
     const email = data.email;
+
     try {
+      /** Add user to cognito */
       await AuthService.signUp(username, password, email)
       const user = await AuthService.signIn(username, password);
       setAuthData(prevState => {
         return {...prevState, ['isLoggedIn']: true, ['id']:user.userId, ['token']:user.jwt}
       })
-      console.log("add user to amazon:")
-      console.log("jwt: ", user.jwt);
-      console.log("data: ", data);
 
-      let apiName = 'AdminQueries';
-      let path = '/getUser';
-      let myInit = {
-        body: {
-          "username" : username,
-          "UserPoolId": "us-east-1_E5VHwqGQp"
-        }, 
-        headers: {
-          'Content-Type' : 'application/json',
-          Authorization: `${(await Auth.currentSession()).getAccessToken().getJwtToken()}`
-        } 
-    }
-      const userTime = await API.get(apiName, path, myInit)
-      console.log("userTime: ", userTime);
+      /** Add user to dynamodb database */
       await UserService.addUser(user.jwt, data)
-      //console.log("USER: ", user)
-      // const data = {
-      //   userName: user.user.getUsername(),
-      //   firstName: firstname,
-      //   lastName: lastname,
-      //   userId: user.userSub,
-      //   email: email
-      // };
-
-      // console.log("user: ", user)
-      // const token = await setAuthorizationToken();
-      // console.log("token: ", token)
-      // const profile = await UserService.addUser(token, data);
-      // console.log("profile: ", profile);
       setError("Sign up was successful!");
       navigate("/interests");
-      //return user;
+      return user;
+
     } catch (error) {
       console.log("error: ", error)
       if (typeof error === 'object' && error != null) {
@@ -85,7 +58,6 @@ function SignUp() {
         return error;
       }
     }
-  navigate("/interests");
    };
 
   return (

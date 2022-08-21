@@ -1,16 +1,19 @@
 import { ToggleButton, Grid, Typography, ToggleButtonGroup, Button, Box, ThemeProvider } from "@mui/material";
 import { styled } from "@mui/system";
-import React, { useState } from "react";
-import Header from "../Header";
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import UserService from "../../Services/UserService";
-import { tempUserID, interests } from "../../Resources/Constants";
+import { interests } from "../../Resources/Constants";
 import { theme } from "../../Resources/GlobalTheme";
+import { AuthContext } from '../../Context/AuthProvider';
 
 function InterestSelection() {
 
+  const navigate = useNavigate();
+  const { id, token } = useContext(AuthContext);
     const [choices, setChoices] = useState(() => [""]);
     const ChoiceToggleButton = styled(ToggleButton)({
-        backgroundColor: "rgba(144, 216, 111, 0.57)",
+        backgroundColor: "#A6BBA7",
         width: "10em",
         fontWeight: 600,
         borderRadius: "50px!important",
@@ -20,18 +23,18 @@ function InterestSelection() {
         setChoices(newChoices);
     }
 
-    function handleSubmit(event: React.MouseEvent<HTMLElement>) {
+    async function handleSubmit(event: React.MouseEvent<HTMLElement>) {
         event.preventDefault();
-        // UserService.updateUser({ interests: choices.slice(1) }, tempUserID);
+        await UserService.updateUser(id, token, { interests: choices.slice(1) });
+        navigate('/')
     }
 
 
     return (
         <ThemeProvider theme={theme}>
-            <Box flex={1} overflow={"auto"}>
-                <Header />
+            <Box overflow={"auto"} sx={{display: 'flex', height: '100%', borderRadius: 4}}>
                 <Grid container spacing={0} alignItems="center" height={"100%"}>
-                    <Grid container item xs={4} bgcolor="rgba(209, 225, 210, 0.32)" height={"inherit"} justifyContent={"center"} alignItems={"center"}>
+                    <Grid container item xs={4} bgcolor="#A6BBA7" height={"inherit"} justifyContent={"center"} alignItems={"center"}>
                         <Grid item>
                             <Typography fontWeight={"600"} variant="h4">Let's Get Started</Typography>
                         </Grid>

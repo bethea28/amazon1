@@ -29,16 +29,17 @@ const AuthContext = createContext<AuthData>(initialData);
 const AuthProvider = ({ children }: Props): JSX.Element => {
   useEffect(() => {
     Hub.listen("auth", ({ payload: { event, data } }) => {
-      console.log("data: ", data)
       // const id = data.userSub;
-      // const jwtToken = data.getSignInUserSession().getAccessToken().getJwtToken();
+      // const jwtToken = data.
+      //data.getSignInUserSession().getAccessToken().getJwtToken();
       // const userName = data.username;
       switch (event) {
         case "signIn":
+          
           // setAuthData(prevState => {
           //   return {...prevState, ['id']: id, ['token']: jwtToken, ['username']: userName, ['isLoggedIn']: true}
           // })
-          break;
+          // break;
           case "signUp":
           // setAuthData(prevState => {
           //   return {...prevState, ['id']: id, ['token']: jwtToken, ['username']: userName, ['isLoggedIn']: true}

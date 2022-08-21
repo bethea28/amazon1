@@ -28,6 +28,7 @@ export default function UserProfile() {
         return {...prevState, ['isLoggedIn']: true, ['id']:currentUser.userId, ['token']:currentUser.jwt}
       })
       console.log("response: ", response)
+      console.log("response data: ", response!.data)
       setUserProfile(response!.data)
       reset(response!.data)
     }catch (err){
@@ -39,7 +40,6 @@ export default function UserProfile() {
   }
 
   const onSubmit = handleSubmit(async (data: User)=>{
-    console.log("data: ", data)
     const response = await UserService.updateUser(id!, token!, data)
 })
 
@@ -130,11 +130,13 @@ export default function UserProfile() {
               <Box sx={{m:1, height: 3 / 4}}>
              
                 <Grid container spacing= {2} >
-                { userProfile.interests.map((interest) =>
+                { userProfile.interests
+                  ? userProfile.interests.map((interest) =>
                   <Grid key={interest} item>
                   <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", borderRadius:50}} variant="contained"
                   >{interest}</Button>
-                  </Grid>)}
+                  </Grid>)
+                  : <></>}
                 </Grid>
               </Box>
             </Paper>        
