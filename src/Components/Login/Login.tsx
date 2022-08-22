@@ -1,23 +1,30 @@
 import React , { useState, useContext } from 'react';
-import { Box, Container, Button, Typography, Grid, TextField } from '@material-ui/core';
+import { Box, Container, Button, Typography, Grid, TextField, Paper } from '@mui/material';
 import { Auth } from 'aws-amplify';
-import SetAuthorizationToken from '../../Services/SetAuthorizationToken';
+import SetAuthorizationToken from '../../Services/Authentication/SetAuthorizationToken';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { useNavigate } from "react-router-dom";
-import { AuthContext, AuthProvider, AuthData } from '../../Context/AuthProvider'
+import { useLocation, useNavigate,  } from "react-router-dom";
+import { AuthContext } from '../../Context/AuthProvider'
 
 interface IFormInput {
   username: string,
   password: string,
 };
 
+interface LocationState {
+  from: {
+    pathname: string;
+  };
+}
+
   function Login() {
 
-    //get context
-    const { id, token, setAuthData } = useContext(AuthContext)
+    const { setAuthData } = useContext(AuthContext)
     const { control, handleSubmit } = useForm<IFormInput>();
     const [errorMessage, setError] = useState("");
     const navigate = useNavigate();
+    const location = useLocation();
+    const {from} = location.state as LocationState || "/"
 
     const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
       const username = data.username;
@@ -29,12 +36,16 @@ interface IFormInput {
         });
         const userId = user.attributes.sub
         const token:string = await SetAuthorizationToken()
-        
+
         setAuthData(prevState => {
-          return {...prevState, ['id']: userId , ['token']: token}
+          return {...prevState, ['id']: userId , ['token']: token, ['isLoggedIn']: true}
         })
-        navigate("/profile");
-        
+        if(location.state){
+            navigate(from.pathname, {replace: true});
+          }
+        else{
+          navigate("/");
+        }
       } catch (error) {
         if (typeof error === 'object' && error != null) {
           const errorObj = error;
@@ -44,12 +55,14 @@ interface IFormInput {
       }
     }
 
-
     return (
-      <Container component="main" maxWidth="xs" className="signUpBox">
+      <Paper>
+      <Grid container direction={"row"} spacing={2} justifyContent="center">
+      <Grid container direction={"column"} justifyContent="center" alignContent={"center"} style={{ minHeight: '100vh' }}>
+      <Grid item className="signUpBox">
         <form>
           <Typography variant="h2">Log In</Typography>
-          <Box height="250%" bgcolor="#D1e1D2">
+          <Box height="100%" bgcolor="#D1e1D2">
             <Grid container direction={"column"} spacing={2}>
               <Grid item>
                 <Typography variant="caption">{errorMessage}</Typography>
@@ -99,6 +112,10 @@ interface IFormInput {
                       type="password"
                     />
                   )}
+                  rules={{
+                    required: true,
+                    minLength: 8
+                  }}
                 />
               </Grid>
               <Grid item>
@@ -109,7 +126,10 @@ interface IFormInput {
             </Grid>
           </Box>
         </form>
-      </Container>
+        </Grid>
+      </Grid>
+    </Grid>
+    </Paper>
     );
   }
 

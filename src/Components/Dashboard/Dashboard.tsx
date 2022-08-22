@@ -38,7 +38,6 @@ function Dashboard() {
     return (
         <ThemeProvider theme={theme}>
             <Box>
-                <AppbarPublic />
                 <Container>
                     <SearchBar />
                     <NavigationBar />
