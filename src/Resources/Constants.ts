@@ -25,6 +25,7 @@ export type Project = {
     categories: string,
     createdAt: string
     lastUpdatedAt: string,
+    photoURLs: string[]
 }
 
 export type GetUserResponse = {

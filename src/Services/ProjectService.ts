@@ -1,5 +1,6 @@
 import { axiosInstance, Project } from "../Resources/Constants";
 import { Auth } from 'aws-amplify';
+import { Params } from "react-router-dom";
 
 export async function getRecommendedProjects(categories: string) {
 

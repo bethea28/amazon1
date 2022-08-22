@@ -5,22 +5,21 @@ import { getProjectDetails } from '../../Services/ProjectService';
 import { theme } from "../../Resources/GlobalTheme";
 import NavigationBar from '../Dashboard/Components/NavigationBar';
 import SearchBar from '../Dashboard/Components/SearchBar';
-import AppbarPrivate from '../Navbar/AppbarPrivate';
-import AppbarPublic from '../Navbar/AppbarPublic';
 import { loadingOverlay } from 'aws-amplify';
+import { useParams } from 'react-router-dom';
 
 export default function ProjectDetails() {
 
-    const projectId = "f6ecfc49-01bb-4d8c-bfab-454b2c820521" //Update to useParams or Context to pass in global projectId variable
+    const { id } = useParams(); //Update to useParams or Context to pass in global projectId variable
     const [currentProject, setCurrentProject] = useState<Project>();
-    const [userLoggedIn, setUserLoggedIn] = useState<boolean>(true);
+    const { projectId, projectName, photoURLs, categories, lastUpdatedAt, createdAt, description } = currentProject! || {};
 
     /**
      * onLoad display the current project's details
      */
     useEffect(() => {
         const getData = async () => {
-            const response = await getProjectDetails(projectId);
+            const response = await getProjectDetails(id!);
             setCurrentProject(response);
         }
 
@@ -29,15 +28,19 @@ export default function ProjectDetails() {
         }
     }, [currentProject]);
 
+    if (!currentProject) {
+        return null;
+    }
+
     return (
         <ThemeProvider theme={theme}>
-            {currentProject && <Box className="Project-details-page">
+            <Box className="Project-details-page">
                 <Container>
                     <SearchBar />
                     <NavigationBar />
                     <Box>
                         <Stack 
-                            key={currentProject!.projectId}
+                            key={projectId}
                             direction="column"
                             justifyContent="space-evenly"
                             alignItems="center"
@@ -48,13 +51,12 @@ export default function ProjectDetails() {
                             <CardMedia
                                 component="img"
                                 height="500"
-                                image="https://images.pexels.com/photos/776656/pexels-photo-776656.jpeg"
+                                image={photoURLs[0] || "https://us.123rf.com/450wm/pavelstasevich/pavelstasevich1811/pavelstasevich181101028/112815904-no-image-available-icon-flat-vector-illustration.jpg?ver=6"}
                                 alt="Pot of plants"
                             />
-                            {/* Update Image to project photos prop */}
                             <CardContent>
                                 <Typography variant="h1" m={1}>
-                                {currentProject!.projectName}
+                                {projectName}
                                 </Typography>
                                 <Stack
                                     direction="row"
@@ -62,15 +64,15 @@ export default function ProjectDetails() {
                                     alignItems="center"
                                     spacing={2}
                                     >
-                                    <Chip label={currentProject!.categories} sx={{backgroundColor: 'rgb(166, 223, 139)' }}/>
+                                    <Chip label={categories} sx={{backgroundColor: 'rgb(166, 223, 139)' }}/>
                                     <Typography variant="subtitle1" m={3}>
-                                    <Typography sx={{ fontWeight: 1000 }}>Created:</Typography> {currentProject!.createdAt} <Typography sx={{ fontWeight: 1000 }}>Last Updated:</Typography> {currentProject!.lastUpdatedAt}
+                                    <Typography sx={{ fontWeight: 1000 }}>Created:</Typography> {createdAt} <Typography sx={{ fontWeight: 1000 }}>Last Updated:</Typography> {lastUpdatedAt}
                                     </Typography>
                                 </Stack>
                                 {/* Insert targetFundingDate and targetFundingNum component here
                                 Insert user data (avatar and name) component */}
                                 <Typography variant="body1" m={3}>
-                                {currentProject!.description}
+                                {description}
                                 </Typography>
                             </CardContent>
                             {/* Insert like component
@@ -80,7 +82,7 @@ export default function ProjectDetails() {
                     </Box>
 
                 </Container>
-            </Box>}
+            </Box>
         </ThemeProvider>
     )
 }
