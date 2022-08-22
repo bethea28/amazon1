@@ -6,9 +6,8 @@ export const axiosInstance = axios.create({
     baseURL: "http://localhost:8080",
     timeout: 1000,
     headers: {
-        "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
-        "Accept": "application/json"
+        //"Authorization": `Bearer ${jwt}`, //(commented out until api token is determined)
     }
 })
 
@@ -17,13 +16,15 @@ export type GetProjectsResponse = {
 }
 
 export type Project = {
-    projectID: string,
-    userID: string,
+    projectId: string,
+    userId: string,
     projectName: string,
+    targetFundingNum: string
+    targetFundingDate: string,
     description: string,
     categories: string,
-    targetFundingDate: string,
-    targetFundingNum: string
+    createdAt: string
+    lastUpdatedAt: string,
 }
 
 export type GetUserResponse = {

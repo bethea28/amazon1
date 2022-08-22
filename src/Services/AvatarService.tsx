@@ -1,10 +1,12 @@
 import axios from "axios";
+import { Auth } from 'aws-amplify';
+
 
 /**
  * Special case - own config since content types include form-data and binary
  */
 const http = axios.create({
-    baseURL: 'http://localhost:8080/users'
+    baseURL: 'http://localhost:8080/profile'
 });
 
 /**
@@ -14,8 +16,13 @@ const http = axios.create({
  */
 export async function getAvatar(userId: String, filename: String) { 
   try {
-    const { data } = await http.get(`/getAvatar/${userId}/${filename}`);
-    //Add auth token
+    const res = await Auth.currentSession()
+    let jwt = res.getAccessToken().getJwtToken(); 
+    const { data } = await http.get(`/getAvatar/${userId}/${filename}`, {
+      headers: {
+          'Authorization': `Bearer ${jwt}`,
+      }
+  });
     return data;
   } catch(error) {
     console.log(error);
@@ -29,11 +36,18 @@ export async function getAvatar(userId: String, filename: String) {
  */
 export async function uploadAvatar(userId: String, file: FormData) {
   try {
-    const response = await http.post(`/${userId}/uploadAvatar`, file);
-    //Add auth token
-    if (response.status === 201) {
+    const res = await Auth.currentSession()
+    let jwt = res.getAccessToken().getJwtToken(); 
+    const response = await http.post(`/${userId}/uploadAvatar`, file, {
+      headers: {
+          'Authorization': `Bearer ${jwt}`,
+      }
+  });
+
+    if (response.status === 200) {
       alert('Upload successful!');
     }
+
   } catch(error) {
       console.log(error);
       alert('Upload failed! Please try again.')
@@ -47,11 +61,18 @@ export async function uploadAvatar(userId: String, file: FormData) {
  */
 export async function deleteAvatar(userId: String, filename: String) { 
   try {
-    const response = await http.delete(`/deleteAvatar/${userId}/${filename}`);
-    //Add auth token
-    if (response.status === 204) {
+    const res = await Auth.currentSession()
+    let jwt = res.getAccessToken().getJwtToken(); 
+    const response = await http.delete(`/deleteAvatar/${userId}/${filename}`, {
+      headers: {
+          'Authorization': `Bearer ${jwt}`,
+      }
+  });
+
+    if (response.status === 200) {
       alert('Delete successful!');
     }
+    
   } catch(error) {
       console.log(error);
       alert('Failed to delete! Please try again.')
