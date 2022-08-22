@@ -23,7 +23,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # aws
-aws-exports.js
+aws-exports.ts
 
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend

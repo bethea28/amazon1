@@ -26,6 +26,22 @@ export type Project = {
     createdAt: string
     lastUpdatedAt: string,
 }
+export class Transaction {
+    transactionId!: string;
+    projectId!: string;
+    userId!: string;
+    amount!: string;
+    createdAt!: string;
+    lastUpdatedAt!: string;
+
+    contructor(userResponse: any) {
+      this.transactionId = userResponse.transactionId;
+      this.projectId = userResponse.projectId;
+      this.userId = userResponse.userId;
+      this.createdAt = userResponse.createdAt;
+      this.lastUpdatedAt = userResponse.lastUpdatedAt;
+    }
+}
 
 export type GetUserResponse = {
     id: number,

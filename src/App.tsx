@@ -53,6 +53,7 @@ function App() {
                       <Route path="/addproject" element={<AddProject />} />
                       <Route path="/interests" element={<InterestSelection />} />
                       <Route path="/project-details" element={<ProjectDetails />} />
+                      <Route path="/transaction" element={<TransactionTable />} />
                     </Route>
                   </Route>
             </Route>
