@@ -28,6 +28,13 @@ export default function ProjectDetails() {
         }
     }, [currentProject]);
 
+    const imageOnErrorHandler = (
+        event: React.SyntheticEvent<HTMLImageElement, Event>
+      ) => {
+        event.currentTarget.src = "https://us.123rf.com/450wm/pavelstasevich/pavelstasevich1811/pavelstasevich181101028/112815904-no-image-available-icon-flat-vector-illustration.jpg?ver=6";
+        event.currentTarget.className = "error";
+      };
+
     if (!currentProject) {
         return null;
     }
@@ -51,7 +58,8 @@ export default function ProjectDetails() {
                             <CardMedia
                                 component="img"
                                 height="500"
-                                image={photoURLs[0] || "https://us.123rf.com/450wm/pavelstasevich/pavelstasevich1811/pavelstasevich181101028/112815904-no-image-available-icon-flat-vector-illustration.jpg?ver=6"}
+                                image={photoURLs[0]}
+                                onError={imageOnErrorHandler}
                                 alt="Pot of plants"
                             />
                             <CardContent>
@@ -85,4 +93,8 @@ export default function ProjectDetails() {
             </Box>
         </ThemeProvider>
     )
+}
+
+function addDefaultSrc(e: any) {
+    throw new Error('Function not implemented.');
 }
