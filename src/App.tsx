@@ -15,7 +15,7 @@ import SignUp from './Components/Signup/Signup';
 import Login from './Components/Login/Login';
 import UserProfile from './Components/UserProfile/UserProfile'
 import { AuthProvider } from './Context/AuthProvider'
-import { TransactionTable } from './Components/TransactionTable';
+import { TransactionTable } from './Components/Transaction/TransactionTable';
 import RequireAuth from './Services/Authentication/RequireAuth'
 import Layout from './Services/Authentication/Layout';
 import PersistLogin from './Services/Authentication/PersistLogin';

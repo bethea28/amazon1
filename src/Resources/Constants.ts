@@ -30,14 +30,17 @@ export class Transaction {
     transactionId!: string;
     projectId!: string;
     userId!: string;
+    username!: string
     amount!: string;
     createdAt!: string;
     lastUpdatedAt!: string;
+
 
     contructor(userResponse: any) {
       this.transactionId = userResponse.transactionId;
       this.projectId = userResponse.projectId;
       this.userId = userResponse.userId;
+      this.username = userResponse.username;
       this.createdAt = userResponse.createdAt;
       this.lastUpdatedAt = userResponse.lastUpdatedAt;
     }

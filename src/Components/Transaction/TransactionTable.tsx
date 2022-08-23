@@ -1,38 +1,31 @@
 import React,{ useState,useEffect } from 'react';
-import { Transaction } from '../Resources/Constants';
+import { Transaction } from '../../Resources/Constants';
 import { TableContainer,Table, TableHead, TableBody, TableRow, TableCell, Paper } from '@mui/material'
-import {getNewestTransaction} from '../Services/TransactionService';
+import {getNewestTransaction} from '../../Services/TransactionService';
 
 export const TransactionTable = () => {
   const [transactions, updateList] = useState<Transaction[]>([]);
 
   const getTransactionList = async () => {
     const response = await getNewestTransaction();
-    let list: Transaction[] = response!;
-    console.log(list);
-    updateList(list);
+    //let list: Transaction[] = response!;
+    //console.log(list);
+    updateList(response!);
     console.log(transactions);
     
   }
   
   useEffect(()=>{
-    
-    
       getTransactionList();
-   
-
   },[])
   return (
     <TableContainer component={Paper} sx={{maxHeight:'300px'}}>
         <Table aria-label='simple table'stickyHeader>
             <TableHead>
                 <TableRow>
-                    <TableCell> Transaction ID</TableCell>
-                    <TableCell> Project ID</TableCell>
-                    <TableCell> User ID</TableCell>
+                    <TableCell> User Name</TableCell>
                     <TableCell> Transaction Amount</TableCell>
                     <TableCell> Created At</TableCell>
-                    <TableCell> Last Update At</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
@@ -42,12 +35,9 @@ export const TransactionTable = () => {
                         key = {transaction.transactionId}
                         sx={{ '&:last-child td, &:last-child th': {border:0}}}
                         >
-                        <TableCell>{transaction.transactionId}</TableCell>
-                        <TableCell>{transaction.projectId}</TableCell>
-                        <TableCell>{transaction.userId}</TableCell>
+                        <TableCell>{transaction.username}</TableCell>
                         <TableCell>{transaction.amount}</TableCell>
                         <TableCell>{transaction.createdAt}</TableCell>
-                        <TableCell>{transaction.lastUpdatedAt}</TableCell>
                         </TableRow>
 
                     ))
