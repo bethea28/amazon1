@@ -8,6 +8,7 @@ import ProjectList from "./Components/ProjectList";
 import SearchBar from "./Components/SearchBar";
 import { theme } from "../../Resources/GlobalTheme";
 import AppbarPublic from "../../Components/Navbar/AppbarPublic";
+import CommentList from "../Comments/CommentList";
 
 function Dashboard() {
 
@@ -38,7 +39,7 @@ function Dashboard() {
     return (
         <ThemeProvider theme={theme}>
             <Box>
-                <Container>
+                {/* <Container>
                     <SearchBar />
                     <NavigationBar />
                     <Stack>
@@ -51,12 +52,13 @@ function Dashboard() {
                             <ProjectList projects={recent!}/>
                         </Stack>
                     </Stack>
-                    {/* Trending Projects Component Carousel */}
                     <ButtonGroup fullWidth>
                         <Button sx={{ marginX: "10px" }} variant="contained">Start a Project</Button>
                         <Button sx={{ marginX: "10px" }} variant="contained">Fund a Project</Button>
                     </ButtonGroup>
-                </Container>
+                </Container> */}
+
+                <CommentList/>
             </Box>
         </ThemeProvider>
     )
