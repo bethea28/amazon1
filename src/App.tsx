@@ -1,10 +1,7 @@
 import '@aws-amplify/ui-react/styles.css';
-import { createTheme } from '@mui/material/styles';
 import AddProject from './Components/Project/AddProject';
 import React from 'react';
 import './App.css';
-import { Amplify } from 'aws-amplify';
-import awsconfig from './Resources/aws-exports';
 import { Routes, Route } from 'react-router-dom';
 import InterestSelection from './Components/Signup/InterestSelection';
 import { Box, ThemeProvider } from '@mui/material';
@@ -18,19 +15,10 @@ import RequireAuth from './Services/Authentication/RequireAuth'
 import Layout from './Services/Authentication/Layout';
 import PersistLogin from './Services/Authentication/PersistLogin';
 import ProjectDetails from './Components/Project/ProjectDetails';
-Amplify.configure(awsconfig);
+import { theme } from './Resources/GlobalTheme'
 
 function App() {
 
-  const theme = createTheme({
-    palette: {
-      primary: {
-        light: '#A6BBA7',
-        main: '#90D86F',
-        dark: '#335436',
-      }
-    },
-  })
   return (
     <Box className="App" height={"100vh"} display={"flex"} flexDirection={"column"}>
       <ThemeProvider theme = {theme}>

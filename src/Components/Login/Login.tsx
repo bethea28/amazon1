@@ -1,14 +1,17 @@
 import React , { useState, useContext } from 'react';
-import { Box, Container, Button, Typography, Grid, TextField, Paper } from '@mui/material';
+import { Box, Button, Typography, Grid, TextField, Paper } from '@mui/material';
+import AuthService from '../../Services/Authentication/AuthService';
 import { Auth } from 'aws-amplify';
 import SetAuthorizationToken from '../../Services/Authentication/SetAuthorizationToken';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useLocation, useNavigate,  } from "react-router-dom";
 import { AuthContext } from '../../Context/AuthProvider'
+import UserService from '../../Services/UserService';
+import { User } from '../../Resources/Constants'
 
 interface IFormInput {
   username: string,
-  password: string,
+  password: string
 };
 
 interface LocationState {
@@ -25,21 +28,22 @@ interface LocationState {
     const navigate = useNavigate();
     const location = useLocation();
     const {from} = location.state as LocationState || "/"
+    const [currentDate, setCurrentDate] = useState<Date>(new Date());
 
     const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
       const username = data.username;
       const password = data.password;
       try {
-        const user = await Auth.signIn({
-          username,
-          password
-        });
-        const userId = user.attributes.sub
-        const token:string = await SetAuthorizationToken()
+        const user = await await AuthService.signIn(username, password);
+        setCurrentDate(new Date())
+        const updatedUser:Partial<User> = {lastSignOn: currentDate.toLocaleString()};
+        const userId:string = user.userId;
+        const token:string = user.jwt;
 
         setAuthData(prevState => {
           return {...prevState, ['id']: userId , ['token']: token, ['isLoggedIn']: true}
         })
+        await UserService.updateUser(userId, token, updatedUser);
         if(location.state){
             navigate(from.pathname, {replace: true});
           }
