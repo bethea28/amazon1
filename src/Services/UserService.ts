@@ -1,22 +1,68 @@
-import { axiosInstance, GetUserResponse, UpdateUserResponse } from "../Resources/Constants";
+import { axiosInstance, User } from "../Resources/Constants";
 
-export async function getUser(userID: string) {
-
-    try {
-        const { data } = await axiosInstance.get<GetUserResponse>(`/users/${userID}`)
-
-        return data;
-            
-    } catch (error) {
-        console.log(error);
+/**
+ * CRUD services for user data
+ */
+class UserService{
+  
+  /**
+   * Add user to the database
+   * @params jwt  The jwt token
+   * @params data The object that stores the updated information
+   */
+   addUser = async (jwt:string, data:object) => {
+     try {
+      const response = await axiosInstance.post<User>('/users/', data, {
+        headers: {
+          'Authorization': `Bearer ${jwt}`,
+          'Content-Type': 'application/json'
+        }
+      })
+      return response.data
+    }catch (error){
+      return error
     }
-}
+  }
 
-export async function updateUser(update: object, userID: string) {
-
-    try {
-        await axiosInstance.put<UpdateUserResponse>(`/users/${userID}`, update);
+  /**
+   * Get user data
+   * @params userId The current user's id
+   * @params jwt    The jwt token
+   */
+   getUser = async (userId: string) => {
+     try {
+      const response = await axiosInstance.get<User>(`/users/${userId}`, {
+        headers: {
+        'Content-Type': 'application/json'
+        }      
+      })
+      return response.data
     } catch (error) {
-        console.log(error);
+      return error
     }
+  }
+
+  /**
+     * Update user data
+     * @params userId The current user's id
+     * @params jwt    The jwt token
+     * @params data   The object that stores the updated information
+     */
+  updateUser = async (userId: string, jwt: string, data: Partial<User>) => {
+    const currentDate = new Date();
+    data.updatedAt = currentDate.toLocaleString();
+    try {
+      const response = await axiosInstance.patch<User>(`/users/${userId}`, data, {
+        headers: {
+          'Authorization': `Bearer ${jwt}`,
+          'Content-Type': 'application/json'
+        }
+      })
+
+      return response.data
+    }catch (error) {
+      return error
+    }
+  }
 }
+export default new UserService;

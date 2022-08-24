@@ -28,17 +28,33 @@ export type Project = {
     photoURLs: string[]
 }
 
-export type GetUserResponse = {
-    id: number,
-    avatar: string,
-    bio: string,
-    email: string,
-    username: string,
-    firstName: string,
-    lastName: string,
-    interests: string[],
-    projectIDs: string[]
+export type User = {
+  userId: string,
+  avatarURL: string,
+  bio: string,
+  email: string,
+  username: string,
+  interests: string[],
+  createdAt: string,
+  updatedAt: string,
+  lastSignOn: string
+  firstName: string,
+  lastName: string,
 }
+
+export const initialUserData: User = {
+  userId: '',
+  avatarURL: '',
+  bio: '',
+  email: '',
+  username: '',
+  interests: [''],
+  createdAt: '',
+  updatedAt: '',
+  lastSignOn: '',
+  firstName: '',
+  lastName: '',
+};
 
 export type UpdateUserResponse = {
     data: object
