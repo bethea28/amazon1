@@ -1,11 +1,13 @@
 import React,{useState, useEffect} from 'react';
-import { Typography, FormHelperText } from '@mui/material';
+import { Typography, FormHelperText, Stack } from '@mui/material';
 import { FormControl, InputLabel, MenuItem, Button,
          Select, Grid, TextField, Paper, makeStyles } from '@material-ui/core';
 import {MuiPickersUtilsProvider, KeyboardDatePicker}from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns';
 import { useForm, Controller} from "react-hook-form";
 import {postData} from '../../Services/AddProjectService';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface ProjectFormInput {
     projectName: string;
@@ -13,6 +15,13 @@ interface ProjectFormInput {
     targetFundingDate: Date;
     description: string;
     categories: string;
+    milestones: Milestone[];
+    
+}
+interface Milestone {
+    name: string;
+    amount: number;
+    targetDate: Date;
 }
 
 const useStyles = makeStyles (theme =>({
@@ -32,6 +41,47 @@ const useStyles = makeStyles (theme =>({
 }))
 
 export default function AddProject() {
+    const [milestones, setMilestones] = useState([])
+
+    const handleAdd =() => {
+        const newMilestones = [...milestones]
+        //newMilestones.push({})
+
+        setMilestones(newMilestones)
+    }
+
+     const handleRemove =(index: number) => {
+        const newMilestones = [...milestones]
+        newMilestones.splice(index, 1)
+        setMilestones(newMilestones)
+    }
+    const [sd, setSd] = React.useState(0);
+
+    const addPoint = () => {
+        console.log("sdfg");
+        let milestone: Milestone = {};
+    
+        arr.push("dummy");
+        // setPoints([...arr]);
+        setMilestones([...points, arr]);
+        setSd(sd + 1);
+    };
+  console.log("p", points);
+    const MileStoneFormRow = ({onAdd, onRemove}) => {
+
+        return (
+        <Stack>
+            <TextField />
+            <TextField />
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                
+            </MuiPickersUtilsProvider>
+            <AddIcon />
+            <DeleteIcon />
+        </Stack>
+    
+        )
+
     const classes = useStyles();
     const { reset, control, register, handleSubmit,formState: { errors }} = useForm<ProjectFormInput>();
     const onSubmit = async (data: ProjectFormInput ) => {
@@ -44,7 +94,7 @@ export default function AddProject() {
             targetFundingNum:data.targetFundingNum.toString(),
             targetFundingDate:data.targetFundingDate.toLocaleDateString(),
             description,
-            categories
+            categories,
         }
         console.log("state",state)
         try{
@@ -162,6 +212,27 @@ export default function AddProject() {
             </Grid>
             </Grid>
             <Grid container>
+            <Grid item xs = {4}>
+            {milestones.map(() => {
+                return <MileStoneFormRow onAdd={handleAdd} onRemove={handleRemove} />
+                })}
+            <Grid item xs = {4}>
+            <Button variant="contained" endIcon={<AddIcon />}>
+            Add
+            </Button>
+            </Grid>
+            
+                <TextField
+                {...register("projectName", {required: true})} 
+                label = "Input name of your project"
+                defaultValue = ""
+                error={errors.projectName !== undefined}
+                />
+                {errors.projectName && ( 
+                <Typography variant ="body2" color ="red">This field is required</Typography>)}
+                
+            </Grid>
+            <Grid container>
             <Grid item xs = {2}>
                 <Button variant="contained" 
                 color="primary"
@@ -177,6 +248,10 @@ export default function AddProject() {
                 </Button>
             </Grid>
             </Grid>
+            </Grid>
+
+            
+
             </Grid>
         </form>
         </Paper>
