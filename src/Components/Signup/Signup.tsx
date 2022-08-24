@@ -1,8 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Box, Button, Grid, Typography, ThemeProvider, Paper, TextField } from "@mui/material";
-import { Auth, API } from 'aws-amplify';
 import UserService from '../../Services/UserService';
-import setAuthorizationToken from '../../Services/Authentication/SetAuthorizationToken';
 import { theme } from "../../Resources/GlobalTheme";
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useNavigate } from "react-router-dom";
@@ -15,20 +13,22 @@ interface IFormInput {
   lastName: string,
   password: string,
   passwordverify: string,
-  email: string
+  email: string,
+  lastSignOn: string
 };
 
 function SignUp() {
-  const { control, handleSubmit, register, getValues } = useForm<IFormInput>();
+  const { control, handleSubmit, getValues } = useForm<IFormInput>();
   const [errorMessage, setError ] = useState("");
   const [ passwordShown, setPasswordShown ] = useState(false);
   const navigate = useNavigate();
+  const [currentDate, setCurrentDate] = useState<Date>(new Date());
 
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
   }
 
-  const { id, token, setAuthData } = useContext(AuthContext);
+  const { setAuthData } = useContext(AuthContext);
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     const username = data.username;
     const firstName = data.firstName;
@@ -40,10 +40,12 @@ function SignUp() {
       /** Add user to cognito */
       await AuthService.signUp(username, password, email)
       const user = await AuthService.signIn(username, password);
+      setCurrentDate(new Date());
       setAuthData(prevState => {
         return {...prevState, isLoggedIn: true, id:user.userId, token:user.jwt}
       })
-
+      data.lastSignOn = currentDate.toLocaleString();
+      
       /** Add user to dynamodb database */
       await UserService.addUser(user.jwt, data)
       setError("Sign up was successful!");
@@ -51,7 +53,6 @@ function SignUp() {
       return user;
 
     } catch (error) {
-      console.log("error: ", error)
       if (typeof error === 'object' && error != null) {
         const errorObj = error;
         setError(JSON.stringify(errorObj));
