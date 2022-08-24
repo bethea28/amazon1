@@ -19,7 +19,7 @@ export function ProfileSectionStyle (props:{ label:string })
         <Box sx={{ml: 2, mr: 1}}>
           <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", mt:1, height: 25}} onClick={navigateTo}  variant="contained"> Change </Button>
         </Box>
-      </Grid>)
+        </Grid>)
       : <></>}
   </Grid> 
   )

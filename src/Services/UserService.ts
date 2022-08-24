@@ -20,7 +20,7 @@ class UserService{
       })
       return response.data
     }catch (error){
-      console.log(error);
+      return error
     }
   }
 
@@ -36,9 +36,9 @@ class UserService{
         'Content-Type': 'application/json'
         }      
       })
-      return(response)
+      return response.data
     } catch (error) {
-      console.log(error);
+      return error
     }
   }
 
@@ -59,9 +59,9 @@ class UserService{
         }
       })
 
-      return(response)
+      return response.data
     }catch (error) {
-      console.log(error);
+      return error
     }
   }
 }

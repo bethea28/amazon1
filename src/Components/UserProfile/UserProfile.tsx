@@ -21,13 +21,9 @@ export default function UserProfile() {
 
   const fetchUserProfile = async () => {
     try {
-      const currentUser = await AuthService.getCurrentUser()
-      const response = await UserService.getUser(currentUser.userId)
-      setAuthData(prevState => {
-        return {...prevState, isLoggedIn: true, id:currentUser.userId, token:currentUser.jwt}
-      })
-      setUserProfile(response!.data)
-      reset(response!.data)
+      const response = await UserService.getUser(id) as User
+      setUserProfile(response)
+      reset(response)
     }catch (err){
       setAuthData(prevState => {
         return {...prevState, isLoggedIn: false, token: ''}
@@ -37,9 +33,10 @@ export default function UserProfile() {
   }
 
   const onSubmit = handleSubmit(async (data: User)=>{
-    const response = await UserService.updateUser(id!, token!, data)
+    await UserService.updateUser(id, token, data)
 })
 
+const { firstName, email, bio } = userProfile
   return (
     <StyledEngineProvider injectFirst>
       <form onSubmit={onSubmit}>  
@@ -69,7 +66,7 @@ export default function UserProfile() {
                     size="small"
                     label="Name"
                     InputLabelProps={{shrink: true}}
-                    value={userProfile!.firstName}
+                    value={firstName}
                     />
                   </Grid>
                   <Grid item>
@@ -81,7 +78,7 @@ export default function UserProfile() {
                       }}
                       fullWidth id="outlined-basic" label="email" 
                       InputLabelProps={{shrink: true}} 
-                      value={userProfile!.email} 
+                      value={email} 
                       variant="outlined" size="small" 
                       />
                   </Grid>
@@ -104,13 +101,14 @@ export default function UserProfile() {
                       id="outlined-multiline"
                       size="medium"
                       label="Bio"
-                      value={userProfile!.bio}
+                      rows={5}
+                      multiline={true}
+                      value={bio}
                       onChange={event => {
                         setUserProfile(prevState => {
                           return {...prevState, bio: event.target.value};
                         });
                     }}
-                    multiline={false}
                       InputLabelProps={{shrink: true}}
                     />
                   </Grid>     
@@ -125,12 +123,12 @@ export default function UserProfile() {
              
                 <Grid container spacing= {2} >
                 { userProfile.interests
-                  ? userProfile.interests.map((interest) =>
-                  <Grid key={interest} item>
-                  <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", borderRadius:50}} variant="contained"
-                  >{interest}</Button>
-                  </Grid>)
-                  : <></>}
+                    ? userProfile.interests.map((interest) =>
+                      <Grid key={interest} item>
+                      <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", borderRadius:50}} variant="contained"
+                      >{interest}</Button>
+                      </Grid>)
+                    : <></>}
                 </Grid>
               </Box>
             </Paper>        

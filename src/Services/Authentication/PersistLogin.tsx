@@ -10,7 +10,6 @@ const PersistLogin = () => {
   const { isLoggedIn, id, token, setAuthData } = useContext(AuthContext)
 
   useEffect(() => {
-    console.log("persit called")
     const verifyUser = async () => {
       try {
         const verified = await AuthService.isLogged();
