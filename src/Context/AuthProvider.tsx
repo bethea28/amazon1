@@ -39,17 +39,17 @@ const AuthProvider = ({ children }: Props): JSX.Element => {
         case "signIn":
           jwtToken = data.signInUserSession.accessToken.jwtToken;
           setAuthData(prevState => {
-            return {...prevState, ['id']: userId, ['token']: jwtToken, ['username']: username, ['isLoggedIn']: true}
+            return {...prevState, id: userId, token: jwtToken, username: username, isLoggedIn: true}
           })
           break;
           case "signUp":
           setAuthData(prevState => {
-            return {...prevState, ['id']: userId, ['username']: username, ['isLoggedIn']: true}
+            return {...prevState, id: userId, username: username, isLoggedIn: true}
           })
           break;
         case "signOut":
           setAuthData(prevState => {
-            return {...prevState, ['id']: '', ['token']: '', ['username']: '', ['isLoggedIn']: false}
+            return {...prevState, id: '', token: '', username: '', isLoggedIn: false}
           })
           break;
         case "signIn_failure":
