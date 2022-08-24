@@ -200,12 +200,8 @@ export default function AppbarPrivate() {
               aria-controls={menuId}
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              {/* <Avatar
-                      src={avatarURL}>
-                    </Avatar> */}
-                    <AccountCircle/>
+              color="inherit">
+              <AccountCircle/>
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
