@@ -3,7 +3,7 @@ import { styled } from "@mui/system";
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import UserService from "../../Services/UserService";
-import { interests } from "../../Resources/Constants";
+import { interests, User, initialUserData } from "../../Resources/Constants";
 import { theme } from "../../Resources/GlobalTheme";
 import { AuthContext } from '../../Context/AuthProvider';
 
@@ -25,7 +25,8 @@ function InterestSelection() {
 
     async function handleSubmit(event: React.MouseEvent<HTMLElement>) {
         event.preventDefault();
-        await UserService.updateUser(id, token, { interests: choices.slice(1) });
+        const user:Partial<User> = {interests: choices.slice(1)}
+        await UserService.updateUser(id, token, user);
         navigate('/')
     }
 

@@ -1,5 +1,4 @@
 import '@aws-amplify/ui-react/styles.css';
-import { green } from '@mui/material/colors';
 import { createTheme } from '@mui/material/styles';
 import AddProject from './Components/Project/AddProject';
 import React from 'react';

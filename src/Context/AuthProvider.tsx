@@ -28,6 +28,7 @@ const AuthContext = createContext<AuthData>(initialData);
 
 const AuthProvider = ({ children }: Props): JSX.Element => {
   useEffect(() => {
+    console.log("auth Provider called")
     Hub.listen("auth", ({ payload: { event, data } }) => {
 
       const userId = data.attributes.sub;
