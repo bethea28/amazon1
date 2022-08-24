@@ -16,15 +16,16 @@ export type GetProjectsResponse = {
 }
 
 export type Project = {
-  projectId: string,
-  userId: string,
-  projectName: string,
-  targetFundingNum: string
-  targetFundingDate: string,
-  description: string,
-  categories: string,
-  createdAt: string
-  lastUpdatedAt: string,
+    projectId: string,
+    userId: string,
+    projectName: string,
+    targetFundingNum: string
+    targetFundingDate: string,
+    description: string,
+    categories: string,
+    createdAt: string
+    lastUpdatedAt: string,
+    photoURLs: string[]
 }
 
 export type User = {

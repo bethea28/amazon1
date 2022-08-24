@@ -38,7 +38,7 @@ function App() {
                       <Route path="/profile" element={<UserProfile /> } />
                       <Route path="/addproject" element={<AddProject />} />
                       <Route path="/interests" element={<InterestSelection />} />
-                      <Route path="/project-details" element={<ProjectDetails />} />
+                      <Route path="/projects/:id" element={<ProjectDetails />} />
                     </Route>
                   </Route>
             </Route>
