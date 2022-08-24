@@ -30,18 +30,17 @@ const AuthProvider = ({ children }: Props): JSX.Element => {
   useEffect(() => {
     Hub.listen("auth", ({ payload: { event, data } }) => {
 
-      const userId = data.attributes.sub;
-      let jwtToken = data.signInUserSession.accessToken.jwtToken;
-      const username = data.username;
+      let  { userId, jwtToken, username } = {userId:'', jwtToken:'', username:''}
       
       switch (event) {
         case "signIn":
-          jwtToken = data.signInUserSession.accessToken.jwtToken;
+          ({ username: username, attributes: {sub: userId }, signInUserSession: {accessToken: {jwtToken: jwtToken}}} = data); 
           setAuthData(prevState => {
             return {...prevState, id: userId, token: jwtToken, username: username, isLoggedIn: true}
           })
           break;
           case "signUp":
+          ({ userSub:userId, user: { username:username }} = data);
           setAuthData(prevState => {
             return {...prevState, id: userId, username: username, isLoggedIn: true}
           })
