@@ -43,6 +43,12 @@ export default function AddTransaction() {
   }
   }
   return (
-    <div>AddTransaction</div>
+    <Paper>
+    <form className={classes.root} onSubmit={handleSubmit(onSubmit)}
+        onReset={() => reset()} autoComplete = "off">
+
+    </form>
+    </Paper>
+    
   )
 }
