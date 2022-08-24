@@ -54,3 +54,23 @@ export async function getProjectDetails(id: string) {
         console.log(error);
     }
 }
+
+export async function uploadPhoto(id: string, file: FormData) {
+    try {
+        const res = await Auth.currentSession()
+        let jwt = res.getAccessToken().getJwtToken(); 
+        const response = await axiosInstance.post(`/${id}/photos`, file, {
+          headers: {
+              'Authorization': `Bearer ${jwt}`,
+          }
+      });
+    
+        if (response.status === 200) {
+          alert('Upload successful!');
+        }
+    
+      } catch(error) {
+          console.log(error);
+          alert('Upload failed! Please try again.')
+        }
+}

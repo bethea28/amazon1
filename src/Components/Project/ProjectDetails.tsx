@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom';
 
 export default function ProjectDetails() {
 
-    const { id } = useParams(); //Update to useParams or Context to pass in global projectId variable
+    const { id } = useParams(); 
     const [currentProject, setCurrentProject] = useState<Project>();
     const { projectId, projectName, photoURLs, categories, lastUpdatedAt, createdAt, description } = currentProject! || {};
 

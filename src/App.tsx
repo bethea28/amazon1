@@ -18,6 +18,7 @@ import RequireAuth from './Services/Authentication/RequireAuth'
 import Layout from './Services/Authentication/Layout';
 import PersistLogin from './Services/Authentication/PersistLogin';
 import ProjectDetails from './Components/Project/ProjectDetails';
+import UploadPhotos from './Components/Project/UploadPhotos';
 
 function App() {
 
@@ -50,6 +51,7 @@ function App() {
                       <Route path="/addproject" element={<AddProject />} />
                       <Route path="/interests" element={<InterestSelection />} />
                       <Route path="/projects/:id" element={<ProjectDetails />} />
+                      <Route path="/updateproject" element={<UploadPhotos />} />
                     </Route>
                   </Route>
             </Route>
