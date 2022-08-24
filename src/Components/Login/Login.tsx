@@ -62,7 +62,7 @@ interface LocationState {
       <Grid container direction={"column"} justifyContent="center" alignContent={"center"} style={{ minHeight: '100vh' }}>
       <Grid item className="signUpBox">
         <form>
-          <Typography variant="h2">Log In</Typography>
+          <Typography variant="h2">Sign In</Typography>
           <Box height="100%">
             <Grid container direction={"column"} spacing={2}>
               <Grid item>
