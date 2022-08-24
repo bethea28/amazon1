@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { CommentData, GetUserResponse } from "../../Resources/Constants";
 import { getUser } from "../../Services/UserService";
 import { theme } from "../../Resources/GlobalTheme"
+import { getTimeAgo } from "../../Resources/DateFormatter"
 
 function Comment(comment: CommentData) {
 
@@ -16,10 +17,11 @@ function Comment(comment: CommentData) {
         }
 
         getCommentUsername();
-        const date = new Date(comment.createdAt)
-        const dateMS = date.getTime()
-        console.log(comment.createdAt);
-        console.log(dateMS);
+        // const date = new Date(comment.createdAt)
+        // const dateMS = date.getTime()
+        // console.log(comment.createdAt);
+        // console.log(dateMS);
+        // console.log(Math.round((Date.now() - Number(date)) / 1000) + " seconds ago");
     }, [commentUsername])
 
     return (
@@ -31,7 +33,7 @@ function Comment(comment: CommentData) {
                 <Grid item>
                     <Typography variant="h6" textAlign={"left"}>{commentUsername}</Typography>
                     <Typography fontWeight={400} variant="body1" textAlign={"left"}>{comment.content}</Typography>
-                    <Typography color={theme.palette.primary.dark} variant="caption" display={"block"} fontStyle={"italic"} textAlign={"right"}>{comment.createdAt}</Typography>
+                    <Typography color={theme.palette.primary.dark} variant="caption" display={"block"} fontStyle={"italic"} textAlign={"left"}>{getTimeAgo(new Date(comment.createdAt))}</Typography>
                 </Grid>
             </Grid>
         </Paper>
