@@ -1,4 +1,4 @@
-import { Box, ThemeProvider, Container, Stack, Card, CardContent, CardMedia, Typography, Chip } from '@mui/material';
+import { Box, ThemeProvider, Container, Stack, Card, CardContent, CardMedia, Typography, Chip, ImageList, ImageListItem } from '@mui/material';
 import React, { useState, useEffect } from "react";
 import { Project } from '../../Resources/Constants';
 import { getProjectDetails } from '../../Services/ProjectService';
@@ -31,7 +31,7 @@ export default function ProjectDetails() {
     const imageOnErrorHandler = (
         event: React.SyntheticEvent<HTMLImageElement, Event>
       ) => {
-        event.currentTarget.src = "https://us.123rf.com/450wm/pavelstasevich/pavelstasevich1811/pavelstasevich181101028/112815904-no-image-available-icon-flat-vector-illustration.jpg?ver=6";
+        event.currentTarget.src = "../../Resources/Default_Image_Thumbnail.png";
         event.currentTarget.className = "error";
       };
 
@@ -54,7 +54,7 @@ export default function ProjectDetails() {
                             spacing={2}
                             m={5}
                         >
-                        <Card sx={{ maxWidth: 1000 }}>
+                        <Card sx={{ maxWidth: 1500 }}>
                             <CardMedia
                                 component="img"
                                 height="500"
@@ -82,6 +82,19 @@ export default function ProjectDetails() {
                                 <Typography variant="body1" m={3}>
                                 {description}
                                 </Typography>
+                                <ImageList sx={{ width: 500, height: 164 }} cols={3} rowHeight={164}>
+                                {photoURLs.map((url) => (
+                                    <ImageListItem key={url}>
+                                    <img
+                                        src={`${url}?w=164&h=164&fit=crop&auto=format`}
+                                        srcSet={`${url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                                        alt="Project photo"
+                                        onError={imageOnErrorHandler}
+                                        loading="lazy"
+                                    />
+                                    </ImageListItem>
+                                ))}
+                                </ImageList>
                             </CardContent>
                             {/* Insert like component
                             Insert comments component */}
