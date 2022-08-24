@@ -48,7 +48,9 @@ class UserService{
      * @params jwt    The jwt token
      * @params data   The object that stores the updated information
      */
-  updateUser = async (userId: string, jwt: string, data: object) => {
+  updateUser = async (userId: string, jwt: string, data: Partial<User>) => {
+    const currentDate = new Date();
+    data.updatedAt = currentDate.toLocaleString();
     try {
       const response = await axiosInstance.patch<User>(`/users/${userId}`, data, {
         headers: {
