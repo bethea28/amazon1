@@ -43,10 +43,7 @@ export default function UserProfile() {
   return (
     <StyledEngineProvider injectFirst>
       <form onSubmit={onSubmit}>  
-        <Box sx={{ display: 'flex', flexDirection: 'column', height: 1000}}>
-          <Box sx={{...profileBackgroundImageBox}}>
-            Picture
-          </Box>
+      <Box sx={{ display: 'flex', flexDirection: 'column', height: 1000, alignItems: 'center', justifyContent: 'center'}}>
           <Box sx={{...profileDataBox}}>
             <Box sx={{ fontWeight: 'bold'}}>My Profile</Box>
             <Paper elevation={3} className="customPaper" >    
