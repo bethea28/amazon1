@@ -2,9 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import awsconfig from './aws-exports';
-import { Amplify, Auth } from 'aws-amplify';
-import reportWebVitals from './reportWebVitals';
+import awsconfig from './Resources/aws-exports';
+import { Amplify } from 'aws-amplify';
 import { BrowserRouter } from 'react-router-dom';
 Amplify.configure(awsconfig);
 

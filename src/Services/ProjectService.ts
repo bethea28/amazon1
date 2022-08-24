@@ -1,5 +1,6 @@
 import { axiosInstance, Project } from "../Resources/Constants";
 import { Auth } from 'aws-amplify';
+import { Params } from "react-router-dom";
 
 export async function getRecommendedProjects(categories: string) {
 
@@ -46,8 +47,8 @@ export async function getProjectDetails(id: string) {
                 'Content-Type': 'application/json'
             }
         });
-        
-        return data; 
+        console.log("data", data);
+        return data;
     } catch (error) {
         console.log(error);
     }

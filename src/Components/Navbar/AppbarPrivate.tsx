@@ -12,6 +12,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {Search, SearchIconWrapper, StyledInputBase} from './Constants'
 import { AuthContext } from '../../Context/AuthProvider';
 import AuthService from '../../Services/Authentication/AuthService';
+import { typographyTitle } from '../../Resources/Constants';
 
 export default function AppbarPrivate() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -64,10 +65,11 @@ export default function AppbarPrivate() {
   const handleLogout = async () =>
   {
     setAuthData(prevState => {
-      return {...prevState, ['id']: '' , ['token']: '', ['isLoggedIn']: false}
+      return {...prevState, id: '' , token: '', isLoggedIn: false}
     })
-    await AuthService.signOut()
+    
     navigate("/");
+    await AuthService.signOut();
   }
 
   const menuId = 'primary-search-account-menu';
@@ -176,7 +178,7 @@ export default function AppbarPrivate() {
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
+            sx={{ ...typographyTitle, display: { xs: 'none', sm: 'block' } }}
           >
             JUMPSTARTER
           </Typography>

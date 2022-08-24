@@ -2,19 +2,17 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Box, StyledEngineProvider, Avatar } from '@mui/material';
 import { Grid, Paper, Button, TextField} from '@mui/material';
 import "./Styles.css";
-import UserProfileService from '../../Services/UserProfileService';
-import { profileBackgroundImageBox, profileDataBox } from '../../Resources/Constants';
+import UserService from '../../Services/UserService';
+import { profileBackgroundImageBox, profileDataBox, User, initialUserData } from '../../Resources/Constants';
 import { useForm } from "react-hook-form";
-import { UserData } from '../../Resources/types';
 import { AuthContext} from '../../Context/AuthProvider';
 import { ProfileSectionStyle } from './UserProfileStyle';
 import AuthService from '../../Services/Authentication/AuthService';
 
 export default function UserProfile() {
 
-  const initialValues = {name: '', email: '', bio: ''}
-  const [userProfile, setUserProfile] = useState<UserData>(initialValues)
-  const { register, handleSubmit, reset } = useForm<UserData>();
+  const [userProfile, setUserProfile] = useState<User>(initialUserData)
+  const { register, handleSubmit, reset } = useForm<User>();
   const { id, token, setAuthData } = useContext(AuthContext)
 
   useEffect(() => {
@@ -23,32 +21,26 @@ export default function UserProfile() {
 
   const fetchUserProfile = async () => {
     try {
-      const token = await AuthService.getCurrentUser()
-      const response = await UserProfileService.getUserProfile(token.id)
-      setAuthData(prevState => {
-        return {...prevState, ['isLoggedIn']: true}
-      })
-      setUserProfile(response.data)
-      reset(response.data)
+      const response = await UserService.getUser(id) as User
+      setUserProfile(response)
+      reset(response)
     }catch (err){
       setAuthData(prevState => {
-        return {...prevState, ['isLoggedIn']: false, ['token']: ''}
+        return {...prevState, isLoggedIn: false, token: ''}
       })
     }
 
   }
 
-  const onSubmit = handleSubmit(async (data: UserData)=>{
-    const response = await UserProfileService.updateUserProfile(id!, token!, data)
+  const onSubmit = handleSubmit(async (data: User)=>{
+    await UserService.updateUser(id, token, data)
 })
 
+const { firstName, email, bio } = userProfile
   return (
     <StyledEngineProvider injectFirst>
       <form onSubmit={onSubmit}>  
-        <Box sx={{ display: 'flex', flexDirection: 'column', height: 1000}}>
-          <Box sx={{...profileBackgroundImageBox}}>
-            Picture
-          </Box>
+      <Box sx={{ display: 'flex', flexDirection: 'column', height: 1000, alignItems: 'center', justifyContent: 'center'}}>
           <Box sx={{...profileDataBox}}>
             <Box sx={{ fontWeight: 'bold'}}>My Profile</Box>
             <Paper elevation={3} className="customPaper" >    
@@ -59,11 +51,11 @@ export default function UserProfile() {
                 <Grid container direction={"column"} 
                 spacing={1}>
                   <Grid item>
-                    <TextField type="text"
-                    {...register('name', {
+                    <TextField disabled type="text"
+                    {...register('firstName', {
                       onChange: (event: React.ChangeEvent<HTMLInputElement>): 
-                      void => {setUserProfile((prevState) => ({ 
-                        name: event.target.value,
+                      void => {setUserProfile((prevState) => ({...prevState,
+                        firstName: event.target.value,
                         email: prevState.email,
                         bio: prevState.bio
                     }))
@@ -74,19 +66,19 @@ export default function UserProfile() {
                     size="small"
                     label="Name"
                     InputLabelProps={{shrink: true}}
-                    value={userProfile!.name}
+                    value={firstName}
                     />
                   </Grid>
                   <Grid item>
-                      <TextField {...register('email')}
+                      <TextField disabled {...register('email')}
                       onChange={event => {
                         setUserProfile(prevState => {
-                          return {...prevState, ['email']: event.target.value};
+                          return {...prevState, email: event.target.value};
                         });
                       }}
                       fullWidth id="outlined-basic" label="email" 
                       InputLabelProps={{shrink: true}} 
-                      value={userProfile!.email} 
+                      value={email} 
                       variant="outlined" size="small" 
                       />
                   </Grid>
@@ -109,13 +101,14 @@ export default function UserProfile() {
                       id="outlined-multiline"
                       size="medium"
                       label="Bio"
-                      value={userProfile!.bio}
+                      rows={5}
+                      multiline={true}
+                      value={bio}
                       onChange={event => {
                         setUserProfile(prevState => {
-                          return {...prevState, ['bio']: event.target.value};
+                          return {...prevState, bio: event.target.value};
                         });
                     }}
-                    multiline={false}
                       InputLabelProps={{shrink: true}}
                     />
                   </Grid>     
@@ -124,13 +117,18 @@ export default function UserProfile() {
             </Paper>
             <Paper elevation={3} className="customPaper">    
               <Box className="customBox">  
-                <ProfileSectionStyle label="Interest"></ProfileSectionStyle>
+                <ProfileSectionStyle label="Interests"></ProfileSectionStyle>
               </Box>
               <Box sx={{m:1, height: 3 / 4}}>
-                <Grid container direction={"column"} 
-                spacing={1}>
-                  <Grid item>
-                  </Grid>     
+             
+                <Grid container spacing= {2} >
+                { userProfile.interests
+                    ? userProfile.interests.map((interest) =>
+                      <Grid key={interest} item>
+                      <Button sx={{backgroundColor:"#A6BBA7", color:"#000000", borderRadius:50}} variant="contained"
+                      >{interest}</Button>
+                      </Grid>)
+                    : <></>}
                 </Grid>
               </Box>
             </Paper>        

@@ -1,5 +1,5 @@
 import { Box, Card, CardContent, CardMedia, Chip, Stack, Typography, Link } from "@mui/material";
-import { GetProjectsResponse } from "../../../Resources/Constants";
+import { GetProjectsResponse, User, initialUserData } from "../../../Resources/Constants";
 import { typographyTitle } from "../../../Resources/Constants"
 import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
@@ -8,12 +8,14 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import logo from '../../../logo.svg';
+import UserService from "../../../Services/UserService";
 
 export default function ProjectDetailsList(props: GetProjectsResponse) {
   const [open, setOpen] = React.useState(false);
   const [fullWidth, setFullWidth] = React.useState(true);
   const [maxWidth, setMaxWidth] = useState<DialogProps['maxWidth']>('sm');
-  const [userData, setUserData] = useState<String>('');
+  const [userId, setUserId] = useState<string>('');
+  const [userProfile, setUserProfile] = useState<User>(initialUserData);
 
   useEffect(() => {
     fetchUserData()
@@ -33,9 +35,13 @@ export default function ProjectDetailsList(props: GetProjectsResponse) {
 
   const fetchUserData = async () => {
     props.projects && props.projects.map((project) => {
-      setUserData(project.userId)
+      setUserId(project.userId)
     })
+    const response = await UserService.getUser(userId) as User;
+    setUserProfile(response);
   }
+
+  const {firstName, lastName, bio, email, lastSignOn} = userProfile
 
   return (
     <Box className="Project-details-list">
@@ -86,8 +92,8 @@ export default function ProjectDetailsList(props: GetProjectsResponse) {
                     onClick={handleClickOpen}
                     sx={{...typographyTitle}}>
                       By: 
-                      <Link href="#" underline="hover">
-                        {userData}
+                      <Link href="#" color="inherit" underline="hover">
+                        {firstName + " " + lastName}
                       </Link>
                   </Typography>                                 
                   <Dialog
@@ -104,10 +110,11 @@ export default function ProjectDetailsList(props: GetProjectsResponse) {
                         component="a"
                         href="/"
                         sx={{...typographyTitle}}>
-                        Add user bio here
+                        Bio: {bio}
                       </Typography>
                       <Typography>
-                        Add some more information here
+                        Email: {email}
+                        Last sign on: {lastSignOn}
                       </Typography>
                       <Box
                         noValidate
