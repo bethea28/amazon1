@@ -60,19 +60,6 @@ export type UpdateUserResponse = {
     data: object
 };
 
-export const profileBackgroundImageBox = {
-  width: 1,
-  height: 1 / 4,
-  my: 3,
-  mr: 2,
-  backgroundColor: '#EAEAEA',
-  borderRadius: '5px',
-  fontSize: '0.875rem',
-  fontWeight: '700',
-  textAlign: 'center',
-  label: "profile-header-picture"
-}
-
 export const viewProfileInfo = {
   display: 'flex',
   justifyContent: 'center',
@@ -122,6 +109,5 @@ export const typographyTitle = {
   fontFamily: 'monospace',
   fontWeight: 700,
   letterSpacing: '.3rem',
-  color: 'inherit',
-  textDecoration: 'none',
+  color: 'inherit'
 }

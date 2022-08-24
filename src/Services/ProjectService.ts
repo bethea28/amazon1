@@ -36,15 +36,13 @@ export async function getNewestProjects() {
     }
 }
 
-export async function getProjectDetails(id: string) {
-    
+export async function getProjectDetails(id: string) { 
     try {
         const { data } = await axiosInstance.get<Project>(`/projects/${id}`, {
             headers: {
                 'Content-Type': 'application/json'
             }
         });
-        console.log("data", data);
         return data;
     } catch (error) {
         console.log(error);
