@@ -23,29 +23,31 @@ const initialData: AuthData = {
   setAuthData: (): void => {},
 };
 
-// Create the context
+/** Create the context */
 const AuthContext = createContext<AuthData>(initialData);
 
 const AuthProvider = ({ children }: Props): JSX.Element => {
   useEffect(() => {
     Hub.listen("auth", ({ payload: { event, data } }) => {
-      const id = data.attributes.sub
-      const jwtToken = data.getSignInUserSession().getAccessToken().getJwtToken()
-      const userName = data.username
+
+      let  { userId, jwtToken, username } = {userId:'', jwtToken:'', username:''}
+      
       switch (event) {
         case "signIn":
+          ({ username: username, attributes: {sub: userId }, signInUserSession: {accessToken: {jwtToken: jwtToken}}} = data); 
           setAuthData(prevState => {
-            return {...prevState, ['id']: id, ['token']: jwtToken, ['username']: userName, ['isLoggedIn']: true}
+            return {...prevState, id: userId, token: jwtToken, username: username, isLoggedIn: true}
           })
           break;
           case "signUp":
+          ({ userSub:userId, user: { username:username }} = data);
           setAuthData(prevState => {
-            return {...prevState, ['id']: id, ['token']: jwtToken, ['username']: userName, ['isLoggedIn']: true}
+            return {...prevState, id: userId, username: username, isLoggedIn: true}
           })
           break;
         case "signOut":
           setAuthData(prevState => {
-            return {...prevState, ['id']: id, ['token']: jwtToken, ['username']: userName, ['isLoggedIn']: false}
+            return {...prevState, id: '', token: '', username: '', isLoggedIn: false}
           })
           break;
         case "signIn_failure":
@@ -55,13 +57,6 @@ const AuthProvider = ({ children }: Props): JSX.Element => {
     });
   },[]);
   const [authData, setAuthData] = useState<AuthData>(initialData);
-  useEffect(() => {
-    return Hub.listen('auth', (data) => {
-      const { payload } = data;
-      console.log(data);
-      //setAuthData
-    })
-  });
   return (
     <AuthContext.Provider value={{ ...authData, setAuthData }}>
       {children}

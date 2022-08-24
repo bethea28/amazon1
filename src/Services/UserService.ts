@@ -1,30 +1,69 @@
-import { axiosInstance, GetUserResponse, UpdateUserResponse } from "../Resources/Constants";
-import { Auth } from "aws-amplify";
+import { axiosInstance, User } from "../Resources/Constants";
 
-export async function getUser(userID: string) {
+/**
+ * CRUD services for user data
+ */
+class UserService {
 
-    try {
-        const res = await Auth.currentSession()
-        let jwt = res.getAccessToken().getJwtToken(); 
-        const { data } = await axiosInstance.get<GetUserResponse>(`/users/${userID}`, {
-            headers: {
-                'Authorization': `Bearer ${jwt}`,
-                'Content-Type': 'application/json'
-            },
-        })
+    /**
+     * Add user to the database
+     * @params jwt  The jwt token
+     * @params data The object that stores the updated information
+     */
+    addUser = async (jwt: string, data: object) => {
+        try {
+            const response = await axiosInstance.post<User>('/users/', data, {
+                headers: {
+                    'Authorization': `Bearer ${jwt}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+            return response.data
+        } catch (error) {
+            return error
+        }
+    }
 
-        return data;
-            
-    } catch (error) {
-        console.log(error);
+    /**
+     * Get user data
+     * @params userId The current user's id
+     * @params jwt    The jwt token
+     */
+    getUser = async (userId: string, jwt: string) => {
+        try {
+            const response = await axiosInstance.get<User>(`/users/${userId}`, {
+                headers: {
+                    'Authorization': `Bearer ${jwt}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+            return response.data
+        } catch (error) {
+            return error
+        }
+    }
+
+    /**
+       * Update user data
+       * @params userId The current user's id
+       * @params jwt    The jwt token
+       * @params data   The object that stores the updated information
+       */
+    updateUser = async (userId: string, jwt: string, data: Partial<User>) => {
+        const currentDate = new Date();
+        data.updatedAt = currentDate.toLocaleString();
+        try {
+            const response = await axiosInstance.patch<User>(`/users/${userId}`, data, {
+                headers: {
+                    'Authorization': `Bearer ${jwt}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+
+            return response.data
+        } catch (error) {
+            return error
+        }
     }
 }
-
-export async function updateUser(update: object, userID: string) {
-
-    try {
-        await axiosInstance.put<UpdateUserResponse>(`/users/${userID}`, update);
-    } catch (error) {
-        console.log(error);
-    }
-}
+export default new UserService;
