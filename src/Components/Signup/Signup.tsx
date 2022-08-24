@@ -41,7 +41,7 @@ function SignUp() {
       await AuthService.signUp(username, password, email)
       const user = await AuthService.signIn(username, password);
       setAuthData(prevState => {
-        return {...prevState, ['isLoggedIn']: true, ['id']:user.userId, ['token']:user.jwt}
+        return {...prevState, isLoggedIn: true, id:user.userId, token:user.jwt}
       })
 
       /** Add user to dynamodb database */

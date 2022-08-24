@@ -15,7 +15,7 @@ const PersistLogin = () => {
       try {
         const verified = await AuthService.isLogged();
         setAuthData(prevState => {
-          return {...prevState, ['isLoggedIn']: verified}
+          return {...prevState, isLoggedIn: verified}
         })
         if(verified){
           const user = await AuthService.getCurrentUser()

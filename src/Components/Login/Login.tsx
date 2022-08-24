@@ -1,8 +1,6 @@
 import React , { useState, useContext } from 'react';
 import { Box, Button, Typography, Grid, TextField, Paper } from '@mui/material';
 import AuthService from '../../Services/Authentication/AuthService';
-import { Auth } from 'aws-amplify';
-import SetAuthorizationToken from '../../Services/Authentication/SetAuthorizationToken';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useLocation, useNavigate,  } from "react-router-dom";
 import { AuthContext } from '../../Context/AuthProvider'
@@ -41,7 +39,7 @@ interface LocationState {
         const token:string = user.jwt;
 
         setAuthData(prevState => {
-          return {...prevState, ['id']: userId , ['token']: token, ['isLoggedIn']: true}
+          return {...prevState, id: userId , token: token, isLoggedIn: true}
         })
         await UserService.updateUser(userId, token, updatedUser);
         if(location.state){

@@ -24,13 +24,13 @@ export default function UserProfile() {
       const currentUser = await AuthService.getCurrentUser()
       const response = await UserService.getUser(currentUser.userId)
       setAuthData(prevState => {
-        return {...prevState, ['isLoggedIn']: true, ['id']:currentUser.userId, ['token']:currentUser.jwt}
+        return {...prevState, isLoggedIn: true, id:currentUser.userId, token:currentUser.jwt}
       })
       setUserProfile(response!.data)
       reset(response!.data)
     }catch (err){
       setAuthData(prevState => {
-        return {...prevState, ['isLoggedIn']: false, ['token']: ''}
+        return {...prevState, isLoggedIn: false, token: ''}
       })
     }
 
@@ -79,7 +79,7 @@ export default function UserProfile() {
                       <TextField disabled {...register('email')}
                       onChange={event => {
                         setUserProfile(prevState => {
-                          return {...prevState, ['email']: event.target.value};
+                          return {...prevState, email: event.target.value};
                         });
                       }}
                       fullWidth id="outlined-basic" label="email" 
@@ -110,7 +110,7 @@ export default function UserProfile() {
                       value={userProfile!.bio}
                       onChange={event => {
                         setUserProfile(prevState => {
-                          return {...prevState, ['bio']: event.target.value};
+                          return {...prevState, bio: event.target.value};
                         });
                     }}
                     multiline={false}

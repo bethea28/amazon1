@@ -65,7 +65,7 @@ export default function AppbarPrivate() {
   const handleLogout = async () =>
   {
     setAuthData(prevState => {
-      return {...prevState, ['id']: '' , ['token']: '', ['isLoggedIn']: false}
+      return {...prevState, id: '' , token: '', isLoggedIn: false}
     })
     
     navigate("/");
