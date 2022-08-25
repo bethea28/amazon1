@@ -17,7 +17,7 @@ import Layout from './Services/Authentication/Layout';
 import PersistLogin from './Services/Authentication/PersistLogin';
 import ProjectDetails from './Components/Project/ProjectDetails';
 import { theme } from './Resources/GlobalTheme'
-import { AddMileStones } from './Components/Milestone/AddMileStones';
+import { AddMileStonesList } from './Components/Milestone/AddMileStonesList';
 
 function App() {
 
@@ -42,7 +42,7 @@ function App() {
                       <Route path="/interests" element={<InterestSelection />} />
                       <Route path="/projects/:id" element={<ProjectDetails />} />
                       <Route path="/addtransaction/" element={<TransactionTable />} />
-                      <Route path="/addmilestone/" element={<AddMileStones />} />
+                      <Route path="/addmilestone/" element={<AddMileStonesList />} />
                       
                     </Route>
                   </Route>

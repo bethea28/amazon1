@@ -9,6 +9,7 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { DatePicker } from '@material-ui/pickers';
 import { updateData } from '../../Services/AddProjectService';
+import AddMilestone from './AddMilestone';
 
 const projectId = "da2731b3-97e2-4f7c-989e-2ef3751f9424";
 const useStyles = makeStyles(theme => ({
@@ -22,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-export function AddMileStones() {
+export function AddMileStonesList() {
     const classes = useStyles();
     const { handleSubmit } = useForm<ProjectFormInput>();
 
@@ -32,7 +33,6 @@ export function AddMileStones() {
    
 
     const addMilestones = () => {
-        console.log("sdfg");
         let milestone1: Milestone = {
             name: "",
             amount: 0,
@@ -54,14 +54,14 @@ export function AddMileStones() {
     const handleChange = (event:any) => {
         setMilestone(event.target.value)
         
-        console.log("hi");
     }
     console.log("milestone", milestones);
     
     const onsubmit = async (data: ProjectFormInput) => {
       alert('You have submitted');
       data.milestones = milestones;
-     return await updateData(projectId, data);
+      console.log(data)
+      return await updateData(projectId, data);
   }
     return (
       <form onSubmit={handleSubmit(onsubmit)}>
@@ -69,14 +69,17 @@ export function AddMileStones() {
         <Box sx={{ width: '100%' }}>
           {milestones.map((milestone, index) => {
             return (
-              <MileStoneForm
-                handleChange={handleChange}
-                // onChange={setMilestone}
-                values={milestone}
-                key={index}
-              />
+              <AddMilestone/>
+              // <MileStoneForm
+              //   onChange = {handleChange}
+              //   //handleChange={handleChange}
+              //   // onChange={setMilestone}
+              //   values={milestone}
+              //   key={index}
+              // />
+              
     
-              //<MilestonePanel sd = {sd} />
+              
             )
           })}
           <Button
