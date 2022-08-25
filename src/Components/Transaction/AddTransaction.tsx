@@ -26,28 +26,39 @@ const useStyles = makeStyles (theme =>({
 }))
 
 export default function AddTransaction() {
-  const classes = useStyles();
-  const { reset, control, register, handleSubmit,formState: { errors }} = useForm<TransactionFormInput>();
-  const onSubmit = async (data: TransactionFormInput) => {
-    const{projectId, amount} = data
+    // let listUpdated = props.listUpdated;
+    // let transactions = props.transactions;
+    //console.log(transactions)
+    const classes = useStyles();
+    const { reset, control, register, handleSubmit,formState: { errors }} = useForm<TransactionFormInput>();
+    const onSubmit = async (data: TransactionFormInput) => {
+        const{projectId, amount} = data
 
-    let state = {
-        projectId:"04ac6a84-b7dd-46bf-80d4-c3faa8734e0d",
-        amount: data.amount.toString()
+        let state = {
+            projectId:"04ac6a84-b7dd-46bf-80d4-c3faa8734e0d",
+            amount: data.amount.toString()
+        }
+        
+        try{
+        const data = await postTransacData(state)
+        // listUpdated([state,...transitions])
+        // transactions.push(data)
+        // listUpdated(transactions)
+        reset() 
     }
-    console.log(state)
-    try{
-      await postTransacData(state)
-      reset() 
-  }
-  catch(error){
-      console.log(error)
-  }
+    catch(error){
+        console.log(error)
+    }
   }
   return (
     <Paper>
     <form className={classes.root} onSubmit={handleSubmit(onSubmit)}
         onReset={() => reset()} autoComplete = "off">
+    <Grid container>
+    <Grid item xs = {6} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center"  }}>
+    <Typography margin={"0.5em"} variant="h4">Fund a project</Typography>
+    </Grid>
+    </Grid>
     <Grid container>
         <Grid item xs = {4}>
             <TextField
@@ -61,8 +72,8 @@ export default function AddTransaction() {
             <Typography variant ="body2" color ="red">Funding amount must be valid</Typography>)}
             
         </Grid>
-        <Grid item xs = {2} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center"  }}>
-            <Typography>Project Name</Typography>
+        <Grid item xs = {4} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center"  }}>
+            <Typography>(USD) Funding Amount</Typography>
         </Grid>
     </Grid>
     <Grid container>
