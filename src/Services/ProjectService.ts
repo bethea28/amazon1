@@ -36,18 +36,15 @@ export async function getNewestProjects() {
     }
 }
 
-export async function getProjectDetails(id: string) {
-    
+export async function getProjectDetails(id: string) { 
     try {
         const res = await Auth.currentSession()
         let jwt = res.getAccessToken().getJwtToken(); 
         const { data } = await axiosInstance.get<Project>(`/projects/${id}`, {
             headers: {
-                'Authorization': `Bearer ${jwt}`,
                 'Content-Type': 'application/json'
             }
         });
-        console.log("data", data);
         return data;
     } catch (error) {
         console.log(error);
