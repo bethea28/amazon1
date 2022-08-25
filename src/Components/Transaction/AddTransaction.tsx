@@ -26,11 +26,14 @@ const useStyles = makeStyles (theme =>({
 }))
 
 export default function AddTransaction() {
-    // let listUpdated = props.listUpdated;
-    // let transactions = props.transactions;
-    //console.log(transactions)
+    //let listUpdated = props.listUpdated;
+    //let transactions = props.transactions;
+
+    console.log("hi")
+
     const classes = useStyles();
     const { reset, control, register, handleSubmit,formState: { errors }} = useForm<TransactionFormInput>();
+    
     const onSubmit = async (data: TransactionFormInput) => {
         const{projectId, amount} = data
 
@@ -44,7 +47,7 @@ export default function AddTransaction() {
         // listUpdated([state,...transitions])
         // transactions.push(data)
         // listUpdated(transactions)
-        window.location.reload();
+         window.location.reload();
         reset() 
     }
     catch(error){

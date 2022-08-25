@@ -25,8 +25,8 @@ function listUpdated(newList: Transaction[]) {
   return (
     <div className="container">
     <AddTransaction
-    // transactions = {transactions}
-    // listUpdated = {listUpdated}
+    //  transactions = {transactions}
+    //  listUpdated = {listUpdated}
     />
     <TableContainer component={Paper} sx={{ maxHeight: '600px' }}>
       <Table aria-label='simple table' stickyHeader>
