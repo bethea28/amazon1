@@ -59,10 +59,10 @@ export default function UploadPhotos() {
     }
 
     return(
-        <Box sx={{ display: 'flex', flexDirection: 'column', border: 1, flexGrow: 1, margin: 2, }}>
-            <Grid container spacing={2}>
+        <Box sx={{ display: 'flex', border: 0, flexGrow: 1, margin: 2, padding: 3, justifyContent: 'center' }}>
+            <Grid container spacing={2} sx={{ justifyContent: 'center', boxShadow: 3, margin: 2, padding: 3 }}>
             <Grid xs={12}>
-                <Box sx={{ textAlign: 'left', margin: 2 }}><Typography variant="h4" m={1}>Upload a cover photo: </Typography></Box>
+                <Box sx={{ textAlign: 'left', margin: 2 }}><Typography variant="h5" m={1}>Upload a cover photo: </Typography></Box>
                 <Box sx={{ display: 'flex', margin: 2, justifyContent: 'center' }}>
                     <TextField
                         fullWidth
@@ -78,26 +78,22 @@ export default function UploadPhotos() {
                         variant="outlined"
                         onChange={handleChange}
                     />
+                    <Button 
+                        className="uploadPhoto"
+                        sx={{ margin: 1, backgroundColor:"#A6BBA7", color:"#000000", mt:1, height: 50 }}
+                        variant="contained" 
+                        component="span"
+                        disabled={disabledUpload}
+                        onClick={handleUpload}
+                    >Upload</Button>
                 </Box>
             </Grid>
-            <Grid xs={9}>
-                Progress bar
-            </Grid>
-            <Grid xs={3}>
-                <Button 
-                    className="uploadPhoto"
-                    sx={{ margin: 1, backgroundColor:"#A6BBA7", color:"#000000", mt:1, height: 25 }}
-                    variant="contained" 
-                    component="span"
-                    disabled={disabledUpload}
-                    onClick={handleUpload}
-                >Upload</Button>
-            </Grid>
+            
             <Grid xs={5}>
-                <Typography variant="h5" m={1}>Cover Photo: </Typography>
+                <Typography variant="h6" m={1}>Cover Photo: </Typography>
             </Grid>
             <Grid xs={7}>
-                <Card sx={{ maxWidth: 1500 }}>
+                <Card sx={{ maxWidth: 800 }}>
                     <CardMedia
                         component="img"
                         height="500"
@@ -119,43 +115,41 @@ export default function UploadPhotos() {
                 </Card>
             </Grid>
             <Grid xs={12}>
-                <Box sx={{ textAlign: 'left', margin: 2 }}><Typography variant="h4" m={1}>Upload up to 3 photos for your gallery: </Typography></Box>
+                <Box sx={{ textAlign: 'left', margin: 2 }}><Typography variant="h5" m={1}>Upload up to 3 photos for your gallery: </Typography></Box>
                 <Box sx={{ display: 'flex', margin: 2, justifyContent: 'center' }}>
-                        <TextField
-                            fullWidth
-                            id="outlined-full-width"
-                            label="Photo Gallery Upload"
-                            style={{ margin: 8 }}
-                            name="upload-photo"
-                            type="file"
-                            margin="normal"
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            variant="outlined"
-                            onChange={handleChange}
-                        />
+                    <TextField
+                        fullWidth
+                        id="outlined-full-width"
+                        label="Photo Gallery Upload"
+                        style={{ margin: 8 }}
+                        name="upload-photo"
+                        type="file"
+                        margin="normal"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        variant="outlined"
+                        onChange={handleChange}
+                    />
+                    <Button 
+                        className="uploadPhoto"
+                        sx={{ margin: 1, backgroundColor:"#A6BBA7", color:"#000000", mt:1, height: 50 }}
+                        variant="contained" 
+                        component="span"
+                        disabled={disabledUpload}
+                        onClick={handleUpload}
+                    >Upload</Button>
                 </Box>
             </Grid>
-            <Grid xs={9}>
-                Progress bar
-            </Grid>
-            <Grid xs={3}>
-                <Button 
-                    className="uploadPhoto"
-                    sx={{ margin: 1, backgroundColor:"#A6BBA7", mt:1, height: 25 }}
-                    variant="contained" 
-                    component="span"
-                    disabled={disabledUpload}
-                    onClick={handleUpload}
-                >Upload</Button>
-            </Grid>
+            
+            
             <Grid xs={4}>
-                <Card sx={{ maxWidth: 800 }}>
+                <Box sx={{ display: 'flex', margin: 2, justifyContent: 'center' }}>
+                <Card sx={{ maxWidth: 300 }}>
                     <CardMedia
                         component="img"
                         height="500"
-                        width="800"
+                        width="300"
                         image={preview}
                         onError={imageOnErrorHandler}
                         alt="Pot of plants"
@@ -171,13 +165,15 @@ export default function UploadPhotos() {
                         >Delete</Button>
                     </CardContent>
                 </Card>
+                </Box>
             </Grid>
             <Grid xs={4}>
-                <Card sx={{ maxWidth: 800 }}>
+                <Box sx={{ display: 'flex', margin: 2, justifyContent: 'center' }}>
+                <Card sx={{ maxWidth: 300 }}>
                     <CardMedia
                         component="img"
                         height="500"
-                        width="800"
+                        width="300"
                         image={preview}
                         onError={imageOnErrorHandler}
                         alt="Pot of plants"
@@ -193,13 +189,15 @@ export default function UploadPhotos() {
                         >Delete</Button>
                     </CardContent>
                 </Card>
+                </Box>
             </Grid>
             <Grid xs={4}>
-                <Card sx={{ maxWidth: 800 }}>
+                <Box sx={{ display: 'flex', margin: 2, justifyContent: 'center' }}>
+                <Card sx={{ maxWidth: 300 }}>
                     <CardMedia
                         component="img"
                         height="500"
-                        width="800"
+                        width="300"
                         image={preview}
                         onError={imageOnErrorHandler}
                         alt="Pot of plants"
@@ -215,6 +213,7 @@ export default function UploadPhotos() {
                         >Delete</Button>
                     </CardContent>
                 </Card>
+                </Box>
             </Grid>
         </Grid>
   </Box>
