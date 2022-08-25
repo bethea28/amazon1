@@ -2,7 +2,7 @@ import React,{ useState,useEffect } from 'react';
 import { Transaction } from '../../Resources/Constants';
 import { TableContainer,Table, TableHead, TableBody, TableRow, TableCell, Paper } from '@mui/material'
 import {getNewestTransaction} from '../../Services/TransactionService';
-
+import AddTransaction from './AddTransaction';
 export const TransactionTable = () => {
   const [transactions, updateList] = useState<Transaction[]>([]);
 
@@ -19,32 +19,31 @@ export const TransactionTable = () => {
       getTransactionList();
   },[])
   return (
-    <TableContainer component={Paper} sx={{maxHeight:'300px'}}>
-        <Table aria-label='simple table'stickyHeader>
-            <TableHead>
-                <TableRow>
-                    <TableCell> User Name</TableCell>
-                    <TableCell> Transaction Amount</TableCell>
-                    <TableCell> Created At</TableCell>
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                {
-                    transactions && transactions.map((transaction) =>(
-                        <TableRow
-                        key = {transaction.transactionId}
-                        sx={{ '&:last-child td, &:last-child th': {border:0}}}
-                        >
-                        <TableCell>{transaction.username}</TableCell>
-                        <TableCell>{transaction.amount}</TableCell>
-                        <TableCell>{transaction.createdAt}</TableCell>
-                        </TableRow>
+    <><AddTransaction />
+    <TableContainer component={Paper} sx={{ maxHeight: '300px' }}>
+      <Table aria-label='simple table' stickyHeader>
+        <TableHead>
+          <TableRow>
+            <TableCell> User Name</TableCell>
+            <TableCell> Transaction Amount</TableCell>
+            <TableCell> Created At</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {transactions && transactions.map((transaction) => (
+            <TableRow
+              key={transaction.transactionId}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell>{transaction.username}</TableCell>
+              <TableCell>{transaction.amount}</TableCell>
+              <TableCell>{transaction.createdAt}</TableCell>
+            </TableRow>
 
-                    ))
-                }
-            </TableBody>
-        </Table>
-    </TableContainer>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer></>
   )
 }
 const tableData = [{

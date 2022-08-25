@@ -32,7 +32,7 @@ export class Transaction {
     projectId!: string;
     userId!: string;
     username!: string
-    amount!: string;
+    amount!: number;
     createdAt!: string;
     lastUpdatedAt!: string;
 

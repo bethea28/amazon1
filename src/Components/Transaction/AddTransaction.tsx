@@ -1,4 +1,5 @@
 import React from 'react'
+import { Typography, FormHelperText, Stack } from '@mui/material';
 import { FormControl, InputLabel, MenuItem, Button,
   Select, Grid, TextField, Paper, makeStyles } from '@material-ui/core';
 import { useForm, Controller} from "react-hook-form";
@@ -31,9 +32,10 @@ export default function AddTransaction() {
     const{projectId, amount} = data
 
     let state = {
-        projectId,
-        amount
+        projectId:"04ac6a84-b7dd-46bf-80d4-c3faa8734e0d",
+        amount: data.amount.toString()
     }
+    console.log(state)
     try{
       await postTransacData(state)
       reset() 
@@ -46,7 +48,39 @@ export default function AddTransaction() {
     <Paper>
     <form className={classes.root} onSubmit={handleSubmit(onSubmit)}
         onReset={() => reset()} autoComplete = "off">
-
+    <Grid container>
+        <Grid item xs = {4}>
+            <TextField
+            {...register("amount", {min: 0.01,})} 
+            type = "number"
+            label = "Input funding amount"
+            defaultValue = {0}
+            error={errors.amount !== undefined}
+            />
+            {errors.amount && ( 
+            <Typography variant ="body2" color ="red">Funding amount must be valid</Typography>)}
+            
+        </Grid>
+        <Grid item xs = {2} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center"  }}>
+            <Typography>Project Name</Typography>
+        </Grid>
+    </Grid>
+    <Grid container>
+        <Grid item xs = {2}>
+            <Button variant="contained" 
+            color="primary"
+            type="reset">
+            <Typography variant="button">Reset</Typography>
+            </Button>
+        </Grid>
+        <Grid item xs = {2} >
+            <Button variant="contained" 
+            color="primary"
+            type="submit">
+            <Typography variant="button">Submit</Typography>
+            </Button>
+        </Grid>
+    </Grid>
     </form>
     </Paper>
     
