@@ -4,6 +4,7 @@ import AuthService from '../../Services/Authentication/AuthService';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useLocation, useNavigate,  } from "react-router-dom";
 import { AuthContext } from '../../Context/AuthProvider'
+import Header from "../Header";
 import UserService from '../../Services/UserService';
 import { User } from '../../Resources/Constants'
 
@@ -63,8 +64,8 @@ interface LocationState {
       <Grid container direction={"column"} justifyContent="center" alignContent={"center"} style={{ minHeight: '100vh' }}>
       <Grid item className="signUpBox">
         <form>
-          <Typography variant="h2">Log In</Typography>
-          <Box height="100%" bgcolor="#D1e1D2">
+          <Typography variant="h2">Sign In</Typography>
+          <Box height="100%">
             <Grid container direction={"column"} spacing={2}>
               <Grid item>
                 <Typography variant="caption">{errorMessage}</Typography>
@@ -121,9 +122,7 @@ interface LocationState {
                 />
               </Grid>
               <Grid item>
-                <Button variant="outlined" type="submit" onClick={handleSubmit(onSubmit)}>
-                  <Typography variant="button">Log In</Typography>
-                </Button>
+                <Button variant="contained" type="submit" onClick={handleSubmit(onSubmit)}>Log In</Button>
               </Grid>
             </Grid>
           </Box>
