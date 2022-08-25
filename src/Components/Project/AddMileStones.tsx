@@ -3,10 +3,10 @@ import { Milestone } from '../../Resources/Constants'
 import { makeStyles, ExpansionPanel, ExpansionPanelSummary,
      Typography, ExpansionPanelDetails, Paper, Grid } from '@material-ui/core';
 //import ExpandMoreIcon from "@material-ui/icons";
-import { Button, Stack, TextField } from '@mui/material';
+import { Button, Stack, TextField, Box } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { DatePicker } from 'material-ui';
+import { DatePicker } from '@material-ui/pickers';
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -23,6 +23,7 @@ export function AddMileStones() {
     const classes = useStyles();
 
     const [milestones, setMilestones] = useState<Milestone[]>([]);
+    const [milestone, setMilestone] = useState<Milestone>();
     const [sd, setSd] = useState(0);
    
 
@@ -49,34 +50,40 @@ export function AddMileStones() {
     console.log("milestone", milestones);
     
     return (
-        <div>
-        <Grid container>
-            {milestones.map((milestone) =>{
-                return <MileStoneFormRow/>
+        
+        <Box sx={{width:'100%'}} >
+            {milestones.map((milestone,index) =>{
+
+                return (<MileStoneForm
+                onChange={setMilestone}
+                values={milestone}
+                key={index}
+                />
+                
                 //<MilestonePanel sd = {sd} />
-            })}
-        <Button variant="contained" endIcon={<AddIcon/>} onClick={() => addMilestones()}>
-
+            )})}
+        <Button  variant="contained" endIcon={<AddIcon/>} onClick={() => addMilestones()}>
+            Add
         </Button>
-        <Button variant="contained" endIcon={<DeleteIcon/>} onClick={() => removeMilestones()}>
-
+        <Button  variant="contained" endIcon={<DeleteIcon/>} onClick={() => removeMilestones()}>
+            Remove
         </Button>
-        </Grid>
-        </div>
+        </Box>
+        
     )
 }
 
-  export const MileStoneFormRow = () => {
+  export const MileStoneForm = () => {
     let milestone2: Milestone = {
         name: "",
         amount: 0,
         targetDate: new Date()
     }
     return (
-    <Stack>
+    <Stack spacing={2}>
         <TextField />
         <TextField />
-        <DatePicker />
+        
         <AddIcon />
         <DeleteIcon />
     </Stack>
