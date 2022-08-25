@@ -5,8 +5,8 @@ import { getProjectDetails } from '../../Services/ProjectService';
 import { theme } from "../../Resources/GlobalTheme";
 import NavigationBar from '../Dashboard/Components/NavigationBar';
 import SearchBar from '../Dashboard/Components/SearchBar';
-import { loadingOverlay } from 'aws-amplify';
 import { useParams } from 'react-router-dom';
+import ViewProfile from '../UserProfile/ViewProfile';
 
 export default function ProjectDetails() {
 
@@ -82,11 +82,13 @@ export default function ProjectDetails() {
                                 <Typography variant="body1" m={3}>
                                 {description}
                                 </Typography>
+                                <ViewProfile {...currentProject}></ViewProfile>
                             </CardContent>
                             {/* Insert like component
                             Insert comments component */}
                         </Card>
                         </Stack>
+
                     </Box>
 
                 </Container>

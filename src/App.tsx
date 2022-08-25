@@ -31,6 +31,7 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/signup" element={<SignUp />} />
                   <Route path="/login" element={<Login />} />
+                  <Route path="/projects/:id" element={<ProjectDetails />} />
 
                 {/* protected routes */}
                   <Route element={<RequireAuth/>}>
@@ -38,7 +39,6 @@ function App() {
                       <Route path="/profile" element={<UserProfile /> } />
                       <Route path="/addproject" element={<AddProject />} />
                       <Route path="/interests" element={<InterestSelection />} />
-                      <Route path="/projects/:id" element={<ProjectDetails />} />
                     </Route>
                   </Route>
             </Route>

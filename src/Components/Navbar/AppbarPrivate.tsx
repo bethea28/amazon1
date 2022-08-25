@@ -1,5 +1,5 @@
 import React, { useState, MouseEvent, useContext } from 'react';
-import { Box, Toolbar, Menu } from '@mui/material';
+import { Box, Toolbar, Menu, Avatar } from '@mui/material';
 import { IconButton, Typography, MenuItem, AppBar } from '@mui/material';
 import { ListItemText, Divider, ListItemIcon } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -200,9 +200,8 @@ export default function AppbarPrivate() {
               aria-controls={menuId}
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
+              color="inherit">
+              <AccountCircle/>
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
