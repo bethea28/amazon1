@@ -14,7 +14,7 @@ function Comment(comment: CommentData) {
 
     useEffect(() => {
         const getCommentUsername = async () => {
-            const { username }: User = await UserService.getUser(comment.userId, currentUser.token) as User;
+            const { username }: User = await UserService.getUser(comment.userId) as User;
             setCommentUsername(username);
         }
 

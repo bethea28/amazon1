@@ -29,14 +29,14 @@ class UserService {
      * @params userId The current user's id
      * @params jwt    The jwt token
      */
-    getUser = async (userId: string, jwt?: string) => {
+    getUser = async (userId: string) => {
         try {
             const response = await axiosInstance.get<User>(`/users/${userId}`, {
                 headers: {
-                    'Authorization': `Bearer ${jwt}`,
                     'Content-Type': 'application/json'
                 }
             })
+            console.log(response.data);
             return response.data
         } catch (error) {
             return error
