@@ -57,30 +57,31 @@ export default function AddProject() {
     }
     const [sd, setSd] = React.useState(0);
 
-    const addPoint = () => {
-        console.log("sdfg");
-        let milestone: Milestone = {};
-    
-        arr.push("dummy");
-        // setPoints([...arr]);
-        setMilestones([...points, arr]);
-        setSd(sd + 1);
-    };
-  console.log("p", points);
-    const MileStoneFormRow = ({onAdd, onRemove}) => {
 
-        return (
-        <Stack>
-            <TextField />
-            <TextField />
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                
-            </MuiPickersUtilsProvider>
-            <AddIcon />
-            <DeleteIcon />
-        </Stack>
+//     const addPoint = () => {
+//         console.log("sdfg");
+//         let milestone: Milestone = {};
     
-        )
+//         arr.push("dummy");
+//         // setPoints([...arr]);
+//         setMilestones([...points, arr]);
+//         setSd(sd + 1);
+//     };
+//   console.log("p", points);
+    // const MileStoneFormRow = ({onAdd, onRemove}) => {
+
+    //     return (
+    //     <Stack>
+    //         <TextField />
+    //         <TextField />
+    //         <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                
+    //         </MuiPickersUtilsProvider>
+    //         <AddIcon />
+    //         <DeleteIcon />
+    //     </Stack>
+    
+    //     )}
 
     const classes = useStyles();
     const { reset, control, register, handleSubmit,formState: { errors }} = useForm<ProjectFormInput>();
@@ -197,6 +198,7 @@ export default function AddProject() {
             <Grid item xs = {2} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center"  }}>
                 <Typography>Target Funding Date</Typography>
             </Grid>
+            </Grid>
             <Grid container>
             <Grid item xs = {4}>
                 <TextField
@@ -211,7 +213,7 @@ export default function AddProject() {
                 <Typography>Project Description</Typography>
             </Grid>
             </Grid>
-            <Grid container>
+            {/* <Grid container>
             <Grid item xs = {4}>
             {milestones.map(() => {
                 return <MileStoneFormRow onAdd={handleAdd} onRemove={handleRemove} />
@@ -231,7 +233,7 @@ export default function AddProject() {
                 {errors.projectName && ( 
                 <Typography variant ="body2" color ="red">This field is required</Typography>)}
                 
-            </Grid>
+            </Grid> */}
             <Grid container>
             <Grid item xs = {2}>
                 <Button variant="contained" 
@@ -248,11 +250,7 @@ export default function AddProject() {
                 </Button>
             </Grid>
             </Grid>
-            </Grid>
 
-            
-
-            </Grid>
         </form>
         </Paper>
     )
