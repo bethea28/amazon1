@@ -3,10 +3,10 @@ import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 export const theme = responsiveFontSizes(createTheme({
     palette: {
         primary: {
-            main: '#90d86f',
+            main: '#335436',
         },
         secondary: {
-            main: '#f50057',
+            main: '#A6BBA7',
         },
     },
     typography: {
@@ -15,7 +15,7 @@ export const theme = responsiveFontSizes(createTheme({
     components: {
         MuiTypography: {
             defaultProps: {
-                fontFamily: "Poppins",
+                fontFamily: "monospace",
                 fontWeight: 600
             }
         }
