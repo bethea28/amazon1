@@ -36,7 +36,6 @@ export class Transaction {
     createdAt!: string;
     lastUpdatedAt!: string;
 
-
     contructor(userResponse: any) {
       this.transactionId = userResponse.transactionId;
       this.projectId = userResponse.projectId;
@@ -46,6 +45,27 @@ export class Transaction {
       this.lastUpdatedAt = userResponse.lastUpdatedAt;
     }
 }
+
+export interface Milestone {
+  name: string;
+  amount: number;
+  targetDate: Date;
+}
+export interface MilestoneFormInput{
+  projectId: string;
+  milestones: Milestone[];
+
+}
+export interface ProjectFormInput {
+  projectName: string;
+  targetFundingNum: number;
+  targetFundingDate: Date;
+  description: string;
+  categories: string;
+  milestones: Milestone[];
+  
+}
+
 
 export type User = {
   userId: string,

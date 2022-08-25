@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from 'react';
-import { Typography, FormHelperText, Stack } from '@mui/material';
+import { Typography, FormHelperText, Stack, ThemeProvider } from '@mui/material';
 import { FormControl, InputLabel, MenuItem, Button,
          Select, Grid, TextField, Paper, makeStyles } from '@material-ui/core';
 import {MuiPickersUtilsProvider, KeyboardDatePicker}from '@material-ui/pickers'
@@ -8,21 +8,8 @@ import { useForm, Controller} from "react-hook-form";
 import {postData} from '../../Services/AddProjectService';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { ProjectFormInput } from '../../Resources/Constants';
 
-interface ProjectFormInput {
-    projectName: string;
-    targetFundingNum: number;
-    targetFundingDate: Date;
-    description: string;
-    categories: string;
-    milestones: Milestone[];
-    
-}
-interface Milestone {
-    name: string;
-    amount: number;
-    targetDate: Date;
-}
 
 const useStyles = makeStyles (theme =>({
     root: {
@@ -253,6 +240,7 @@ export default function AddProject() {
 
         </form>
         </Paper>
+
     )
 }
 
