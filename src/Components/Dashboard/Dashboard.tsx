@@ -38,8 +38,8 @@ function Dashboard() {
         <ThemeProvider theme={theme}>
             <Box>
                 <Container>
-                    <SearchBar />
-                    <NavigationBar />
+                    {/* <SearchBar />
+                    <NavigationBar /> */}
                     <Stack>
                         <Stack>
                             <Typography margin={"0.5em"} textAlign={"left"} variant="h4">BASED ON YOUR INTERESTS</Typography>

@@ -22,11 +22,11 @@ export async function getRecommendedProjects(categories: string) {
 export async function getNewestProjects() {
 
     try {
-        const res = await Auth.currentSession()
-        let jwt = res.getAccessToken().getJwtToken(); 
+        // const res = await Auth.currentSession()
+        // let jwt = res.getAccessToken().getJwtToken(); 
         const { data } = await axiosInstance.get<Project[]>("/projects/recent", {
             headers: {
-                'Authorization': `Bearer ${jwt}`,
+                // 'Authorization': `Bearer ${jwt}`,
                 'Content-Type': 'application/json'
             }
         })

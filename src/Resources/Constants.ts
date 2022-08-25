@@ -12,21 +12,34 @@ export const axiosInstance = axios.create({
 })
 
 export type GetProjectsResponse = {
-    projects: Array<Project>
+    projects: Project[]
 }
 
 export type Project = {
-    projectId: string,
-    userId: string,
-    projectName: string,
-    targetFundingNum: string
-    targetFundingDate: string,
-    description: string,
-    categories: string,
-    createdAt: string
-    lastUpdatedAt: string,
-    photoURLs: string[]
+  projectId: string,
+  userId: string,
+  projectName: string,
+  targetFundingNum: string
+  targetFundingDate: string,
+  description: string,
+  categories: string,
+  createdAt: string
+  lastUpdatedAt: string,
+  photoURLs: string[]
 }
+
+export const initialProjectData: Project = {
+  projectId: 'string',
+  userId: 'string',
+  projectName: 'string',
+  targetFundingNum: 'string',
+  targetFundingDate: 'string',
+  description: 'string',
+  categories: 'string',
+  createdAt: 'string',
+  lastUpdatedAt: 'string',
+  photoURLs: ['https://amz1projectphotos.s3.amazonaws.com/f6ecfc49-01bb-4d8c-bfab-454b2c820521_pexels-photo-7418632.jpeg']
+};
 
 export type User = {
   userId: string,
