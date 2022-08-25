@@ -93,7 +93,7 @@ function SignUp() {
                 }) => (
                   <TextField
                     fullWidth
-                    label={"Username"}
+                    label="Username"
                     variant="outlined"
                     value={value}
                     onChange={onChange}
@@ -118,7 +118,7 @@ function SignUp() {
                 }) => (
                   <TextField
                     fullWidth
-                    label={"First Name"}
+                    label="First Name"
                     variant="outlined"
                     value={value}
                     onChange={onChange}
@@ -143,7 +143,7 @@ function SignUp() {
                 }) => (
                   <TextField
                     fullWidth
-                    label={"Last Name"}
+                    label="Last Name"
                     variant="outlined"
                     value={value}
                     onChange={onChange}
@@ -168,7 +168,7 @@ function SignUp() {
                 }) => (
                   <TextField
                     fullWidth
-                    label={"Email"}
+                    label="Email"
                     variant="outlined"
                     value={value}
                     onChange={onChange}
@@ -193,7 +193,7 @@ function SignUp() {
                 }) => (
                   <TextField
                     fullWidth
-                    label={"Password"}
+                    label="Password"
                     variant="outlined"
                     value={value}
                     onChange={onChange}
@@ -222,7 +222,7 @@ function SignUp() {
                 }) => (
                   <TextField
                     fullWidth
-                    label={"Verify Password"}
+                    label="Verify Password"
                     variant="outlined"
                     value={value}
                     onChange={onChange}
