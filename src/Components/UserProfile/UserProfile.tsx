@@ -3,11 +3,10 @@ import { Box, StyledEngineProvider, Avatar } from '@mui/material';
 import { Grid, Paper, Button, TextField} from '@mui/material';
 import "./Styles.css";
 import UserService from '../../Services/UserService';
-import { profileBackgroundImageBox, profileDataBox, User, initialUserData } from '../../Resources/Constants';
+import { profileDataBox, User, initialUserData } from '../../Resources/Constants';
 import { useForm } from "react-hook-form";
 import { AuthContext} from '../../Context/AuthProvider';
 import { ProfileSectionStyle } from './UserProfileStyle';
-import AuthService from '../../Services/Authentication/AuthService';
 
 export default function UserProfile() {
 
@@ -36,7 +35,7 @@ export default function UserProfile() {
     await UserService.updateUser(id, token, data)
 })
 
-const { firstName, email, bio } = userProfile
+const { firstName, email, bio, avatarURL } = userProfile
   return (
     <StyledEngineProvider injectFirst>
       <form onSubmit={onSubmit}>  
@@ -83,7 +82,9 @@ const { firstName, email, bio } = userProfile
                       />
                   </Grid>
                   <Grid item>
-                    <Avatar />
+                    <Avatar
+                      src={avatarURL}>
+                    </Avatar>
                   </Grid>
                 </Grid>
               </Box>
