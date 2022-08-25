@@ -44,6 +44,7 @@ export default function AddTransaction() {
         // listUpdated([state,...transitions])
         // transactions.push(data)
         // listUpdated(transactions)
+        window.location.reload();
         reset() 
     }
     catch(error){
