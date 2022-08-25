@@ -1,5 +1,6 @@
 import React,{useState, useEffect} from 'react';
-import { Milestone } from '../../Resources/Constants'
+import { useForm } from "react-hook-form";
+import { Milestone, ProjectFormInput } from '../../Resources/Constants'
 import { makeStyles, ExpansionPanel, ExpansionPanelSummary,
      Typography, ExpansionPanelDetails, Paper, Grid } from '@material-ui/core';
 //import ExpandMoreIcon from "@material-ui/icons";
@@ -7,7 +8,9 @@ import { Button, Stack, TextField, Box } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { DatePicker } from '@material-ui/pickers';
+import { updateData } from '../../Services/AddProjectService';
 
+const projectId = "da2731b3-97e2-4f7c-989e-2ef3751f9424";
 const useStyles = makeStyles(theme => ({
     formControl: {
       margin: theme.spacing(1),
@@ -21,6 +24,7 @@ const useStyles = makeStyles(theme => ({
 
 export function AddMileStones() {
     const classes = useStyles();
+    const { handleSubmit } = useForm<ProjectFormInput>();
 
     const [milestones, setMilestones] = useState<Milestone[]>([]);
     const [milestone, setMilestone] = useState<Milestone>();
@@ -47,47 +51,72 @@ export function AddMileStones() {
         setMilestones([...newMilestones]);
         setSd(sd - 1);
     };
+    const handleChange = (event:any) => {
+        setMilestone(event.target.value)
+        
+        console.log("hi");
+    }
     console.log("milestone", milestones);
     
+    const onsubmit = async (data: ProjectFormInput) => {
+      alert('You have submitted');
+      data.milestones = milestones;
+     return await updateData(projectId, data);
+  }
     return (
-        
-        <Box sx={{width:'100%'}} >
-            {milestones.map((milestone,index) =>{
-
-                return (<MileStoneForm
-                onChange={setMilestone}
+      <form onSubmit={handleSubmit(onsubmit)}>
+        <Typography>Milestones</Typography>
+        <Box sx={{ width: '100%' }}>
+          {milestones.map((milestone, index) => {
+            return (
+              <MileStoneForm
+                handleChange={handleChange}
+                // onChange={setMilestone}
                 values={milestone}
                 key={index}
-                />
-                
-                //<MilestonePanel sd = {sd} />
-            )})}
-        <Button  variant="contained" endIcon={<AddIcon/>} onClick={() => addMilestones()}>
+              />
+    
+              //<MilestonePanel sd = {sd} />
+            )
+          })}
+          <Button
+            variant='contained'
+            endIcon={<AddIcon />}
+            onClick={() => addMilestones()}
+          >
             Add
-        </Button>
-        <Button  variant="contained" endIcon={<DeleteIcon/>} onClick={() => removeMilestones()}>
+          </Button>
+          <Button
+            variant='contained'
+            endIcon={<DeleteIcon />}
+            onClick={() => removeMilestones()}
+          >
             Remove
-        </Button>
+          </Button>
+          <input type="submit" value="Submit" />
+          
         </Box>
+        </form>
         
     )
 }
 
-  export const MileStoneForm = () => {
+export const MileStoneForm = (props: any) => {
     let milestone2: Milestone = {
-        name: "",
-        amount: 0,
-        targetDate: new Date()
+      name: '',
+      amount: 0,
+      targetDate: new Date(),
     }
     return (
-    <Stack spacing={2}>
-        <TextField />
-        <TextField />
-        
+      <Stack spacing={2}>
+        <TextField onChange={(event) => props.handleChange(event)} />
+        <TextField 
+
+        type = "number"
+        defaultValue = {0}/>
+  
         <AddIcon />
         <DeleteIcon />
-    </Stack>
-
+      </Stack>
     )
-}
-  
+  }

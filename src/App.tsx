@@ -17,7 +17,7 @@ import Layout from './Services/Authentication/Layout';
 import PersistLogin from './Services/Authentication/PersistLogin';
 import ProjectDetails from './Components/Project/ProjectDetails';
 import { theme } from './Resources/GlobalTheme'
-import { AddMileStones } from './Components/Project/AddMileStones';
+import { AddMileStones } from './Components/Milestone/AddMileStones';
 
 function App() {
 
