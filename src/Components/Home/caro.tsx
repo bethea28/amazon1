@@ -10,7 +10,6 @@ interface CustomLeftArrowProps extends ArrowProps {
   myOwnStuff: string;
 }
 interface CustomRightArrowProps extends ArrowProps {
-
   myOwnStuff: string;
 }
 
@@ -24,21 +23,8 @@ interface CarouselButtonGroupProps extends ButtonGroupProps {
     // {const proj = projects[5];
     //   console.log("proj: ", proj)
     // }
-    
-  // const CustomLeftArrow = ({ onClick }:CustomLeftArrowProps) => {
-  //   return <button onClick={() => onClick()}></button>
-  // }
-  // const CustomRightArrow = ({ onClick }:CustomRightArrowProps) ...rest }) => {
-  //   const {
-  //     onMove,
-  //     carouselState: { currentSlide, deviceType }
-  //   } = rest;
-  //   // onMove means if dragging or swiping in progress.
-  //   return <button onClick={() => onClick()} />;
-  // };
   const responsive = { 
     superLargeDesktop: {
-    // the naming can be any, depends on you.
     breakpoint: { max: 4000, min: 3000 },
     items: 5,
     slidesToSlide: 4
@@ -70,7 +56,18 @@ interface CarouselButtonGroupProps extends ButtonGroupProps {
     return <div onClick={() => onClick }>This is a Custom dots</div>
   }
 
-  const photo = 'https://amz1projectphotos.s3.amazonaws.com/f6ecfc49-01bb-4d8c-bfab-454b2c820521_pexels-photo-7418632.jpeg';
+  const getPhotoUrl = (photoUrl:string) => {
+    console.log('photoUrl: ', photoUrl)
+    if(photoUrl){
+      console.log("not empty")
+      return photoUrl
+    }
+    console.log("is empty")
+    return 'https://picsum.photos/200/300';
+  }
+
+  //const photo = 'https://amz1projectphotos.s3.amazonaws.com/f6ecfc49-01bb-4d8c-bfab-454b2c820521_pexels-photo-7418632.jpeg';
+  const photo = 'https://picsum.photos/200/300';
 
   return(
     <>
@@ -132,6 +129,7 @@ interface CarouselButtonGroupProps extends ButtonGroupProps {
       <CardMedia
         component="img"
         height="140"
+        // image={getPhotoUrl(projects[idx].photoURLs[0])}
         image={photo}
         alt="green iguana"
       />
@@ -149,10 +147,6 @@ interface CarouselButtonGroupProps extends ButtonGroupProps {
         <Button size="small">Learn More</Button>
       </CardActions>
     </Card>)}
-  <div>Item 1</div>
-  <div>Item 2</div>
-  <div>Item 3</div>
-  <div>Item 4</div>
     {/* <WithStyles
       description="Appending currency sign to a purchase form in your e-commerce site using plain JavaScript."
       headline="w3js.com - web front-end studio"

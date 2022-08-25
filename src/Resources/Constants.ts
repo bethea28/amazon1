@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const interests = ["music", "art", "food", "cars", "wildlife", "pets", "technology", "literature", "healthcare", "finance", "sports", "politics", "entertainment"]
+export const interests = ["Music", "Art", "Food", "Cars", "Wildlife", "Pets", "Technology", "Literature", "Healthcare", "Finance", "Sports", "Politics", "Entertainment"]
 export const tempUserID = "de3caccd-fa2c-4cd0-a1bc-c9a313a09a75";
 export const axiosInstance = axios.create({
     baseURL: "http://localhost:8080",
@@ -29,16 +29,16 @@ export type Project = {
 }
 
 export const initialProjectData: Project = {
-  projectId: 'string',
-  userId: 'string',
-  projectName: 'string',
-  targetFundingNum: 'string',
-  targetFundingDate: 'string',
-  description: 'string',
-  categories: 'string',
-  createdAt: 'string',
-  lastUpdatedAt: 'string',
-  photoURLs: ['https://amz1projectphotos.s3.amazonaws.com/f6ecfc49-01bb-4d8c-bfab-454b2c820521_pexels-photo-7418632.jpeg']
+  projectId: '',
+  userId: '',
+  projectName: '',
+  targetFundingNum: '',
+  targetFundingDate: '',
+  description: '',
+  categories: '',
+  createdAt: '',
+  lastUpdatedAt: '',
+  photoURLs: ['']
 };
 
 export type User = {
