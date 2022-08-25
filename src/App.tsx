@@ -16,7 +16,6 @@ import RequireAuth from './Services/Authentication/RequireAuth'
 import Layout from './Services/Authentication/Layout';
 import PersistLogin from './Services/Authentication/PersistLogin';
 import ProjectDetails from './Components/Project/ProjectDetails';
-import { theme } from './Resources/GlobalTheme'
 
 function App() {
 

@@ -29,7 +29,7 @@ class UserService {
      * @params userId The current user's id
      * @params jwt    The jwt token
      */
-    getUser = async (userId: string, jwt: string) => {
+    getUser = async (userId: string, jwt?: string) => {
         try {
             const response = await axiosInstance.get<User>(`/users/${userId}`, {
                 headers: {

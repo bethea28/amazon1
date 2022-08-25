@@ -1,27 +1,25 @@
 import { Avatar, Grid, Paper, Typography } from "@mui/material";
 import { green } from "@mui/material/colors";
-import React, { useEffect, useState } from "react";
-import { CommentData, GetUserResponse } from "../../Resources/Constants";
-import { getUser } from "../../Services/UserService";
+import React, { useContext, useEffect, useState } from "react";
+import { CommentData, User } from "../../Resources/Constants";
 import { theme } from "../../Resources/GlobalTheme"
 import { getTimeAgo } from "../../Resources/DateFormatter"
+import UserService from "../../Services/UserService";
+import { AuthContext } from "../../Context/AuthProvider";
 
 function Comment(comment: CommentData) {
 
     const [commentUsername, setCommentUsername] = useState<string>();
+    const currentUser = useContext(AuthContext)
 
     useEffect(() => {
         const getCommentUsername = async () => {
-            const { username }: GetUserResponse = await getUser(comment.userId) as GetUserResponse;
+            const { username }: User = await UserService.getUser(comment.userId, currentUser.token) as User;
             setCommentUsername(username);
         }
 
         getCommentUsername();
-        // const date = new Date(comment.createdAt)
-        // const dateMS = date.getTime()
-        // console.log(comment.createdAt);
-        // console.log(dateMS);
-        // console.log(Math.round((Date.now() - Number(date)) / 1000) + " seconds ago");
+        console.log(comment.createdAt);
     }, [commentUsername])
 
     return (

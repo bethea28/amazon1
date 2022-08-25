@@ -41,7 +41,7 @@ export async function getProjectDetails(id: string) {
     try {
         const res = await Auth.currentSession()
         let jwt = res.getAccessToken().getJwtToken(); 
-        const { data } = await axiosInstance.get<Project[]>(`/projects/${id}`, {
+        const { data } = await axiosInstance.get<Project>(`/projects/${id}`, {
             headers: {
                 'Authorization': `Bearer ${jwt}`,
                 'Content-Type': 'application/json'
