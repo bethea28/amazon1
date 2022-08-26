@@ -62,11 +62,11 @@ export type UpdateUserResponse = {
 };
 
 export type CommentData = {
-  id: string,
+  id?: string,
   content: string,
   userId: string,
   projectId: string,
-  createdAt: string
+  createdAt?: string
 }
 
 export const profileBackgroundImageBox = {

@@ -7,6 +7,7 @@ import NavigationBar from '../Dashboard/Components/NavigationBar';
 import SearchBar from '../Dashboard/Components/SearchBar';
 import { useParams } from 'react-router-dom';
 import ViewProfile from '../UserProfile/ViewProfile';
+import CommentList from '../Comments/CommentList';
 
 export default function ProjectDetails() {
 
@@ -86,6 +87,7 @@ export default function ProjectDetails() {
                             </CardContent>
                             {/* Insert like component
                             Insert comments component */}
+                            <CommentList/>
                         </Card>
                         </Stack>
 

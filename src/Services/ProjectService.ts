@@ -38,8 +38,6 @@ export async function getNewestProjects() {
 
 export async function getProjectDetails(id: string) { 
     try {
-        const res = await Auth.currentSession()
-        let jwt = res.getAccessToken().getJwtToken(); 
         const { data } = await axiosInstance.get<Project>(`/projects/${id}`, {
             headers: {
                 'Content-Type': 'application/json'

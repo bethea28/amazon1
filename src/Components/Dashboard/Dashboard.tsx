@@ -57,8 +57,6 @@ function Dashboard() {
                         <Button sx={{ marginX: "10px" }} variant="contained">Fund a Project</Button>
                     </ButtonGroup>
                 </Container> */}
-
-                <CommentList/>
             </Box>
         </ThemeProvider>
     )

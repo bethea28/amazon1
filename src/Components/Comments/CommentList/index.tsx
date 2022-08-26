@@ -6,11 +6,16 @@ import CommentField from "../CommentField";
 import { CommentData, tempProjectID } from "../../../Resources/Constants"
 import { AuthContext } from "../../../Context/AuthProvider";
 import Comment from "../Comment";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+type Inputs = {
+    commentContent: string
+}
 
 function CommentList() {
 
     const [commentList, setCommentList] = useState<CommentData[]>();
-    const user = useContext(AuthContext);
+    const { register, handleSubmit } = useForm<Inputs>();
 
     useEffect(() => {
         const fetchComments = async () => {
@@ -22,8 +27,6 @@ function CommentList() {
         if (!commentList) {
             fetchComments();
         }
-
-        console.log(user);
     }, [commentList])
 
     return (

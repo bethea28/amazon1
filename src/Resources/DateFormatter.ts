@@ -9,7 +9,7 @@ export function getTimeAgo(date: Date) {
     const secondsAgo = Math.round((Date.now() - Number(date)) / 1000);
 
     if (secondsAgo < MINUTE) {
-        return `${secondsAgo} second${Math.floor(secondsAgo / YEAR) > 1 ? "s" : ""} ago`;
+        return `${secondsAgo} second${secondsAgo > 1 ? "s" : ""} ago`;
     }
 
     if (secondsAgo > HOUR) { 
