@@ -12,7 +12,7 @@ class UserService {
      */
     addUser = async (jwt: string, data: object) => {
         try {
-            const response = await axiosInstance.post<User>('/users/', data, {
+            const response = await axiosInstance.post<User>('/users', data, {
                 headers: {
                     'Authorization': `Bearer ${jwt}`,
                     'Content-Type': 'application/json'

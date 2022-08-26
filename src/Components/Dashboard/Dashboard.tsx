@@ -39,7 +39,7 @@ function Dashboard() {
     return (
         <ThemeProvider theme={theme}>
             <Box>
-                {/* <Container>
+                <Container>
                     <SearchBar />
                     <NavigationBar />
                     <Stack>
@@ -56,7 +56,7 @@ function Dashboard() {
                         <Button sx={{ marginX: "10px" }} variant="contained">Start a Project</Button>
                         <Button sx={{ marginX: "10px" }} variant="contained">Fund a Project</Button>
                     </ButtonGroup>
-                </Container> */}
+                </Container>
             </Box>
         </ThemeProvider>
     )

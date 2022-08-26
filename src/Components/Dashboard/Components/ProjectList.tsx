@@ -19,7 +19,7 @@ function ProjectList(props: GetProjectsResponse) {
                     return (
                         <Grid key={idx} container flexWrap={"nowrap"} justifyContent={"space-evenly"}>
                             <Grid item>
-                                <Card sx={{padding: "1em"}} onMouseOver={(e) => e.currentTarget.style.cursor = "pointer"} onClick={() => navigate(`/project/${project.projectId}`)}>
+                                <Card sx={{padding: "1em"}} onMouseOver={(e) => e.currentTarget.style.cursor = "pointer"} onClick={() => navigate(`/projects/${project.projectId}`)}>
                                     <img src="https://picsum.photos/250" alt="thumbnail"/>
                                     <Typography variant="h4">{project.projectName}</Typography>
                                     <Typography padding={"1em"} variant="subtitle1" textAlign={"justify"}>{project.description}</Typography>
