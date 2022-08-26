@@ -3,7 +3,7 @@ import { Milestone, MilestoneStr } from '../../Resources/Constants';
 import { useForm, Controller} from "react-hook-form";
 import { Typography, FormHelperText, ThemeProvider } from '@mui/material';
 import { FormControl, InputLabel, MenuItem, Grid, Paper, makeStyles } from '@material-ui/core';
-import { Stack, TextField, Box } from '@mui/material';
+import { Button, Stack, TextField, Box } from '@mui/material';
 import {MuiPickersUtilsProvider, KeyboardDatePicker}from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns';
 import { UserContext } from './AddMileStonesList';
@@ -13,15 +13,19 @@ export default function AddMilestone() {
 
     const { reset, control, register, handleSubmit,formState: { errors }} = useForm<Milestone>();
 
-    const onChange = (milestoneDate: Milestone) => {
+    const onSubmit = (milestoneDate: Milestone) => {
       milestoneInfo.name = milestoneDate.name;
       milestoneInfo.amount = milestoneDate.amount;
+      console.log(milestoneInfo.targetDate)
       milestoneInfo.targetDate = milestoneDate.targetDate.toLocaleDateString();
+      reset();
       }
+    const onReset = () => {
+      reset();
+    }
   return (
     <Stack>
-       <form onChange={handleSubmit(onChange)}
-       onReset={() => reset()} autoComplete = "off">
+       <form onReset={() => reset()} autoComplete = "off">
        <Grid container>
             <Grid item xs = {4}>
                 <TextField
@@ -69,7 +73,7 @@ export default function AddMilestone() {
                 value={field.value}
                 onChange={(e)=>field.onChange(e)}
                 format="MM/dd/yyyy"
-                defaultValue = {null}
+                //defaultValue = {new Date()}
                 autoOk/>
             </MuiPickersUtilsProvider>
             )}/>
@@ -78,6 +82,21 @@ export default function AddMilestone() {
                 <Typography>Milestone Date</Typography>
             </Grid>
             </Grid>
+          <Grid container>
+          <Grid item xs = {2}>
+          <Button
+            variant='contained'
+            onClick={handleSubmit(onSubmit)}>
+              Save
+          </Button>
+          </Grid>
+          <Grid item xs = {2}>
+          <Button variant="contained" 
+            onClick={handleSubmit(onReset)}>
+            Reset
+          </Button>
+          </Grid>
+          </Grid>
        </form>
     </Stack>
   )

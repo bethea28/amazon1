@@ -33,7 +33,7 @@ export function AddMileStonesList() {
     const classes = useStyles();
     const { handleSubmit } = useForm<ProjectFormInput>();
     const [milestones, setMilestones] = useState<MilestoneStr[]>([]);
-    
+
     let milestone1: MilestoneStr = {
       name: '',
       amount: 0,
@@ -57,7 +57,8 @@ export function AddMileStonesList() {
       console.log(data)
       try{
       await updateData(projectId, data);
-      alert('You have submitted');
+      alert('You have create milestones successfuly');
+      window.location.reload();
       }
       catch(error) {
         console.log(error)
@@ -65,7 +66,7 @@ export function AddMileStonesList() {
   }
     return (
       <form onSubmit={handleSubmit(onsubmit)}>
-        <Typography>Milestones</Typography>
+        <Typography>Please Define Milestones</Typography>
         <Box sx={{ width: '100%' }}>
           {milestones.map((milestone, index) => {
             return (
