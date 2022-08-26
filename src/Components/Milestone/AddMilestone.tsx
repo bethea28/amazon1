@@ -3,10 +3,10 @@ import { Milestone, MilestoneStr } from '../../Resources/Constants';
 import { useForm, Controller} from "react-hook-form";
 import { Typography, FormHelperText, ThemeProvider } from '@mui/material';
 import { FormControl, InputLabel, MenuItem, Grid, Paper, makeStyles } from '@material-ui/core';
-import { Button, Stack, TextField, Box } from '@mui/material';
+import { Stack, TextField, Box } from '@mui/material';
 import {MuiPickersUtilsProvider, KeyboardDatePicker}from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns';
-import { AddMileStonesList, UserContext } from './AddMileStonesList';
+import { UserContext } from './AddMileStonesList';
 export default function AddMilestone() {
 
     const milestoneInfo = useContext<MilestoneStr>(UserContext);

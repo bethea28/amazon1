@@ -77,19 +77,6 @@ export interface MilestoneStr {
   amount: number;
   targetDate: string;
 }
-export type MilestoneSet = {
-  name: string;
-  amount: number;
-  targetDate: Date;
-  setMileStoneData: Dispatch <SetStateAction<MilestoneSet>>;
-}
-export const milestoneInit: MilestoneSet = {
-  name: '',
-  amount: 0,
-  targetDate: new Date(),
-  setMileStoneData: (): void => {},
-};
-
 
 export type User = {
   userId: string,
