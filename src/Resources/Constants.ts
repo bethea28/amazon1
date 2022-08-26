@@ -4,7 +4,7 @@ export const interests = ["music", "art", "food", "cars", "wildlife", "pets", "t
 export const tempUserID = "de3caccd-fa2c-4cd0-a1bc-c9a313a09a75";
 export const axiosInstance = axios.create({
     baseURL: "http://localhost:8080",
-    timeout: 1000,
+    timeout: 20000,
     headers: {
         "Access-Control-Allow-Origin": "*",
         //"Authorization": `Bearer ${jwt}`, //(commented out until api token is determined)

@@ -33,7 +33,7 @@ export default function ProjectDetails() {
       ) => {
         event.currentTarget.src = "../../Resources/Default_Image_Thumbnail.png";
         event.currentTarget.className = "error";
-      };
+      }
 
     if (!currentProject) {
         return null;
@@ -61,7 +61,7 @@ export default function ProjectDetails() {
                                 width="800"
                                 image={photoURLs[0]}
                                 onError={imageOnErrorHandler}
-                                alt="Pot of plants"
+                                alt="Project photo"
                             />
                             <CardContent>
                                 <Typography variant="h1" m={1}>
@@ -84,7 +84,7 @@ export default function ProjectDetails() {
                                 {description}
                                 </Typography>
                                 <ImageList sx={{ width: 500, height: 164 }} cols={3} rowHeight={164}>
-                                {photoURLs.map((url) => (
+                                {photoURLs.slice(1).map((url) => (
                                     <ImageListItem key={url}>
                                     <img
                                         src={`${url}?w=164&h=164&fit=crop&auto=format`}
