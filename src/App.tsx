@@ -19,7 +19,6 @@ import Layout from './Services/Authentication/Layout';
 import PersistLogin from './Services/Authentication/PersistLogin';
 import ProjectDetails from './Components/Project/ProjectDetails';
 import UploadPhotos from './Components/Project/UploadPhotos';
-import UploadGalleryPhotos from './Components/Project/Components/UploadGalleryPhotos';
 
 function App() {
 
@@ -53,7 +52,6 @@ function App() {
                       <Route path="/interests" element={<InterestSelection />} />
                       <Route path="/projects/:id" element={<ProjectDetails />} />
                       <Route path="/myprojects/:id" element={<UploadPhotos />} />
-                      <Route path="/myprojectsgallery/:id" element={<UploadGalleryPhotos />} />
                     </Route>
                   </Route>
             </Route>

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Project } from "../../Resources/Constants";
 import { theme } from "../../Resources/GlobalTheme";
-import { deletePhoto, getProjectDetails, uploadCoverPhoto, uploadPhoto } from "../../Services/ProjectService";
+import { deletePhoto, getProjectDetails, uploadPhoto } from "../../Services/ProjectService";
 import UploadGalleryPhotos from "./Components/UploadGalleryPhotos";
 
 export default function UploadPhotos() {
@@ -34,7 +34,7 @@ export default function UploadPhotos() {
     const handleCoverUpload = (e: React.MouseEvent<HTMLElement>) => {
         let bodyFormData = new FormData();
         bodyFormData.append('file', file);
-        uploadCoverPhoto(id!, bodyFormData).then(
+        uploadPhoto(id!, bodyFormData, true).then(
             (value) => {
                 setCoverPhoto(photoURLs[0]);
             },

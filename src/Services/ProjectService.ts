@@ -55,34 +55,17 @@ export async function getProjectDetails(id: string) {
     }
 }
 
-export async function uploadPhoto(id: string, file: FormData) {
+export async function uploadPhoto(id: string, file: FormData, isCoverPhoto: boolean) {
+
+
     try {
         const res = await Auth.currentSession()
         let jwt = res.getAccessToken().getJwtToken(); 
         const response = await axiosInstance.post(`/projects/${id}/photos`, file, {
           headers: {
               'Authorization': `Bearer ${jwt}`,
-          }
-      });
-    
-        if (response.status === 200) {
-          alert('Upload successful!');
-        }
-    
-      } catch(error) {
-          console.log(error);
-          alert('Upload failed! Please try again.')
-        }
-}
-
-export async function uploadCoverPhoto(id: string, file: FormData) {
-    try {
-        const res = await Auth.currentSession()
-        let jwt = res.getAccessToken().getJwtToken(); 
-        const response = await axiosInstance.post(`/projects/${id}/coverphoto`, file, {
-          headers: {
-              'Authorization': `Bearer ${jwt}`,
-          }
+          },
+          params: { isCoverPhoto: isCoverPhoto }
       });
     
         if (response.status === 200) {

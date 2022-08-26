@@ -3,7 +3,7 @@ import { photoPickerButton } from "aws-amplify";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Project } from "../../../Resources/Constants";
-import { deletePhoto, getProjectDetails, uploadCoverPhoto, uploadPhoto } from "../../../Services/ProjectService";
+import { deletePhoto, getProjectDetails, uploadPhoto } from "../../../Services/ProjectService";
 
 export default function UploadGalleryPhotos() {
 
@@ -31,40 +31,18 @@ export default function UploadGalleryPhotos() {
         setFile(e.target.files[0]);
     }
 
-    const handleGalleryUploadOne = (e: React.MouseEvent<HTMLElement>) => {
+    const handleGalleryUpload = (e: React.MouseEvent<HTMLElement>) => {
         let bodyFormData = new FormData();
         bodyFormData.append('file', file);
-        uploadPhoto(id!, bodyFormData).then(
+        uploadPhoto(id!, bodyFormData, false).then(
             (value) => {
                 setFirstGalleryPhoto(photoURLs[1]);
-            },
-            (reason) => {
-                setFirstGalleryPhoto(noPhoto);
-            }
-        );
-    }
-
-    const handleGalleryUploadTwo = (e: React.MouseEvent<HTMLElement>) => {
-        let bodyFormData = new FormData();
-        bodyFormData.append('file', file);
-        uploadPhoto(id!, bodyFormData).then(
-            (value) => {
                 setSecondGalleryPhoto(photoURLs[2]);
-            },
-            (reason) => {
-                setSecondGalleryPhoto(noPhoto);
-            }
-        );
-    }
-
-    const handleGalleryUploadThree = (e: React.MouseEvent<HTMLElement>) => {
-        let bodyFormData = new FormData();
-        bodyFormData.append('file', file);
-        uploadPhoto(id!, bodyFormData).then(
-            (value) => {
                 setThirdGalleryPhoto(photoURLs[3]);
             },
             (reason) => {
+                setFirstGalleryPhoto(noPhoto);
+                setSecondGalleryPhoto(noPhoto);
                 setThirdGalleryPhoto(noPhoto);
             }
         );
@@ -143,57 +121,7 @@ export default function UploadGalleryPhotos() {
                         sx={{ margin: 1, backgroundColor:"#A6BBA7", color:"#000000", mt:1, height: 50 }}
                         variant="contained" 
                         component="span"
-                        onClick={handleGalleryUploadOne}
-                    >Upload</Button>
-                </Box>
-            </Grid>
-            <Grid xs={12}>
-                <Box sx={{ display: 'flex', margin: 2, justifyContent: 'center' }}>
-                    <TextField
-                        fullWidth
-                        id="outlined-full-width"
-                        label="Photo Gallery Upload"
-                        style={{ margin: 8 }}
-                        name="upload-photo"
-                        type="file"
-                        margin="normal"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        variant="outlined"
-                        onChange={handleChange}
-                    />
-                    <Button 
-                        className="uploadPhoto"
-                        sx={{ margin: 1, backgroundColor:"#A6BBA7", color:"#000000", mt:1, height: 50 }}
-                        variant="contained" 
-                        component="span"
-                        onClick={handleGalleryUploadTwo}
-                    >Upload</Button>
-                </Box>
-            </Grid>
-            <Grid xs={12}>
-                <Box sx={{ display: 'flex', margin: 2, justifyContent: 'center' }}>
-                    <TextField
-                        fullWidth
-                        id="outlined-full-width"
-                        label="Photo Gallery Upload"
-                        style={{ margin: 8 }}
-                        name="upload-photo"
-                        type="file"
-                        margin="normal"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        variant="outlined"
-                        onChange={handleChange}
-                    />
-                    <Button 
-                        className="uploadPhoto"
-                        sx={{ margin: 1, backgroundColor:"#A6BBA7", color:"#000000", mt:1, height: 50 }}
-                        variant="contained" 
-                        component="span"
-                        onClick={handleGalleryUploadThree}
+                        onClick={handleGalleryUpload}
                     >Upload</Button>
                 </Box>
             </Grid>
@@ -204,8 +132,8 @@ export default function UploadGalleryPhotos() {
                 <Card sx={{ maxWidth: 300 }}>
                     <CardMedia
                         component="img"
-                        height="500"
-                        width="300"
+                        height="200"
+                        width="200"
                         image={firstGalleryPhoto || photoURLs[1]}
                         onError={imageOnErrorHandler}
                         alt="Project photo"
@@ -226,8 +154,8 @@ export default function UploadGalleryPhotos() {
                 <Card sx={{ maxWidth: 300 }}>
                     <CardMedia
                         component="img"
-                        height="500"
-                        width="300"
+                        height="200"
+                        width="200"
                         image={secondGalleryPhoto || photoURLs[2]}
                         onError={imageOnErrorHandler}
                         alt="Project photo"
@@ -248,8 +176,8 @@ export default function UploadGalleryPhotos() {
                 <Card sx={{ maxWidth: 300 }}>
                     <CardMedia
                         component="img"
-                        height="500"
-                        width="300"
+                        height="200"
+                        width="200"
                         image={thirdGalleryPhoto || photoURLs[3]}
                         onError={imageOnErrorHandler}
                         alt="Project photo"

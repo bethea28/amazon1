@@ -58,7 +58,7 @@ export default function ProjectDetails() {
                             <CardMedia
                                 component="img"
                                 height="500"
-                                width="1000"
+                                width="800"
                                 image={photoURLs[0]}
                                 onError={imageOnErrorHandler}
                                 alt="Project photo"
