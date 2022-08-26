@@ -211,7 +211,6 @@ export default function UploadGalleryPhotos() {
                         alt="Project photo"
                     />
                     <CardContent>
-                        Filename
                         <Button className="deletePhoto"
                             sx={{ margin: 1, backgroundColor:"#FFF", mt:1, height: 25 }}
                             variant="contained" 
@@ -234,7 +233,6 @@ export default function UploadGalleryPhotos() {
                         alt="Project photo"
                     />
                     <CardContent>
-                        Filename
                         <Button className="deletePhoto"
                             sx={{ margin: 1, backgroundColor:"#FFF", mt:1, height: 25 }}
                             variant="contained" 
@@ -257,7 +255,6 @@ export default function UploadGalleryPhotos() {
                         alt="Project photo"
                     />
                     <CardContent>
-                        Filename
                         <Button className="deletePhoto"
                             sx={{ margin: 1, backgroundColor:"#FFF", mt:1, height: 25 }}
                             variant="contained" 

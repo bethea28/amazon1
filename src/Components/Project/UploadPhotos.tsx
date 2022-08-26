@@ -1,8 +1,9 @@
-import { Box, Button, Card, CardContent, CardMedia, Grid, TextField, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, CardMedia, Grid, TextField, ThemeProvider, Typography } from "@mui/material";
 import { photoPickerButton } from "aws-amplify";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Project } from "../../Resources/Constants";
+import { theme } from "../../Resources/GlobalTheme";
 import { deletePhoto, getProjectDetails, uploadCoverPhoto, uploadPhoto } from "../../Services/ProjectService";
 import UploadGalleryPhotos from "./Components/UploadGalleryPhotos";
 
@@ -67,61 +68,62 @@ export default function UploadPhotos() {
     }
 
     return(
-        <Box sx={{ display: 'flex', border: 0, flexGrow: 1, flexDirection: 'column', margin: 2, padding: 3, justifyContent: 'center' }}>
-            <Grid container spacing={2} sx={{ justifyContent: 'center', boxShadow: 3, margin: 2, padding: 3 }}>
-            <Grid xs={12}>
-                <Box sx={{ textAlign: 'left', margin: 2 }}><Typography variant="h5" m={1}>Upload a cover photo: </Typography></Box>
-                <Box sx={{ display: 'flex', margin: 2, justifyContent: 'center' }}>
-                    <TextField
-                        fullWidth
-                        id="outlined-full-width"
-                        label="Cover Photo Upload"
-                        style={{ margin: 8 }}
-                        name="upload-photo"
-                        type="file"
-                        margin="normal"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        variant="outlined"
-                        onChange={handleChange}
-                    />
-                    <Button 
-                        className="uploadPhoto"
-                        sx={{ margin: 1, backgroundColor:"#A6BBA7", color:"#000000", mt:1, height: 50 }}
-                        variant="contained" 
-                        component="span"
-                        onClick={handleCoverUpload}
-                    >Upload</Button>
-                </Box>
-            </Grid>
-            
-            <Grid xs={5}>
-                <Typography variant="h6" m={1}>Cover Photo: </Typography>
-            </Grid>
-            <Grid xs={7}>
-                <Card sx={{ maxWidth: 800 }}>
-                    <CardMedia
-                        component="img"
-                        height="500"
-                        width="800"
-                        image={coverPhoto || photoURLs[0]}
-                        onError={imageOnErrorHandler}
-                        alt="Project photo"
-                    />
-                    <CardContent>
-                        Filename
-                        <Button className="deletePhoto"
-                            sx={{ margin: 1, backgroundColor:"#FFF", mt:1, height: 25 }}
-                            variant="contained" 
-                            component="span"
-                            onClick={handleDeleteCover}
-                        >Delete</Button>
-                    </CardContent>
-                </Card>
-            </Grid>
-        </Grid>
-        <UploadGalleryPhotos />
-  </Box>
+        <ThemeProvider theme={theme}>
+            <Box sx={{ display: 'flex', border: 0, flexGrow: 1, flexDirection: 'column', margin: 2, padding: 3, justifyContent: 'center' }}>
+                <Grid container spacing={2} sx={{ justifyContent: 'center', boxShadow: 3, margin: 2, padding: 3 }}>
+                    <Grid xs={12}>
+                        <Box sx={{ textAlign: 'left', margin: 2 }}><Typography variant="h5" m={1}>Upload a cover photo: </Typography></Box>
+                        <Box sx={{ display: 'flex', margin: 2, justifyContent: 'center' }}>
+                            <TextField
+                                fullWidth
+                                id="outlined-full-width"
+                                label="Cover Photo Upload"
+                                style={{ margin: 8 }}
+                                name="upload-photo"
+                                type="file"
+                                margin="normal"
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                variant="outlined"
+                                onChange={handleChange}
+                            />
+                            <Button 
+                                className="uploadPhoto"
+                                sx={{ margin: 1, backgroundColor:"#A6BBA7", color:"#000000", mt:1, height: 50 }}
+                                variant="contained" 
+                                component="span"
+                                onClick={handleCoverUpload}
+                            >Upload</Button>
+                        </Box>
+                    </Grid>
+                    
+                    <Grid xs={5}>
+                        <Typography variant="h6" m={1}>Cover Photo: </Typography>
+                    </Grid>
+                    <Grid xs={7}>
+                        <Card sx={{ maxWidth: 800 }}>
+                            <CardMedia
+                                component="img"
+                                height="500"
+                                width="800"
+                                image={coverPhoto || photoURLs[0]}
+                                onError={imageOnErrorHandler}
+                                alt="Project photo"
+                            />
+                            <CardContent>
+                                <Button className="deletePhoto"
+                                    sx={{ margin: 1, backgroundColor:"#FFF", mt:1, height: 25 }}
+                                    variant="contained" 
+                                    component="span"
+                                    onClick={handleDeleteCover}
+                                >Delete</Button>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                </Grid>
+            <UploadGalleryPhotos />
+            </Box>
+        </ThemeProvider>
   )    
 }
