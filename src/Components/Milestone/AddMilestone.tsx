@@ -1,5 +1,5 @@
 import React,{createContext,useContext} from 'react'
-import { Milestone } from '../../Resources/Constants';
+import { Milestone, MilestoneStr } from '../../Resources/Constants';
 import { useForm, Controller} from "react-hook-form";
 import { Typography, FormHelperText, ThemeProvider } from '@mui/material';
 import { FormControl, InputLabel, MenuItem, Grid, Paper, makeStyles } from '@material-ui/core';
@@ -9,14 +9,14 @@ import DateFnsUtils from '@date-io/date-fns';
 import { AddMileStonesList, UserContext } from './AddMileStonesList';
 export default function AddMilestone() {
 
-    const milestoneInfo = useContext<Milestone>(UserContext);
+    const milestoneInfo = useContext<MilestoneStr>(UserContext);
 
     const { reset, control, register, handleSubmit,formState: { errors }} = useForm<Milestone>();
 
     const onChange = (milestoneDate: Milestone) => {
       milestoneInfo.name = milestoneDate.name;
       milestoneInfo.amount = milestoneDate.amount;
-      milestoneInfo.targetDate = milestoneDate.targetDate;
+      milestoneInfo.targetDate = milestoneDate.targetDate.toLocaleDateString();
       }
   return (
     <Stack>

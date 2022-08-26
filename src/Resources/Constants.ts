@@ -5,7 +5,7 @@ export const interests = ["music", "art", "food", "cars", "wildlife", "pets", "t
 export const tempUserID = "de3caccd-fa2c-4cd0-a1bc-c9a313a09a75";
 export const axiosInstance = axios.create({
     baseURL: "http://localhost:8080",
-    timeout: 1000,
+    timeout: 20000,
     headers: {
         "Access-Control-Allow-Origin": "*",
         //"Authorization": `Bearer ${jwt}`, //(commented out until api token is determined)
@@ -58,18 +58,24 @@ export interface MilestoneFormInput{
 
 }
 export interface ProjectFormInput {
+  projectId: string,
   projectName: string;
   targetFundingNum: number;
   targetFundingDate: Date;
   description: string;
   categories: string;
-  milestones: Milestone[];
+  milestones: MilestoneStr[];
   
 }
 export interface Milestone {
   name: string;
   amount: number;
   targetDate: Date;
+}
+export interface MilestoneStr {
+  name: string;
+  amount: number;
+  targetDate: string;
 }
 export type MilestoneSet = {
   name: string;

@@ -1,6 +1,6 @@
 import React,{useState, useEffect,createContext,useContext} from 'react';
 import { useForm } from "react-hook-form";
-import { Milestone, ProjectFormInput,milestoneInit } from '../../Resources/Constants'
+import { Milestone, ProjectFormInput,milestoneInit, MilestoneStr } from '../../Resources/Constants'
 import { makeStyles, ExpansionPanel, ExpansionPanelSummary,
      Typography, ExpansionPanelDetails, Paper, Grid } from '@material-ui/core';
 //import ExpandMoreIcon from "@material-ui/icons";
@@ -11,13 +11,13 @@ import { DatePicker } from '@material-ui/pickers';
 import { updateData } from '../../Services/AddProjectService';
 import AddMilestone from './AddMilestone';
 
-export const UserContext = createContext<Milestone>({
+export const UserContext = createContext<MilestoneStr>({
   name: '',
   amount: 0,
-  targetDate: new Date()
+  targetDate:''
 });
 
-const projectId = "da2731b3-97e2-4f7c-989e-2ef3751f9424";
+const projectId = "596146d3-af2a-4efe-8e0f-a29a73d22d68";
 const useStyles = makeStyles(theme => ({
     formControl: {
       margin: theme.spacing(1),
@@ -34,13 +34,13 @@ export function AddMileStonesList() {
     const classes = useStyles();
     const { handleSubmit } = useForm<ProjectFormInput>();
 
-    const [milestones, setMilestones] = useState<Milestone[]>([]);
+    const [milestones, setMilestones] = useState<MilestoneStr[]>([]);
     const [milestone, setMilestone] = useState<Milestone>();
     const [sd, setSd] = useState(0);
-    let milestone1: Milestone = {
+    let milestone1: MilestoneStr = {
       name: '',
       amount: 0,
-      targetDate: new Date()
+      targetDate: ''
     }
 
     const addMilestones = () => {
@@ -60,13 +60,20 @@ export function AddMileStonesList() {
         setMilestone(event.target.value)
         
     }
-    console.log("milestone", milestones);
+    //console.log("milestone", milestones);
     
     const onsubmit = async (data: ProjectFormInput) => {
-      alert('You have submitted');
+      
+      data.projectId = projectId;
       data.milestones = milestones;
       console.log(data)
-      return await updateData(projectId, data);
+      try{
+      await updateData(projectId, data);
+      alert('You have submitted');
+      }
+      catch(error) {
+        console.log(error)
+      }
   }
     return (
       

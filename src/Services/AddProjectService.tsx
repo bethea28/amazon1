@@ -15,7 +15,7 @@ export const postData = async (state:any) => {
 export const updateData = async (projectId: string, state: ProjectFormInput) => {
     const res = await Auth.currentSession()
     let jwt = res.getAccessToken().getJwtToken();
-    return axiosInstance.put(`/projects/${projectId}`, state, {
+    return axiosInstance.patch<any>(`/projects/${projectId}`, state, {
         headers: {
             'Authorization': `Bearer ${jwt}`,
             'Content-Type': 'application/json'
