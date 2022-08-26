@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{createContext,useContext} from 'react'
 import { Milestone } from '../../Resources/Constants';
 import { useForm, Controller} from "react-hook-form";
 import { Typography, FormHelperText, ThemeProvider } from '@mui/material';
@@ -6,25 +6,21 @@ import { FormControl, InputLabel, MenuItem, Grid, Paper, makeStyles } from '@mat
 import { Button, Stack, TextField, Box } from '@mui/material';
 import {MuiPickersUtilsProvider, KeyboardDatePicker}from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns';
+import { AddMileStonesList, UserContext } from './AddMileStonesList';
 export default function AddMilestone() {
+
+    const milestoneInfo = useContext<Milestone>(UserContext);
+
     const { reset, control, register, handleSubmit,formState: { errors }} = useForm<Milestone>();
 
-    const onSubmit = (milestoneDate: Milestone) => {
-
-      const{name, amount,targetDate} = milestoneDate
-
-      let state = {
-          name,
-          amount,
-          targetDate
+    const onChange = (milestoneDate: Milestone) => {
+      milestoneInfo.name = milestoneDate.name;
+      milestoneInfo.amount = milestoneDate.amount;
+      milestoneInfo.targetDate = milestoneDate.targetDate;
       }
-      console.log("state",state)
-      
-  
-  }
   return (
     <Stack>
-       <form onSubmit={handleSubmit(onSubmit)}
+       <form onChange={handleSubmit(onChange)}
        onReset={() => reset()} autoComplete = "off">
        <Grid container>
             <Grid item xs = {4}>
@@ -82,7 +78,6 @@ export default function AddMilestone() {
                 <Typography>Milestone Date</Typography>
             </Grid>
             </Grid>
-
        </form>
     </Stack>
   )

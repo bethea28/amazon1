@@ -1,4 +1,5 @@
 import axios from "axios";
+import{Dispatch, SetStateAction} from "react";
 
 export const interests = ["music", "art", "food", "cars", "wildlife", "pets", "technology", "literature", "healthcare", "finance", "sports", "politics", "entertainment"]
 export const tempUserID = "de3caccd-fa2c-4cd0-a1bc-c9a313a09a75";
@@ -46,11 +47,11 @@ export class Transaction {
     }
 }
 
-export interface Milestone {
-  name: string;
-  amount: number;
-  targetDate: Date;
-}
+// export interface Milestone {
+//   name: string;
+//   amount: number;
+//   targetDate: Date;
+// }
 export interface MilestoneFormInput{
   projectId: string;
   milestones: Milestone[];
@@ -65,6 +66,23 @@ export interface ProjectFormInput {
   milestones: Milestone[];
   
 }
+export interface Milestone {
+  name: string;
+  amount: number;
+  targetDate: Date;
+}
+export type MilestoneSet = {
+  name: string;
+  amount: number;
+  targetDate: Date;
+  setMileStoneData: Dispatch <SetStateAction<MilestoneSet>>;
+}
+export const milestoneInit: MilestoneSet = {
+  name: '',
+  amount: 0,
+  targetDate: new Date(),
+  setMileStoneData: (): void => {},
+};
 
 
 export type User = {
