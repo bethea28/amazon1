@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import SendIcon from '@mui/icons-material/Send';
 import { AuthContext } from "../../../Context/AuthProvider";
-import { User } from "../../../Resources/Constants";
+import { CommentData, User } from "../../../Resources/Constants";
 import UserService from "../../../Services/UserService";
 import { useParams } from "react-router-dom";
 import { postComment } from "../../../Services/CommentService";
@@ -12,7 +12,11 @@ type Inputs = {
     commentContent: string
 }
 
-function CommentField() {
+type Props = {
+    updateList: (comment: CommentData) => void;
+}
+
+function CommentField(props: Props) {
 
     const [comment, setComment] = useState<string>();
     const [userAvatar, setUserAvatar] = useState<string>();
@@ -26,19 +30,17 @@ function CommentField() {
             const { avatarURL }: User = await UserService.getUser(currentUser.id) as User;
             setUserAvatar(avatarURL);
         }
-        console.log("UseEffect fired")
-
         getUserAvatar();
     }, [userAvatar])
 
     const submitComment: SubmitHandler<Inputs> = async (data) => {
-        console.log(data.commentContent);
-        postComment({
+        const post = await postComment({
             content: data.commentContent,
             userId: currentUser.id,
             projectId: id!
         }, currentUser.token)
         setComment("");
+        props.updateList(post!)
     };
 
     return (

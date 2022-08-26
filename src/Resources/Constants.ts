@@ -66,7 +66,8 @@ export type CommentData = {
   content: string,
   userId: string,
   projectId: string,
-  createdAt?: string
+  createdAt?: string,
+  updatedAt?: string
 }
 
 export const profileBackgroundImageBox = {
