@@ -10,13 +10,13 @@ export const theme = responsiveFontSizes(createTheme({
         },
     },
     typography: {
-        fontFamily: 'Poppins',
+        // fontFamily: 'Poppins',
     },
     components: {
         MuiTypography: {
             defaultProps: {
-                fontFamily: "monospace",
-                fontWeight: 600
+                // fontFamily: "monospace",
+                // fontWeight: 600
             }
         }
     }

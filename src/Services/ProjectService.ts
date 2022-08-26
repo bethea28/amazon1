@@ -22,17 +22,14 @@ export async function getRecommendedProjects(categories: string) {
 export async function getNewestProjects() {
 
     try {
-        // const res = await Auth.currentSession()
-        // let jwt = res.getAccessToken().getJwtToken(); 
         const { data } = await axiosInstance.get<Project[]>("/projects/recent", {
             headers: {
-                // 'Authorization': `Bearer ${jwt}`,
                 'Content-Type': 'application/json'
             }
         })
         return data;
     } catch (error) {
-        console.log(error);
+        console.log(error)
     }
 }
 
@@ -48,3 +45,39 @@ export async function getProjectDetails(id: string) {
         console.log(error);
     }
 }
+
+export async function getLikedProjects(userId: string) {
+  try {
+      const res = await Auth.currentSession()
+        let jwt = res.getAccessToken().getJwtToken(); 
+      const { data } = await axiosInstance.get<Project[]>('/likes/users', {
+          headers: {
+            'Authorization': `Bearer ${jwt}`,
+            'Content-Type': 'application/json'
+          },
+          params: { id: `${userId}` } 
+      })
+      return data;
+  } catch (error) {
+      console.log(error)
+  }
+}
+
+export async function getMyProjects(userId: string) {
+  try {
+      const res = await Auth.currentSession()
+      let jwt = res.getAccessToken().getJwtToken();
+      const { data } = await axiosInstance.get<Project[]>('/projects/userprojects',
+      {
+          headers: {
+            'Authorization': `Bearer ${jwt}`,
+            'Content-Type': 'application/json'
+          },
+          params: { userId: `${userId}` }    
+      })
+      return data;
+  } catch (error) {
+      console.log(error)
+  }
+}
+

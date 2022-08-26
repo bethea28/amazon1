@@ -20,14 +20,13 @@ class UserService{
       })
       return response.data
     }catch (error){
-      return error
+      console.log(error)
     }
   }
 
   /**
    * Get user data
    * @params userId The current user's id
-   * @params jwt    The jwt token
    */
    getUser = async (userId: string) => {
      try {
@@ -38,7 +37,7 @@ class UserService{
       })
       return response.data
     } catch (error) {
-      return error
+      //console.log(error)
     }
   }
 
@@ -61,7 +60,7 @@ class UserService{
 
       return response.data
     }catch (error) {
-      return error
+      console.log(error)
     }
   }
 }

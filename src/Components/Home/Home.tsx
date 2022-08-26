@@ -6,25 +6,22 @@ import { useState, useEffect } from "react";
 import { Project, initialProjectData } from "../../Resources/Constants";
 import { getRecommendedProjects, getNewestProjects } from "../../Services/ProjectService";
 import Dashboard from "../Dashboard/Dashboard";
+import NavigationBar from "../Dashboard/Components/NavigationBar";
+import CarouselSection from "./CarouselSection";
 
 const Home = () => {
   const [recent, setRecent] = useState<Project[]>([initialProjectData]);
   const [recommended, setRecommended] = useState<Project[]>();
 
   useEffect(() => {
-    const fetchRecommended = async () => {
-        const response = await getRecommendedProjects('["art", "pet", "food"]')
-        setRecommended(response);
-    }
+    // const fetchRecommended = async () => {
+    //     const response = await getRecommendedProjects('["art", "pet", "food"]')
+    //     setRecommended(response);
+    // }
 
     const fetchNewest = async () => {
         const response = await getNewestProjects();
-        console.log("recent: ", recent)
         setRecent(response!);
-    }
-
-    if (!recommended) {
-        fetchRecommended();
     }
 
     if (!recent) {
@@ -65,9 +62,8 @@ const Home = () => {
           alignContent: 'center',
           mb: 4,
           mt: 2,
-          // width: 'fit-content',
-          width: 400,
-          height: 50,
+          height: 120,
+          width: 900,
           border: (theme) => `1px solid ${theme.palette.divider}`,
           borderRadius: 1,
           bgcolor: 'background.paper',
@@ -80,17 +76,32 @@ const Home = () => {
           },
         }}
       >
-        {/* <FormatAlignLeftIcon /> */}
-        # Projects funded
+        <Grid container justifyContent={'space-evenly'}>
+        <Grid item>
+          <Typography variant="h4" color={'#335436'}>
+            200,000
+          </Typography>
+          <Typography>
+         Projects funded
+         </Typography>
+        </Grid>
         <Divider orientation="vertical" flexItem />
-        {/* <FormatBoldIcon /> */}
-        $ towards creative work
+        <Grid item>
+          <Typography variant="h4" color={'#335436'}>
+            3,856,297
+          </Typography>
+          <Typography>
+          towards creative work
+         </Typography>
+        </Grid>
+        </Grid>
+
       </Paper>
       </Box>
       </Box>
-      {/* <Dashboard/> */}
-      {/* <Caro {...recent}/> */}
-      <Caro {...recent}/>
+      <Box sx={{mb:10, borderColor:'pink'}}>
+      {<CarouselSection {...recent}/>}
+      </Box>
       </Box>
     </>
   )

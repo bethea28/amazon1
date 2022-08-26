@@ -1,10 +1,13 @@
-import * as React from 'react';
+import React, { useState, useEffect } from "react"
 import { ButtonGroupProps, ArrowProps, DotProps } from 'react-multi-carousel/lib/types';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import { Project, GetProjectsResponse } from '../../Resources/Constants'
-import { Card, CardMedia, CardContent, Typography, CardActions, Button } from '@mui/material';
+import { Project, GetProjectsResponse, User } from '../../Resources/Constants'
+import { Card, CardMedia, CardContent, Typography, CardActions, Button, Box } from '@mui/material';
 import ProjectList from '../Dashboard/Components/ProjectList';
+import { useNavigate } from 'react-router-dom';
+import ViewProfile from '../UserProfile/ViewProfile';
+import UserService from '../../Services/UserService';
 
 interface CustomLeftArrowProps extends ArrowProps {
   myOwnStuff: string;
@@ -17,12 +20,29 @@ interface CarouselButtonGroupProps extends ButtonGroupProps {
   className?: string;
 }
 // export default function Caro(projects:GetProjectsResponse){
-  export default function Caro(projects:Project[]){
-    console.log("projects: ", projects)
-    // if(projects[5].photoURLs)
-    // {const proj = projects[5];
-    //   console.log("proj: ", proj)
-    // }
+  export default function Caro(projects:Project[], isPrivate:boolean){
+  
+    const navigate = useNavigate();
+    const styles = {
+      Card: {
+        width: 300,
+        margin: 'auto'
+      },
+      media: {
+        // height: '50%',
+        // width: '100%'
+        // height: 200,
+        // width: 200,
+        // paddingTop: '56.25%', // 16:9,
+        // marginTop:'30'
+      }
+  };
+
+  const NavigateTo = (page:string) => {
+    // const pageLink = "/projects/"+page
+    // navigate(pageLink)
+    navigate('')
+  }
   const responsive = { 
     superLargeDesktop: {
     breakpoint: { max: 4000, min: 3000 },
@@ -56,19 +76,30 @@ interface CarouselButtonGroupProps extends ButtonGroupProps {
     return <div onClick={() => onClick }>This is a Custom dots</div>
   }
 
-  const getPhotoUrl = (photoUrl:string) => {
-    console.log('photoUrl: ', photoUrl)
+  const getPhotoUrl = (photoUrl:string[]) => {
     if(photoUrl){
-      console.log("not empty")
-      return photoUrl
+      return photoUrl[0]
     }
-    console.log("is empty")
     return 'https://picsum.photos/200/300';
   }
 
-  //const photo = 'https://amz1projectphotos.s3.amazonaws.com/f6ecfc49-01bb-4d8c-bfab-454b2c820521_pexels-photo-7418632.jpeg';
-  const photo = 'https://picsum.photos/200/300';
+  const fetchUserData = async (userId:string) => {
+    if(projects){
+    try{
+      const response = await UserService.getUser(userId) as User;
 
+      const name = response.firstName + " " + response.lastName;
+      return name;
+    }catch (err)
+    {
+      console.log(err)
+    }}
+  }
+  if(!projects)
+  {
+    return null
+  }
+  
   return(
     <>
     <Carousel
@@ -124,36 +155,58 @@ interface CarouselButtonGroupProps extends ButtonGroupProps {
     slidesToSlide={1}
     swipeable
   >
-    { Object.keys(projects).map((project, idx) =>
-    <Card key={idx} sx={{ maxWidth: 345 }}>
+    {
+    Object.keys(projects).map((project, idx) =>
+    <Card key={project} sx={{ maxWidth: 345, width: 400, height: 450, margin:'auto' }}
+    // onClick=() => {NavigateTo('whereTo')}
+    onClick={() => NavigateTo(projects[idx].projectId)}
+    >
       <CardMedia
         component="img"
-        height="140"
-        // image={getPhotoUrl(projects[idx].photoURLs[0])}
-        image={photo}
+        height="200"
+        //image={getPhotoUrl(projects[5].photoURLs[0])}
+        image={getPhotoUrl(projects[idx].photoURLs)}
+        // onError={imageOnErrorHandler}
+        //image={photo}
         alt="green iguana"
+        style={styles.media}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {projects[idx].projectName}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
+        {projects[idx].description}
+        {projects[idx].userId}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+        {/* <Button size="small">Share</Button>
+        <Button size="small">Learn More</Button> */}
+        <Typography
+        variant="h6"
+        noWrap
+        component="a"
+        sx={{textDecoration:'underline' }}>
+          {/* {() => {
+            const response = UserService.getUser(projects[idx].userId)
+            const {firstName, lastName} = response as Partial<User>;
+            return firstName! + lastName!;
+              }} */}
+               By: 
+      </Typography>  
+      <Box>
+        {/* {fetchUserData('k')} */}
+      </Box>
+      {/* {fetchUserData(projects[idx].userId)} */}
+        {/* <ViewProfile userId={projects[idx].userId}/> */}
       </CardActions>
     </Card>)}
-    {/* <WithStyles
-      description="Appending currency sign to a purchase form in your e-commerce site using plain JavaScript."
-      headline="w3js.com - web front-end studio"
-      image="https://images.unsplash.com/photo-1549989476-69a92fa57c36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
-    /> */}
     
 </Carousel>
+<Box sx = {{my:4}}>
+  {}
+</Box>
 </>
   )
 

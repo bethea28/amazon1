@@ -15,7 +15,9 @@ import RequireAuth from './Services/Authentication/RequireAuth'
 import Layout from './Services/Authentication/Layout';
 import PersistLogin from './Services/Authentication/PersistLogin';
 import ProjectDetails from './Components/Project/ProjectDetails';
+import AllProjects from './Components/Project/AllProjects';
 import { theme } from './Resources/GlobalTheme'
+import ModifyProject from './Components/Project/ModifyProject';
 
 function App() {
 
@@ -39,6 +41,8 @@ function App() {
                       <Route path="/profile" element={<UserProfile /> } />
                       <Route path="/addproject" element={<AddProject />} />
                       <Route path="/interests" element={<InterestSelection />} />
+                      <Route path="/allprojects" element={<AllProjects />} />
+                      <Route path="/allprojects/projects/:id" element={<ModifyProject />} />
                     </Route>
                   </Route>
             </Route>

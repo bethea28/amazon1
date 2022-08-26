@@ -3,7 +3,7 @@ import { Typography, Dialog, DialogTitle, DialogContent, Box, DialogActions, But
 import { typographyTitle, Project, User, initialUserData } from "../../Resources/Constants"
 import UserService from "../../Services/UserService";
 
-  export default function ViewProfile({userId}: Project) {
+  export default function ViewProfile({ userId }: { userId: string }) {
   const [open, setOpen] = React.useState(false);
   const [fullWidth, setFullWidth] = React.useState(true);
   const [userProfile, setUserProfile] = useState<User>(initialUserData);
@@ -26,15 +26,19 @@ import UserService from "../../Services/UserService";
   };
 
   const fetchUserData = async () => {
+    if(userId){
     try{
       const response = await UserService.getUser(userId) as User;
       setUserProfile(response);
     }catch (err)
     {
-      return err;
-    }
+      console.log(err)
+    }}
   }
-
+  if(!userProfile)
+  {
+    return null
+  }
   const {firstName, lastName, bio, email, lastSignOn, avatarURL} = userProfile
 
   return(  
@@ -42,16 +46,12 @@ import UserService from "../../Services/UserService";
       <Typography
         variant="h6"
         noWrap
-        component="a"
-        sx={{ ...typographyTitle }}>
-          By:
-        <Typography variant="h6"
-        noWrap
-        component="a"
+        fontSize={8}
+        fontWeight={0}
+        fontFamily={'sans-serif'}
         onClick={handleClickOpen}
-        sx={{ textDecoration:'underline', ...typographyTitle }}>
-          {firstName + " " + lastName}
-        </Typography>
+        sx={{ ...typographyTitle}}>
+          By: {firstName + " " + lastName}
       </Typography>                                 
       <Dialog
         fullWidth={fullWidth}

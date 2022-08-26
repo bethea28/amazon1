@@ -1,6 +1,6 @@
 import { Box, ThemeProvider, Container, Stack, Card, CardContent, CardMedia, Typography, Chip } from '@mui/material';
 import React, { useState, useEffect } from "react";
-import { Project } from '../../Resources/Constants';
+import { initialProjectData, Project } from '../../Resources/Constants';
 import { getProjectDetails } from '../../Services/ProjectService';
 import { theme } from "../../Resources/GlobalTheme";
 import NavigationBar from '../Dashboard/Components/NavigationBar';
@@ -19,8 +19,8 @@ export default function ProjectDetails() {
      */
     useEffect(() => {
         const getData = async () => {
-            const response = await getProjectDetails(id!);
-            setCurrentProject(response);
+            const response = await getProjectDetails(id!)
+            setCurrentProject(response)
         }
 
         if (!currentProject) {
@@ -35,7 +35,7 @@ export default function ProjectDetails() {
         event.currentTarget.className = "error";
       };
 
-    if (!currentProject) {
+    if (!currentProject){
         return null;
     }
 
@@ -43,8 +43,8 @@ export default function ProjectDetails() {
         <ThemeProvider theme={theme}>
             <Box className="Project-details-page">
                 <Container>
-                    <SearchBar />
-                    <NavigationBar />
+                    {/* <SearchBar />
+                    <NavigationBar /> */}
                     <Box>
                         <Stack 
                             key={projectId}
@@ -82,15 +82,16 @@ export default function ProjectDetails() {
                                 <Typography variant="body1" m={3}>
                                 {description}
                                 </Typography>
-                                <ViewProfile {...currentProject}></ViewProfile>
+                                {/* <ViewProfile {...currentProject}></ViewProfile> */}
+
                             </CardContent>
                             {/* Insert like component
                             Insert comments component */}
                         </Card>
+
                         </Stack>
 
                     </Box>
-
                 </Container>
             </Box>
         </ThemeProvider>

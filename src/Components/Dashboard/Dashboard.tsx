@@ -15,8 +15,8 @@ function Dashboard() {
 
     useEffect(() => {
         const fetchRecommended = async () => {
-            const response = await getRecommendedProjects('["art", "pet", "food"]')
-            setRecommended(response);
+            // const response = await getRecommendedProjects('["art", "pet", "food"]')
+            // setRecommended(response);
         }
 
         const fetchNewest = async () => {
