@@ -7,11 +7,18 @@ import NavigationBar from "./Components/NavigationBar";
 import ProjectList from "./Components/ProjectList";
 import SearchBar from "./Components/SearchBar";
 import { theme } from "../../Resources/GlobalTheme";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
 
     const [recommended, setRecommended] = useState<Project[]>();
     const [recent, setRecent] = useState<Project[]>();
+
+    const navigate = useNavigate();
+
+    const handleStartProject= () => {
+        navigate("/addproject");
+    };
 
     useEffect(() => {
         const fetchRecommended = async () => {
@@ -52,7 +59,7 @@ function Dashboard() {
                     </Stack>
                     {/* Trending Projects Component Carousel */}
                     <ButtonGroup fullWidth>
-                        <Button sx={{ marginX: "10px" }} variant="contained">Start a Project</Button>
+                        <Button sx={{ marginX: "10px" }} variant="contained" onClick={handleStartProject}>Start a Project</Button>
                         <Button sx={{ marginX: "10px" }} variant="contained">Fund a Project</Button>
                     </ButtonGroup>
                 </Container>
