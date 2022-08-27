@@ -1,31 +1,31 @@
 import { Box, Button, Card, CardContent, CardMedia, Grid, TextField, Typography } from "@mui/material";
 import { photoPickerButton } from "aws-amplify";
-import { useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Project } from "../../../Resources/Constants";
 import { deletePhoto, getProjectDetails, uploadPhoto } from "../../../Services/ProjectService";
+import { CurrentProjectContext, ProjectData } from "../UploadPhotos";
 
 export default function UploadGalleryPhotos() {
 
-    const { id } = useParams(); //projectId to Upload photos to
-    const [firstGalleryPhoto, setFirstGalleryPhoto] = useState("");
-    const [secondGalleryPhoto, setSecondGalleryPhoto] = useState("");
-    const [thirdGalleryPhoto, setThirdGalleryPhoto] = useState("");
+    // const { id } = useParams(); //projectId to Upload photos to
     const [file, setFile] = useState("");
-    const [currentProject, setCurrentProject] = useState<Project>();
-    const { photoURLs } = currentProject! || {};
+    const currentProject = useContext<ProjectData>(CurrentProjectContext);
+    const { id, photoURLs } = currentProject;
+    // const [currentProject, setCurrentProject] = useState<Project>();
+    // const { photoURLs } = currentProject! || {};
     const noPhoto = "https://dominionmartialarts.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
 
-    useEffect(() => {
-        const getData = async () => {
-            const response = await getProjectDetails(id!);
-            setCurrentProject(response);
-        }
+    // useEffect(() => {
+    //     const getData = async () => {
+    //         const response = await getProjectDetails(id!);
+    //         setCurrentProject(response);
+    //     }
 
-        if (!currentProject) {
-            getData();
-        }
-    }, [currentProject]);
+    //     if (!currentProject) {
+    //         getData();
+    //     }
+    // }, [currentProject]);
 
     function handleChange(e: any) {
         setFile(e.target.files[0]);
@@ -36,50 +36,46 @@ export default function UploadGalleryPhotos() {
         bodyFormData.append('file', file);
         uploadPhoto(id!, bodyFormData, false).then(
             (value) => {
-                setFirstGalleryPhoto(photoURLs[1]);
-                setSecondGalleryPhoto(photoURLs[2]);
-                setThirdGalleryPhoto(photoURLs[3]);
+                window.location.reload();
             },
             (reason) => {
-                setFirstGalleryPhoto(noPhoto);
-                setSecondGalleryPhoto(noPhoto);
-                setThirdGalleryPhoto(noPhoto);
+                window.location.reload();
             }
         );
     }
 
-    const handleDeleteFirst = (e: React.MouseEvent<HTMLElement>) => {
+    const handleGalleryDeleteOne = (e: React.MouseEvent<HTMLElement>) => {
         const filename = photoURLs[1].substring(photoURLs[1].lastIndexOf("/") + 1);
         deletePhoto(id!, filename).then(
             (value) => {
-                setFirstGalleryPhoto(noPhoto);
+                window.location.reload();
             },
             (reason) => {
-                setFirstGalleryPhoto(photoURLs[1])
+                window.location.reload();
             }
         );
     }
 
-    const handleDeleteSecond = (e: React.MouseEvent<HTMLElement>) => {
+    const handleGalleryDeleteTwo = (e: React.MouseEvent<HTMLElement>) => {
         const filename = photoURLs[2].substring(photoURLs[2].lastIndexOf("/") + 1);
         deletePhoto(id!, filename).then(
             (value) => {
-                setSecondGalleryPhoto(noPhoto);
+                window.location.reload();
             },
             (reason) => {
-                setSecondGalleryPhoto(photoURLs[2])
+                window.location.reload();
             }
         );
     }
 
-    const handleDeleteThird = (e: React.MouseEvent<HTMLElement>) => {
+    const handleGalleryDeleteThree = (e: React.MouseEvent<HTMLElement>) => {
         const filename = photoURLs[3].substring(photoURLs[3].lastIndexOf("/") + 1);
         deletePhoto(id!, filename).then(
             (value) => {
-                setThirdGalleryPhoto(noPhoto);
+                window.location.reload();
             },
             (reason) => {
-                setThirdGalleryPhoto(photoURLs[3])
+                window.location.reload();
             }
         );
     }
@@ -91,9 +87,9 @@ export default function UploadGalleryPhotos() {
         event.currentTarget.className = "error";
       };
 
-    if (!currentProject) {
-        return null;
-    }
+    // if (!currentProject) {
+    //     return null;
+    // }
 
     return (
         <Grid container spacing={2} sx={{ justifyContent: 'center', boxShadow: 3, margin: 2, padding: 3 }}>
@@ -134,7 +130,7 @@ export default function UploadGalleryPhotos() {
                         component="img"
                         height="200"
                         width="200"
-                        image={firstGalleryPhoto || photoURLs[1]}
+                        image={photoURLs[1] || noPhoto}
                         onError={imageOnErrorHandler}
                         alt="Project photo"
                     />
@@ -143,7 +139,7 @@ export default function UploadGalleryPhotos() {
                             sx={{ margin: 1, backgroundColor:"#FFF", mt:1, height: 25 }}
                             variant="contained" 
                             component="span"
-                            onClick={handleDeleteFirst}
+                            onClick={handleGalleryDeleteOne}
                         >Delete</Button>
                     </CardContent>
                 </Card>
@@ -156,7 +152,7 @@ export default function UploadGalleryPhotos() {
                         component="img"
                         height="200"
                         width="200"
-                        image={secondGalleryPhoto || photoURLs[2]}
+                        image={photoURLs[2] || noPhoto}
                         onError={imageOnErrorHandler}
                         alt="Project photo"
                     />
@@ -165,7 +161,7 @@ export default function UploadGalleryPhotos() {
                             sx={{ margin: 1, backgroundColor:"#FFF", mt:1, height: 25 }}
                             variant="contained" 
                             component="span"
-                            onClick={handleDeleteSecond}
+                            onClick={handleGalleryDeleteTwo}
                         >Delete</Button>
                     </CardContent>
                 </Card>
@@ -178,7 +174,7 @@ export default function UploadGalleryPhotos() {
                         component="img"
                         height="200"
                         width="200"
-                        image={thirdGalleryPhoto || photoURLs[3]}
+                        image={photoURLs[3] || noPhoto}
                         onError={imageOnErrorHandler}
                         alt="Project photo"
                     />
@@ -187,7 +183,7 @@ export default function UploadGalleryPhotos() {
                             sx={{ margin: 1, backgroundColor:"#FFF", mt:1, height: 25 }}
                             variant="contained" 
                             component="span"
-                            onClick={handleDeleteThird}
+                            onClick={handleGalleryDeleteThree}
                         >Delete</Button>
                     </CardContent>
                 </Card>

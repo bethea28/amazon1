@@ -1,24 +1,34 @@
 import { Box, Button, Card, CardContent, CardMedia, Grid, TextField, ThemeProvider, Typography } from "@mui/material";
 import { photoPickerButton } from "aws-amplify";
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Project } from "../../Resources/Constants";
 import { theme } from "../../Resources/GlobalTheme";
 import { deletePhoto, getProjectDetails, uploadPhoto } from "../../Services/ProjectService";
 import UploadGalleryPhotos from "./Components/UploadGalleryPhotos";
 
+export type ProjectData = {
+    id: string | undefined;                                       // The userId
+    photoURLs: string[];                                  // The username of the user
+  };
+  
+  const initialData: ProjectData = {
+    id: '',
+    photoURLs: [''],
+  };
+
+export const CurrentProjectContext = createContext<ProjectData>(initialData);
+
 export default function UploadPhotos() {
 
     const { id } = useParams();
-    const [coverPhoto, setCoverPhoto] = useState("");
     const [file, setFile] = useState("");
     const [currentProject, setCurrentProject] = useState<Project>();
     const { photoURLs } = currentProject! || {};
     const noPhoto = "https://dominionmartialarts.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
-    const domain = "https://amz1projectphotos.s3.amazonaws.com/"
 
     useEffect(() => {
-        
+
         const getData = async () => {
             const response = await getProjectDetails(id!);
             setCurrentProject(response);
@@ -40,10 +50,12 @@ export default function UploadPhotos() {
         bodyFormData.append('file', file);
         uploadPhoto(id!, bodyFormData, true).then(
             (value) => {
-                setCoverPhoto(domain + id! + "_" + bodyFormData.values().next().value.name);
+                // setCoverPhoto(domain + id! + "_" + bodyFormData.values().next().value.name);
+                window.location.reload();
             },
             (reason) => {
-                setCoverPhoto(photoURLs[0]);
+                // setCoverPhoto(photoURLs[0]);
+                window.location.reload();
             }
         );
     }
@@ -52,10 +64,10 @@ export default function UploadPhotos() {
         const filename = photoURLs[0].substring(photoURLs[0].lastIndexOf("/") + 1);
         deletePhoto(id!, filename).then(
             (value) => {
-                setCoverPhoto(noPhoto);
+                window.location.reload();
             },
             (reason) => {
-                setCoverPhoto(photoURLs[0])
+                window.location.reload();
             }
         );
     }
@@ -63,17 +75,13 @@ export default function UploadPhotos() {
     const imageOnErrorHandler = (
         event: React.SyntheticEvent<HTMLImageElement, Event>
       ) => {
-        event.currentTarget.src = "https://dominionmartialarts.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
+        event.currentTarget.src = noPhoto;
         event.currentTarget.className = "error";
       };
 
     if (!currentProject) {
         return null;
     }
-
-    console.log("cover", coverPhoto);
-
-    console.log("photoURLs", photoURLs);
 
     return(
         <ThemeProvider theme={theme}>
@@ -115,7 +123,7 @@ export default function UploadPhotos() {
                                 component="img"
                                 height="500"
                                 width="800"
-                                image={coverPhoto || photoURLs[0]}
+                                image={photoURLs[0] || noPhoto}
                                 onError={imageOnErrorHandler}
                                 alt="Project photo"
                             />
@@ -130,7 +138,9 @@ export default function UploadPhotos() {
                         </Card>
                     </Grid>
                 </Grid>
-            <UploadGalleryPhotos />
+            <CurrentProjectContext.Provider value={{id, photoURLs}}>
+                <UploadGalleryPhotos />
+            </CurrentProjectContext.Provider>
             </Box>
         </ThemeProvider>
   )    
