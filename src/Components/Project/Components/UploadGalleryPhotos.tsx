@@ -1,31 +1,15 @@
 import { Box, Button, Card, CardContent, CardMedia, Grid, TextField, Typography } from "@mui/material";
 import { photoPickerButton } from "aws-amplify";
-import { createContext, useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Project } from "../../../Resources/Constants";
-import { deletePhoto, getProjectDetails, uploadPhoto } from "../../../Services/ProjectService";
+import { useContext, useState } from "react";
+import { deletePhoto, uploadPhoto } from "../../../Services/ProjectService";
 import { CurrentProjectContext, ProjectData } from "../UploadPhotos";
 
 export default function UploadGalleryPhotos() {
 
-    // const { id } = useParams(); //projectId to Upload photos to
     const [file, setFile] = useState("");
     const currentProject = useContext<ProjectData>(CurrentProjectContext);
     const { id, photoURLs } = currentProject;
-    // const [currentProject, setCurrentProject] = useState<Project>();
-    // const { photoURLs } = currentProject! || {};
     const noPhoto = "https://dominionmartialarts.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
-
-    // useEffect(() => {
-    //     const getData = async () => {
-    //         const response = await getProjectDetails(id!);
-    //         setCurrentProject(response);
-    //     }
-
-    //     if (!currentProject) {
-    //         getData();
-    //     }
-    // }, [currentProject]);
 
     function handleChange(e: any) {
         setFile(e.target.files[0]);
@@ -86,10 +70,6 @@ export default function UploadGalleryPhotos() {
         event.currentTarget.src = "https://dominionmartialarts.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
         event.currentTarget.className = "error";
       };
-
-    // if (!currentProject) {
-    //     return null;
-    // }
 
     return (
         <Grid container spacing={2} sx={{ justifyContent: 'center', boxShadow: 3, margin: 2, padding: 3 }}>
