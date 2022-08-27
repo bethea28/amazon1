@@ -89,7 +89,6 @@ export default function ProjectDetails() {
                             Insert comments component */}
                         </Card>
                         </Stack>
-
                     </Box>
                 </Container>
             </Box>
