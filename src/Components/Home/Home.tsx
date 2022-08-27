@@ -14,11 +14,7 @@ const Home = () => {
   const [recommended, setRecommended] = useState<Project[]>();
 
   useEffect(() => {
-    // const fetchRecommended = async () => {
-    //     const response = await getRecommendedProjects('["art", "pet", "food"]')
-    //     setRecommended(response);
-    // }
-
+    
     const fetchNewest = async () => {
         const response = await getNewestProjects();
         setRecent(response!);
