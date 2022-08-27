@@ -1,5 +1,5 @@
 import React, { useState, MouseEvent, useContext } from 'react';
-import { Box, Toolbar, Menu, Avatar } from '@mui/material';
+import { Box, Toolbar, Menu } from '@mui/material';
 import { IconButton, Typography, MenuItem, AppBar } from '@mui/material';
 import { ListItemText, Divider, ListItemIcon } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -9,7 +9,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { useNavigate } from "react-router-dom";
 import Logout from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import {Search, SearchIconWrapper, StyledInputBase} from './Constants'
+import { Search, SearchIconWrapper, StyledInputBase } from './Constants'
 import { AuthContext } from '../../Context/AuthProvider';
 import AuthService from '../../Services/Authentication/AuthService';
 import { typographyTitle } from '../../Resources/Constants';
@@ -19,7 +19,7 @@ export default function AppbarPrivate() {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
-  const settings = ['Home','All Projects'];
+  const settings = ['Home', 'All Projects'];
 
   const navigate = useNavigate();
   const { setAuthData } = useContext(AuthContext)
@@ -40,20 +40,19 @@ export default function AppbarPrivate() {
     handleMobileMenuClose();
   };
 
-  const handleClickProfile= () => {
+  const handleClickProfile = () => {
     handleMenuClose();
     navigate("/profile");
   };
 
-  const handlePageClick=(page:string)=>{
+  const handlePageClick = (page: string) => {
     handleCloseUserMenu()
-    if(page == 'Home'){
-    navigate('/');
+    if (page == 'Home') {
+      navigate('/');
     }
     else {
       navigate('/allprojects')
     }
-
   }
 
   const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
@@ -68,12 +67,11 @@ export default function AppbarPrivate() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const handleLogout = async () =>
-  {
+  const handleLogout = async () => {
     setAuthData(prevState => {
-      return {...prevState, id: '' , token: '', isLoggedIn: false}
+      return { ...prevState, id: '', token: '', isLoggedIn: false }
     })
-    
+
     navigate("/");
     await AuthService.signOut();
   }
@@ -98,7 +96,7 @@ export default function AppbarPrivate() {
       <MenuItem onClick={handleClickProfile}>
         <ListItemIcon>
           <AccountCircleIcon fontSize="small"></AccountCircleIcon>
-        </ListItemIcon> 
+        </ListItemIcon>
         <ListItemText primary="Profile" />
       </MenuItem>
       <Divider />
@@ -159,27 +157,27 @@ export default function AppbarPrivate() {
             <MenuIcon />
           </IconButton>
           <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((page) => (
-                <MenuItem key={page} onClick={() => handlePageClick(page)}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+            sx={{ mt: '45px' }}
+            id="menu-appbar"
+            anchorEl={anchorElUser}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            open={Boolean(anchorElUser)}
+            onClose={handleCloseUserMenu}
+          >
+            {settings.map((page) => (
+              <MenuItem key={page} onClick={() => handlePageClick(page)}>
+                <Typography textAlign="center">{page}</Typography>
+              </MenuItem>
+            ))}
+          </Menu>
           <Typography
             variant="h6"
             noWrap
@@ -207,7 +205,7 @@ export default function AppbarPrivate() {
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
               color="inherit">
-              <AccountCircle/>
+              <AccountCircle />
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>

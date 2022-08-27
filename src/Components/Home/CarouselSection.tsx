@@ -40,7 +40,7 @@ export default function CarouselSection(projects: Project[]) {
   const navigate = useNavigate();
 
   const getPhotoUrl = (photoUrl: string[]) => {
-    if (photoUrl && photoUrl.length>0) {
+    if (photoUrl && photoUrl.length > 0) {
       return photoUrl[0]
     }
     return 'https://picsum.photos/200/300';
@@ -62,25 +62,27 @@ export default function CarouselSection(projects: Project[]) {
     <>
       {projects
         ? <>
-          <Carousel responsive={{    
-            superLargeDesktop: {
-              breakpoint: { max: 4000, min: 3000 },
-              items: 5
-            },
-            desktop: {
-              breakpoint: { max: 3000, min: 1024 },
-              items: 2
-            },
-            tablet: {
-              breakpoint: { max: 1024, min: 464 },
-              items: 2
-            },
-            mobile: {
-              breakpoint: { max: 464, min: 0 },
-              items: 1
-            }}}
-            centerMode={true}
-          >
+          <Carousel
+            responsive={{
+              superLargeDesktop: {
+                breakpoint: { max: 4000, min: 3000 },
+                items: 5
+              },
+              desktop: {
+                breakpoint: { max: 3000, min: 1024 },
+                items: 2
+              },
+              tablet: {
+                breakpoint: { max: 1024, min: 464 },
+                items: 2
+              },
+              mobile: {
+                breakpoint: { max: 464, min: 0 },
+                items: 1
+              }
+            }}
+            centerMode={true}>
+              
             {Object.keys(projects).map((project, idx) =>
               <Card key={project} sx={{ maxWidth: 440, height: 400, margin: 'auto' }}
                 onClick={() => navigateTo(projects[idx].projectId)}>
