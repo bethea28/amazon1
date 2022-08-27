@@ -1,6 +1,5 @@
 import { axiosInstance, Project } from "../Resources/Constants";
 import { Auth } from 'aws-amplify';
-import { Params } from "react-router-dom";
 
 export async function getRecommendedProjects(categories: string) {
 
@@ -46,6 +45,10 @@ export async function getProjectDetails(id: string) {
     }
 }
 
+/**
+   * Get all projects liked by the userId
+   * @params userId the id of the user
+   */
 export async function getLikedProjects(userId: string) {
   try {
       const res = await Auth.currentSession()
@@ -63,6 +66,10 @@ export async function getLikedProjects(userId: string) {
   }
 }
 
+/**
+   * Get all projects by userId
+   * @params userId the id of the user
+   */
 export async function getMyProjects(userId: string) {
   try {
       const res = await Auth.currentSession()

@@ -7,7 +7,7 @@ import { getNewestProjects } from "../../Services/ProjectService";
 import CarouselSection from "./CarouselSection";
 
 const Home = () => {
-  const [recent, setRecent] = useState<Project[]>([initialProjectData]);
+  const [recent, setRecent] = useState<Project[]>();
 
   useEffect(() => {
     const fetchNewest = async () => {
@@ -19,15 +19,18 @@ const Home = () => {
         fetchNewest();
     }
 
-    fetchNewest()
 }, [recent])
+
+if(!recent){
+  return null
+}
 
   return (
     <>
       <Box>
         <Grid container columnSpacing={2} justifyContent={'space-evenly'} marginTop={3} marginBottom={3}>
           {interests.map((interest, idx) => 
-            <Grid item key={idx}>
+            <Grid item key={interest}>
               <Typography variant="subtitle1" fontWeight={0} fontSize={20} lineHeight={2} fontFamily={'sans-serif'}>
                 {interest}
               </Typography>
