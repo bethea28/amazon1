@@ -12,8 +12,9 @@ export const ProjectIdContext = createContext<string>('')
 
 export const TransactionTable = () => {
 
-  const { projectId } = useParams();
+  const { id } = useParams();
  
+  console.log("transactiontable",id);
   const [transactions, updateList] = useState<Transaction[]>();
   
   useEffect(()=>{
@@ -34,7 +35,8 @@ function listUpdated(newList: Transaction[]) {
 
   return (
     <div className="container">
-    <ProjectIdContext.Provider value={projectId!}>
+    
+    <ProjectIdContext.Provider value={id!}>
     <AddTransaction
     //  transactions = {transactions}
     //  listUpdated = {listUpdated}

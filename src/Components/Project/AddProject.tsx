@@ -1,4 +1,5 @@
 import React,{useState, useEffect} from 'react';
+import { Project } from '../../Resources/Constants';
 import { Typography, FormHelperText, ThemeProvider } from '@mui/material';
 import { FormControl, InputLabel, MenuItem, Button,
          Select, Grid, TextField, Paper, makeStyles } from '@material-ui/core';
@@ -7,7 +8,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { useForm, Controller} from "react-hook-form";
 import {postData} from '../../Services/AddProjectService';
 import { ProjectFormInput } from '../../Resources/Constants';
-
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles (theme =>({
     root: {
@@ -26,6 +27,10 @@ const useStyles = makeStyles (theme =>({
 }))
 
 export default function AddProject() {
+
+    const navigate = useNavigate();
+    const [currentProject, setCurrentProject] = useState<Project>();
+    const { projectId, projectName, photoURLs, categories, lastUpdatedAt, createdAt, description } = currentProject! || {};
     const classes = useStyles();
     const { reset, control, register, handleSubmit,formState: { errors }} = useForm<ProjectFormInput>();
     const onSubmit = async (data: ProjectFormInput ) => {
@@ -42,7 +47,8 @@ export default function AddProject() {
         }
         console.log("state",state)
         try{
-            await postData(state)
+            const response = await postData(state)
+            setCurrentProject(response);
             reset() 
         }
         catch(error){
@@ -171,6 +177,12 @@ export default function AddProject() {
                 <Typography variant="button">Submit</Typography>
                 </Button>
             </Grid>
+            </Grid>
+            <Grid container>
+            <Button variant="contained" 
+                onClick={() => navigate(`/addmilestones/${projectId}`)}>
+                Fund the project
+            </Button>
             </Grid>
 
         </form>

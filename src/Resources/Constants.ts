@@ -26,6 +26,8 @@ export type Project = {
     categories: string,
     createdAt: string
     lastUpdatedAt: string,
+    milestones: null,
+    totalFundedNum: string,
     photoURLs: string[]
 }
 export class Transaction {

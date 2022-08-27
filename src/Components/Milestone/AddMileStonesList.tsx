@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
 
 export function AddMileStonesList() {
 
-    const { projectId } = useParams();
+    const { id } = useParams();
     const classes = useStyles();
     const { handleSubmit } = useForm<ProjectFormInput>();
     const [milestones, setMilestones] = useState<MilestoneStr[]>([]);
@@ -52,11 +52,11 @@ export function AddMileStonesList() {
     };
 
     const onsubmit = async (data: ProjectFormInput) => {
-      data.projectId = projectId!;
+      data.projectId = id!;
       data.milestones = milestones;
       console.log(data)
       try{
-      await updateData(projectId!, data);
+      await updateData(id!, data);
       alert('You have create milestones successfuly');
       window.location.reload();
       }

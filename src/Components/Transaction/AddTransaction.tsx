@@ -4,7 +4,6 @@ import { FormControl, InputLabel, MenuItem, Button,
   Select, Grid, TextField, Paper, makeStyles } from '@material-ui/core';
 import { useForm, Controller} from "react-hook-form";
 import {postTransacData} from '../../Services/AddTransactionService';
-import { useParams } from 'react-router-dom';
 import{ProjectIdContext} from '../Transaction/TransactionTable';
 
 
@@ -35,7 +34,7 @@ export default function AddTransaction() {
     
     const projectIdTrans = useContext<string>(ProjectIdContext);
 
-    console.log("hi")
+    console.log("hi",projectIdTrans);
 
     const classes = useStyles();
     const { reset, control, register, handleSubmit,formState: { errors }} = useForm<TransactionFormInput>();
@@ -53,7 +52,7 @@ export default function AddTransaction() {
         // listUpdated([state,...transitions])
         // transactions.push(data)
         // listUpdated(transactions)
-         window.location.reload();
+        // window.location.reload();
         reset() 
     }
     catch(error){
