@@ -15,8 +15,10 @@ export default function UploadPhotos() {
     const [currentProject, setCurrentProject] = useState<Project>();
     const { photoURLs } = currentProject! || {};
     const noPhoto = "https://dominionmartialarts.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
+    const domain = "https://amz1projectphotos.s3.amazonaws.com/"
 
     useEffect(() => {
+        
         const getData = async () => {
             const response = await getProjectDetails(id!);
             setCurrentProject(response);
@@ -28,18 +30,20 @@ export default function UploadPhotos() {
     }, [currentProject]);
 
     function handleChange(e: any) {
+        console.log("file", e.target.files[0]);
         setFile(e.target.files[0]);
     }
 
     const handleCoverUpload = (e: React.MouseEvent<HTMLElement>) => {
+
         let bodyFormData = new FormData();
         bodyFormData.append('file', file);
         uploadPhoto(id!, bodyFormData, true).then(
             (value) => {
-                setCoverPhoto(photoURLs[0]);
+                setCoverPhoto(domain + id! + "_" + bodyFormData.values().next().value.name);
             },
             (reason) => {
-                setCoverPhoto(noPhoto);
+                setCoverPhoto(photoURLs[0]);
             }
         );
     }
@@ -66,6 +70,10 @@ export default function UploadPhotos() {
     if (!currentProject) {
         return null;
     }
+
+    console.log("cover", coverPhoto);
+
+    console.log("photoURLs", photoURLs);
 
     return(
         <ThemeProvider theme={theme}>
