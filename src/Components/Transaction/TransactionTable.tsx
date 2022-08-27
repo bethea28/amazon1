@@ -1,9 +1,19 @@
-import React,{ useState,useEffect } from 'react';
+import React,{ useState,useEffect,createContext} from 'react';
 import { Transaction } from '../../Resources/Constants';
 import { TableContainer,Table, TableHead, TableBody, TableRow, TableCell, Paper } from '@mui/material'
 import {getNewestTransaction} from '../../Services/TransactionService';
 import AddTransaction from './AddTransaction';
+import { useParams} from 'react-router-dom';
+import { UserContext } from '../Milestone/AddMileStonesList';
+
+
+
+export const ProjectIdContext = createContext<string>('')
+
 export const TransactionTable = () => {
+
+  const { projectId } = useParams();
+ 
   const [transactions, updateList] = useState<Transaction[]>();
   
   useEffect(()=>{
@@ -24,10 +34,12 @@ function listUpdated(newList: Transaction[]) {
 
   return (
     <div className="container">
+    <ProjectIdContext.Provider value={projectId!}>
     <AddTransaction
     //  transactions = {transactions}
     //  listUpdated = {listUpdated}
     />
+    </ProjectIdContext.Provider>
     <TableContainer component={Paper} sx={{ maxHeight: '600px' }}>
       <Table aria-label='simple table' stickyHeader>
         <TableHead>

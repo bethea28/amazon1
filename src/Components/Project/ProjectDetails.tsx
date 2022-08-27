@@ -1,19 +1,20 @@
-import { Box, ThemeProvider, Container, Stack, Card, CardContent, CardMedia, Typography, Chip } from '@mui/material';
-import React, { useState, useEffect } from "react";
+import { Box, ThemeProvider, Container, Stack, Card, CardContent, CardMedia, Typography, Chip, Button } from '@mui/material';
+import React, { useState, useEffect, createContext } from "react";
 import { Project } from '../../Resources/Constants';
 import { getProjectDetails } from '../../Services/ProjectService';
 import { theme } from "../../Resources/GlobalTheme";
 import NavigationBar from '../Dashboard/Components/NavigationBar';
 import SearchBar from '../Dashboard/Components/SearchBar';
 import { loadingOverlay } from 'aws-amplify';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 export default function ProjectDetails() {
 
+    const navigate = useNavigate();
     const { id } = useParams(); //Update to useParams or Context to pass in global projectId variable
     const [currentProject, setCurrentProject] = useState<Project>();
     const { projectId, projectName, photoURLs, categories, lastUpdatedAt, createdAt, description } = currentProject! || {};
-
+    
     /**
      * onLoad display the current project's details
      */
@@ -87,6 +88,10 @@ export default function ProjectDetails() {
                             Insert comments component */}
                         </Card>
                         </Stack>
+                        <Button variant="contained" 
+                            onClick={() => navigate(`/addtransactions/${projectId}`)}>
+                            Fund the project
+                        </Button>
                     </Box>
 
                 </Container>

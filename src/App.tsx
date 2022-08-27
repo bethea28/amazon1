@@ -41,8 +41,8 @@ function App() {
                       <Route path="/addproject" element={<AddProject />} />
                       <Route path="/interests" element={<InterestSelection />} />
                       <Route path="/projects/:id" element={<ProjectDetails />} />
-                      <Route path="/addtransaction/" element={<TransactionTable />} />
-                      <Route path="/addmilestone/" element={<AddMileStonesList />} />
+                      <Route path="/addtransactions/:id" element={<TransactionTable />} />
+                      <Route path="/addmilestones/:id" element={<AddMileStonesList />} />
                       
                     </Route>
                   </Route>

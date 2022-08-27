@@ -1,9 +1,13 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { Typography, FormHelperText, Stack } from '@mui/material';
 import { FormControl, InputLabel, MenuItem, Button,
   Select, Grid, TextField, Paper, makeStyles } from '@material-ui/core';
 import { useForm, Controller} from "react-hook-form";
 import {postTransacData} from '../../Services/AddTransactionService';
+import { useParams } from 'react-router-dom';
+import{ProjectIdContext} from '../Transaction/TransactionTable';
+
+
 
 interface TransactionFormInput {
     projectId: string;
@@ -28,6 +32,8 @@ const useStyles = makeStyles (theme =>({
 export default function AddTransaction() {
     //let listUpdated = props.listUpdated;
     //let transactions = props.transactions;
+    
+    const projectIdTrans = useContext<string>(ProjectIdContext);
 
     console.log("hi")
 
@@ -35,10 +41,10 @@ export default function AddTransaction() {
     const { reset, control, register, handleSubmit,formState: { errors }} = useForm<TransactionFormInput>();
     
     const onSubmit = async (data: TransactionFormInput) => {
-        const{projectId, amount} = data
+        //const{projectId, amount} = data
 
         let state = {
-            projectId:"04ac6a84-b7dd-46bf-80d4-c3faa8734e0d",
+            projectId:projectIdTrans,
             amount: data.amount.toString()
         }
         

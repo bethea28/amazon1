@@ -7,6 +7,7 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { updateData } from '../../Services/AddProjectService';
 import AddMilestone from './AddMilestone';
+import { useParams} from 'react-router-dom';
 
 export const UserContext = createContext<MilestoneStr>({
   name: '',
@@ -14,7 +15,7 @@ export const UserContext = createContext<MilestoneStr>({
   targetDate:''
 });
 
-const projectId = "596146d3-af2a-4efe-8e0f-a29a73d22d68";
+//const projectId = "596146d3-af2a-4efe-8e0f-a29a73d22d68";
 const useStyles = makeStyles(theme => ({
     formControl: {
       margin: theme.spacing(1),
@@ -28,6 +29,7 @@ const useStyles = makeStyles(theme => ({
 
 export function AddMileStonesList() {
 
+    const { projectId } = useParams();
     const classes = useStyles();
     const { handleSubmit } = useForm<ProjectFormInput>();
     const [milestones, setMilestones] = useState<MilestoneStr[]>([]);
@@ -50,11 +52,11 @@ export function AddMileStonesList() {
     };
 
     const onsubmit = async (data: ProjectFormInput) => {
-      data.projectId = projectId;
+      data.projectId = projectId!;
       data.milestones = milestones;
       console.log(data)
       try{
-      await updateData(projectId, data);
+      await updateData(projectId!, data);
       alert('You have create milestones successfuly');
       window.location.reload();
       }
