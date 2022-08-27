@@ -4,8 +4,6 @@ import { TableContainer,Table, TableHead, TableBody, TableRow, TableCell, Paper 
 import {getNewestTransaction} from '../../Services/TransactionService';
 import AddTransaction from './AddTransaction';
 import { useParams} from 'react-router-dom';
-import { UserContext } from '../Milestone/AddMileStonesList';
-
 
 
 export const ProjectIdContext = createContext<string>('')
@@ -28,10 +26,6 @@ export const TransactionTable = () => {
     console.log(transactions);
       
   },[transactions])
-
-function listUpdated(newList: Transaction[]) {
-    updateList(newList);
-}
 
   return (
     <div className="container">
