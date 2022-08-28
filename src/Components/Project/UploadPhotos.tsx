@@ -8,14 +8,14 @@ import { deletePhoto, getProjectDetails, uploadPhoto } from "../../Services/Proj
 import UploadGalleryPhotos from "./Components/UploadGalleryPhotos";
 
 export type ProjectData = {
-    id: string | undefined;                                       // The userId
-    photoURLs: string[];                                  // The username of the user
-  };
-  
-  const initialData: ProjectData = {
+    id: string | undefined;
+    photoURLs: string[];
+};
+
+const initialData: ProjectData = {
     id: '',
     photoURLs: [''],
-  };
+};
 
 export const CurrentProjectContext = createContext<ProjectData>(initialData);
 
@@ -39,27 +39,33 @@ export default function UploadPhotos() {
         }
     }, [currentProject]);
 
+    /**
+     * Set the file to the file user chooses on their window
+     */
     function handleChange(e: any) {
-        console.log("file", e.target.files[0]);
         setFile(e.target.files[0]);
     }
 
+    /**
+     * When the user clicks the upload button, send the file to the BE
+     */
     const handleCoverUpload = (e: React.MouseEvent<HTMLElement>) => {
 
         let bodyFormData = new FormData();
         bodyFormData.append('file', file);
         uploadPhoto(id!, bodyFormData, true).then(
             (value) => {
-                // setCoverPhoto(domain + id! + "_" + bodyFormData.values().next().value.name);
                 window.location.reload();
             },
             (reason) => {
-                // setCoverPhoto(photoURLs[0]);
                 window.location.reload();
             }
         );
     }
 
+    /**
+     * When the user clicks the delete button, delete the file from the BE
+     */
     const handleDeleteCover = (e: React.MouseEvent<HTMLElement>) => {
         const filename = photoURLs[0].substring(photoURLs[0].lastIndexOf("/") + 1);
         deletePhoto(id!, filename).then(
@@ -72,18 +78,21 @@ export default function UploadPhotos() {
         );
     }
 
+    /**
+     * Default image when no image is available or cannot be uploaded
+     */
     const imageOnErrorHandler = (
         event: React.SyntheticEvent<HTMLImageElement, Event>
-      ) => {
+    ) => {
         event.currentTarget.src = noPhoto;
         event.currentTarget.className = "error";
-      };
+    };
 
     if (!currentProject) {
         return null;
     }
 
-    return(
+    return (
         <ThemeProvider theme={theme}>
             <Box sx={{ display: 'flex', border: 0, flexGrow: 1, flexDirection: 'column', margin: 2, padding: 3, justifyContent: 'center' }}>
                 <Grid container spacing={2} sx={{ justifyContent: 'center', boxShadow: 3, margin: 2, padding: 3 }}>
@@ -104,16 +113,16 @@ export default function UploadPhotos() {
                                 variant="outlined"
                                 onChange={handleChange}
                             />
-                            <Button 
+                            <Button
                                 className="uploadPhoto"
-                                sx={{ margin: 1, backgroundColor:"#A6BBA7", color:"#000000", mt:1, height: 50 }}
-                                variant="contained" 
+                                sx={{ margin: 1, backgroundColor: "#A6BBA7", color: "#000000", mt: 1, height: 50 }}
+                                variant="contained"
                                 component="span"
                                 onClick={handleCoverUpload}
                             >Upload</Button>
                         </Box>
                     </Grid>
-                    
+
                     <Grid xs={5}>
                         <Typography variant="h6" m={1}>Cover Photo: </Typography>
                     </Grid>
@@ -129,8 +138,8 @@ export default function UploadPhotos() {
                             />
                             <CardContent>
                                 <Button className="deletePhoto"
-                                    sx={{ margin: 1, backgroundColor:"#FFF", mt:1, height: 25 }}
-                                    variant="contained" 
+                                    sx={{ margin: 1, backgroundColor: "#FFF", mt: 1, height: 25 }}
+                                    variant="contained"
                                     component="span"
                                     onClick={handleDeleteCover}
                                 >Delete</Button>
@@ -138,10 +147,10 @@ export default function UploadPhotos() {
                         </Card>
                     </Grid>
                 </Grid>
-            <CurrentProjectContext.Provider value={{id, photoURLs}}>
-                <UploadGalleryPhotos />
-            </CurrentProjectContext.Provider>
+                <CurrentProjectContext.Provider value={{ id, photoURLs }}>
+                    <UploadGalleryPhotos />
+                </CurrentProjectContext.Provider>
             </Box>
         </ThemeProvider>
-  )    
+    )
 }

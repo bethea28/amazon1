@@ -11,10 +11,16 @@ export default function UploadGalleryPhotos() {
     const { id, photoURLs } = currentProject;
     const noPhoto = "https://dominionmartialarts.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
 
+    /**
+     * Set the file to the file user chooses on their window
+     */
     function handleChange(e: any) {
         setFile(e.target.files[0]);
     }
 
+    /**
+     * When the user clicks the upload button, send the file to the BE
+     */
     const handleGalleryUpload = (e: React.MouseEvent<HTMLElement>) => {
 
         let bodyFormData = new FormData();
@@ -29,6 +35,9 @@ export default function UploadGalleryPhotos() {
         );
     }
 
+    /**
+     * When the user clicks the delete button, delete the file from the BE
+     */
     const handleGalleryDelete = (e: React.MouseEvent<HTMLElement>, index: number) => {
         console.log("handle", e, index);
         const filename = photoURLs[index].substring(photoURLs[index].lastIndexOf("/") + 1);
@@ -42,6 +51,9 @@ export default function UploadGalleryPhotos() {
         );
     }
 
+    /**
+     * Default image when no image is available or cannot be uploaded
+     */
     const imageOnErrorHandler = (
         event: React.SyntheticEvent<HTMLImageElement, Event>
     ) => {
@@ -52,7 +64,7 @@ export default function UploadGalleryPhotos() {
     return (
         <Grid container spacing={2} sx={{ justifyContent: 'center', boxShadow: 3, margin: 2, padding: 3 }}>
             <Grid xs={12}>
-                <Box sx={{ textAlign: 'left', margin: 2 }}><Typography variant="h5" m={1}>Upload up to 3 photos for your gallery: </Typography></Box>
+                <Box sx={{ textAlign: 'left', margin: 2 }}><Typography variant="h5" m={1}>Upload up to 3 more photos for your gallery: </Typography></Box>
             </Grid>
             <Grid xs={12}>
                 <Box sx={{ display: 'flex', margin: 2, justifyContent: 'center' }}>
@@ -80,6 +92,9 @@ export default function UploadGalleryPhotos() {
                 </Box>
             </Grid>
 
+            <Grid xs={12}>
+                <Box sx={{ textAlign: 'left', margin: 2 }}><Typography variant="h6" m={1}>Current cover photo: </Typography></Box>
+            </Grid>
             {photoURLs.map((a, index) => {
                 return (
                     <Grid xs={4}>
@@ -98,7 +113,7 @@ export default function UploadGalleryPhotos() {
                                         sx={{ margin: 1, backgroundColor: "#FFF", mt: 1, height: 25 }}
                                         variant="contained"
                                         component="span"
-                                        onClick={(e: any) => handleGalleryDelete(e, index)}
+                                        onClick={(e: React.MouseEvent<HTMLElement>) => handleGalleryDelete(e, index)}
                                     >Delete</Button>
                                 </CardContent>
                             </Card>
