@@ -33,27 +33,27 @@ function App() {
   })
   return (
     <Box className="App" height={"100vh"} display={"flex"} flexDirection={"column"}>
-      <ThemeProvider theme = {theme}>
+      <ThemeProvider theme={theme}>
         <AuthProvider>
           <Routes>
-            <Route element={<PersistLogin/>}>
-              <Route path="/" element={<Layout/>}>
-              
+            <Route element={<PersistLogin />}>
+              <Route path="/" element={<Layout />}>
+
                 {/* public routes */}
-                  <Route path="/" element={<Home />} />
-                  <Route path="/signup" element={<SignUp />} />
-                  <Route path="/login" element={<Login />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/login" element={<Login />} />
 
                 {/* protected routes */}
-                  <Route element={<RequireAuth/>}>
-                    <Route path="/dashboard" element={<Dashboard />} />
-                      <Route path="/profile" element={<UserProfile /> } />
-                      <Route path="/addproject" element={<AddProject />} />
-                      <Route path="/interests" element={<InterestSelection />} />
-                      <Route path="/projects/:id" element={<ProjectDetails />} />
-                      <Route path="/myprojects/:id" element={<UploadPhotos />} />
-                    </Route>
-                  </Route>
+                <Route element={<RequireAuth />}>
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/profile" element={<UserProfile />} />
+                  <Route path="/addproject" element={<AddProject />} />
+                  <Route path="/interests" element={<InterestSelection />} />
+                  <Route path="/projects/:id" element={<ProjectDetails />} />
+                  <Route path="/uploadprojectphotos/:id" element={<UploadPhotos />} />
+                </Route>
+              </Route>
             </Route>
           </Routes>
         </AuthProvider>
