@@ -2,7 +2,7 @@ import { interests } from "../../Resources/Constants";
 import { Grid, Typography } from "@mui/material";
 import { Divider, Box, Paper } from "@mui/material";
 import { useState, useEffect } from "react";
-import { Project, initialProjectData } from "../../Resources/Constants";
+import { Project } from "../../Resources/Constants";
 import { getNewestProjects } from "../../Services/ProjectService";
 import CarouselSection from "./CarouselSection";
 

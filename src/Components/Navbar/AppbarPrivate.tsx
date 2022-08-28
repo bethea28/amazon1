@@ -142,7 +142,7 @@ export default function AppbarPrivate() {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box >
       <AppBar position="static" sx={{ bgcolor: "#335436" }}>
         <Toolbar>
           <IconButton

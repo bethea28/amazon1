@@ -32,7 +32,7 @@ const AppbarPublic = () => {
 
   return (
     <AppBar position="static" sx={{ bgcolor: "#335436" }}>
-      <Container maxWidth="xl">
+      <Container maxWidth={false}>
         <Toolbar disableGutters>
           <Grid container justifyContent="space-between" alignItems="center">
             <Grid item>
