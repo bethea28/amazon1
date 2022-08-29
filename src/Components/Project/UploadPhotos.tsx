@@ -96,7 +96,7 @@ export default function UploadPhotos() {
         <ThemeProvider theme={theme}>
             <Box sx={{ display: 'flex', border: 0, flexGrow: 1, flexDirection: 'column', margin: 2, padding: 3, justifyContent: 'center' }}>
                 <Grid container spacing={2} sx={{ justifyContent: 'center', boxShadow: 3, margin: 2, padding: 3 }}>
-                    <Grid xs={12}>
+                    <Grid item xs={12}>
                         <Box sx={{ textAlign: 'left', margin: 2 }}><Typography variant="h5" m={1}>Upload a cover photo: </Typography></Box>
                         <Box sx={{ display: 'flex', margin: 2, justifyContent: 'center' }}>
                             <TextField
@@ -123,10 +123,10 @@ export default function UploadPhotos() {
                         </Box>
                     </Grid>
 
-                    <Grid xs={5}>
+                    <Grid item xs={5}>
                         <Typography variant="h6" m={1}>Cover Photo: </Typography>
                     </Grid>
-                    <Grid xs={7}>
+                    <Grid item xs={7}>
                         <Card sx={{ maxWidth: 800 }}>
                             <CardMedia
                                 component="img"

@@ -63,10 +63,10 @@ export default function UploadGalleryPhotos() {
 
     return (
         <Grid container spacing={2} sx={{ justifyContent: 'center', boxShadow: 3, margin: 2, padding: 3 }}>
-            <Grid xs={12}>
+            <Grid item xs={12}>
                 <Box sx={{ textAlign: 'left', margin: 2 }}><Typography variant="h5" m={1}>Upload up to 3 more photos for your gallery: </Typography></Box>
             </Grid>
-            <Grid xs={12}>
+            <Grid item xs={12}>
                 <Box sx={{ display: 'flex', margin: 2, justifyContent: 'center' }}>
                     <TextField
                         fullWidth
@@ -92,12 +92,12 @@ export default function UploadGalleryPhotos() {
                 </Box>
             </Grid>
 
-            <Grid xs={12}>
+            <Grid item xs={12}>
                 <Box sx={{ textAlign: 'left', margin: 2 }}><Typography variant="h6" m={1}>Current cover photo: </Typography></Box>
             </Grid>
             {photoURLs.map((a, index) => {
                 return (
-                    <Grid xs={4}>
+                    <Grid item xs={4}>
                         <Box sx={{ display: 'flex', margin: 2, justifyContent: 'center' }}>
                             <Card sx={{ maxWidth: 300 }}>
                                 <CardMedia
