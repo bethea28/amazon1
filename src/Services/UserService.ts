@@ -3,15 +3,15 @@ import { axiosInstance, User } from "../Resources/Constants";
 /**
  * CRUD services for user data
  */
-class UserService{
-  
+class UserService {
+
   /**
    * Add user to the database
    * @params jwt  The jwt token
    * @params data The object that stores the updated information
    */
-   addUser = async (jwt:string, data:object) => {
-     try {
+  addUser = async (jwt: string, data: object) => {
+    try {
       const response = await axiosInstance.post<User>('/users/', data, {
         headers: {
           'Authorization': `Bearer ${jwt}`,
@@ -19,7 +19,7 @@ class UserService{
         }
       })
       return response.data
-    }catch (error){
+    } catch (error) {
       return error
     }
   }
@@ -29,12 +29,12 @@ class UserService{
    * @params userId The current user's id
    * @params jwt    The jwt token
    */
-   getUser = async (userId: string) => {
-     try {
+  getUser = async (userId: string) => {
+    try {
       const response = await axiosInstance.get<User>(`/users/${userId}`, {
         headers: {
-        'Content-Type': 'application/json'
-        }      
+          'Content-Type': 'application/json'
+        }
       })
       return response.data
     } catch (error) {
@@ -60,8 +60,54 @@ class UserService{
       })
 
       return response.data
-    }catch (error) {
+    } catch (error) {
       return error
+    }
+  }
+
+  /**
+   * Upload new avatar for the user
+   * @params userId The current user's id
+   * @params file The image file to be saved via form data
+   */
+  uploadAvatar = async (userId: string, jwt: string, file: FormData) => {
+    try {
+      const response = await axiosInstance.post(`/${userId}/uploadAvatar`, file, {
+        headers: {
+          'Authorization': `Bearer ${jwt}`,
+        }
+      });
+
+      if (response.status === 200) {
+        alert('Upload successful!');
+      }
+
+    } catch (error) {
+      console.log(error);
+      alert('Upload failed! Please try again.')
+    }
+  }
+
+  /**
+   * Delete user's avatar
+   * @params userId The current user's id
+   * @params filename The image file to delete
+   */
+  deleteAvatar = async (userId: String, jwt: string, filename: String) => {
+    try {
+      const response = await axiosInstance.delete(`/deleteAvatar/${userId}/${filename}`, {
+        headers: {
+          'Authorization': `Bearer ${jwt}`,
+        }
+      });
+
+      if (response.status === 200) {
+        alert('Delete successful!');
+      }
+
+    } catch (error) {
+      console.log(error);
+      alert('Failed to delete! Please try again.')
     }
   }
 }
