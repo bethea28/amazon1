@@ -1,71 +1,79 @@
-import React,{ useState,useEffect,createContext} from 'react';
-import { Transaction } from '../../Resources/Constants';
-import { TableContainer,Table, TableHead, TableBody, TableRow, TableCell, Paper } from '@mui/material'
-import {getNewestTransaction} from '../../Services/TransactionService';
-import AddTransaction from './AddTransaction';
-import { useParams} from 'react-router-dom';
+import React, { useState, useEffect, createContext } from "react";
+import { Transaction } from "../../Resources/Constants";
+import {
+  TableContainer,
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  Paper,
+} from "@mui/material";
+import { getNewestTransaction } from "../../Services/TransactionService";
+import AddTransaction from "./AddTransaction";
+import { useParams } from "react-router-dom";
 
-
-export const ProjectIdContext = createContext<string>('')
+export const ProjectIdContext = createContext<string>("");
 export const TransactionContext = createContext<Transaction[]>([]);
 
 export const TransactionTable = () => {
-
   const { id } = useParams();
- 
-  console.log("transactiontable",id);
-  const [transactions, updateList] = useState<Transaction[]>();
-  
-  useEffect(()=>{
-      const fetchTransaction = async() =>{
-        const response = await getNewestTransaction();
-        updateList(response);
-      }
-      if (!transactions) {
-        fetchTransaction();
+
+  console.log("transactiontable", id);
+  const [transactions, setTransactions] = useState<Transaction[]>();
+
+  useEffect(() => {
+    const fetchTransaction = async () => {
+      const response = await getNewestTransaction();
+      setTransactions(response);
+    };
+    if (!transactions) {
+      fetchTransaction();
     }
     console.log(transactions);
-      
-  },[transactions])
+  }, []);
+
+  // Update to put transaction to the top
+  const handleTransactionCreated = (transaction: Transaction) => {
+    const newTransactions = transactions ? [...transactions] : [];
+    // newTransactions.push(transaction);
+    setTransactions([transaction, ...newTransactions]);
+    // setTransactions(newTransactions);
+  };
 
   return (
     <div className="container">
-    
-    <ProjectIdContext.Provider value={id!}>
-    <TransactionContext.Provider value = {transactions!}>
-      
-    
-    <AddTransaction
-    //  transactions = {transactions}
-    //  listUpdated = {listUpdated}
-    />
-    </TransactionContext.Provider>
-    </ProjectIdContext.Provider>
-    <TableContainer component={Paper} sx={{ maxHeight: '600px' }}>
-      <Table aria-label='simple table' stickyHeader>
-        <TableHead>
-          <TableRow>
-            <TableCell> User Name</TableCell>
-            <TableCell> Funding Amount(USD)</TableCell>
-            <TableCell> Created At</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {transactions && transactions.map((transaction) => (
-            <TableRow
-              key={transaction.transactionId}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell>{transaction.username}</TableCell>
-              <TableCell>{transaction.amount}</TableCell>
-              <TableCell>{transaction.createdAt}</TableCell>
+      <ProjectIdContext.Provider value={id!}>
+        {/* <TransactionContext.Provider value = {transactions!}> */}
+
+        <AddTransaction onTransactionCreated={handleTransactionCreated} />
+
+        {/* </TransactionContext.Provider> */}
+      </ProjectIdContext.Provider>
+      <TableContainer component={Paper} sx={{ maxHeight: "600px" }}>
+        <Table aria-label="simple table" stickyHeader>
+          <TableHead>
+            <TableRow>
+              <TableCell> User Name</TableCell>
+              <TableCell> Funding Amount(USD)</TableCell>
+              <TableCell> Created At</TableCell>
             </TableRow>
-
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {transactions &&
+              transactions.map((transaction) => (
+                <TableRow
+                  key={transaction.transactionId}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell>{transaction.username}</TableCell>
+                  <TableCell>{transaction.amount}</TableCell>
+                  <TableCell>{transaction.createdAt}</TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
-  )
-}
-
+  );
+};
