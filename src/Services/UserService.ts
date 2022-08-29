@@ -70,9 +70,9 @@ class UserService {
    * @params userId The current user's id
    * @params file The image file to be saved via form data
    */
-  uploadAvatar = async (userId: string, jwt: string, file: FormData) => {
+  uploadAvatar = async (id: string, jwt: string, file: FormData) => {
     try {
-      const response = await axiosInstance.post(`/${userId}/uploadAvatar`, file, {
+      const response = await axiosInstance.post(`/users/${id}/avatar`, file, {
         headers: {
           'Authorization': `Bearer ${jwt}`,
         }
@@ -93,9 +93,9 @@ class UserService {
    * @params userId The current user's id
    * @params filename The image file to delete
    */
-  deleteAvatar = async (userId: String, jwt: string, filename: String) => {
+  deleteAvatar = async (id: String, jwt: string) => {
     try {
-      const response = await axiosInstance.delete(`/deleteAvatar/${userId}/${filename}`, {
+      const response = await axiosInstance.delete(`/users/${id}/avatar/`, {
         headers: {
           'Authorization': `Bearer ${jwt}`,
         }

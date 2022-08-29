@@ -1,16 +1,20 @@
 
 import { Box, TextField, Avatar, Button } from '@mui/material';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { AuthContext } from '../../Context/AuthProvider';
+import UserService from '../../Services/UserService';
 
-export default function AvatarUploadField() {
+interface Props {
+    avatarURL: string;
+}
 
-    const [preview, setPreview] = useState("");
+export default function AvatarUploadField({ avatarURL }: Props) {
+
+    const [preview, setPreview] = useState('https://icon-library.com/images/no-profile-pic-icon/no-profile-pic-icon-11.jpg');
     const [file, setFile] = useState("");
     const [disabledSave, setDisabledSave] = useState(false);
     const [disabledDelete, setDisabledDelete] = useState(false);
     const { id, token } = useContext(AuthContext);
-    const filename = id;
 
     /**
      * This handler changes the image displayed and file to be saved based on the image chosen to be saved.
@@ -33,7 +37,7 @@ export default function AvatarUploadField() {
          */
         let bodyFormData = new FormData();
         bodyFormData.append('file', file);
-        uploadAvatar(id, token, bodyFormData);
+        UserService.uploadAvatar(id, token, bodyFormData);
     }
 
     /**
@@ -41,7 +45,7 @@ export default function AvatarUploadField() {
      */
     const handleDeleteAvatar = (e: React.MouseEvent<HTMLElement>) => {
         setDisabledDelete(true);
-        deleteAvatar(userId, filename);
+        UserService.deleteAvatar(id, token);
         const noAvatar = "";
         setPreview(noAvatar);
         setFile(noAvatar);
@@ -52,7 +56,7 @@ export default function AvatarUploadField() {
             <Box sx={{ display: 'flex', margin: 2, justifyContent: 'center' }}>
                 <Avatar
                     alt="Profile Image"
-                    src={preview}
+                    src={preview || avatarURL}
                     sx={{ width: 75, height: 75 }}
                 />
                 <TextField
