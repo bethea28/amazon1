@@ -1,15 +1,14 @@
 import { Box, Button, Card, CardContent, CardMedia, Grid, TextField, Typography } from "@mui/material";
-import { photoPickerButton } from "aws-amplify";
 import { useContext, useState } from "react";
 import { deletePhoto, uploadPhoto } from "../../../Services/ProjectService";
 import { CurrentProjectContext, ProjectData } from "../UploadPhotos";
+import { noPhoto } from "../../../Resources/Constants";
 
 export default function UploadGalleryPhotos() {
 
     const [file, setFile] = useState("");
     const currentProject = useContext<ProjectData>(CurrentProjectContext);
     const { id, photoURLs } = currentProject;
-    const noPhoto = "https://dominionmartialarts.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
 
     /**
      * Set the file to the file user chooses on their window
@@ -39,7 +38,6 @@ export default function UploadGalleryPhotos() {
      * When the user clicks the delete button, delete the file from the BE
      */
     const handleGalleryDelete = (e: React.MouseEvent<HTMLElement>, index: number) => {
-        console.log("handle", e, index);
         const filename = photoURLs[index].substring(photoURLs[index].lastIndexOf("/") + 1);
         deletePhoto(id!, filename).then(
             (value) => {

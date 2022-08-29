@@ -1,8 +1,7 @@
 import { Box, Button, Card, CardContent, CardMedia, Grid, TextField, ThemeProvider, Typography } from "@mui/material";
-import { photoPickerButton } from "aws-amplify";
 import { createContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Project } from "../../Resources/Constants";
+import { Project, noPhoto } from "../../Resources/Constants";
 import { theme } from "../../Resources/GlobalTheme";
 import { deletePhoto, getProjectDetails, uploadPhoto } from "../../Services/ProjectService";
 import UploadGalleryPhotos from "./Components/UploadGalleryPhotos";
@@ -25,7 +24,6 @@ export default function UploadPhotos() {
     const [file, setFile] = useState("");
     const [currentProject, setCurrentProject] = useState<Project>();
     const { photoURLs } = currentProject! || {};
-    const noPhoto = "https://dominionmartialarts.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
 
     useEffect(() => {
 
