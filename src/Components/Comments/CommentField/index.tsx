@@ -36,7 +36,6 @@ function CommentField(props: Props) {
     const submitComment: SubmitHandler<Inputs> = async (data) => {
         const post = await postComment({
             content: data.commentContent,
-            userId: currentUser.id,
             projectId: id!
         }, currentUser.token)
         setComment("");

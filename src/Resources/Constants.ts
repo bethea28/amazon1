@@ -64,8 +64,10 @@ export type UpdateUserResponse = {
 export type CommentData = {
   id?: string,
   content: string,
-  userId: string,
+  userId?: string,
   projectId: string,
+  username?: string,
+  avatarURL?: string,
   createdAt?: string,
   updatedAt?: string
 }
