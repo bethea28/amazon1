@@ -1,28 +1,28 @@
-import React, { useState, MouseEvent, useContext } from 'react';
-import { Box, Toolbar, Menu } from '@mui/material';
-import { IconButton, Typography, MenuItem, AppBar } from '@mui/material';
-import { ListItemText, Divider, ListItemIcon } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MoreIcon from '@mui/icons-material/MoreVert';
+import React, { useState, MouseEvent, useContext } from "react";
+import { Box, Toolbar, Menu } from "@mui/material";
+import { IconButton, Typography, MenuItem, AppBar } from "@mui/material";
+import { ListItemText, Divider, ListItemIcon } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import SearchIcon from "@mui/icons-material/Search";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import MoreIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
-import Logout from '@mui/icons-material/Logout';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Search, SearchIconWrapper, StyledInputBase } from './Constants'
-import { AuthContext } from '../../Context/AuthProvider';
-import AuthService from '../../Services/Authentication/AuthService';
-import { typographyTitle } from '../../Resources/Constants';
+import Logout from "@mui/icons-material/Logout";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { Search, SearchIconWrapper, StyledInputBase } from "./Constants";
+import { AuthContext } from "../../Context/AuthProvider";
+import AuthService from "../../Services/Authentication/AuthService";
+import { typographyTitle } from "../../Resources/constants";
 
 export default function AppbarPrivate() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
-  const settings = ['Home', 'All Projects'];
+  const settings = ["Home", "All Projects"];
 
   const navigate = useNavigate();
-  const { setAuthData } = useContext(AuthContext)
+  const { setAuthData } = useContext(AuthContext);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -46,14 +46,13 @@ export default function AppbarPrivate() {
   };
 
   const handlePageClick = (page: string) => {
-    handleCloseUserMenu()
-    if (page == 'Home') {
-      navigate('/');
+    handleCloseUserMenu();
+    if (page == "Home") {
+      navigate("/");
+    } else {
+      navigate("/allprojects");
     }
-    else {
-      navigate('/allprojects')
-    }
-  }
+  };
 
   const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -68,27 +67,27 @@ export default function AppbarPrivate() {
   };
 
   const handleLogout = async () => {
-    setAuthData(prevState => {
-      return { ...prevState, id: '', token: '', isLoggedIn: false }
-    })
+    setAuthData((prevState) => {
+      return { ...prevState, id: "", token: "", isLoggedIn: false };
+    });
 
     navigate("/");
     await AuthService.signOut();
-  }
+  };
 
-  const menuId = 'primary-search-account-menu';
+  const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       id={menuId}
       keepMounted
       transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}
@@ -109,19 +108,19 @@ export default function AppbarPrivate() {
     </Menu>
   );
 
-  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       id={mobileMenuId}
       keepMounted
       transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
@@ -142,7 +141,7 @@ export default function AppbarPrivate() {
   );
 
   return (
-    <Box >
+    <Box>
       <AppBar position="static" sx={{ bgcolor: "#335436" }}>
         <Toolbar>
           <IconButton
@@ -157,17 +156,17 @@ export default function AppbarPrivate() {
             <MenuIcon />
           </IconButton>
           <Menu
-            sx={{ mt: '45px' }}
+            sx={{ mt: "45px" }}
             id="menu-appbar"
             anchorEl={anchorElUser}
             anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
+              vertical: "top",
+              horizontal: "right",
             }}
             keepMounted
             transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
+              vertical: "top",
+              horizontal: "right",
             }}
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}
@@ -182,7 +181,7 @@ export default function AppbarPrivate() {
             variant="h6"
             noWrap
             component="div"
-            sx={{ ...typographyTitle, display: { xs: 'none', sm: 'block' } }}
+            sx={{ ...typographyTitle, display: { xs: "none", sm: "block" } }}
           >
             JUMPSTARTER
           </Typography>
@@ -192,11 +191,11 @@ export default function AppbarPrivate() {
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
+              inputProps={{ "aria-label": "search" }}
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton
               size="large"
               edge="end"
@@ -204,11 +203,12 @@ export default function AppbarPrivate() {
               aria-controls={menuId}
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
-              color="inherit">
+              color="inherit"
+            >
               <AccountCircle />
             </IconButton>
           </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-label="show more"

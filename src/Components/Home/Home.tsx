@@ -1,8 +1,8 @@
-import { interests } from "../../Resources/Constants";
+import { interests } from "../../Resources/constants";
 import { Grid, Typography } from "@mui/material";
 import { Divider, Box, Paper } from "@mui/material";
 import { useState, useEffect } from "react";
-import { Project } from "../../Resources/Constants";
+import { Project } from "../../Resources/constants";
 import { getNewestProjects } from "../../Services/ProjectService";
 import CarouselSection from "./CarouselSection";
 

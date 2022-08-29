@@ -8,7 +8,7 @@ import {
   LinearProgress,
   Button,
 } from "@mui/material";
-import { Project } from "../../Resources/Constants";
+import { Project } from "../../Resources/constants";
 import { useNavigate } from "react-router-dom";
 import ViewProfile from "../UserProfile/ViewProfile";
 import LinearProgressLine from "../Home/LinearProgressLine";
@@ -25,11 +25,13 @@ export default function CarouselCard({ project }: Props) {
     navigate(pageLink);
   };
 
+  const defaultImage = "https://picsum.photos/200/300";
+
   const getPhotoUrl = (photoUrl: string[]) => {
     if (photoUrl && photoUrl.length > 0) {
       return photoUrl[0];
     }
-    return "https://picsum.photos/200/300";
+    return defaultImage;
   };
 
   const styles = {
