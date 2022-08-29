@@ -86,7 +86,7 @@ export const profileDataBox = {
   fontSize: '0.875rem',
   fontWeight: '700',
   textAlign: 'left',
-  label: "My profile section"
+  label: "My profile section",
 }
 
 export const viewProfileAdditional = {
@@ -111,3 +111,7 @@ export const typographyTitle = {
   letterSpacing: '.3rem',
   color: 'inherit'
 }
+
+export const noPhoto = 'https://dominionmartialarts.com/wp-content/uploads/2017/04/default-image-620x600.jpg';
+
+export const noAvatarUrl = 'https://icon-library.com/images/no-profile-pic-icon/no-profile-pic-icon-11.jpg';

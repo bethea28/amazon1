@@ -3,6 +3,7 @@ import { Box, TextField, Avatar, Button } from '@mui/material';
 import { useState, useContext } from 'react';
 import { AuthContext } from '../../Context/AuthProvider';
 import UserService from '../../Services/UserService';
+import { noAvatarUrl } from '../../Resources/Constants'
 
 interface Props {
     avatarURL: string;
@@ -10,7 +11,7 @@ interface Props {
 
 export default function AvatarUploadField({ avatarURL }: Props) {
 
-    const [preview, setPreview] = useState('https://icon-library.com/images/no-profile-pic-icon/no-profile-pic-icon-11.jpg');
+    const [preview, setPreview] = useState(noAvatarUrl);
     const [file, setFile] = useState("");
     const [disabledSave, setDisabledSave] = useState(false);
     const [disabledDelete, setDisabledDelete] = useState(false);
@@ -46,13 +47,13 @@ export default function AvatarUploadField({ avatarURL }: Props) {
     const handleDeleteAvatar = (e: React.MouseEvent<HTMLElement>) => {
         setDisabledDelete(true);
         UserService.deleteAvatar(id, token);
+        setPreview(noAvatarUrl);
         const noAvatar = "";
-        setPreview(noAvatar);
         setFile(noAvatar);
     }
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', border: 1 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <Box sx={{ display: 'flex', margin: 2, justifyContent: 'center' }}>
                 <Avatar
                     alt="Profile Image"

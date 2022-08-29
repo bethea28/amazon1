@@ -1,4 +1,4 @@
-import { Box, ThemeProvider, Container, Stack, Card, CardContent, CardMedia, Typography, Chip } from '@mui/material';
+import { Box, ThemeProvider, Container, Stack, Card, CardContent, CardMedia, Typography, Chip, ImageList, ImageListItem } from '@mui/material';
 import React, { useState, useEffect } from "react";
 import { Project } from '../../Resources/Constants';
 import { getProjectDetails } from '../../Services/ProjectService';
@@ -10,7 +10,7 @@ import ViewProfile from '../UserProfile/ViewProfile';
 
 export default function ProjectDetails() {
 
-    const { id } = useParams(); //Update to useParams or Context to pass in global projectId variable
+    const { id } = useParams();
     const [currentProject, setCurrentProject] = useState<Project>();
     const { projectId, projectName, photoURLs, categories, lastUpdatedAt, createdAt, description } = currentProject! || {};
 
@@ -30,10 +30,10 @@ export default function ProjectDetails() {
 
     const imageOnErrorHandler = (
         event: React.SyntheticEvent<HTMLImageElement, Event>
-      ) => {
-        event.currentTarget.src = "https://us.123rf.com/450wm/pavelstasevich/pavelstasevich1811/pavelstasevich181101028/112815904-no-image-available-icon-flat-vector-illustration.jpg?ver=6";
+    ) => {
+        event.currentTarget.src = "../../Resources/Default_Image_Thumbnail.png";
         event.currentTarget.className = "error";
-      };
+    }
 
     if (!currentProject) {
         return null;
@@ -46,7 +46,7 @@ export default function ProjectDetails() {
                     <SearchBar />
                     <NavigationBar />
                     <Box>
-                        <Stack 
+                        <Stack
                             key={projectId}
                             direction="column"
                             justifyContent="space-evenly"
@@ -54,39 +54,53 @@ export default function ProjectDetails() {
                             spacing={2}
                             m={5}
                         >
-                        <Card sx={{ maxWidth: 1000 }}>
-                            <CardMedia
-                                component="img"
-                                height="500"
-                                image={photoURLs[0]}
-                                onError={imageOnErrorHandler}
-                                alt="Pot of plants"
-                            />
-                            <CardContent>
-                                <Typography variant="h1" m={1}>
-                                {projectName}
-                                </Typography>
-                                <Stack
-                                    direction="row"
-                                    justifyContent="space-around"
-                                    alignItems="center"
-                                    spacing={2}
-                                    >
-                                    <Chip label={categories} sx={{backgroundColor: 'rgb(166, 223, 139)' }}/>
-                                    <Typography variant="subtitle1" m={3}>
-                                    <Typography sx={{ fontWeight: 1000 }}>Created:</Typography> {createdAt} <Typography sx={{ fontWeight: 1000 }}>Last Updated:</Typography> {lastUpdatedAt}
+                            <Card sx={{ maxWidth: 1500 }}>
+                                <CardMedia
+                                    component="img"
+                                    height="500"
+                                    width="800"
+                                    image={photoURLs[0]}
+                                    onError={imageOnErrorHandler}
+                                    alt="Project photo"
+                                />
+                                <CardContent>
+                                    <Typography variant="h1" m={1}>
+                                        {projectName}
                                     </Typography>
-                                </Stack>
-                                {/* Insert targetFundingDate and targetFundingNum component here
+                                    <Stack
+                                        direction="row"
+                                        justifyContent="space-around"
+                                        alignItems="center"
+                                        spacing={2}
+                                    >
+                                        <Chip label={categories} sx={{ backgroundColor: 'rgb(166, 223, 139)' }} />
+                                        <Typography variant="subtitle1" m={3}>
+                                            <Typography sx={{ fontWeight: 1000 }}>Created:</Typography> {createdAt} <Typography sx={{ fontWeight: 1000 }}>Last Updated:</Typography> {lastUpdatedAt}
+                                        </Typography>
+                                    </Stack>
+                                    {/* Insert targetFundingDate and targetFundingNum component here
                                 Insert user data (avatar and name) component */}
-                                <Typography variant="body1" m={3}>
-                                {description}
-                                </Typography>
-                                <ViewProfile {...currentProject}></ViewProfile>
-                            </CardContent>
-                            {/* Insert like component
+                                    <Typography variant="body1" m={3}>
+                                        {description}
+                                    </Typography>
+                                    <ImageList sx={{ width: 500, height: 164 }} cols={3} rowHeight={164}>
+                                        {photoURLs.slice(1).map((url) => (
+                                            <ImageListItem key={url}>
+                                                <img
+                                                    src={`${url}?w=164&h=164&fit=crop&auto=format`}
+                                                    srcSet={`${url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                                                    alt="Project photo"
+                                                    onError={imageOnErrorHandler}
+                                                    loading="lazy"
+                                                />
+                                            </ImageListItem>
+                                        ))}
+                                    </ImageList>
+                                    <ViewProfile {...currentProject}></ViewProfile>
+                                </CardContent>
+                                {/* Insert like component
                             Insert comments component */}
-                        </Card>
+                            </Card>
                         </Stack>
 
                     </Box>

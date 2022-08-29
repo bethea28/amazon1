@@ -15,32 +15,34 @@ import RequireAuth from './Services/Authentication/RequireAuth'
 import Layout from './Services/Authentication/Layout';
 import PersistLogin from './Services/Authentication/PersistLogin';
 import ProjectDetails from './Components/Project/ProjectDetails';
+import UploadPhotos from './Components/Project/UploadPhotos';
 import { theme } from './Resources/GlobalTheme'
 
 function App() {
 
   return (
     <Box className="App" height={"100vh"} display={"flex"} flexDirection={"column"}>
-      <ThemeProvider theme = {theme}>
+      <ThemeProvider theme={theme}>
         <AuthProvider>
           <Routes>
-            <Route element={<PersistLogin/>}>
-              <Route path="/" element={<Layout/>}>
-              
+            <Route element={<PersistLogin />}>
+              <Route path="/" element={<Layout />}>
+
                 {/* public routes */}
-                  <Route path="/" element={<Home />} />
-                  <Route path="/signup" element={<SignUp />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/projects/:id" element={<ProjectDetails />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/projects/:id" element={<ProjectDetails />} />
 
                 {/* protected routes */}
-                  <Route element={<RequireAuth/>}>
-                    <Route path="/dashboard" element={<Dashboard />} />
-                      <Route path="/profile" element={<UserProfile /> } />
-                      <Route path="/addproject" element={<AddProject />} />
-                      <Route path="/interests" element={<InterestSelection />} />
-                    </Route>
-                  </Route>
+                <Route element={<RequireAuth />}>
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/profile" element={<UserProfile />} />
+                  <Route path="/addproject" element={<AddProject />} />
+                  <Route path="/interests" element={<InterestSelection />} />
+                  <Route path="/uploadprojectphotos/:id" element={<UploadPhotos />} />
+                </Route>
+              </Route>
             </Route>
           </Routes>
         </AuthProvider>

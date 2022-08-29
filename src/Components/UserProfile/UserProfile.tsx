@@ -78,7 +78,7 @@ export default function UserProfile() {
                           return { ...prevState, email: event.target.value };
                         });
                       }}
-                      fullWidth id="outlined-basic" label="email"
+                      fullWidth id="outlined-basic" label="Email"
                       InputLabelProps={{ shrink: true }}
                       value={email}
                       variant="outlined" size="small"
@@ -106,7 +106,7 @@ export default function UserProfile() {
                       id="outlined-multiline"
                       size="medium"
                       label="Bio"
-                      rows={5}
+                      rows={10}
                       multiline={true}
                       value={bio}
                       onChange={event => {
