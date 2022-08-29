@@ -1,6 +1,6 @@
 import React, { useState, MouseEvent } from 'react';
 import { AppBar, Container, Button, Grid } from '@mui/material';
-import { Box, Toolbar, Menu } from '@mui/material';
+import { Box, Toolbar, Menu, useTheme } from '@mui/material';
 import { IconButton, Typography, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from "react-router-dom";
@@ -21,10 +21,6 @@ const AppbarPublic = () => {
   };
 
   const navigate = useNavigate();
-
-  const handleStartProject = () => {
-    navigate("/addproject");
-  };
 
   const handlePageClick = (key: string) => {
     navigate(`/${key}`);
@@ -76,20 +72,22 @@ const AppbarPublic = () => {
                   <Button
                     key={page}
                     onClick={() => handlePageClick(page)}
-                    sx={{ my: 2, color: 'white', display: 'block' }}>
+                    color="white" sx={{ my: 2, display: 'block' }}>
                     {page}
                   </Button>))}
               </Box>
             </Grid>
             <Grid item>
-              <Typography fontStyle={'inherit'} fontFamily={'Frankfurter'}>
-                JUMPSTARTER
-              </Typography>
+              <Button color='white' onClick={() => handlePageClick('')}>
+                <Typography fontStyle={'inherit'}>
+                  JUMPSTARTER
+                </Typography>
+              </Button>
             </Grid>
             <Grid item>
               <Box sx={{ flexGrow: 0 }}>
                 <Button sx={{ backgroundColor: "#A6BBA7", color: "#000000", borderRadius: 50 }}
-                  variant="contained" size="small" onClick={handleStartProject}>Start a project</Button>
+                  variant="contained" size="small" onClick={() => handlePageClick('addproject')}>Start a project</Button>
               </Box>
             </Grid>
           </Grid>

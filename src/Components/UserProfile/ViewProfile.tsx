@@ -3,7 +3,7 @@ import { Typography, Dialog, DialogTitle, DialogContent, Box, DialogActions, But
 import { typographyTitle, User, initialUserData } from "../../Resources/Constants"
 import UserService from "../../Services/UserService";
 
-  export default function ViewProfile({ userId }: { userId: string }) {
+export default function ViewProfile({ userId }: { userId: string }) {
   const [open, setOpen] = React.useState(false);
   const [fullWidth, setFullWidth] = React.useState(true);
   const [userProfile, setUserProfile] = useState<User>(initialUserData);
@@ -22,40 +22,37 @@ import UserService from "../../Services/UserService";
   };
 
   const fetchUserData = async () => {
-    if(userId){
-    try{
-      const response = await UserService.getUser(userId) as User;
-      setUserProfile(response);
-    }catch (err)
-    {
-      console.log(err)
-    }}
+    if (userId) {
+      try {
+        const response = await UserService.getUser(userId) as User;
+        setUserProfile(response);
+      } catch (err) {
+        console.log(err)
+      }
+    }
   }
-  if(!userProfile)
-  {
+  if (!userProfile) {
     return null
   }
-  const {firstName, lastName, bio, email, lastSignOn, avatarURL} = userProfile
+  const { firstName, lastName, bio, email, lastSignOn, avatarURL } = userProfile
 
-  return(  
+  return (
     <Box>
       <Typography
         variant="h6"
         noWrap
-        fontSize={8}
-        fontWeight={0}
-        fontFamily={'sans-serif'}
+        fontSize={14}
         onClick={handleClickOpen}
-        sx={{ ...typographyTitle}}>
-          By: {firstName + " " + lastName}
-      </Typography>                                 
+        sx={{ ...typographyTitle }}>
+        By: {firstName + " " + lastName}
+      </Typography>
       <Dialog
         fullWidth={fullWidth}
         maxWidth={maxWidth}
         open={open}
         onClose={handleClose}>
         <img src={avatarURL} />
-        <DialogTitle sx={{justifyContent: 'center' }}>
+        <DialogTitle sx={{ justifyContent: 'center' }}>
           {firstName + " " + lastName}
         </DialogTitle>
         <DialogContent dividers>
