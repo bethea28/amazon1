@@ -42,7 +42,7 @@ function App() {
                 <Route path="/addproject" element={<AddProject />} />
                 <Route path="/interests" element={<InterestSelection />} />
                 <Route path="/allprojects" element={<AllProjects />} />
-                <Route path="/allprojects/:id" element={<ModifyProject />} />
+                <Route path="/projects/:id/edit" element={<ModifyProject />} />
               </Route>
             </Route>
           </Route>
