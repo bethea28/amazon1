@@ -28,34 +28,37 @@ export type Project = {
     photoURLs: string[]
 }
 
-export type GetUserResponse = {
-    id: number,
-    avatar: string,
-    bio: string,
-    email: string,
-    username: string,
-    firstName: string,
-    lastName: string,
-    interests: string[],
-    projectIDs: string[]
+export type User = {
+  userId: string,
+  avatarURL: string,
+  bio: string,
+  email: string,
+  username: string,
+  interests: string[],
+  createdAt: string,
+  updatedAt: string,
+  lastSignOn: string
+  firstName: string,
+  lastName: string,
 }
+
+export const initialUserData: User = {
+  userId: '',
+  avatarURL: '',
+  bio: '',
+  email: '',
+  username: '',
+  interests: [''],
+  createdAt: '',
+  updatedAt: '',
+  lastSignOn: '',
+  firstName: '',
+  lastName: '',
+};
 
 export type UpdateUserResponse = {
     data: object
 };
-
-export const profileBackgroundImageBox = {
-  width: 1,
-  height: 1 / 4,
-  my: 3,
-  mr: 2,
-  backgroundColor: '#EAEAEA',
-  borderRadius: '5px',
-  fontSize: '0.875rem',
-  fontWeight: '700',
-  textAlign: 'center',
-  label: "profile-header-picture"
-}
 
 export const viewProfileInfo = {
   display: 'flex',
@@ -106,6 +109,5 @@ export const typographyTitle = {
   fontFamily: 'monospace',
   fontWeight: 700,
   letterSpacing: '.3rem',
-  color: 'inherit',
-  textDecoration: 'none',
+  color: 'inherit'
 }

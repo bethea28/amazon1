@@ -1,10 +1,7 @@
 import '@aws-amplify/ui-react/styles.css';
-import { green } from '@mui/material/colors';
-import { createTheme } from '@mui/material/styles';
 import AddProject from './Components/Project/AddProject';
 import React from 'react';
 import './App.css';
-import { Amplify } from 'aws-amplify';
 import { Routes, Route } from 'react-router-dom';
 import InterestSelection from './Components/Signup/InterestSelection';
 import { Box, ThemeProvider } from '@mui/material';
@@ -19,18 +16,10 @@ import Layout from './Services/Authentication/Layout';
 import PersistLogin from './Services/Authentication/PersistLogin';
 import ProjectDetails from './Components/Project/ProjectDetails';
 import UploadPhotos from './Components/Project/UploadPhotos';
+import { theme } from './Resources/GlobalTheme'
 
 function App() {
 
-  const theme = createTheme({
-    palette: {
-      primary: {
-        light: '#757ce8',
-        main: '#90D86F',
-        dark: green[600],
-      }
-    },
-  })
   return (
     <Box className="App" height={"100vh"} display={"flex"} flexDirection={"column"}>
       <ThemeProvider theme={theme}>
@@ -43,6 +32,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/projects/:id" element={<ProjectDetails />} />
 
                 {/* protected routes */}
                 <Route element={<RequireAuth />}>
@@ -50,7 +40,6 @@ function App() {
                   <Route path="/profile" element={<UserProfile />} />
                   <Route path="/addproject" element={<AddProject />} />
                   <Route path="/interests" element={<InterestSelection />} />
-                  <Route path="/projects/:id" element={<ProjectDetails />} />
                   <Route path="/uploadprojectphotos/:id" element={<UploadPhotos />} />
                 </Route>
               </Route>

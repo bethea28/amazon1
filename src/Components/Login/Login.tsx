@@ -1,14 +1,16 @@
 import React , { useState, useContext } from 'react';
-import { Box, Container, Button, Typography, Grid, TextField, Paper } from '@mui/material';
-import { Auth } from 'aws-amplify';
-import SetAuthorizationToken from '../../Services/Authentication/SetAuthorizationToken';
+import { Box, Button, Typography, Grid, TextField, Paper } from '@mui/material';
+import AuthService from '../../Services/Authentication/AuthService';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useLocation, useNavigate,  } from "react-router-dom";
 import { AuthContext } from '../../Context/AuthProvider'
+import Header from "../Header";
+import UserService from '../../Services/UserService';
+import { User } from '../../Resources/Constants'
 
 interface IFormInput {
   username: string,
-  password: string,
+  password: string
 };
 
 interface LocationState {
@@ -25,21 +27,22 @@ interface LocationState {
     const navigate = useNavigate();
     const location = useLocation();
     const {from} = location.state as LocationState || "/"
+    const [currentDate, setCurrentDate] = useState<Date>(new Date());
 
     const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
       const username = data.username;
       const password = data.password;
       try {
-        const user = await Auth.signIn({
-          username,
-          password
-        });
-        const userId = user.attributes.sub
-        const token:string = await SetAuthorizationToken()
+        const user = await await AuthService.signIn(username, password);
+        setCurrentDate(new Date())
+        const updatedUser:Partial<User> = {lastSignOn: currentDate.toLocaleString()};
+        const userId:string = user.userId;
+        const token:string = user.jwt;
 
         setAuthData(prevState => {
-          return {...prevState, ['id']: userId , ['token']: token, ['isLoggedIn']: true}
+          return {...prevState, id: userId , token: token, isLoggedIn: true}
         })
+        await UserService.updateUser(userId, token, updatedUser);
         if(location.state){
             navigate(from.pathname, {replace: true});
           }
@@ -61,8 +64,8 @@ interface LocationState {
       <Grid container direction={"column"} justifyContent="center" alignContent={"center"} style={{ minHeight: '100vh' }}>
       <Grid item className="signUpBox">
         <form>
-          <Typography variant="h2">Log In</Typography>
-          <Box height="100%" bgcolor="#D1e1D2">
+          <Typography variant="h2">Sign In</Typography>
+          <Box height="100%">
             <Grid container direction={"column"} spacing={2}>
               <Grid item>
                 <Typography variant="caption">{errorMessage}</Typography>
@@ -119,9 +122,7 @@ interface LocationState {
                 />
               </Grid>
               <Grid item>
-                <Button variant="outlined" type="submit" onClick={handleSubmit(onSubmit)}>
-                  <Typography variant="button">Log In</Typography>
-                </Button>
+                <Button variant="contained" type="submit" onClick={handleSubmit(onSubmit)}>Log In</Button>
               </Grid>
             </Grid>
           </Box>

@@ -1,66 +1,73 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Box, Button, Grid, Typography, ThemeProvider, Paper, TextField } from "@mui/material";
-import { Auth } from 'aws-amplify';
-import setAuthorizationToken from '../../Services/Authentication/SetAuthorizationToken';
+import UserService from '../../Services/UserService';
 import { theme } from "../../Resources/GlobalTheme";
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useNavigate } from "react-router-dom";
-import UserProfileService from '../../Services/UserProfileService';
+import Header from "../Header";
+import AuthService from "../../Services/Authentication/AuthService"
+import { AuthContext} from '../../Context/AuthProvider';
 
 interface IFormInput {
   username: string,
-  firstname: string,
-  lastname: string,
+  firstName: string,
+  lastName: string,
   password: string,
   passwordverify: string,
-  email: string
+  email: string,
+  lastSignOn: string,
+  createdAt: string
 };
 
+interface signUpError {
+  name: string;
+  code: string;
+}
+
 function SignUp() {
-  const { control, handleSubmit, register, getValues } = useForm<IFormInput>();
+  const { control, handleSubmit, getValues } = useForm<IFormInput>();
   const [errorMessage, setError ] = useState("");
   const [ passwordShown, setPasswordShown ] = useState(false);
   const navigate = useNavigate();
+  const [currentDate, setCurrentDate] = useState<Date>(new Date());
 
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
   }
 
+  const { setAuthData } = useContext(AuthContext);
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     const username = data.username;
-    const firstname = data.firstname;
-    const lastname = data.lastname;
+    const firstName = data.firstName;
+    const lastName = data.lastName;
     const password = data.password;
     const email = data.email;
+
     try {
-      const user = await Auth.signUp({
-        username,
-        password,
-        attributes: {
-          email
-        }
-      });
-      const data = {
-        userName: user.user.getUsername(),
-        firstName: firstname,
-        lastName: lastname,
-        userId: user.userSub,
-        email: email
-      };
-      const token = await setAuthorizationToken();
-      const profile = await UserProfileService.addUserProfile(token, data );
-      console.log(profile);
+      /** Add user to cognito */
+      await AuthService.signUp(username, password, email)
+      const user = await AuthService.signIn(username, password);
+      setCurrentDate(new Date());
+      setAuthData(prevState => {
+        return {...prevState, isLoggedIn: true, id:user.userId, token:user.jwt}
+      })
+      data.lastSignOn = currentDate.toLocaleString();
+      data.createdAt = currentDate.toLocaleString();
+
+      /** Add user to dynamodb database */
+      await UserService.addUser(user.jwt, data)
       setError("Sign up was successful!");
       navigate("/interests");
       return user;
-    } catch (error) {
-      if (typeof error === 'object' && error != null) {
-        const errorObj = error;
-        setError(JSON.stringify(errorObj));
-        return error;
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        const errorMessage = e.message;
+        setError(errorMessage);
+      } else {
+        setError("Something went wrong, please try again later!")
       }
     }
-  };
+   };
 
   return (
     <ThemeProvider theme = {theme}>
@@ -70,7 +77,7 @@ function SignUp() {
     <Grid item className="signUpBox">
       <form>
         <Typography variant="h2">Sign Up</Typography>
-        <Box height="25%" bgcolor="#D1e1D2">
+        <Box height="25%">
           <Grid container direction={"column"} spacing={2} justifyContent="center">
             <Grid item>
               <Typography variant="caption">{errorMessage}</Typography>
@@ -86,7 +93,7 @@ function SignUp() {
                 }) => (
                   <TextField
                     fullWidth
-                    label={"Username"}
+                    label="Username"
                     variant="outlined"
                     value={value}
                     onChange={onChange}
@@ -102,7 +109,7 @@ function SignUp() {
             </Grid>
             <Grid item>
               <Controller
-                name="firstname"
+                name="firstName"
                 control={control}
                 defaultValue=""
                 render={({
@@ -111,7 +118,7 @@ function SignUp() {
                 }) => (
                   <TextField
                     fullWidth
-                    label={"First Name"}
+                    label="First Name"
                     variant="outlined"
                     value={value}
                     onChange={onChange}
@@ -127,7 +134,7 @@ function SignUp() {
               </Grid>
               <Grid item>
               <Controller
-                name="lastname"
+                name="lastName"
                 control={control}
                 defaultValue=""
                 render={({
@@ -136,7 +143,7 @@ function SignUp() {
                 }) => (
                   <TextField
                     fullWidth
-                    label={"Last Name"}
+                    label="Last Name"
                     variant="outlined"
                     value={value}
                     onChange={onChange}
@@ -152,6 +159,31 @@ function SignUp() {
             </Grid>
             <Grid item>
               <Controller
+                name="email"
+                control={control}
+                defaultValue=""
+                render={({
+                  field: { onChange, value = "" },
+                  fieldState: { error },
+                }) => (
+                  <TextField
+                    fullWidth
+                    label="Email"
+                    variant="outlined"
+                    value={value}
+                    onChange={onChange}
+                    error={!!error}
+                    helperText={error ? error.message : null}
+                    type="string"
+                  />
+                )}
+                rules={{
+                  required: true,
+                }}
+              />
+            </Grid>
+            <Grid item>
+              <Controller
                 name="password"
                 control={control}
                 defaultValue=""
@@ -161,7 +193,7 @@ function SignUp() {
                 }) => (
                   <TextField
                     fullWidth
-                    label={"Password"}
+                    label="Password"
                     variant="outlined"
                     value={value}
                     onChange={onChange}
@@ -175,8 +207,9 @@ function SignUp() {
                   minLength: 8,
                   pattern: /^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!?]).*$/
                 }}
+
               />
-              <Button onClick={togglePassword}>Show Password</Button>
+            <Button onClick={togglePassword}>Show Password</Button>
             </Grid>
             <Grid item>
               <Controller
@@ -189,7 +222,7 @@ function SignUp() {
                 }) => (
                   <TextField
                     fullWidth
-                    label={"PasswordVerify"}
+                    label="Verify Password"
                     variant="outlined"
                     value={value}
                     onChange={onChange}
@@ -209,37 +242,10 @@ function SignUp() {
               />
             </Grid>
             <Grid item>
-              <Controller
-                name="email"
-                control={control}
-                defaultValue=""
-                render={({
-                  field: { onChange, value = "" },
-                  fieldState: { error },
-                }) => (
-                  <TextField
-                    fullWidth
-                    label={"Email"}
-                    variant="outlined"
-                    value={value}
-                    onChange={onChange}
-                    error={!!error}
-                    helperText={error ? error.message : null}
-                    type="string"
-                  />
-                )}
-                rules={{
-                  required: true,
-                }}
-              />
-            </Grid>
-            <Grid item>
               <Typography variant="caption">*Password must be at least 8 characters with 1 symbol and 1 capitol letter</Typography>
             </Grid>
             <Grid item>
-             <Button variant="outlined" type="submit" onClick={handleSubmit(onSubmit)}>
-                <Typography variant="button">Sign Up</Typography>
-              </Button>
+            <Button onClick={handleSubmit(onSubmit)} type="submit" size="large" variant="contained" >Sign Up</Button>
             </Grid>
             </Grid>
         </Box>

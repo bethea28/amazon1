@@ -11,10 +11,9 @@ class AuthService{
    * @params password The user's password
    */
   signIn = async (username:string, password:string) => {
-    const response = await Auth.signIn(username, password)
-    const jwt = await this.getCurrentUser()
-    const returns = {jwt, response}
-    return returns
+    await Auth.signIn(username, password)
+    const response = await this.getCurrentUser()
+    return response
   }
 
   /**
@@ -28,9 +27,6 @@ class AuthService{
       email
     }
     });
-    const newUser = await this.getCurrentUser()
-    const returns = {newUser, response}
-    return returns
   }
 
   /**
@@ -39,9 +35,9 @@ class AuthService{
   getCurrentUser = async () => {
     const token = await Auth.currentSession().then(res=>{
       let accessToken = res.getAccessToken();
-      let id = accessToken.payload.sub;
+      let userId = accessToken.payload.sub;
       let jwt = accessToken.getJwtToken();
-      return {id, jwt}
+      return {userId, jwt}
     })
     return token
   };

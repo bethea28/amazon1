@@ -110,7 +110,7 @@ export default function UploadGalleryPhotos() {
                                 />
                                 <CardContent>
                                     <Button className="deletePhoto"
-                                        sx={{ margin: 1, backgroundColor: "#FFF", mt: 1, height: 25 }}
+                                        sx={{ margin: 1, backgroundColor: "#000", mt: 1, height: 25 }}
                                         variant="contained"
                                         component="span"
                                         onClick={(e: React.MouseEvent<HTMLElement>) => handleGalleryDelete(e, index)}

@@ -1,5 +1,5 @@
 import React, { useState, MouseEvent, useContext } from 'react';
-import { Box, Toolbar, Menu } from '@mui/material';
+import { Box, Toolbar, Menu, Avatar } from '@mui/material';
 import { IconButton, Typography, MenuItem, AppBar } from '@mui/material';
 import { ListItemText, Divider, ListItemIcon } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -12,6 +12,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {Search, SearchIconWrapper, StyledInputBase} from './Constants'
 import { AuthContext } from '../../Context/AuthProvider';
 import AuthService from '../../Services/Authentication/AuthService';
+import { typographyTitle } from '../../Resources/Constants';
 
 export default function AppbarPrivate() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -64,7 +65,7 @@ export default function AppbarPrivate() {
   const handleLogout = async () =>
   {
     setAuthData(prevState => {
-      return {...prevState, ['id']: '' , ['token']: '', ['isLoggedIn']: false}
+      return {...prevState, id: '' , token: '', isLoggedIn: false}
     })
     
     navigate("/");
@@ -177,7 +178,7 @@ export default function AppbarPrivate() {
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
+            sx={{ ...typographyTitle, display: { xs: 'none', sm: 'block' } }}
           >
             JUMPSTARTER
           </Typography>
@@ -199,9 +200,8 @@ export default function AppbarPrivate() {
               aria-controls={menuId}
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
+              color="inherit">
+              <AccountCircle/>
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
