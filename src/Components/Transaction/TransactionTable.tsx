@@ -7,6 +7,7 @@ import { useParams} from 'react-router-dom';
 
 
 export const ProjectIdContext = createContext<string>('')
+export const TransactionContext = createContext<Transaction[]>([]);
 
 export const TransactionTable = () => {
 
@@ -31,10 +32,14 @@ export const TransactionTable = () => {
     <div className="container">
     
     <ProjectIdContext.Provider value={id!}>
+    <TransactionContext.Provider value = {transactions!}>
+      
+    
     <AddTransaction
     //  transactions = {transactions}
     //  listUpdated = {listUpdated}
     />
+    </TransactionContext.Provider>
     </ProjectIdContext.Provider>
     <TableContainer component={Paper} sx={{ maxHeight: '600px' }}>
       <Table aria-label='simple table' stickyHeader>

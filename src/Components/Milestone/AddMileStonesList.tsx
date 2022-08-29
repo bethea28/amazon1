@@ -65,7 +65,7 @@ export function AddMileStonesList() {
       }
   }
     return (
-      <form onSubmit={handleSubmit(onsubmit)}>
+      <form onSubmit={handleSubmit(onsubmit)} style={{flexDirection:"row-reverse"}}>
         <Typography>Please Define Milestones</Typography>
         <Box sx={{ width: '100%' }}>
           {milestones.map((milestone, index) => {

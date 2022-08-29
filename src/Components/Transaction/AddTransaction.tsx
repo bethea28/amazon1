@@ -1,10 +1,11 @@
 import React, {useContext} from 'react'
+import { Transaction } from '../../Resources/Constants';
 import { Typography, FormHelperText, Stack } from '@mui/material';
 import { FormControl, InputLabel, MenuItem, Button,
   Select, Grid, TextField, Paper, makeStyles } from '@material-ui/core';
 import { useForm, Controller} from "react-hook-form";
 import {postTransacData} from '../../Services/AddTransactionService';
-import{ProjectIdContext} from '../Transaction/TransactionTable';
+import{ProjectIdContext, TransactionContext} from '../Transaction/TransactionTable';
 
 
 
@@ -33,6 +34,7 @@ export default function AddTransaction() {
     //let transactions = props.transactions;
     
     const projectIdTrans = useContext<string>(ProjectIdContext);
+    let transactionsList = useContext<Transaction[]>(TransactionContext);
 
     console.log("hi",projectIdTrans);
 
@@ -48,12 +50,15 @@ export default function AddTransaction() {
         }
         
         try{
-        const data = await postTransacData(state)
+        const data = await postTransacData(state);
+        console.log(data);
+        transactionsList = [data, ...transactionsList];
+        
         // listUpdated([state,...transitions])
         // transactions.push(data)
         // listUpdated(transactions)
         // window.location.reload();
-        reset() 
+        reset();
     }
     catch(error){
         console.log(error)
