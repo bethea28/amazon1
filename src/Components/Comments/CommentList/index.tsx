@@ -32,7 +32,7 @@ function CommentList() {
             <Box>
                 <Typography margin={"0.5em"} textAlign={"left"} variant="h5">Comments ({commentList.length})</Typography>
                 <CommentField updateList={(comment: CommentData) => updateList(comment)} />
-                {commentList.map((comment: CommentData) => <Comment key={comment.id} {...comment}/>)}
+                {commentList.map((comment: CommentData) => <Comment key={comment.id} comment={comment}/>)}
             </Box>}
         </Box>
     )
