@@ -3,9 +3,7 @@ import {
   CardActions,
   CardMedia,
   CardContent,
-  Box,
   Typography,
-  LinearProgress,
   Button,
 } from "@mui/material";
 import { Project } from "../../Resources/constants";
@@ -20,6 +18,16 @@ interface Props {
 export default function CarouselCard({ project }: Props) {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const {
+    projectId,
+    photoURLs,
+    totalFundedNum,
+    targetFundingNum,
+    projectName,
+    userId,
+    description,
+  } = project;
 
   const navigateTo = (page: string) => {
     if (location.pathname == "/allprojects") {
@@ -45,16 +53,6 @@ export default function CarouselCard({ project }: Props) {
     },
     media: {},
   };
-
-  const {
-    projectId,
-    photoURLs,
-    totalFundedNum,
-    targetFundingNum,
-    projectName,
-    userId,
-    description,
-  } = project;
 
   return (
     <Card

@@ -46,7 +46,10 @@ function App() {
                 <Route path="/addproject" element={<AddProject />} />
                 <Route path="/interests" element={<InterestSelection />} />
                 <Route path="/allprojects" element={<AllProjects />} />
-                <Route path="/projects/:id/edit" element={<ModifyProject />} />
+                <Route
+                  path="/projects/:userId/edit"
+                  element={<ModifyProject />}
+                />
                 <Route
                   path="/uploadprojectphotos/:id"
                   element={<UploadPhotos />}
