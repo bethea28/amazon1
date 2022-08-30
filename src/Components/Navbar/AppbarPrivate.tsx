@@ -19,7 +19,7 @@ export default function AppbarPrivate() {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
-  const settings = ["Home"];
+  const settings = ["Home", "All Projects"];
 
   const navigate = useNavigate();
   const { setAuthData } = useContext(AuthContext);
@@ -45,9 +45,13 @@ export default function AppbarPrivate() {
     navigate("/profile");
   };
 
-  const handleHomePageClick = () => {
+  const handlePageClick = (page: string) => {
     handleCloseUserMenu();
-    navigate("/");
+    if (page == "Home") {
+      navigate("/");
+    } else {
+      navigate("/allprojects");
+    }
   };
 
   const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
@@ -167,9 +171,9 @@ export default function AppbarPrivate() {
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}
           >
-            {settings.map((setting) => (
-              <MenuItem key={setting} onClick={handleHomePageClick}>
-                <Typography textAlign="center">{setting}</Typography>
+            {settings.map((page) => (
+              <MenuItem key={page} onClick={() => handlePageClick(page)}>
+                <Typography textAlign="center">{page}</Typography>
               </MenuItem>
             ))}
           </Menu>
