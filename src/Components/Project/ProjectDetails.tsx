@@ -35,6 +35,10 @@ export default function ProjectDetails() {
     createdAt,
     description,
     userId,
+    milestones,
+    totalFundedNum,
+    targetFundingDate,
+    targetFundingNum,
   } = currentProject! || {};
 
   /**
@@ -62,7 +66,7 @@ export default function ProjectDetails() {
   if (!currentProject) {
     return null;
   }
-
+  //console.log("milestones", milestones[0].name);
   return (
     <ThemeProvider theme={theme}>
       <Box className="Project-details-page">
@@ -97,10 +101,19 @@ export default function ProjectDetails() {
                     alignItems="center"
                     spacing={2}
                   >
-                    <Chip
-                      label={categories}
-                      sx={{ backgroundColor: "rgb(166, 223, 139)" }}
-                    />
+                    <Stack direction="row">
+                      <Typography
+                        sx={{ fontWeight: 1000, mx: 2 }}
+                        variant="subtitle1"
+                      >
+                        Category:
+                      </Typography>
+                      <Chip
+                        label={categories}
+                        sx={{ backgroundColor: "#A6BBA7" }}
+                      />
+                    </Stack>
+
                     <Typography variant="subtitle1" m={3}>
                       <Typography sx={{ fontWeight: 1000 }}>
                         Created:
@@ -112,28 +125,107 @@ export default function ProjectDetails() {
                       {lastUpdatedAt}
                     </Typography>
                   </Stack>
+
                   {/* Insert targetFundingDate and targetFundingNum component here
                                 Insert user data (avatar and name) component */}
-                  <Typography variant="body1" m={3}>
-                    {description}
-                  </Typography>
-                  <ImageList
-                    sx={{ width: 500, height: 164 }}
-                    cols={3}
-                    rowHeight={164}
+
+                  {milestones.map((milestone, idx) => {
+                    return (
+                      <Card
+                        sx={{
+                          maxWidth: 1500,
+                          my: 2,
+                          backgroundColor: "#E9E9E9",
+                        }}
+                      >
+                        <CardContent>
+                          <Stack
+                            direction="row"
+                            justifyContent="space-around"
+                            alignItems="center"
+                            spacing={2}
+                          >
+                            <Typography key={idx} variant="body1" m={3}>
+                              Milestone {idx + 1}:
+                            </Typography>
+                            <Typography variant="body1" m={3}>
+                              Milestones Name: {milestone.name}
+                            </Typography>
+                            <Typography variant="body1" m={3}>
+                              Milestones Target Amount: ${milestone.amount}
+                            </Typography>
+                            <Typography variant="body1" m={3}>
+                              Milestones Date: {milestone.targetDate}
+                            </Typography>
+                          </Stack>
+                        </CardContent>
+                      </Card>
+                    );
+                  })}
+                  <Stack
+                    direction="row"
+                    justifyContent="space-around"
+                    alignItems="center"
+                    spacing={2}
                   >
-                    {photoURLs.slice(1).map((url) => (
-                      <ImageListItem key={url}>
-                        <img
-                          src={`${url}?w=164&h=164&fit=crop&auto=format`}
-                          srcSet={`${url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                          alt="Project photo"
-                          onError={imageOnErrorHandler}
-                          loading="lazy"
-                        />
-                      </ImageListItem>
-                    ))}
-                  </ImageList>
+                    <Card sx={{ minWidth: 600, my: 2 }}>
+                      <CardContent>
+                        <Typography variant="h5" m={3}>
+                          Project Description
+                        </Typography>
+                        <Typography variant="body1" m={3}>
+                          {description}
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                    <Card sx={{ minWidth: 300, my: 2 }}>
+                      <CardContent>
+                        <Stack
+                          direction="column"
+                          justifyContent="space-around"
+                          alignItems="center"
+                          spacing={2}
+                        >
+                          <Typography variant="body1">
+                            Current Funding Amount: ${totalFundedNum}
+                          </Typography>
+                          <Typography variant="body1">
+                            Target Funding Amount: ${targetFundingNum}
+                          </Typography>
+                          <Typography variant="body1">
+                            Target Funding Date: {targetFundingDate}
+                          </Typography>
+                          <Button
+                            variant="contained"
+                            onClick={() =>
+                              navigate(`/addtransactions/${projectId}`)
+                            }
+                          >
+                            Fund
+                          </Button>
+                        </Stack>
+                      </CardContent>
+                    </Card>
+                  </Stack>
+                  <Box sx={{ display: "flex", justifyContent: "center" }}>
+                    <ImageList
+                      sx={{ width: 500, height: 164 }}
+                      cols={3}
+                      rowHeight={164}
+                    >
+                      {photoURLs.slice(1).map((url) => (
+                        <ImageListItem key={url}>
+                          <img
+                            src={`${url}?w=164&h=164&fit=crop&auto=format`}
+                            srcSet={`${url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                            alt="Project photo"
+                            onError={imageOnErrorHandler}
+                            loading="lazy"
+                          />
+                        </ImageListItem>
+                      ))}
+                    </ImageList>
+                  </Box>
                   <ViewProfile userId={userId}></ViewProfile>
                 </CardContent>
                 {/* Insert like component
@@ -141,12 +233,6 @@ export default function ProjectDetails() {
                 <CommentList />
               </Card>
             </Stack>
-            <Button
-              variant="contained"
-              onClick={() => navigate(`/addtransactions/${projectId}`)}
-            >
-              Fund the project
-            </Button>
           </Box>
         </Container>
       </Box>
