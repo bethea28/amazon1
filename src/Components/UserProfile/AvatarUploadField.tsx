@@ -4,7 +4,6 @@ import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../../Context/AuthProvider';
 import UserService from '../../Services/UserService';
 import { noAvatarUrl } from '../../Resources/Constants';
-import { useForm } from "react-hook-form";
 
 interface Props {
     avatarURL: string;
@@ -12,25 +11,19 @@ interface Props {
 
 export default function AvatarUploadField({ avatarURL }: Props) {
 
-    const initialAvatar = {
-        avatarURL: avatarURL
-    }
-
-
     const { id, token } = useContext(AuthContext);
+    const initialAvatar = avatarURL ? avatarURL : noAvatarUrl;
     const [preview, setPreview] = useState(initialAvatar);
     const [file, setFile] = useState("");
     const [disabledSave, setDisabledSave] = useState(false);
     const [disabledDelete, setDisabledDelete] = useState(false);
-    const { register, handleSubmit, reset } = useForm<Props>();
 
     /**
      * onLoad display the image of the avatar associated with current user
      */
     useEffect(() => {
-        console.log("AVATAR", avatarURL);
         setPreview(initialAvatar);
-    }, [avatarURL]);
+    }, [initialAvatar]);
 
     /**
      * This handler changes the image displayed and file to be saved based on the image chosen to be saved.
@@ -39,31 +32,26 @@ export default function AvatarUploadField({ avatarURL }: Props) {
     function handleChange(e: any) {
 
         let fileChosen = URL.createObjectURL(e.target.files[0]);
+        setPreview(fileChosen);
         setFile(e.target.files[0]);
-        console.log("PREVIEW", fileChosen);
-        setPreview(prevState => {
-            return { ...prevState, avatarURL: fileChosen };
-        });
-        setDisabledSave(false);
     }
 
     /**
      * This handler uploads photo chosen to the backend
      */
-    const onSubmit = handleSubmit(async (data: Props) => {
-
+    const handleUpload = (e: React.MouseEvent<HTMLElement>) => {
+        setDisabledSave(true);
         let bodyFormData = new FormData();
         bodyFormData.append('file', file);
-        setDisabledSave(true);
-        await UserService.uploadAvatar(id, token, bodyFormData).then(
+        UserService.uploadAvatar(id, token, bodyFormData).then(
             (value) => {
-                setFile("");
+                window.location.reload();
             },
             (reason) => {
-                setFile("");
+                window.location.reload();
             }
         );
-    });
+    }
 
     /**
      * This handler deletes the current photo saved in the backend and resets the preview image to the default no avatar image
@@ -71,28 +59,41 @@ export default function AvatarUploadField({ avatarURL }: Props) {
     const handleDeleteAvatar = (e: React.MouseEvent<HTMLElement>) => {
 
         setDisabledDelete(true);
-        UserService.deleteAvatar(id, token);
-        setPreview(prevState => {
-            return { ...prevState, avatarURL: noAvatarUrl };
-        });
-        setFile("");
+        UserService.deleteAvatar(id, token).then(
+            (value) => {
+                window.location.reload();
+            },
+            (reason) => {
+                window.location.reload();
+            }
+        );
+
     }
 
-    return (
+    /**
+     * Default image when no image is available or cannot be uploaded
+     */
+    const imageOnErrorHandler = (
+        event: React.SyntheticEvent<HTMLImageElement, Event>
+    ) => {
+        event.currentTarget.src = noAvatarUrl;
+        event.currentTarget.className = "error";
+    };
 
+    return (
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Avatar
                     alt="Profile Image"
-                    src={preview?.avatarURL}
-                    sx={{ width: 75, height: 75 }}
+                    src={preview}
+                    onError={imageOnErrorHandler}
+                    sx={{ width: 60, height: 60 }}
                 />
-                <TextField {...register('avatarURL')}
+                <TextField
                     fullWidth
                     id="outlined-full-width"
                     label="Avatar Upload"
                     style={{ margin: 4 }}
-                    // value=''
                     name="upload-photo"
                     type="file"
                     margin="normal"
@@ -109,7 +110,7 @@ export default function AvatarUploadField({ avatarURL }: Props) {
                     variant="contained"
                     component="span"
                     disabled={disabledSave}
-                    onClick={onSubmit}
+                    onClick={handleUpload}
                 >
                     Save Avatar
                 </Button>
