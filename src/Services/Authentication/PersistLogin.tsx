@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 const PersistLogin = () => {
   
   const [isLoading, setIsLoading] = useState(true)
-  const { isLoggedIn, id, token, setAuthData } = useContext(AuthContext)
+  const { isLoggedIn, setAuthData } = useContext(AuthContext)
 
   useEffect(() => {
     const verifyUser = async () => {
@@ -19,7 +19,7 @@ const PersistLogin = () => {
         if(verified){
           const user = await AuthService.getCurrentUser()
           setAuthData(prevState => {
-            return {...prevState, id: user.userId, token: user.jwt }
+            return {...prevState, id: user.userId, token: user.jwt, isLoggedIn:true }
           })
         }
       }
