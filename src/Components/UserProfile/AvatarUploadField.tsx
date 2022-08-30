@@ -12,12 +12,13 @@ interface Props {
 
 export default function AvatarUploadField({ avatarURL }: Props) {
 
-    const initialData = {
+    const initialAvatar = {
         avatarURL: avatarURL
     }
 
+
     const { id, token } = useContext(AuthContext);
-    const [preview, setPreview] = useState(initialData);
+    const [preview, setPreview] = useState(initialAvatar);
     const [file, setFile] = useState("");
     const [disabledSave, setDisabledSave] = useState(false);
     const [disabledDelete, setDisabledDelete] = useState(false);
@@ -28,7 +29,7 @@ export default function AvatarUploadField({ avatarURL }: Props) {
      */
     useEffect(() => {
         console.log("AVATAR", avatarURL);
-        setPreview(initialData);
+        setPreview(initialAvatar);
     }, [avatarURL]);
 
     /**
@@ -36,12 +37,13 @@ export default function AvatarUploadField({ avatarURL }: Props) {
      * Event type is any for now for file useState to be data types File, String, or Blob.
      */
     function handleChange(e: any) {
+
         let fileChosen = URL.createObjectURL(e.target.files[0]);
+        setFile(e.target.files[0]);
         console.log("PREVIEW", fileChosen);
         setPreview(prevState => {
             return { ...prevState, avatarURL: fileChosen };
         });
-        setFile(e.target.files[0]);
         setDisabledSave(false);
     }
 
@@ -53,14 +55,21 @@ export default function AvatarUploadField({ avatarURL }: Props) {
         let bodyFormData = new FormData();
         bodyFormData.append('file', file);
         setDisabledSave(true);
-        await UserService.uploadAvatar(id, token, bodyFormData);
-        setFile("");
+        await UserService.uploadAvatar(id, token, bodyFormData).then(
+            (value) => {
+                setFile("");
+            },
+            (reason) => {
+                setFile("");
+            }
+        );
     });
 
     /**
      * This handler deletes the current photo saved in the backend and resets the preview image to the default no avatar image
      */
     const handleDeleteAvatar = (e: React.MouseEvent<HTMLElement>) => {
+
         setDisabledDelete(true);
         UserService.deleteAvatar(id, token);
         setPreview(prevState => {
@@ -83,7 +92,7 @@ export default function AvatarUploadField({ avatarURL }: Props) {
                     id="outlined-full-width"
                     label="Avatar Upload"
                     style={{ margin: 4 }}
-                    value=''
+                    // value=''
                     name="upload-photo"
                     type="file"
                     margin="normal"
