@@ -103,7 +103,7 @@ export default function UserProfile() {
                       id="outlined-multiline"
                       size="medium"
                       label="Bio"
-                      rows={4}
+                      rows={7}
                       multiline={true}
                       value={bio}
                       onChange={event => {
