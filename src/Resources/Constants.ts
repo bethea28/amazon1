@@ -77,10 +77,12 @@ export const viewProfileInfo = {
 
 export const profileDataBox = {
   width: 2 / 3,
-  height: 3 / 4,
+  height: "100%",
   mx: "auto",
-  pl: 3,
-  py: 1,
+  my: 4,
+  pl: 6,
+  pr: 3,
+  pt: 3,
   backgroundColor: '#EAEAEA',
   borderRadius: 2,
   fontSize: '0.875rem',

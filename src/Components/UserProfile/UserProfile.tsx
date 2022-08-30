@@ -85,9 +85,6 @@ export default function UserProfile() {
                     />
                   </Grid>
                   <Grid item>
-                    {/* <Avatar
-                      src={avatarURL}>
-                    </Avatar> */}
                     <AvatarUploadField avatarURL={avatarURL} />
                   </Grid>
                 </Grid>
@@ -106,7 +103,7 @@ export default function UserProfile() {
                       id="outlined-multiline"
                       size="medium"
                       label="Bio"
-                      rows={10}
+                      rows={4}
                       multiline={true}
                       value={bio}
                       onChange={event => {

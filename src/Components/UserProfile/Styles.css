@@ -1,6 +1,6 @@
 .customPaper {
   flex-direction: column;
-  height: 44%;
+  height: 28%;
   margin-top: 10px;
   margin-right: 25px;
   border-radius: 5px;
@@ -13,7 +13,7 @@
   border-radius: 5px;
   display: flex;
   background-color: #335436;
-  height: 13%;
+  height: 17%;
 }
 
 .arrowUp-root:hover {
