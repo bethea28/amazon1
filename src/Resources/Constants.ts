@@ -91,28 +91,28 @@ export type UpdateUserResponse = {
 };
 
 export type CommentData = {
-  id?: string,
-  content: string,
-  userId?: string,
-  projectId: string,
-  username?: string,
-  avatarURL?: string,
-  createdAt?: string,
-  updatedAt?: string
-}
+  id?: string;
+  content: string;
+  userId?: string;
+  projectId: string;
+  username?: string;
+  avatarURL?: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
 
 export const profileBackgroundImageBox = {
   width: 1,
   height: 1 / 4,
   my: 3,
   mr: 2,
-  backgroundColor: '#EAEAEA',
-  borderRadius: '5px',
-  fontSize: '0.875rem',
-  fontWeight: '700',
-  textAlign: 'center',
-  label: "profile-header-picture"
-}
+  backgroundColor: "#EAEAEA",
+  borderRadius: "5px",
+  fontSize: "0.875rem",
+  fontWeight: "700",
+  textAlign: "center",
+  label: "profile-header-picture",
+};
 
 export const viewProfileInfo = {
   display: "flex",

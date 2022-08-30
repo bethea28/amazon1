@@ -2,11 +2,11 @@ import { Avatar, Grid, Paper, Typography } from "@mui/material";
 import React from "react";
 import { CommentData } from "../../Resources/Constants";
 import { theme } from "../../Resources/GlobalTheme";
-import { formatDistanceToNowStrict as getTimeDistance } from 'date-fns';
+import { formatDistanceToNowStrict as getTimeDistance } from "date-fns";
 
 type Props = {
-    comment: CommentData
-}
+  comment: CommentData;
+};
 
 function Comment(props: Props) {
   return (
