@@ -9,7 +9,7 @@ import {
   Button,
 } from "@mui/material";
 import { Project } from "../../Resources/constants";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import ViewProfile from "../UserProfile/ViewProfile";
 import LinearProgressLine from "../Home/LinearProgressLine";
 
@@ -19,10 +19,14 @@ interface Props {
 
 export default function CarouselCard({ project }: Props) {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const navigateTo = (page: string) => {
-    const pageLink = `/projects/${page}`;
-    navigate(pageLink);
+    if (location.pathname == "/allprojects") {
+      navigate(`/projects/${page}/edit`);
+    } else {
+      navigate(`/projects/${page}`);
+    }
   };
 
   const defaultImage = "https://picsum.photos/200/300";
@@ -51,6 +55,7 @@ export default function CarouselCard({ project }: Props) {
     userId,
     description,
   } = project;
+
   return (
     <Card
       sx={{ maxWidth: 440, height: 400, margin: "auto" }}
@@ -64,7 +69,9 @@ export default function CarouselCard({ project }: Props) {
         style={styles.media}
       />
       <CardContent>
-        <LinearProgressLine />
+        <LinearProgressLine
+          value={Math.round((totalFundedNum / targetFundingNum) * 100)}
+        />
         <Typography
           gutterBottom
           variant="h5"

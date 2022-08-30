@@ -120,7 +120,7 @@ export default function UserProfile() {
                       label="Bio"
                       rows={5}
                       multiline={true}
-                      value={bio}
+                      value={bio || ""}
                       onChange={(event) => {
                         setUserProfile((prevState) => {
                           return { ...prevState, bio: event.target.value };

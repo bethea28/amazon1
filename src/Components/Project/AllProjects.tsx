@@ -2,13 +2,15 @@ import { useState, useEffect, useContext } from "react";
 import { Project } from "../../Resources/constants";
 import { getLikedProjects, getMyProjects } from "../../Services/ProjectService";
 import CarouselSelection from "../Home/CarouselSection";
-import { Typography, Box, Button, Grid } from "@mui/material";
+import { Typography, Box, Button, Grid, CircularProgress } from "@mui/material";
 import { AuthContext } from "../../Context/AuthProvider";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import { useNavigate } from "react-router-dom";
 
 export default function AllProjects() {
   const { id } = useContext(AuthContext);
+  const [isLoadingLiked, setIsLoadingLiked] = useState(true);
+  const [isLoadingCreated, setIsLoadingCreated] = useState(true);
   const [likedProjects, setLikedProjects] = useState<Project[]>();
   const [myProjects, setMyProjects] = useState<Project[]>();
 
@@ -19,6 +21,8 @@ export default function AllProjects() {
         setLikedProjects(response);
       } catch (err) {
         setLikedProjects(undefined);
+      } finally {
+        setIsLoadingLiked(false);
       }
     };
 
@@ -28,6 +32,8 @@ export default function AllProjects() {
         setMyProjects(response);
       } catch (err) {
         setMyProjects(undefined);
+      } finally {
+        setIsLoadingCreated(false);
       }
     };
 
@@ -43,7 +49,11 @@ export default function AllProjects() {
 
   return (
     <>
-      {likedProjects ? (
+      {isLoadingLiked ? (
+        <Box sx={{ display: "flex" }}>
+          <CircularProgress />
+        </Box>
+      ) : likedProjects && likedProjects?.length > 1 ? (
         <>
           <Box sx={{ bgcolor: "#A6BBA7", mb: 2 }}>
             <Typography variant="h6" my={2}>
@@ -54,13 +64,15 @@ export default function AllProjects() {
         </>
       ) : (
         <Box marginBottom={4}>
-          <Typography variant="h6" fontFamily={"sans-serif"}>
-            No Liked projects
-          </Typography>
+          <Typography variant="h6">No Liked projects</Typography>
         </Box>
       )}
 
-      {myProjects ? (
+      {isLoadingCreated ? (
+        <Box sx={{ display: "flex" }}>
+          <CircularProgress />
+        </Box>
+      ) : myProjects ? (
         <>
           <Grid
             container
