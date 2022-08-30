@@ -12,7 +12,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Search, SearchIconWrapper, StyledInputBase } from "./Constants";
 import { AuthContext } from "../../Context/AuthProvider";
 import AuthService from "../../Services/Authentication/AuthService";
-import { typographyTitle } from "../../Resources/constants";
+import { typographyTitle } from "../../Resources/Constants";
 
 export default function AppbarPrivate() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

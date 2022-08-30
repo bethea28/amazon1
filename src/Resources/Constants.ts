@@ -16,6 +16,7 @@ export const interests = [
   "Entertainment",
 ];
 export const tempUserID = "de3caccd-fa2c-4cd0-a1bc-c9a313a09a75";
+export const tempProjectID = "5f460f1d-493d-4b36-ad7d-98c867700377";
 export const axiosInstance = axios.create({
   baseURL: "http://localhost:8080",
   timeout: 20000,
@@ -87,6 +88,30 @@ export const initialUserData: User = {
 
 export type UpdateUserResponse = {
   data: object;
+};
+
+export type CommentData = {
+  id?: string;
+  content: string;
+  userId?: string;
+  projectId: string;
+  username?: string;
+  avatarURL?: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export const profileBackgroundImageBox = {
+  width: 1,
+  height: 1 / 4,
+  my: 3,
+  mr: 2,
+  backgroundColor: "#EAEAEA",
+  borderRadius: "5px",
+  fontSize: "0.875rem",
+  fontWeight: "700",
+  textAlign: "center",
+  label: "profile-header-picture",
 };
 
 export const viewProfileInfo = {

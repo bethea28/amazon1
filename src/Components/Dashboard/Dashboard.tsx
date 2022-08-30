@@ -13,11 +13,13 @@ import {
   getNewestProjects,
   getRecommendedProjects,
 } from "../../Services/ProjectService";
-import { Project } from "../../Resources/constants";
+import { Project } from "../../Resources/Constants";
 import NavigationBar from "./Components/NavigationBar";
 import ProjectList from "./Components/ProjectList";
 import SearchBar from "./Components/SearchBar";
 import { theme } from "../../Resources/GlobalTheme";
+import AppbarPublic from "../../Components/Navbar/AppbarPublic";
+import CommentList from "../Comments/CommentList";
 import { useNavigate } from "react-router-dom";
 
 function Dashboard() {

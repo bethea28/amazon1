@@ -7,7 +7,7 @@ import {
   profileDataBox,
   User,
   initialUserData,
-} from "../../Resources/constants";
+} from "../../Resources/Constants";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../Context/AuthProvider";
 import { ProfileSectionStyle } from "./UserProfileStyle";

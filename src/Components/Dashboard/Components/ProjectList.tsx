@@ -1,9 +1,12 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Card, Grid, Typography } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
-import React, { useEffect, useState } from "react";
-import { GetProjectsResponse } from "../../../Resources/constants";
+import React from "react";
+import { GetProjectsResponse } from "../../../Resources/Constants";
+import { useNavigate } from "react-router-dom";
 
 function ProjectList(props: GetProjectsResponse) {
+  const navigate = useNavigate();
+
   return (
     <Box>
       <Carousel indicators={false} animation="slide" height={"450px"}>
@@ -17,14 +20,23 @@ function ProjectList(props: GetProjectsResponse) {
                 justifyContent={"space-evenly"}
               >
                 <Grid item>
-                  <img src="https://picsum.photos/250" alt="thumbnail" />
-                  <Typography
-                    padding={"1em"}
-                    variant="subtitle1"
-                    textAlign={"justify"}
+                  <Card
+                    sx={{ padding: "1em" }}
+                    onMouseOver={(e) =>
+                      (e.currentTarget.style.cursor = "pointer")
+                    }
+                    onClick={() => navigate(`/projects/${project.projectId}`)}
                   >
-                    {project.description}
-                  </Typography>
+                    <img src="https://picsum.photos/250" alt="thumbnail" />
+                    <Typography variant="h4">{project.projectName}</Typography>
+                    <Typography
+                      padding={"1em"}
+                      variant="subtitle1"
+                      textAlign={"justify"}
+                    >
+                      {project.description}
+                    </Typography>
+                  </Card>
                 </Grid>
               </Grid>
             );

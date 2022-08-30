@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Project } from "../../Resources/constants";
+import { Project } from "../../Resources/Constants";
 import { getLikedProjects, getMyProjects } from "../../Services/ProjectService";
 import CarouselSelection from "../Home/CarouselSection";
 import { Typography, Box, Button, Grid, CircularProgress } from "@mui/material";

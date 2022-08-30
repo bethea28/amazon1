@@ -1,4 +1,4 @@
-import { axiosInstance, Project } from "../Resources/constants";
+import { axiosInstance, Project } from "../Resources/Constants";
 import { Auth } from "aws-amplify";
 
 export async function getRecommendedProjects(categories: string) {

@@ -1,7 +1,7 @@
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { Typography, Box, Grid } from "@mui/material";
-import { Project, User, initialUserData } from "../../Resources/constants";
+import { Project, User, initialUserData } from "../../Resources/Constants";
 import UserService from "../../Services/UserService";
 import { useEffect, useState } from "react";
 import CarouselCard from "./CarouselCard";

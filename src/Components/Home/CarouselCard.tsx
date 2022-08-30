@@ -8,7 +8,7 @@ import {
   LinearProgress,
   Button,
 } from "@mui/material";
-import { Project } from "../../Resources/constants";
+import { Project } from "../../Resources/Constants";
 import { useNavigate, useLocation } from "react-router-dom";
 import ViewProfile from "../UserProfile/ViewProfile";
 import LinearProgressLine from "../Home/LinearProgressLine";

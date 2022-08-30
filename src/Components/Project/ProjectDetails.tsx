@@ -12,13 +12,14 @@ import {
   ImageListItem,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { Project } from "../../Resources/constants";
+import { Project } from "../../Resources/Constants";
 import { getProjectDetails } from "../../Services/ProjectService";
 import { theme } from "../../Resources/GlobalTheme";
 import NavigationBar from "../Dashboard/Components/NavigationBar";
 import SearchBar from "../Dashboard/Components/SearchBar";
 import { useParams } from "react-router-dom";
 import ViewProfile from "../UserProfile/ViewProfile";
+import CommentList from "../Comments/CommentList";
 
 export default function ProjectDetails() {
   const { id } = useParams();
@@ -134,6 +135,7 @@ export default function ProjectDetails() {
                 </CardContent>
                 {/* Insert like component
                             Insert comments component */}
+                <CommentList />
               </Card>
             </Stack>
           </Box>
