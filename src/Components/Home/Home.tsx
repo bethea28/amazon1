@@ -12,7 +12,9 @@ const Home = () => {
   useEffect(() => {
     const fetchNewest = async () => {
       const response = await getNewestProjects();
-      setRecent(response!);
+      if (response) {
+        setRecent(response!);
+      }
     };
 
     if (!recent) {
