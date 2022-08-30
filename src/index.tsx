@@ -5,6 +5,8 @@ import App from './App';
 import awsconfig from './Resources/aws-exports';
 import { Amplify } from 'aws-amplify';
 import { BrowserRouter } from 'react-router-dom';
+import { theme } from './Resources/GlobalTheme';
+import { ThemeProvider } from '@mui/material';
 Amplify.configure(awsconfig);
 
 const root = ReactDOM.createRoot(
@@ -12,11 +14,13 @@ const root = ReactDOM.createRoot(
 );
 root.render(
 
-  <BrowserRouter>
-    <React.StrictMode>
+  <ThemeProvider theme={theme}>
+    <BrowserRouter>
+      <React.StrictMode>
         <App />
-    </React.StrictMode>
-  </BrowserRouter>
+      </React.StrictMode>
+    </BrowserRouter>
+  </ThemeProvider>
 
 );
 
