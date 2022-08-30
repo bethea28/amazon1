@@ -18,6 +18,7 @@ import ProjectDetails from "./Components/Project/ProjectDetails";
 import AllProjects from "./Components/Project/AllProjects";
 import ModifyProject from "./Components/Project/ModifyProject";
 import UploadPhotos from "./Components/Project/UploadPhotos";
+import HomeCategory from "./Components/Home/HomeCategory";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
               <Route path="/signup" element={<SignUp />} />
               <Route path="/login" element={<Login />} />
               <Route path="/projects/:id" element={<ProjectDetails />} />
+              <Route path="/:id" element={<HomeCategory />} />
 
               {/* protected routes */}
               <Route element={<RequireAuth />}>

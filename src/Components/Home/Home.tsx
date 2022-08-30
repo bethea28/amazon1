@@ -1,10 +1,11 @@
 import { interests } from "../../Resources/constants";
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography, Link } from "@mui/material";
 import { Divider, Box, Paper } from "@mui/material";
 import { useState, useEffect } from "react";
 import { Project } from "../../Resources/constants";
 import { getNewestProjects } from "../../Services/ProjectService";
 import CarouselSection from "./CarouselSection";
+import { Navigate } from "react-router-dom";
 
 const Home = () => {
   const [recent, setRecent] = useState<Project[]>();
@@ -26,6 +27,10 @@ const Home = () => {
     return null;
   }
 
+  const selectCategory = (category: string) => {
+    console.log(category);
+  };
+
   return (
     <>
       <Box>
@@ -38,8 +43,15 @@ const Home = () => {
         >
           {interests.map((interest, idx) => (
             <Grid item key={interest}>
-              <Typography variant="subtitle1" fontSize={20} lineHeight={2}>
-                {interest}
+              <Typography
+                variant="subtitle1"
+                fontSize={20}
+                lineHeight={2}
+                onClick={() => {
+                  selectCategory(interest);
+                }}
+              >
+                <Link>{interest}</Link>
               </Typography>
             </Grid>
           ))}
