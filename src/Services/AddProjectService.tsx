@@ -30,7 +30,7 @@ export const updateData = async (
 ) => {
   const res = await Auth.currentSession();
   let jwt = res.getAccessToken().getJwtToken();
-  return axiosInstance.patch<any>(`/projects/${projectId}`, state, {
+  return axiosInstance.put<any>(`/projects/${projectId}`, state, {
     headers: {
       Authorization: `Bearer ${jwt}`,
       "Content-Type": "application/json",

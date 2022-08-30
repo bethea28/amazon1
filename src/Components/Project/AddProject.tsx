@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Project } from "../../Resources/Constants";
-import { Typography, FormHelperText, ThemeProvider, Box } from "@mui/material";
 import {
+  Typography,
+  FormHelperText,
+  ThemeProvider,
+  Box,
   FormControl,
   InputLabel,
   MenuItem,
@@ -10,8 +13,8 @@ import {
   Grid,
   TextField,
   Paper,
-  makeStyles,
-} from "@material-ui/core";
+} from "@mui/material";
+import { makeStyles } from "@material-ui/core";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -291,21 +294,18 @@ export default function AddProject() {
                 </Button>
               </Grid>
             </Grid>
-            <Grid
-              container
-              direction={"row"}
-              spacing={2}
-              justifyContent="center"
-            >
-              <Button
-                variant="contained"
-                onClick={() => navigate(`/addmilestones/${projectId}`)}
-              >
-                Fund the project
-              </Button>
-            </Grid>
           </Box>
         </form>
+        <Grid container direction={"row"} spacing={2} justifyContent="center">
+          <Grid item xs={4}>
+            <Button
+              variant="contained"
+              onClick={() => navigate(`/addmilestones/${projectId}`)}
+            >
+              Define the project milestones
+            </Button>
+          </Grid>
+        </Grid>
       </Paper>
     </ThemeProvider>
   );

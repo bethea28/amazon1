@@ -1,15 +1,11 @@
 import React, { useContext } from "react";
 import { Transaction } from "../../Resources/Constants";
-import { Typography, FormHelperText, Stack } from "@mui/material";
+import { Typography, Button, Grid, TextField, Paper } from "@mui/material";
 import {
   FormControl,
   InputLabel,
   MenuItem,
-  Button,
   Select,
-  Grid,
-  TextField,
-  Paper,
   makeStyles,
 } from "@material-ui/core";
 import { useForm, Controller } from "react-hook-form";
@@ -67,11 +63,6 @@ export default function AddTransaction({ onTransactionCreated }: Props) {
       const data = await postTransacData(state);
       console.log(data);
       onTransactionCreated(data);
-
-      // listUpdated([state,...transitions])
-      // transactions.push(data)
-      // listUpdated(transactions)
-      // window.location.reload();
       reset();
     } catch (error) {
       console.log(error);
@@ -80,7 +71,6 @@ export default function AddTransaction({ onTransactionCreated }: Props) {
   return (
     <Paper>
       <form
-        className={classes.root}
         onSubmit={handleSubmit(onSubmit)}
         onReset={() => reset()}
         autoComplete="off"
@@ -101,7 +91,15 @@ export default function AddTransaction({ onTransactionCreated }: Props) {
           </Grid>
         </Grid>
         <Grid container>
-          <Grid item xs={4}>
+          <Grid
+            item
+            xs={4}
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",
+            }}
+          >
             <TextField
               {...register("amount", { min: 0.01 })}
               type="number"
@@ -117,7 +115,7 @@ export default function AddTransaction({ onTransactionCreated }: Props) {
           </Grid>
           <Grid
             item
-            xs={4}
+            xs={0}
             style={{
               display: "flex",
               justifyContent: "flex-start",
@@ -128,12 +126,12 @@ export default function AddTransaction({ onTransactionCreated }: Props) {
           </Grid>
         </Grid>
         <Grid container>
-          <Grid item xs={2}>
+          <Grid item xs={4}>
             <Button variant="contained" color="primary" type="reset">
               <Typography variant="button">Reset</Typography>
             </Button>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={0}>
             <Button variant="contained" color="primary" type="submit">
               <Typography variant="button">Submit</Typography>
             </Button>
