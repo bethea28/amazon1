@@ -8,6 +8,8 @@ import {
   CardMedia,
   Typography,
   Chip,
+  ImageList,
+  ImageListItem,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { Project } from "../../Resources/constants";
@@ -19,7 +21,7 @@ import { useParams } from "react-router-dom";
 import ViewProfile from "../UserProfile/ViewProfile";
 
 export default function ProjectDetails() {
-  const { id } = useParams(); //Update to useParams or Context to pass in global projectId variable
+  const { id } = useParams();
   const [currentProject, setCurrentProject] = useState<Project>();
   const {
     projectId,
@@ -29,6 +31,7 @@ export default function ProjectDetails() {
     lastUpdatedAt,
     createdAt,
     description,
+    userId,
   } = currentProject! || {};
 
   /**
@@ -48,8 +51,7 @@ export default function ProjectDetails() {
   const imageOnErrorHandler = (
     event: React.SyntheticEvent<HTMLImageElement, Event>
   ) => {
-    event.currentTarget.src =
-      "https://us.123rf.com/450wm/pavelstasevich/pavelstasevich1811/pavelstasevich181101028/112815904-no-image-available-icon-flat-vector-illustration.jpg?ver=6";
+    event.currentTarget.src = "../../Resources/Default_Image_Thumbnail.png";
     event.currentTarget.className = "error";
   };
 
@@ -72,13 +74,14 @@ export default function ProjectDetails() {
               spacing={2}
               m={5}
             >
-              <Card sx={{ maxWidth: 1000 }}>
+              <Card sx={{ maxWidth: 1500 }}>
                 <CardMedia
                   component="img"
                   height="500"
+                  width="800"
                   image={photoURLs[0]}
                   onError={imageOnErrorHandler}
-                  alt="Pot of plants"
+                  alt="Project photo"
                 />
                 <CardContent>
                   <Typography variant="h1" m={1}>
@@ -110,7 +113,24 @@ export default function ProjectDetails() {
                   <Typography variant="body1" m={3}>
                     {description}
                   </Typography>
-                  <ViewProfile {...currentProject}></ViewProfile>
+                  <ImageList
+                    sx={{ width: 500, height: 164 }}
+                    cols={3}
+                    rowHeight={164}
+                  >
+                    {photoURLs.slice(1).map((url) => (
+                      <ImageListItem key={url}>
+                        <img
+                          src={`${url}?w=164&h=164&fit=crop&auto=format`}
+                          srcSet={`${url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                          alt="Project photo"
+                          onError={imageOnErrorHandler}
+                          loading="lazy"
+                        />
+                      </ImageListItem>
+                    ))}
+                  </ImageList>
+                  <ViewProfile userId={userId}></ViewProfile>
                 </CardContent>
                 {/* Insert like component
                             Insert comments component */}

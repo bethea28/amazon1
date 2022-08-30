@@ -17,6 +17,7 @@ import PersistLogin from "./Services/Authentication/PersistLogin";
 import ProjectDetails from "./Components/Project/ProjectDetails";
 import AllProjects from "./Components/Project/AllProjects";
 import ModifyProject from "./Components/Project/ModifyProject";
+import UploadPhotos from "./Components/Project/UploadPhotos";
 
 function App() {
   return (
@@ -44,6 +45,10 @@ function App() {
                 <Route path="/interests" element={<InterestSelection />} />
                 <Route path="/allprojects" element={<AllProjects />} />
                 <Route path="/projects/:id/edit" element={<ModifyProject />} />
+                <Route
+                  path="/uploadprojectphotos/:id"
+                  element={<UploadPhotos />}
+                />
               </Route>
             </Route>
           </Route>

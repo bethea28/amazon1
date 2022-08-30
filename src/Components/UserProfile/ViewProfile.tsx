@@ -59,7 +59,7 @@ export default function ViewProfile({ userId }: { userId: string }) {
         onClick={handleClickOpen}
         sx={{ ...typographyTitle }}
       >
-        By: {firstName + " " + lastName}
+        {`By: ${firstName} ${lastName}`}
       </Typography>
       <Dialog
         fullWidth={fullWidth}

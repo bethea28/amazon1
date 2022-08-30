@@ -140,3 +140,6 @@ export const typographyTitle = {
   letterSpacing: ".3rem",
   color: "inherit",
 };
+
+export const noPhoto =
+  "https://dominionmartialarts.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
