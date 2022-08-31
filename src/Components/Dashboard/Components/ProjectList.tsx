@@ -1,7 +1,7 @@
 import { Box, Card, Grid, Typography } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
 import React from "react";
-import { GetProjectsResponse } from "../../../Resources/Constants";
+import { GetProjectsResponse } from "../../../Resources/constants";
 import { useNavigate } from "react-router-dom";
 
 function ProjectList(props: GetProjectsResponse) {

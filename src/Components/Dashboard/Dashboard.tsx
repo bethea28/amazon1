@@ -13,7 +13,7 @@ import {
   getNewestProjects,
   getRecommendedProjects,
 } from "../../Services/ProjectService";
-import { Project } from "../../Resources/Constants";
+import { Project } from "../../Resources/constants";
 import NavigationBar from "./Components/NavigationBar";
 import ProjectList from "./Components/ProjectList";
 import SearchBar from "./Components/SearchBar";

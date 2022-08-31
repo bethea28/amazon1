@@ -1,16 +1,12 @@
-import { axiosInstance, Project } from "../Resources/Constants";
+import { axiosInstance, Project } from "../Resources/constants";
 import { Auth } from "aws-amplify";
 
 export async function getRecommendedProjects(categories: string) {
   try {
-    const res = await Auth.currentSession();
-    let jwt = res.getAccessToken().getJwtToken();
-    const { data } = await axiosInstance.post<Project[]>(
-      "/projects/recommended",
-      categories,
+    const { data } = await axiosInstance.get<Project[]>(
+      `/projects/recommended/${categories}`,
       {
         headers: {
-          Authorization: `Bearer ${jwt}`,
           "Content-Type": "application/json",
         },
       }
@@ -134,5 +130,18 @@ export async function deletePhoto(id: String, filename: String) {
   } catch (error) {
     console.log(error);
     alert("Failed to delete! Please try again.");
+  }
+}
+
+export async function getAllProjects() {
+  try {
+    const { data } = await axiosInstance.get<Project[]>("/projects", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
   }
 }

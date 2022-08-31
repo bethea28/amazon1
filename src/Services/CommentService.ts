@@ -1,6 +1,5 @@
-import { axiosInstance, CommentData } from "../Resources/Constants";
+import { axiosInstance, CommentData } from "../Resources/constants";
 import { Auth } from "aws-amplify";
-
 
 /**
  * Gets a list of comments by project ID
@@ -8,19 +7,19 @@ import { Auth } from "aws-amplify";
  * @returns A promise containing a list of comments relating to the current project
  */
 export async function getProjectComments(projectId: string) {
-    try {
-        const { data } = await axiosInstance.get<CommentData[]>("/comments", {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            params: {
-                id: projectId
-            }
-        })
-        return data;
-    } catch (error) {
-        console.log(error);
-    }
+  try {
+    const { data } = await axiosInstance.get<CommentData[]>("/comments", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      params: {
+        id: projectId,
+      },
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
 }
 /**
  * Adds a new comment
@@ -29,15 +28,19 @@ export async function getProjectComments(projectId: string) {
  * @returns A promise containing the newly created CommentData
  */
 export async function postComment(comment: CommentData, jwt: string) {
-    try {
-        const { data } = await axiosInstance.post<CommentData>("/comments", comment, {
-            headers: {
-                'Authorization': `Bearer ${jwt}`,
-                'Content-Type': 'application/json'
-            }
-        })
-        return data;
-    } catch (error) {
-        console.log(error);
-    }
+  try {
+    const { data } = await axiosInstance.post<CommentData>(
+      "/comments",
+      comment,
+      {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
 }

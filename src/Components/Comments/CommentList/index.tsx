@@ -3,7 +3,7 @@ import { green } from "@mui/material/colors";
 import React, { useContext, useEffect, useState } from "react";
 import { getProjectComments } from "../../../Services/CommentService";
 import CommentField from "../CommentField";
-import { CommentData, tempProjectID } from "../../../Resources/Constants";
+import { CommentData, tempProjectID } from "../../../Resources/constants";
 import Comment from "../Comment";
 
 function CommentList() {

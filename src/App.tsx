@@ -36,6 +36,7 @@ function App() {
               <Route path="/signup" element={<SignUp />} />
               <Route path="/login" element={<Login />} />
               <Route path="/projects/:id" element={<ProjectDetails />} />
+              <Route path="/:category" element={<Home />} />
 
               {/* protected routes */}
               <Route element={<RequireAuth />}>
@@ -44,7 +45,10 @@ function App() {
                 <Route path="/addproject" element={<AddProject />} />
                 <Route path="/interests" element={<InterestSelection />} />
                 <Route path="/allprojects" element={<AllProjects />} />
-                <Route path="/projects/:id/edit" element={<ModifyProject />} />
+                <Route
+                  path="/projects/:userId/edit"
+                  element={<ModifyProject />}
+                />
                 <Route
                   path="/uploadprojectphotos/:id"
                   element={<UploadPhotos />}

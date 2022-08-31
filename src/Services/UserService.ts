@@ -1,4 +1,4 @@
-import { axiosInstance, User } from "../Resources/Constants";
+import { axiosInstance, User } from "../Resources/constants";
 
 /**
  * CRUD services for user data
