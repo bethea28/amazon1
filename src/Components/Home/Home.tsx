@@ -1,4 +1,4 @@
-import { Grid, Typography, Link } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { Divider, Box, Paper } from "@mui/material";
 import { useState, useEffect } from "react";
 import { Project } from "../../Resources/constants";
@@ -11,8 +11,6 @@ import { getRecommendedProjects } from "../../Services/ProjectService";
 const Home = () => {
   const [recent, setRecent] = useState<Project[]>();
   const [categoryProjects, setCategoryProjects] = useState<Project[]>();
-  const [isLoadingCategory, setIsLoadingCategory] = useState(true);
-
   const { category } = useParams();
 
   useEffect(() => {
@@ -22,7 +20,7 @@ const Home = () => {
         if (response) {
           setRecent(response!);
         }
-      } catch {
+      } catch (err) {
         setRecent(undefined);
       }
     };
@@ -33,10 +31,8 @@ const Home = () => {
         if (response) {
           setCategoryProjects(response!);
         }
-      } catch {
+      } catch (err) {
         setCategoryProjects(undefined);
-      } finally {
-        setIsLoadingCategory(false);
       }
     };
 
