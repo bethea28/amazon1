@@ -2,16 +2,27 @@ import { Grid, Typography } from "@mui/material";
 import { Divider, Box, Paper } from "@mui/material";
 import { useState, useEffect } from "react";
 import { Project } from "../../Resources/constants";
-import { getNewestProjects } from "../../Services/ProjectService";
+import {
+  getNewestProjects,
+  getAllProjects,
+  getRecommendedProjects,
+} from "../../Services/ProjectService";
 import CarouselSection from "./CarouselSection";
 import { useParams } from "react-router-dom";
 import Interest from "./Interest";
-import { getRecommendedProjects } from "../../Services/ProjectService";
 
 const Home = () => {
   const [recent, setRecent] = useState<Project[]>();
+  const [stats, setStats] = useState<Project[]>();
+  const [totalFundedAmount, setTotalFundedAmount] = useState<number>();
   const [categoryProjects, setCategoryProjects] = useState<Project[]>();
   const { category } = useParams();
+
+  function separator(numb: number) {
+    var str = numb.toString().split(".");
+    str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return str.join(".");
+  }
 
   useEffect(() => {
     const fetchNewest = async () => {
@@ -35,6 +46,22 @@ const Home = () => {
         setCategoryProjects(undefined);
       }
     };
+
+    const fetchStats = async () => {
+      try {
+        const response = await getAllProjects();
+        if (response) {
+          setStats(response!);
+        }
+        let sum = 0;
+        response!.forEach((item) => (sum += item.totalFundedNum));
+        setTotalFundedAmount(sum);
+      } catch (err) {
+        setStats(undefined);
+      }
+    };
+
+    fetchStats();
 
     if (!recent) {
       fetchNewest();
@@ -94,14 +121,14 @@ const Home = () => {
               <Grid container justifyContent={"space-evenly"}>
                 <Grid item>
                   <Typography variant="h4" color={"#335436"}>
-                    200,000
+                    {separator(stats!.length)}
                   </Typography>
                   <Typography>Projects funded</Typography>
                 </Grid>
                 <Divider orientation="vertical" flexItem />
                 <Grid item>
                   <Typography variant="h4" color={"#335436"}>
-                    3,856,297
+                    {separator(totalFundedAmount!)}
                   </Typography>
                   <Typography>towards creative work</Typography>
                 </Grid>

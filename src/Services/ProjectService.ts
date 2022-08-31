@@ -132,3 +132,16 @@ export async function deletePhoto(id: String, filename: String) {
     alert("Failed to delete! Please try again.");
   }
 }
+
+export async function getAllProjects() {
+  try {
+    const { data } = await axiosInstance.get<Project[]>("/projects", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
