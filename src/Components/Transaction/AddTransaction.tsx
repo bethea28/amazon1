@@ -40,7 +40,6 @@ interface Props {
 
 export default function AddTransaction({ onTransactionCreated }: Props) {
   const projectIdTrans = useContext<string>(ProjectIdContext);
-  console.log("hi", projectIdTrans);
 
   const classes = useStyles();
   const {
@@ -52,8 +51,6 @@ export default function AddTransaction({ onTransactionCreated }: Props) {
   } = useForm<TransactionFormInput>();
 
   const onSubmit = async (data: TransactionFormInput) => {
-    //const{projectId, amount} = data
-
     let state = {
       projectId: projectIdTrans,
       amount: data.amount.toString(),
@@ -61,7 +58,6 @@ export default function AddTransaction({ onTransactionCreated }: Props) {
 
     try {
       const data = await postTransacData(state);
-      console.log(data);
       onTransactionCreated(data);
       reset();
     } catch (error) {

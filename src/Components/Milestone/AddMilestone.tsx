@@ -25,7 +25,6 @@ export default function AddMilestone({ milestone }: Props) {
   const onSubmit = (milestoneDate: Milestone) => {
     milestone.name = milestoneDate.name;
     milestone.amount = milestoneDate.amount;
-    console.log(milestone.targetDate);
     milestone.targetDate = milestoneDate.targetDate.toLocaleDateString();
     reset();
   };

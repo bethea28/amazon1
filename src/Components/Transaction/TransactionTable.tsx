@@ -18,8 +18,6 @@ export const TransactionContext = createContext<Transaction[]>([]);
 
 export const TransactionTable = () => {
   const { id } = useParams();
-
-  console.log("transactiontable", id);
   const [transactions, setTransactions] = useState<Transaction[]>();
 
   useEffect(() => {
@@ -30,25 +28,18 @@ export const TransactionTable = () => {
     if (!transactions) {
       fetchTransaction();
     }
-    console.log(transactions);
   }, []);
 
   // Update to put transaction to the top
   const handleTransactionCreated = (transaction: Transaction) => {
     const newTransactions = transactions ? [...transactions] : [];
-    // newTransactions.push(transaction);
     setTransactions([transaction, ...newTransactions]);
-    // setTransactions(newTransactions);
   };
 
   return (
     <div className="container">
       <ProjectIdContext.Provider value={id!}>
-        {/* <TransactionContext.Provider value = {transactions!}> */}
-
         <AddTransaction onTransactionCreated={handleTransactionCreated} />
-
-        {/* </TransactionContext.Provider> */}
       </ProjectIdContext.Provider>
       <TableContainer component={Paper} sx={{ maxHeight: "600px" }}>
         <Table aria-label="simple table" stickyHeader>
