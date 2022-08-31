@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { Dayjs } from "dayjs";
 import { Project } from "../../Resources/Constants";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import {
   Typography,
   FormHelperText,
@@ -13,45 +17,18 @@ import {
   Grid,
   TextField,
   Paper,
+  Stack,
 } from "@mui/material";
-import { makeStyles } from "@material-ui/core";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
 import { useForm, Controller } from "react-hook-form";
 import { postData } from "../../Services/AddProjectService";
 import { ProjectFormInput } from "../../Resources/Constants";
 import { useNavigate } from "react-router-dom";
 import { theme } from "../../Resources/GlobalTheme";
-const useStyles = makeStyles(() => ({
-  root: {
-    "& .MuiFormControl-root": {
-      width: "80%",
-      margin: theme.spacing(1),
-      background: "#A6BBA7",
-    },
-    "& .MuiFormLabel-root": {
-      padding: "0 30px",
-      color: "#000000",
-    },
-  },
-}));
 
 export default function AddProject() {
   const navigate = useNavigate();
   const [currentProject, setCurrentProject] = useState<Project>();
-  const {
-    projectId,
-    projectName,
-    photoURLs,
-    categories,
-    lastUpdatedAt,
-    createdAt,
-    description,
-  } = currentProject! || {};
-  const classes = useStyles();
+  const { projectId } = currentProject! || {};
   const {
     reset,
     control,
@@ -79,25 +56,39 @@ export default function AddProject() {
       console.log(error);
     }
   };
+  const [value, setValue] = React.useState<Dayjs | null>(null);
   return (
     <ThemeProvider theme={theme}>
       <Paper>
         <form
-          //className={classes.root}
+          color="#335436"
+          border-color="#335436"
           onSubmit={handleSubmit(onSubmit)}
           onReset={() => reset()}
           autoComplete="off"
         >
-          <Typography>Add a Project</Typography>
-          <Box sx={{ width: "100%" }}>
+          <Typography sx={{ my: 0.5 }} variant="h4">
+            Add a Project
+          </Typography>
+          <Box>
             <Grid
+              sx={{ my: 0.5 }}
               container
               direction={"row"}
-              spacing={0}
+              spacing={2}
               justifyContent="center"
             >
-              <Grid item xs={4}>
+              <Grid
+                item
+                xs={4}
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  alignItems: "center",
+                }}
+              >
                 <TextField
+                  sx={{ minWidth: 300 }}
                   {...register("projectName", { required: true })}
                   label="Input name of your project"
                   defaultValue=""
@@ -122,13 +113,23 @@ export default function AddProject() {
               </Grid>
             </Grid>
             <Grid
+              sx={{ my: 0.5 }}
               container
               direction={"row"}
               spacing={2}
               justifyContent="center"
             >
-              <Grid item xs={4}>
+              <Grid
+                item
+                xs={4}
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  alignItems: "center",
+                }}
+              >
                 <TextField
+                  sx={{ minWidth: 300 }}
                   {...register("targetFundingNum", { min: 0.01 })}
                   type="number"
                   label="Input target funding amount"
@@ -154,12 +155,21 @@ export default function AddProject() {
               </Grid>
             </Grid>
             <Grid
+              sx={{ my: 0.5 }}
               container
               direction={"row"}
               spacing={2}
               justifyContent="center"
             >
-              <Grid item xs={4}>
+              <Grid
+                item
+                xs={4}
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  alignItems: "center",
+                }}
+              >
                 <FormControl>
                   <InputLabel htmlFor="category-select">
                     Select Category
@@ -172,6 +182,7 @@ export default function AddProject() {
                     render={({ field }) => {
                       return (
                         <Select
+                          sx={{ minWidth: 300 }}
                           value={field.value}
                           onChange={(e) => field.onChange(e)}
                         >
@@ -207,29 +218,39 @@ export default function AddProject() {
               </Grid>
             </Grid>
             <Grid
+              sx={{ my: 0.5 }}
               container
               direction={"row"}
               spacing={2}
               justifyContent="center"
             >
-              <Grid item xs={4}>
+              <Grid
+                item
+                xs={4}
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  alignItems: "center",
+                }}
+              >
                 <Controller
                   name="targetFundingDate"
                   defaultValue={new Date()}
                   control={control}
                   render={({ field }) => (
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                      <KeyboardDatePicker
-                        inputVariant="outlined"
-                        variant="inline"
+                    <LocalizationProvider
+                      sx={{ minWidth: 300 }}
+                      dateAdapter={AdapterDayjs}
+                    >
+                      <DatePicker
                         label="Select Date"
-                        value={field.value}
-                        onChange={(e) => field.onChange(e)}
-                        format="MM/dd/yyyy"
-                        defaultValue={null}
-                        autoOk
+                        value={value}
+                        onChange={(newValue) => {
+                          setValue(newValue);
+                        }}
+                        renderInput={(params) => <TextField {...params} />}
                       />
-                    </MuiPickersUtilsProvider>
+                    </LocalizationProvider>
                   )}
                 />
               </Grid>
@@ -246,13 +267,23 @@ export default function AddProject() {
               </Grid>
             </Grid>
             <Grid
+              sx={{ my: 0.5 }}
               container
               direction={"row"}
               spacing={2}
               justifyContent="center"
             >
-              <Grid item xs={4}>
+              <Grid
+                item
+                xs={4}
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  alignItems: "center",
+                }}
+              >
                 <TextField
+                  sx={{ minWidth: 300 }}
                   {...register("description", { required: true })}
                   label="Input descriptions of your project"
                   multiline
@@ -278,12 +309,21 @@ export default function AddProject() {
               </Grid>
             </Grid>
             <Grid
+              sx={{ my: 0.5 }}
               container
               direction={"row"}
               spacing={2}
               justifyContent="center"
             >
-              <Grid item xs={2}>
+              <Grid
+                item
+                xs={2}
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  alignItems: "center",
+                }}
+              >
                 <Button variant="contained" color="primary" type="reset">
                   <Typography variant="button">Reset</Typography>
                 </Button>
@@ -293,19 +333,25 @@ export default function AddProject() {
                   <Typography variant="button">Submit</Typography>
                 </Button>
               </Grid>
+              <Grid
+                item
+                xs={0}
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  alignItems: "center",
+                }}
+              >
+                <Button
+                  variant="contained"
+                  onClick={() => navigate(`/addmilestones/${projectId}`)}
+                >
+                  Next
+                </Button>
+              </Grid>
             </Grid>
           </Box>
         </form>
-        <Grid container direction={"row"} spacing={2} justifyContent="center">
-          <Grid item xs={4}>
-            <Button
-              variant="contained"
-              onClick={() => navigate(`/addmilestones/${projectId}`)}
-            >
-              Define the project milestones
-            </Button>
-          </Grid>
-        </Grid>
       </Paper>
     </ThemeProvider>
   );
