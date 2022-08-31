@@ -124,12 +124,12 @@ export default function AddMilestone({ milestone }: Props) {
           </Grid>
         </Grid>
         <Grid container>
-          <Grid item xs={2}>
+          <Grid item xs={4}>
             <Button variant="contained" onClick={handleSubmit(onSubmit)}>
               Save
             </Button>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={4}>
             <Button variant="contained" onClick={handleSubmit(onReset)}>
               Reset
             </Button>

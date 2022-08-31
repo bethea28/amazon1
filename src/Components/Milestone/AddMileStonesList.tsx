@@ -10,13 +10,6 @@ import AddMilestone from "./AddMilestone";
 import { useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
   root: {
     "& .MuiFormControl-root": {
       width: "80%",
@@ -72,20 +65,21 @@ export function AddMileStonesList() {
         flexDirection: "column",
       }}
     >
-      <Typography sx={{ my: 0.5 }} variant="h4">
-        Please Define Milestones
-      </Typography>
       <Box
         sx={{
           width: "100%",
           my: 2,
           display: "flex",
           justifyContent: "center",
-          border: 2,
         }}
       >
         <form className={classes.root} onSubmit={handleSubmit(onsubmit)}>
-          <Grid container sx={{ border: 2, minWidth: 900 }}>
+          <Grid container sx={{ minWidth: 900 }}>
+            <Grid item xs={8.5}>
+              <Typography sx={{ my: 0.5 }} variant="h4">
+                Please Define Milestones
+              </Typography>
+            </Grid>
             <Grid item xs={4}>
               <Button
                 variant="contained"
@@ -110,12 +104,19 @@ export function AddMileStonesList() {
               <AddMilestone milestone={milestone} />
             ))}
           </Grid>
+          <Box
+            sx={{
+              width: "80%",
+              my: 2,
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          >
+            <Button variant="contained" color="primary" type="submit">
+              <Typography variant="button">Submit</Typography>
+            </Button>
+          </Box>
         </form>
-      </Box>
-      <Box>
-        <Button variant="contained" color="primary" type="submit">
-          <Typography variant="button">Submit</Typography>
-        </Button>
       </Box>
     </Paper>
   );

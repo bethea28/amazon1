@@ -66,10 +66,14 @@ export default function AddProject() {
           onReset={() => reset()}
           autoComplete="off"
         >
-          <Typography sx={{ my: 0.5 }} variant="h4">
-            Add a Project
-          </Typography>
-          <Box>
+          <Box
+            sx={{
+              my: 4,
+            }}
+          >
+            <Typography sx={{ my: 0.5 }} variant="h4">
+              Add a Project
+            </Typography>
             <Grid
               sx={{ my: 0.5 }}
               container
@@ -313,7 +317,7 @@ export default function AddProject() {
             >
               <Grid
                 item
-                xs={2}
+                xs={1.5}
                 style={{
                   display: "flex",
                   justifyContent: "flex-end",
