@@ -6,7 +6,7 @@ export const interests = [
   "Food",
   "Cars",
   "Wildlife",
-  "Pets",
+  "Pet",
   "Technology",
   "Literature",
   "Healthcare",

@@ -37,7 +37,7 @@ function InterestSelection() {
     event.preventDefault();
     const user: Partial<User> = { interests: choices.slice(1) };
     await UserService.updateUser(id, token, user);
-    navigate("/");
+    navigate("/profile");
   }
 
   return (

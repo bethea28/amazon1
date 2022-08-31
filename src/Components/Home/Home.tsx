@@ -1,59 +1,90 @@
-import { interests } from "../../Resources/constants";
 import { Grid, Typography } from "@mui/material";
 import { Divider, Box, Paper } from "@mui/material";
 import { useState, useEffect } from "react";
 import { Project } from "../../Resources/constants";
-import { getNewestProjects } from "../../Services/ProjectService";
+import {
+  getNewestProjects,
+  getAllProjects,
+  getRecommendedProjects,
+} from "../../Services/ProjectService";
 import CarouselSection from "./CarouselSection";
+import { useParams } from "react-router-dom";
+import Interest from "./Interest";
 
 const Home = () => {
   const [recent, setRecent] = useState<Project[]>();
+  const [stats, setStats] = useState<Project[]>();
+  const [totalFundedAmount, setTotalFundedAmount] = useState<number>();
+  const [categoryProjects, setCategoryProjects] = useState<Project[]>();
+  const { category } = useParams();
+
+  function separator(numb: number) {
+    var str = numb.toString().split(".");
+    str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return str.join(".");
+  }
 
   useEffect(() => {
     const fetchNewest = async () => {
-      const response = await getNewestProjects();
-      if (response) {
-        setRecent(response!);
+      try {
+        const response = await getNewestProjects();
+        if (response) {
+          setRecent(response!);
+        }
+      } catch (err) {
+        setRecent(undefined);
       }
     };
+
+    const fetchCategory = async () => {
+      try {
+        const response = await getRecommendedProjects(category!);
+        if (response) {
+          setCategoryProjects(response!);
+        }
+      } catch (err) {
+        setCategoryProjects(undefined);
+      }
+    };
+
+    const fetchStats = async () => {
+      try {
+        const response = await getAllProjects();
+        if (response) {
+          setStats(response!);
+        }
+        let sum = 0;
+        response!.forEach((item) => (sum += item.totalFundedNum));
+        setTotalFundedAmount(sum);
+      } catch (err) {
+        setStats(undefined);
+      }
+    };
+
+    fetchStats();
 
     if (!recent) {
       fetchNewest();
     }
-  }, [recent]);
+
+    if (!categoryProjects) {
+      fetchCategory();
+    }
+  }, [recent, categoryProjects, category]);
 
   if (!recent) {
+    return null;
+  }
+
+  if (!categoryProjects) {
     return null;
   }
 
   return (
     <>
       <Box>
-        <Grid
-          container
-          columnSpacing={2}
-          justifyContent={"space-evenly"}
-          marginTop={3}
-          marginBottom={3}
-        >
-          {interests.map((interest, idx) => (
-            <Grid item key={interest}>
-              <Typography variant="subtitle1" fontSize={20} lineHeight={2}>
-                {interest}
-              </Typography>
-            </Grid>
-          ))}
-        </Grid>
-        <Divider />
-        <Box sx={{ my: 5 }}>
-          <Typography variant="subtitle1" fontSize={40}>
-            Bring a creative project to life.
-          </Typography>
-        </Box>
+        <Interest />
         <Box sx={{ mb: 5 }}>
-          <Typography variant="h6" fontSize={15}>
-            On Jumpstarter:
-          </Typography>
           <Box
             sx={{
               justifyContent: "center",
@@ -87,14 +118,14 @@ const Home = () => {
               <Grid container justifyContent={"space-evenly"}>
                 <Grid item>
                   <Typography variant="h4" color={"#335436"}>
-                    200,000
+                    {separator(stats!.length)}
                   </Typography>
                   <Typography>Projects funded</Typography>
                 </Grid>
                 <Divider orientation="vertical" flexItem />
                 <Grid item>
                   <Typography variant="h4" color={"#335436"}>
-                    3,856,297
+                    {separator(totalFundedAmount!)}
                   </Typography>
                   <Typography>towards creative work</Typography>
                 </Grid>
@@ -102,7 +133,19 @@ const Home = () => {
             </Paper>
           </Box>
         </Box>
-        <Box sx={{ mb: 10 }}>{<CarouselSection projects={recent} />}</Box>
+
+        {category == undefined ? (
+          <Box sx={{ mb: 10 }}>{<CarouselSection projects={recent} />}</Box>
+        ) : categoryProjects.length > 0 ? (
+          <Box sx={{ mb: 10 }}>
+            {<CarouselSection projects={categoryProjects} />}
+          </Box>
+        ) : (
+          <>
+            <Typography> {`No ${category} found`}</Typography>
+            <Box sx={{ mb: 10 }}>{<CarouselSection projects={recent} />}</Box>
+          </>
+        )}
       </Box>
     </>
   );

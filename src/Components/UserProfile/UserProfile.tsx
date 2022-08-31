@@ -79,7 +79,7 @@ export default function UserProfile() {
                       size="small"
                       label="Name"
                       InputLabelProps={{ shrink: true }}
-                      value={firstName}
+                      value={firstName || ""}
                     />
                   </Grid>
                   <Grid item>
@@ -95,7 +95,7 @@ export default function UserProfile() {
                       id="outlined-basic"
                       label="email"
                       InputLabelProps={{ shrink: true }}
-                      value={email}
+                      value={email || ""}
                       variant="outlined"
                       size="small"
                     />
