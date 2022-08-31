@@ -1,5 +1,5 @@
 import React, { useState, MouseEvent, useContext } from "react";
-import { Box, Toolbar, Menu } from "@mui/material";
+import { Box, Toolbar, Menu, Button } from "@mui/material";
 import { IconButton, Typography, MenuItem, AppBar } from "@mui/material";
 import { ListItemText, Divider, ListItemIcon } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -12,7 +12,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Search, SearchIconWrapper, StyledInputBase } from "./Constants";
 import { AuthContext } from "../../Context/AuthProvider";
 import AuthService from "../../Services/Authentication/AuthService";
-import { typographyTitle } from "../../Resources/Constants";
+import { typographyTitle } from "../../Resources/constants";
 
 export default function AppbarPrivate() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -177,14 +177,16 @@ export default function AppbarPrivate() {
               </MenuItem>
             ))}
           </Menu>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ ...typographyTitle, display: { xs: "none", sm: "block" } }}
-          >
-            JUMPSTARTER
-          </Typography>
+          <Button color="white" onClick={() => navigate("/")}>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ display: { xs: "none", sm: "block" } }}
+            >
+              JUMPSTARTER
+            </Typography>
+          </Button>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />

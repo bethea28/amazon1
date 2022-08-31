@@ -1,6 +1,6 @@
 import { Avatar, Grid, Paper, Typography } from "@mui/material";
 import React from "react";
-import { CommentData } from "../../Resources/Constants";
+import { CommentData } from "../../Resources/constants";
 import { theme } from "../../Resources/GlobalTheme";
 import { formatDistanceToNowStrict as getTimeDistance } from "date-fns";
 

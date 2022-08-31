@@ -11,7 +11,7 @@ import {
 import { useContext, useState } from "react";
 import { deletePhoto, uploadPhoto } from "../../../Services/ProjectService";
 import { CurrentProjectContext, ProjectData } from "../UploadPhotos";
-import { noPhoto } from "../../../Resources/Constants";
+import { noPhoto } from "../../../Resources/constants";
 
 export default function UploadGalleryPhotos() {
   const [file, setFile] = useState("");

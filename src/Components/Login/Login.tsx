@@ -5,7 +5,7 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider";
 import UserService from "../../Services/UserService";
-import { User } from "../../Resources/Constants";
+import { User } from "../../Resources/constants";
 
 interface IFormInput {
   username: string;

@@ -7,10 +7,11 @@ import {
   profileDataBox,
   User,
   initialUserData,
-} from "../../Resources/Constants";
+} from "../../Resources/constants";
 import { useForm } from "react-hook-form";
-import { AuthContext } from "../../Context/AuthProvider";
-import { ProfileSectionStyle } from "./UserProfileStyle";
+import { AuthContext } from '../../Context/AuthProvider';
+import { ProfileSectionStyle } from './UserProfileStyle';
+import AvatarUploadField from './AvatarUploadField';
 
 export default function UserProfile() {
   const [userProfile, setUserProfile] = useState<User>(initialUserData);
@@ -78,7 +79,7 @@ export default function UserProfile() {
                       size="small"
                       label="Name"
                       InputLabelProps={{ shrink: true }}
-                      value={firstName}
+                      value={firstName || ""}
                     />
                   </Grid>
                   <Grid item>
@@ -94,13 +95,13 @@ export default function UserProfile() {
                       id="outlined-basic"
                       label="email"
                       InputLabelProps={{ shrink: true }}
-                      value={email}
+                      value={email || ""}
                       variant="outlined"
                       size="small"
                     />
                   </Grid>
                   <Grid item>
-                    <Avatar src={avatarURL}></Avatar>
+                    <AvatarUploadField avatarURL={avatarURL} />
                   </Grid>
                 </Grid>
               </Box>
@@ -118,7 +119,7 @@ export default function UserProfile() {
                       id="outlined-multiline"
                       size="medium"
                       label="Bio"
-                      rows={5}
+                      rows={7}
                       multiline={true}
                       value={bio || ""}
                       onChange={(event) => {
@@ -130,8 +131,8 @@ export default function UserProfile() {
                     />
                   </Grid>
                 </Grid>
-              </Box>
-            </Paper>
+              </Box >
+            </Paper >
             <Paper elevation={3} className="customPaper">
               <Box className="customBox">
                 <ProfileSectionStyle label="Interests"></ProfileSectionStyle>
@@ -183,8 +184,8 @@ export default function UserProfile() {
               </Grid>
             </Grid>
           </Box>
-        </Box>
-      </form>
-    </StyledEngineProvider>
+        </Box >
+      </form >
+    </StyledEngineProvider >
   );
 }

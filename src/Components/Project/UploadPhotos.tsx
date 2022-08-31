@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { createContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Project, noPhoto } from "../../Resources/Constants";
+import { Project, noPhoto } from "../../Resources/constants";
 import { theme } from "../../Resources/GlobalTheme";
 import {
   deletePhoto,

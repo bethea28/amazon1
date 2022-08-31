@@ -12,11 +12,11 @@ import UserService from "../../Services/UserService";
 import { theme } from "../../Resources/GlobalTheme";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import Header from "../Header";
 import AuthService from "../../Services/Authentication/AuthService";
 import { AuthContext } from "../../Context/AuthProvider";
 
 interface IFormInput {
+  userId: string;
   username: string;
   firstName: string;
   lastName: string;
@@ -65,6 +65,7 @@ function SignUp() {
         };
       });
       data.lastSignOn = currentDate.toLocaleString();
+      data.userId = user.userId;
 
       /** Add user to dynamodb database */
       await UserService.addUser(user.jwt, data);

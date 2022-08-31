@@ -13,7 +13,7 @@ import {
   Button,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { Project } from "../../Resources/Constants";
+import { Project } from "../../Resources/constants";
 import { getProjectDetails } from "../../Services/ProjectService";
 import { theme } from "../../Resources/GlobalTheme";
 import NavigationBar from "../Dashboard/Components/NavigationBar";

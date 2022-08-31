@@ -13,7 +13,7 @@ import {
   typographyTitle,
   User,
   initialUserData,
-} from "../../Resources/Constants";
+} from "../../Resources/constants";
 import UserService from "../../Services/UserService";
 
 export default function ViewProfile({ userId }: { userId: string }) {

@@ -11,7 +11,7 @@ import { styled } from "@mui/system";
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import UserService from "../../Services/UserService";
-import { interests, User } from "../../Resources/Constants";
+import { interests, User } from "../../Resources/constants";
 import { theme } from "../../Resources/GlobalTheme";
 import { AuthContext } from "../../Context/AuthProvider";
 
@@ -37,7 +37,7 @@ function InterestSelection() {
     event.preventDefault();
     const user: Partial<User> = { interests: choices.slice(1) };
     await UserService.updateUser(id, token, user);
-    navigate("/");
+    navigate("/profile");
   }
 
   return (

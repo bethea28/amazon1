@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import SendIcon from "@mui/icons-material/Send";
 import { AuthContext } from "../../../Context/AuthProvider";
-import { CommentData, User } from "../../../Resources/Constants";
+import { CommentData, User } from "../../../Resources/constants";
 import UserService from "../../../Services/UserService";
 import { useParams } from "react-router-dom";
 import { postComment } from "../../../Services/CommentService";
