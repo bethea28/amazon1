@@ -1,8 +1,8 @@
-import React, { useState, createContext } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { ProjectFormInput, MilestoneStr } from "../../Resources/Constants";
 import { makeStyles } from "@material-ui/core";
-import { Button, Box, Typography, Grid, Paper, Select } from "@mui/material";
+import { Button, Box, Typography, Grid, Paper } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { updateData } from "../../Services/AddProjectService";
@@ -61,7 +61,6 @@ export function AddMileStonesList() {
     try {
       await updateData(id!, data);
       alert("You have create milestones successfuly");
-      //window.location.reload();
     } catch (error) {
       console.log(error);
     }
