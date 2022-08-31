@@ -48,6 +48,7 @@ export default function ProjectDetails() {
     targetFundingDate,
     targetFundingNum,
   } = currentProject! || {};
+
   const defaultImage = "https://picsum.photos/200/300";
 
   /**
@@ -239,8 +240,6 @@ export default function ProjectDetails() {
                     </Box>
                   </Box>
                 </CardContent>
-                {/* Insert like component
-                            Insert comments component */}
                 <CommentList />
               </Card>
             </Stack>

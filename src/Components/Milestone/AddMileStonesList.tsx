@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { ProjectFormInput, MilestoneStr } from "../../Resources/Constants";
+import { ProjectFormInput, MilestoneStr } from "../../Resources/constants";
 import { makeStyles } from "@material-ui/core";
 import { Button, Box, Typography, Grid, Paper } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
@@ -24,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export function AddMileStonesList() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const classes = useStyles();
   const { handleSubmit } = useForm<ProjectFormInput>();
@@ -53,6 +55,7 @@ export function AddMileStonesList() {
     try {
       await updateData(id!, data);
       alert("You have create milestones successfuly");
+      navigate("/dashboard");
     } catch (error) {
       console.log(error);
     }

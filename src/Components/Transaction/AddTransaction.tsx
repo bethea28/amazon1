@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Transaction } from "../../Resources/Constants";
+import { Transaction } from "../../Resources/constants";
 import { Typography, Button, Grid, TextField, Paper, Box } from "@mui/material";
 import {
   FormControl,

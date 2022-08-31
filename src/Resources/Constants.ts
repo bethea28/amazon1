@@ -182,13 +182,13 @@ export const profileDataBox = {
   pl: 6,
   pr: 3,
   pt: 3,
-  backgroundColor: '#EAEAEA',
+  backgroundColor: "#EAEAEA",
   borderRadius: 2,
-  fontSize: '0.875rem',
-  fontWeight: '700',
-  textAlign: 'left',
+  fontSize: "0.875rem",
+  fontWeight: "700",
+  textAlign: "left",
   label: "My profile section",
-}
+};
 
 export const viewProfileAdditional = {
   width: 1,
@@ -213,6 +213,8 @@ export const typographyTitle = {
   color: "inherit",
 };
 
-export const noPhoto = 'https://dominionmartialarts.com/wp-content/uploads/2017/04/default-image-620x600.jpg';
+export const noPhoto =
+  "https://dominionmartialarts.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
 
-export const noAvatarUrl = 'https://icon-library.com/images/no-profile-pic-icon/no-profile-pic-icon-11.jpg';
+export const noAvatarUrl =
+  "https://icon-library.com/images/no-profile-pic-icon/no-profile-pic-icon-11.jpg";

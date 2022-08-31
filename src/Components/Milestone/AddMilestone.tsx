@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Dayjs } from "dayjs";
-import { Milestone, MilestoneStr } from "../../Resources/Constants";
+import { Milestone, MilestoneStr } from "../../Resources/constants";
 import { useForm, Controller } from "react-hook-form";
 import { Typography } from "@mui/material";
 import { Grid } from "@material-ui/core";

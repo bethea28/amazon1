@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Dayjs } from "dayjs";
-import { Project, interests } from "../../Resources/Constants";
+import {
+  Project,
+  interests,
+  ProjectFormInput,
+} from "../../Resources/constants";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -20,7 +24,6 @@ import {
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import { postData } from "../../Services/AddProjectService";
-import { ProjectFormInput } from "../../Resources/Constants";
 import { useNavigate } from "react-router-dom";
 import { theme } from "../../Resources/GlobalTheme";
 

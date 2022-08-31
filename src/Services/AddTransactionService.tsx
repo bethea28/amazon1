@@ -1,4 +1,4 @@
-import { axiosInstance } from "../Resources/Constants";
+import { axiosInstance } from "../Resources/constants";
 import { Auth } from "aws-amplify";
 
 export async function postTransacData(state: any) {

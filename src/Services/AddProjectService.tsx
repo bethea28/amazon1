@@ -1,6 +1,6 @@
-import { axiosInstance, Project } from "../Resources/Constants";
+import { axiosInstance, Project } from "../Resources/constants";
 import { Auth } from "aws-amplify";
-import { ProjectFormInput } from "../Resources/Constants";
+import { ProjectFormInput } from "../Resources/constants";
 
 export const postData = async (state: any) => {
   try {

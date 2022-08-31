@@ -1,5 +1,6 @@
 import React, { useState, useEffect, createContext } from "react";
-import { Transaction } from "../../Resources/Constants";
+
+import { Transaction } from "../../Resources/constants";
 import {
   TableContainer,
   Table,
