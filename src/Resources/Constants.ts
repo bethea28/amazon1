@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Dispatch, SetStateAction } from "react";
 
 export const interests = [
   "Music",
@@ -41,9 +42,9 @@ export type Project = {
   categories: string;
   createdAt: string;
   lastUpdatedAt: string;
+  milestones: MilestoneStr[];
   photoURLs: string[];
 };
-
 export const initialProjectData: Project = {
   projectId: "",
   userId: "",
@@ -55,8 +56,52 @@ export const initialProjectData: Project = {
   categories: "",
   createdAt: "",
   lastUpdatedAt: "",
+  milestones: [],
   photoURLs: [""],
 };
+
+export class Transaction {
+  transactionId!: string;
+  projectId!: string;
+  userId!: string;
+  username!: string;
+  amount!: number;
+  createdAt!: string;
+  lastUpdatedAt!: string;
+
+  contructor(userResponse: any) {
+    this.transactionId = userResponse.transactionId;
+    this.projectId = userResponse.projectId;
+    this.userId = userResponse.userId;
+    this.username = userResponse.username;
+    this.createdAt = userResponse.createdAt;
+    this.lastUpdatedAt = userResponse.lastUpdatedAt;
+  }
+}
+
+export interface MilestoneFormInput {
+  projectId: string;
+  milestones: Milestone[];
+}
+export interface ProjectFormInput {
+  projectId: string;
+  projectName: string;
+  targetFundingNum: number;
+  targetFundingDate: Date;
+  description: string;
+  categories: string;
+  milestones: MilestoneStr[];
+}
+export interface Milestone {
+  name: string;
+  amount: number;
+  targetDate: Date;
+}
+export interface MilestoneStr {
+  name: string;
+  amount: number;
+  targetDate: string;
+}
 
 export type User = {
   userId: string;
@@ -137,13 +182,13 @@ export const profileDataBox = {
   pl: 6,
   pr: 3,
   pt: 3,
-  backgroundColor: '#EAEAEA',
+  backgroundColor: "#EAEAEA",
   borderRadius: 2,
-  fontSize: '0.875rem',
-  fontWeight: '700',
-  textAlign: 'left',
+  fontSize: "0.875rem",
+  fontWeight: "700",
+  textAlign: "left",
   label: "My profile section",
-}
+};
 
 export const viewProfileAdditional = {
   width: 1,
@@ -168,6 +213,8 @@ export const typographyTitle = {
   color: "inherit",
 };
 
-export const noPhoto = 'https://dominionmartialarts.com/wp-content/uploads/2017/04/default-image-620x600.jpg';
+export const noPhoto =
+  "https://dominionmartialarts.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
 
-export const noAvatarUrl = 'https://icon-library.com/images/no-profile-pic-icon/no-profile-pic-icon-11.jpg';
+export const noAvatarUrl =
+  "https://icon-library.com/images/no-profile-pic-icon/no-profile-pic-icon-11.jpg";

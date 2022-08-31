@@ -9,9 +9,9 @@ import {
   initialUserData,
 } from "../../Resources/constants";
 import { useForm } from "react-hook-form";
-import { AuthContext } from '../../Context/AuthProvider';
-import { ProfileSectionStyle } from './UserProfileStyle';
-import AvatarUploadField from './AvatarUploadField';
+import { AuthContext } from "../../Context/AuthProvider";
+import { ProfileSectionStyle } from "./UserProfileStyle";
+import AvatarUploadField from "./AvatarUploadField";
 
 export default function UserProfile() {
   const [userProfile, setUserProfile] = useState<User>(initialUserData);
@@ -131,8 +131,8 @@ export default function UserProfile() {
                     />
                   </Grid>
                 </Grid>
-              </Box >
-            </Paper >
+              </Box>
+            </Paper>
             <Paper elevation={3} className="customPaper">
               <Box className="customBox">
                 <ProfileSectionStyle label="Interests"></ProfileSectionStyle>
@@ -184,8 +184,8 @@ export default function UserProfile() {
               </Grid>
             </Grid>
           </Box>
-        </Box >
-      </form >
-    </StyledEngineProvider >
+        </Box>
+      </form>
+    </StyledEngineProvider>
   );
 }
