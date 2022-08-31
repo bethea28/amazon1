@@ -182,7 +182,7 @@ export default function AppbarPrivate() {
               variant="h6"
               noWrap
               component="div"
-              sx={{ ...typographyTitle, display: { xs: "none", sm: "block" } }}
+              sx={{ display: { xs: "none", sm: "block" } }}
             >
               JUMPSTARTER
             </Typography>
