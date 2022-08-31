@@ -44,14 +44,7 @@ export default function AvatarUploadField({ avatarURL }: Props) {
         setDisabledSave(true);
         let bodyFormData = new FormData();
         bodyFormData.append('file', file);
-        UserService.uploadAvatar(id, token, bodyFormData).then(
-            (value) => {
-                window.location.reload();
-            },
-            (reason) => {
-                window.location.reload();
-            }
-        );
+        UserService.uploadAvatar(id, token, bodyFormData);
     }
 
     /**
@@ -68,7 +61,6 @@ export default function AvatarUploadField({ avatarURL }: Props) {
                 window.location.reload();
             }
         );
-
     }
 
     /**
