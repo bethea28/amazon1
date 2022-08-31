@@ -5,7 +5,7 @@ import { ProjectFormInput } from "../Resources/Constants";
 export const postData = async (state: any) => {
   try {
     const res = await Auth.currentSession();
-    let jwt = res.getAccessToken().getJwtToken();
+    const jwt = res.getAccessToken().getJwtToken();
     const { data } = await axiosInstance.post<Project>("projects", state, {
       headers: {
         Authorization: `Bearer ${jwt}`,
@@ -16,12 +16,6 @@ export const postData = async (state: any) => {
   } catch (error) {
     console.log(error);
   }
-  // return axiosInstance.post<Project>('projects', state, {
-  //     headers: {
-  //         'Authorization': `Bearer ${jwt}`,
-  //         'Content-Type': 'application/json'
-  //     }
-  // })
 };
 
 export const updateData = async (
@@ -29,7 +23,7 @@ export const updateData = async (
   state: ProjectFormInput
 ) => {
   const res = await Auth.currentSession();
-  let jwt = res.getAccessToken().getJwtToken();
+  const jwt = res.getAccessToken().getJwtToken();
   return axiosInstance.put<any>(`/projects/${projectId}`, state, {
     headers: {
       Authorization: `Bearer ${jwt}`,

@@ -57,7 +57,6 @@ export function AddMileStonesList() {
   const onsubmit = async (data: ProjectFormInput) => {
     data.projectId = id!;
     data.milestones = milestones;
-    console.log(data);
     try {
       await updateData(id!, data);
       alert("You have create milestones successfuly");
@@ -65,7 +64,6 @@ export function AddMileStonesList() {
       console.log(error);
     }
   };
-  console.log("milestones", milestones);
   return (
     <Paper
       sx={{
