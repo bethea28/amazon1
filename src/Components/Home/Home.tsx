@@ -85,9 +85,6 @@ const Home = () => {
       <Box>
         <Interest />
         <Box sx={{ mb: 5 }}>
-          <Typography variant="h6" fontSize={15}>
-            On Jumpstarter:
-          </Typography>
           <Box
             sx={{
               justifyContent: "center",

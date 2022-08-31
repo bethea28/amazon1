@@ -16,6 +16,7 @@ import AuthService from "../../Services/Authentication/AuthService";
 import { AuthContext } from "../../Context/AuthProvider";
 
 interface IFormInput {
+  userId: string;
   username: string;
   firstName: string;
   lastName: string;
@@ -64,6 +65,7 @@ function SignUp() {
         };
       });
       data.lastSignOn = currentDate.toLocaleString();
+      data.userId = user.userId;
 
       /** Add user to dynamodb database */
       await UserService.addUser(user.jwt, data);
