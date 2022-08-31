@@ -1,9 +1,13 @@
 import React, { useContext } from "react";
+import { Dayjs } from "dayjs";
 import { Milestone, MilestoneStr } from "../../Resources/Constants";
 import { useForm, Controller } from "react-hook-form";
 import { Typography } from "@mui/material";
 import { Grid } from "@material-ui/core";
 import { Button, Stack, TextField } from "@mui/material";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -33,6 +37,7 @@ export default function AddMilestone({ milestone }: Props) {
   const onReset = () => {
     reset();
   };
+  const [value, setValue] = React.useState<Dayjs | null>(null);
   return (
     <Stack>
       <form onReset={() => reset()} autoComplete="off">
@@ -96,18 +101,19 @@ export default function AddMilestone({ milestone }: Props) {
               defaultValue={new Date()}
               control={control}
               render={({ field }) => (
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <KeyboardDatePicker
-                    inputVariant="outlined"
-                    variant="inline"
+                <LocalizationProvider
+                  sx={{ minWidth: 300 }}
+                  dateAdapter={AdapterDayjs}
+                >
+                  <DatePicker
                     label="Select Date"
-                    value={field.value}
-                    onChange={(e) => field.onChange(e)}
-                    format="MM/dd/yyyy"
-                    //defaultValue = {new Date()}
-                    autoOk
+                    value={value}
+                    onChange={(newValue) => {
+                      setValue(newValue);
+                    }}
+                    renderInput={(params) => <TextField {...params} />}
                   />
-                </MuiPickersUtilsProvider>
+                </LocalizationProvider>
               )}
             />
           </Grid>

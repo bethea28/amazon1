@@ -70,7 +70,9 @@ export function AddMileStonesList() {
   return (
     <Paper>
       <form className={classes.root} onSubmit={handleSubmit(onsubmit)}>
-        <Typography>Please Define Milestones</Typography>
+        <Typography sx={{ my: 0.5 }} variant="h4">
+          Please Define Milestones
+        </Typography>
         <Box sx={{ width: "100%" }}>
           <Grid container>
             <Grid item xs={2}>
