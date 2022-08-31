@@ -7,11 +7,11 @@ const RequireAuth = () => {
   const { isLoggedIn } = useContext(AuthContext)
   const location = useLocation();
 
-  return(
+  return (
 
     isLoggedIn
-      ? (<Outlet/>)
-      : (< Navigate to ="/login" state={{from: location}} replace />)
-  )  
+      ? (<Outlet />)
+      : (< Navigate to="/login" state={{ from: location }} replace />)
+  )
 }
 export default RequireAuth

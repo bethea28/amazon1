@@ -3,7 +3,7 @@ import { Box, TextField, Avatar, Button } from '@mui/material';
 import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../../Context/AuthProvider';
 import UserService from '../../Services/UserService';
-import { noAvatarUrl } from '../../Resources/Constants';
+import { noAvatarUrl } from '../../Resources/constants';
 
 interface Props {
     avatarURL: string;
@@ -40,6 +40,7 @@ export default function AvatarUploadField({ avatarURL }: Props) {
      * This handler uploads photo chosen to the backend
      */
     const handleUpload = (e: React.MouseEvent<HTMLElement>) => {
+
         setDisabledSave(true);
         let bodyFormData = new FormData();
         bodyFormData.append('file', file);

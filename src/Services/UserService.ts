@@ -1,10 +1,9 @@
-import { axiosInstance, User } from "../Resources/Constants";
+import { axiosInstance, User } from "../Resources/constants";
 
 /**
  * CRUD services for user data
  */
 class UserService {
-
   /**
    * Add user to the database
    * @params jwt  The jwt token
@@ -12,58 +11,61 @@ class UserService {
    */
   addUser = async (jwt: string, data: object) => {
     try {
-      const response = await axiosInstance.post<User>('/users/', data, {
+      const response = await axiosInstance.post<User>("/users/", data, {
         headers: {
-          'Authorization': `Bearer ${jwt}`,
-          'Content-Type': 'application/json'
-        }
-      })
-      return response.data
+          Authorization: `Bearer ${jwt}`,
+          "Content-Type": "application/json",
+        },
+      });
+      return response.data;
     } catch (error) {
-      return error
+      console.log(error);
     }
-  }
+  };
 
   /**
    * Get user data
    * @params userId The current user's id
-   * @params jwt    The jwt token
    */
   getUser = async (userId: string) => {
     try {
       const response = await axiosInstance.get<User>(`/users/${userId}`, {
         headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      return response.data
+          "Content-Type": "application/json",
+        },
+      });
+      return response.data;
     } catch (error) {
-      return error
+      console.log(error);
     }
-  }
+  };
 
   /**
-     * Update user data
-     * @params userId The current user's id
-     * @params jwt    The jwt token
-     * @params data   The object that stores the updated information
-     */
+   * Update user data
+   * @params userId The current user's id
+   * @params jwt    The jwt token
+   * @params data   The object that stores the updated information
+   */
   updateUser = async (userId: string, jwt: string, data: Partial<User>) => {
     const currentDate = new Date();
     data.updatedAt = currentDate.toLocaleString();
     try {
-      const response = await axiosInstance.patch<User>(`/users/${userId}`, data, {
-        headers: {
-          'Authorization': `Bearer ${jwt}`,
-          'Content-Type': 'application/json'
+      const response = await axiosInstance.patch<User>(
+        `/users/${userId}`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+            "Content-Type": "application/json",
+          },
         }
-      })
+      );
 
-      return response.data
+      return response.data;
     } catch (error) {
-      return error
+      console.log(error);
     }
-  }
+  };
 
   /**
    * Upload new avatar for the user
@@ -110,5 +112,6 @@ class UserService {
       alert('Failed to delete! Please try again.')
     }
   }
+
 }
-export default new UserService;
+export default new UserService();

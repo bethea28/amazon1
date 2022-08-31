@@ -52,7 +52,6 @@ function SignUp() {
         return {...prevState, isLoggedIn: true, id:user.userId, token:user.jwt}
       })
       data.lastSignOn = currentDate.toLocaleString();
-      data.createdAt = currentDate.toLocaleString();
 
       /** Add user to dynamodb database */
       await UserService.addUser(user.jwt, data)
