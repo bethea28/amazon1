@@ -67,14 +67,28 @@ export function AddMileStonesList() {
   };
   console.log("milestones", milestones);
   return (
-    <Paper>
-      <form className={classes.root} onSubmit={handleSubmit(onsubmit)}>
-        <Typography sx={{ my: 0.5 }} variant="h4">
-          Please Define Milestones
-        </Typography>
-        <Box sx={{ width: "100%" }}>
-          <Grid container>
-            <Grid item xs={2}>
+    <Paper
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column",
+      }}
+    >
+      <Typography sx={{ my: 0.5 }} variant="h4">
+        Please Define Milestones
+      </Typography>
+      <Box
+        sx={{
+          width: "100%",
+          my: 2,
+          display: "flex",
+          justifyContent: "center",
+          border: 2,
+        }}
+      >
+        <form className={classes.root} onSubmit={handleSubmit(onsubmit)}>
+          <Grid container sx={{ border: 2, minWidth: 900 }}>
+            <Grid item xs={4}>
               <Button
                 variant="contained"
                 endIcon={<AddIcon />}
@@ -83,7 +97,7 @@ export function AddMileStonesList() {
                 Add
               </Button>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={4}>
               <Button
                 variant="contained"
                 endIcon={<DeleteIcon />}
@@ -92,17 +106,19 @@ export function AddMileStonesList() {
                 Remove
               </Button>
             </Grid>
-            <Grid item xs={2}>
-              <Button variant="contained" color="primary" type="submit">
-                <Typography variant="button">Submit</Typography>
-              </Button>
-            </Grid>
           </Grid>
-          {milestones.map((milestone) => (
-            <AddMilestone milestone={milestone} />
-          ))}
-        </Box>
-      </form>
+          <Grid item xs={12}>
+            {milestones.map((milestone) => (
+              <AddMilestone milestone={milestone} />
+            ))}
+          </Grid>
+        </form>
+      </Box>
+      <Box>
+        <Button variant="contained" color="primary" type="submit">
+          <Typography variant="button">Submit</Typography>
+        </Button>
+      </Box>
     </Paper>
   );
 }

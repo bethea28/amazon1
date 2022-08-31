@@ -37,7 +37,7 @@ export default function AddMilestone({ milestone }: Props) {
     <Stack>
       <form onReset={() => reset()} autoComplete="off">
         <Grid container>
-          <Grid item xs={4}>
+          <Grid item xs={8}>
             <TextField
               {...register("name", { required: true })}
               label="Input name of the milestone"
@@ -52,7 +52,7 @@ export default function AddMilestone({ milestone }: Props) {
           </Grid>
           <Grid
             item
-            xs={2}
+            xs={4}
             style={{
               display: "flex",
               justifyContent: "flex-start",
@@ -63,7 +63,7 @@ export default function AddMilestone({ milestone }: Props) {
           </Grid>
         </Grid>
         <Grid container>
-          <Grid item xs={4}>
+          <Grid item xs={8}>
             <TextField
               {...register("amount", { min: 0.01 })}
               type="number"
@@ -79,7 +79,7 @@ export default function AddMilestone({ milestone }: Props) {
           </Grid>
           <Grid
             item
-            xs={2}
+            xs={4}
             style={{
               display: "flex",
               justifyContent: "flex-start",
@@ -90,7 +90,7 @@ export default function AddMilestone({ milestone }: Props) {
           </Grid>
         </Grid>
         <Grid container>
-          <Grid item xs={4}>
+          <Grid item xs={8}>
             <Controller
               name="targetDate"
               defaultValue={new Date()}
@@ -114,7 +114,7 @@ export default function AddMilestone({ milestone }: Props) {
           </Grid>
           <Grid
             item
-            xs={2}
+            xs={4}
             style={{
               display: "flex",
               justifyContent: "flex-start",

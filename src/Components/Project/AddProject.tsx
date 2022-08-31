@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Dayjs } from "dayjs";
-import { Project } from "../../Resources/Constants";
+import { Project, interests } from "../../Resources/Constants";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -185,12 +185,9 @@ export default function AddProject() {
                           value={field.value}
                           onChange={(e) => field.onChange(e)}
                         >
-                          <MenuItem value="Tech">Tech</MenuItem>
-                          <MenuItem value="Art">Art</MenuItem>
-                          <MenuItem value="Car">Car</MenuItem>
-                          <MenuItem value="Food">Food</MenuItem>
-                          <MenuItem value="Pet">Pet</MenuItem>
-                          <MenuItem value="Other">Other</MenuItem>
+                          {interests.map((interest) => (
+                            <MenuItem value={interest}>{interest}</MenuItem>
+                          ))}
                         </Select>
                       );
                     }}
