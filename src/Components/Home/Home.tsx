@@ -1,67 +1,66 @@
-import { interests } from "../../Resources/constants";
 import { Grid, Typography, Link } from "@mui/material";
 import { Divider, Box, Paper } from "@mui/material";
 import { useState, useEffect } from "react";
 import { Project } from "../../Resources/constants";
 import { getNewestProjects } from "../../Services/ProjectService";
 import CarouselSection from "./CarouselSection";
-import { Navigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import Interest from "./Interest";
+import { getRecommendedProjects } from "../../Services/ProjectService";
 
 const Home = () => {
   const [recent, setRecent] = useState<Project[]>();
+  const [categoryProjects, setCategoryProjects] = useState<Project[]>();
+  const [isLoadingCategory, setIsLoadingCategory] = useState(true);
+
+  const { category } = useParams();
 
   useEffect(() => {
     const fetchNewest = async () => {
-      const response = await getNewestProjects();
-      if (response) {
-        setRecent(response!);
+      try {
+        const response = await getNewestProjects();
+        if (response) {
+          setRecent(response!);
+        }
+      } catch {
+        setRecent(undefined);
+      }
+    };
+
+    const fetchCategory = async () => {
+      try {
+        const response = await getRecommendedProjects(category!);
+        if (response) {
+          setCategoryProjects(response!);
+        }
+      } catch {
+        setCategoryProjects(undefined);
+      } finally {
+        setIsLoadingCategory(false);
       }
     };
 
     if (!recent) {
       fetchNewest();
     }
-  }, [recent]);
+
+    if (!categoryProjects) {
+      fetchCategory();
+    }
+  }, [recent, categoryProjects, category]);
 
   if (!recent) {
     return null;
   }
 
-  const selectCategory = (category: string) => {
-    console.log(category);
-  };
+  if (!categoryProjects) {
+    return null;
+  }
 
   return (
     <>
       <Box>
-        <Grid
-          container
-          columnSpacing={2}
-          justifyContent={"space-evenly"}
-          marginTop={3}
-          marginBottom={3}
-        >
-          {interests.map((interest, idx) => (
-            <Grid item key={interest}>
-              <Typography
-                variant="subtitle1"
-                fontSize={20}
-                lineHeight={2}
-                onClick={() => {
-                  selectCategory(interest);
-                }}
-              >
-                <Link>{interest}</Link>
-              </Typography>
-            </Grid>
-          ))}
-        </Grid>
-        <Divider />
-        <Box sx={{ my: 5 }}>
-          <Typography variant="subtitle1" fontSize={40}>
-            Bring a creative project to life.
-          </Typography>
-        </Box>
+        <Interest />
         <Box sx={{ mb: 5 }}>
           <Typography variant="h6" fontSize={15}>
             On Jumpstarter:
@@ -114,7 +113,19 @@ const Home = () => {
             </Paper>
           </Box>
         </Box>
-        <Box sx={{ mb: 10 }}>{<CarouselSection projects={recent} />}</Box>
+
+        {category == undefined ? (
+          <Box sx={{ mb: 10 }}>{<CarouselSection projects={recent} />}</Box>
+        ) : categoryProjects.length > 0 ? (
+          <Box sx={{ mb: 10 }}>
+            {<CarouselSection projects={categoryProjects} />}
+          </Box>
+        ) : (
+          <>
+            <Typography> {`No ${category} found`}</Typography>
+            <Box sx={{ mb: 10 }}>{<CarouselSection projects={recent} />}</Box>
+          </>
+        )}
       </Box>
     </>
   );

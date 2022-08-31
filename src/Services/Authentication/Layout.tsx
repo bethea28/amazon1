@@ -16,7 +16,11 @@ const Layout = () => {
     if (isLoggedIn && location.pathname == "/login") {
       navigate("/");
     }
-    if (isLoggedIn && id != location.pathname.split("/")[2]) {
+    if (
+      isLoggedIn &&
+      location.pathname.split("/")[3] == "edit" &&
+      id != location.pathname.split("/")[2]
+    ) {
       navigate("/allprojects");
     }
   }, []);
